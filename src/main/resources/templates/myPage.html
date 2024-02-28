@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>마이 페이지</title>
+    <script>
+        function enableEdit() {
+            document.getElementById('userName').removeAttribute('readonly');
+            document.getElementById('userPhoneNumber').removeAttribute('readonly');
+            document.getElementById('userBirthDate').removeAttribute('readonly');
+            document.getElementById('editBtn').style.display = 'none';
+            document.getElementById('saveBtn').style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+<h2>내 정보</h2>
+
+<form id="userForm" action="/user/update" method="post">
+    <label for="userName">이름:</label><br>
+    <input type="text" id="userName" name="userName" th:value="${user.userName}" readonly><br>
+    <label for="userPhoneNumber">휴대전화:</label><br>
+    <input type="tel" id="userPhoneNumber" name="userPhoneNumber" th:value="${user.userPhoneNumber}" readonly><br>
+    <label for="userBirthDate">생년월일:</label><br>
+    <input type="date" id="userBirthDate" name="userBirthDate" th:value="${user.userBirthDate}" readonly><br>
+    <button type="button" id="editBtn" onclick="enableEdit()">수정하기</button>
+    <input type="submit" id="saveBtn" value="저장하기" style="display: none;">
+</form>
+
+</body>
+</html>
