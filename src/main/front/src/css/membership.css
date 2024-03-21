@@ -1,0 +1,72 @@
+#header_membership{
+    width:100%;
+    height:100px;
+}
+hr{
+    border:0 ;
+}
+#membership_write{
+    position: relative;
+    display: block;
+    width: 556px;
+    height: 806px;
+    background-color: #FFFFFF;
+    margin:0 auto;
+}
+
+#membership_write>#membership_write_header{
+    width: 556px;
+    height: 230px;
+    border-top: solid 3px #000000;
+}
+
+#membership_write_header>img{
+    display:block;
+    width: 97px;
+    height: 97px;
+    margin:15px auto auto;
+    object-fit: cover;
+}
+
+#membership_write_header>a{
+    display:block;
+    font-size: 40px;
+    color:#000000;
+    text-align: center;
+    margin:auto;
+}
+
+#membership_write_buttons>input{
+    display:block;
+    width: 380px;
+    height: 48px;
+    background-color: #FFFFFF;
+    margin:10px auto;
+    border-color: #6A6A6A;
+    border-radius: 15px;
+
+    font-size: 15px;
+    color:#6A6A6A;
+    box-shadow: none;
+    
+}
+
+#membership_write_buttons>#create_btn{
+    display:block;
+    width: 380px;
+    height: 48px;
+    background-color: #363636;
+    margin:10px auto;
+    border-color: #6A6A6A;
+    border-radius: 15px;
+
+    font-size: 15px;
+    color:#FFFFFF;
+    box-shadow: none;
+    
+}
+
+#footer_membership{
+    width:100%;
+    height:100px;
+}
