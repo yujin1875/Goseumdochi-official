@@ -27,6 +27,6 @@ public class AcademyFormController {
         // 신청서 이미 있으면 중복처리 할지
 
         academyFormService.submit(academyFormDTO);
-        return "home/first"; //*
+        return "index"; // 시작화면
     }
 }
