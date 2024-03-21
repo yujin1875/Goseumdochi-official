@@ -1,0 +1,92 @@
+#header_afterlogin{
+    width: 100%;
+    height:100px;
+}
+
+#header_afterlogin>#user_afterlogin{
+    float:right;
+    width: 210px;
+    height: 45px;
+    background-color: #646464;
+}
+
+#logo_afterlogin{
+    width: 100%;
+    height: 350px;
+}
+
+#logo_afterlogin>img{
+    display:block;
+    width: 141px;
+    height: 141px;
+    margin:0 auto;
+    object-fit: cover;
+}
+
+#logo_afterlogin>a{
+    display:block;
+    font-size: 64px;
+    color:#000000;
+    text-align: center;
+}
+
+#logo_afterlogin>#notice_afterlogin{
+    position:relative;
+    display:block;
+    width: 680px;
+    height: 49px;
+    margin:50px auto 1px;
+    background-color: #F5C5AB;
+    font-size: 24px;
+    text-align: left;
+    vertical-align: center;
+}
+
+#buttons_afterlogin{
+    width: 100%;
+    height:384px;
+    
+}
+
+#buttons_afterlogin>#btn_afterlogin{
+    position:relative;
+    width: 1344px;
+    height:334px;
+    margin: 25px auto;
+}
+
+#btn_afterlogin>#commu_btn{
+    float:left;
+    width: 334px;
+    height: 334px;
+    background-color: #FFFFFF;
+}
+
+#btn_afterlogin>#learn_btn{
+    float:left;
+    width: 334px;
+    height: 334px;
+    margin-left:171px;
+    background-color: #FFFFFF;
+}
+
+#btn_afterlogin>#aca_btn{
+    float:left;
+    width: 334px;
+    height: 334px;
+    margin-left:171px;
+    background-color: #FFFFFF;
+}
+
+#footer_afterlogin{
+    width: 100%;
+    height:246px;
+}
+
+#footer_afterlogin>a{
+    display:block;
+    font-size: 16px;
+    color:#838383;
+    text-align: center;
+    margin:auto;
+}
