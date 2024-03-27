@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Application Management</title>
+</head>
+<body>
+<h2>Academy Application Management</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Address</th>
+        <th>Address Detail</th>
+        <th>Academy Name</th>
+        <th>Phone Number</th>
+        <th>Postcode</th>
+        <th>Status</th>
+        <th>Director Name</th>
+        <th>Director Phone</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="academyForm : ${academyForms}">
+        <td th:text="${academyForm.form_id}"></td>
+        <td th:text="${academyForm.addr}"></td>
+        <td th:text="${academyForm.addr_detail}"></td>
+        <td th:text="${academyForm.aca_name}"></td>
+        <td th:text="${academyForm.aca_phone}"></td>
+        <td th:text="${academyForm.aca_postcode}"></td>
+        <td th:text="${academyForm.status}"></td>
+        <td th:text="${academyForm.dir_name}"></td>
+        <td th:text="${academyForm.dir_phone}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
