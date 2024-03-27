@@ -7,15 +7,15 @@
 <body>
 <div class="login-container">
     <h2>로그인</h2>
-    <form action="user/login" method="post">
-        <label for="UserId">아이디:</label>
-        <input type="text" id="userId" name="userId" required>
+    <form action="student/login" method="post">
+        <label for="StudentId">아이디:</label>
+        <input type="text" id="studentId" name="studentId" required>
 
-        <label for="userPassword">비밀번호:</label>
-        <input type="password" id="userPassword" name="userPassword" required>
+        <label for="studentPassword">비밀번호:</label>
+        <input type="password" id="studentPassword" name="studentPassword" required>
 
         <button type="submit">Login</button>
-        <a href="/findUserId">아이디 찾기</a> | <a href="/findUserPassword">비밀번호 찾기</a>
+        <a href="/findStudentId">아이디 찾기</a> | <a href="/findStudentPassword">비밀번호 찾기</a>
     </form>
 </div>
 </body>
