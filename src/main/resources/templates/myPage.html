@@ -27,5 +27,17 @@
     <input type="submit" id="saveBtn" value="저장하기" style="display: none;">
 </form>
 
+<form action="/student/uploadProfilePicture" method="post" enctype="multipart/form-data">
+    <input type="file" name="profilePicture" required>
+    <input type="submit" value="Upload">
+</form>
+
+<div th:if="${student.profilePictureUrl}">
+    <img th:src="${student.profilePictureUrl}" alt="프로필 이미지" style="width: 100px; height: 100px;">
+</div>
+<div th:unless="${student.profilePictureUrl}">
+    <p>등록된 프로필이 없습니다</p>
+</div>
+
 </body>
 </html>

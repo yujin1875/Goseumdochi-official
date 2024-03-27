@@ -7,6 +7,14 @@ spring:
     hikari:
       connection-test-query: select 1 from dual
 
+    cloud:
+      gcp:
+        storage:
+          credentials:
+            location: classpath:midas-vm-instance-03c538b381b1.json
+      project-id: midas-vm-instance
+      bucket: studentprofile
+
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect

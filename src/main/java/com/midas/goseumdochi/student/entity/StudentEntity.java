@@ -27,6 +27,9 @@ public class StudentEntity {
     @Column
     private String studentPhoneNumber;
 
+    @Column
+    private String profilePictureUrl;
+
     public static StudentEntity toStudent(StudentDTO studentDTO){
         StudentEntity studentEntity = new StudentEntity();
         studentEntity.setStudentId(studentDTO.getStudentId());
@@ -35,5 +38,3 @@ public class StudentEntity {
         return studentEntity;
     }
 }
-
-// 커밋테스트

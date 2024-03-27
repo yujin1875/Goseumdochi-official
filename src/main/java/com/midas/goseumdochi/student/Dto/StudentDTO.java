@@ -21,6 +21,8 @@ public class StudentDTO {
     private String studentBirthDate;
 
     private String studentPhoneNumber;
+
+    private String profilePictureUrl;
     
 
     public static StudentDTO toStudentDTO(StudentEntity studentEntity){
@@ -31,6 +33,7 @@ public class StudentDTO {
         studentDTO.setStudentName(studentEntity.getStudentName());
         studentDTO.setStudentBirthDate(studentEntity.getStudentBirthDate());
         studentDTO.setStudentPhoneNumber(studentEntity.getStudentPhoneNumber());
+        studentDTO.setProfilePictureUrl(studentEntity.getProfilePictureUrl());
         return studentDTO;
     }
 }

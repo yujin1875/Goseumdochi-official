@@ -2,6 +2,7 @@ package com.midas.goseumdochi.student.Controller;
 
 import com.midas.goseumdochi.student.Component.OtherComponent;
 import com.midas.goseumdochi.student.Dto.StudentDTO;
+import com.midas.goseumdochi.student.Service.FileStorageService;
 import com.midas.goseumdochi.student.Service.StudentService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import java.io.IOException;
 import java.util.Optional;
@@ -21,6 +24,7 @@ import java.util.Optional;
 public class StudentController {
 
     public final StudentService studentService;
+    private final FileStorageService fileStorageService;
     private final OtherComponent otherComponent;
 
     // 회원가입 페이지 폼 작성 데이터 받기
@@ -125,5 +129,28 @@ public class StudentController {
         }
     }
 
+    @PostMapping("/student/uploadProfilePicture")
+    public String uploadProfilePicture(@RequestParam("profilePicture") MultipartFile file, HttpSession session, HttpServletResponse response) throws IOException {
+        Long studentId = (Long) session.getAttribute("loginId");
+        if(studentId == null) {
+            otherComponent.AlertMessage(response, "로그인이 필요합니다.");
+            return "redirect:/login";
+        }
+        if (file.isEmpty()) {
+            otherComponent.AlertMessage(response, "파일이 선택되지 않았습니다.");
+            return "redirect:/myPage";
+        }
+        String imageUrl = fileStorageService.uploadFile(file); // 파일 업로드 서비스 호출
+
+        StudentDTO studentDTO = studentService.findStudentById(studentId);
+        if(studentDTO != null) {
+            studentDTO.setProfilePictureUrl(imageUrl); // 업로드된 파일 URL 저장
+            studentService.updateStudent(studentDTO); // 업데이트 서비스 호출
+            return "redirect:/myPage";
+        } else {
+            otherComponent.AlertMessage(response, "학생 정보를 찾을 수 없습니다.");
+            return "redirect:/myPage";
+        }
+    }
 
 }
