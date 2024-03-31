@@ -2,35 +2,54 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Application Management</title>
+    <title>Academy Forms</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-<h2>Academy Application Management</h2>
-<table border="1">
+<h1>Academy Forms</h1>
+<table>
     <thead>
     <tr>
-        <th>ID</th>
-        <th>Address</th>
-        <th>Address Detail</th>
-        <th>Academy Name</th>
-        <th>Phone Number</th>
-        <th>Postcode</th>
-        <th>Status</th>
-        <th>Director Name</th>
-        <th>Director Phone</th>
+        <th>원장 이름</th>
+        <th>원장 휴대전화</th>
+        <th>학원 이름 </th>
+        <th>학원 번호</th>
+        <th>학원 우편번호</th>
+        <th>학원 주소</th>
+        <th>학원 상세주소</th>
+        <th>통과 여부</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="academyForm : ${academyForms}">
-        <td th:text="${academyForm.form_id}"></td>
-        <td th:text="${academyForm.addr}"></td>
-        <td th:text="${academyForm.addr_detail}"></td>
-        <td th:text="${academyForm.aca_name}"></td>
-        <td th:text="${academyForm.aca_phone}"></td>
-        <td th:text="${academyForm.aca_postcode}"></td>
-        <td th:text="${academyForm.status}"></td>
-        <td th:text="${academyForm.dir_name}"></td>
-        <td th:text="${academyForm.dir_phone}"></td>
+        <td th:text="${academyForm.directorName}"></td>
+        <td th:text="${academyForm.directorPhoneNumber}"></td>
+        <td th:text="${academyForm.academyName}"></td>
+        <td th:text="${academyForm.academyPhoneNumber}"></td>
+        <td th:text="${academyForm.academyPostcode}"></td>
+        <td th:text="${academyForm.academyAddress}"></td>
+        <td th:text="${academyForm.academyAddressDetail}"></td>
+        <td>
+                    <span th:if="${academyForm.authStatus == 0}">
+                        <button type="button" onclick="location.href='/admin/success'">수락</button>
+                        <button type="button" onclick="location.href='/admin/fail'">거절</button>
+                    </span>
+            <span th:if="${academyForm.authStatus == 1}">o</span>
+            <span th:if="${academyForm.authStatus == -1}">x</span>
+        </td>
     </tr>
     </tbody>
 </table>
