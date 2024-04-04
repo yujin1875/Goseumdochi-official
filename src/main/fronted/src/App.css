@@ -16,4 +16,5 @@ a{
   height: 100%;
   background-color: #EAEAEA;
   margin:0 auto;
+  min-width: 1344px;
 }

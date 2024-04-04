@@ -1,18 +1,7 @@
 import '../css/start.css';
-import logo from './images/goseumdochi.png';
-import {useEffect, useState} from "react";
-import axios from "axios";
+import logo from './images/goseumdochi.png'; 
 
 function App1() {
-  const [hello, setHello] = useState('');
-
-  useEffect(()=> {
-    axios.get('./api/test')
-        .then((res) => {
-            setHello(res.data);
-        })
-  }, []);
-
   const Gologin=()=>{
     window.location.href='/login'
   }
@@ -39,7 +28,6 @@ function App1() {
         <div id="btn_start">
           <input type="submit" value="학원등록1" id="academy1_btn" onClick={Goaca}/>
           <input type="submit" value="학원등록2" id="academy2_btn" onClick={Goaca}/>
-          백엔드 데이터 : {hello}
         </div>
       </div>
       <div id="footer_start">
