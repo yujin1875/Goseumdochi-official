@@ -17,6 +17,12 @@ public class StudentService {
 
     //회원가입 로직
     public int join(StudentDTO studentDTO, String passwordCheck) {
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+        String birthDateRegex = "^\\d{4}-\\d{2}-\\d{2}$";
+        if (!studentDTO.getStudentEmail().matches(emailRegex) || !studentDTO.getStudentBirthDate().matches(birthDateRegex)) {
+            return -4; // 새로운 에러 코드
+        }
+
         if (studentDTO.getStudentId() == null || studentDTO.getStudentPassword() == null || passwordCheck == null) {
             return -3; // 적절한 에러 코드 반환
         }
@@ -62,8 +68,20 @@ public class StudentService {
     }
 
     // 비밀번호 찾기
-    public Optional<String> findStudentPasswordByStudentIdAndStudentNameAndPhoneNumber(String studentId, String studentName, String studentPhoneNumber) {
-        return studentRepository.findStudentPasswordByStudentIdAndStudentNameAndPhoneNumber(studentId, studentName, studentPhoneNumber);
+    public Optional<StudentDTO> findStudentByStudentIdAndStudentNameAndPhoneNumber(String studentId, String studentName, String studentPhoneNumber) {
+        return studentRepository.findByStudentIdAndStudentNameAndStudentPhoneNumber(studentId, studentName, studentPhoneNumber)
+                .map(StudentDTO::toStudentDTO);
+    }
+
+    public Optional<StudentDTO> findStudentByEmail(String email) {
+        return studentRepository.findByStudentEmail(email).map(StudentDTO::toStudentDTO);
+    }
+
+    public void updateStudentPassword(Long studentId, String newPassword) {
+        studentRepository.findById(studentId).ifPresent(studentEntity -> {
+            studentEntity.setStudentPassword(newPassword);
+            studentRepository.save(studentEntity);
+        });
     }
 
     //사용자 정보 수정
