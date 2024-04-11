@@ -14,21 +14,26 @@ public class StudentService {
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
+
     //회원가입 로직
     public int join(StudentDTO studentDTO, String passwordCheck) {
-        if(studentDTO.getStudentId() == null || studentDTO.getStudentPassword() == null || passwordCheck == null) {
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+        String birthDateRegex = "^\\d{4}-\\d{2}-\\d{2}$";
+        if (!studentDTO.getStudentEmail().matches(emailRegex) || !studentDTO.getStudentBirthDate().matches(birthDateRegex)) {
+            return -4; // 새로운 에러 코드
+        }
+
+        if (studentDTO.getStudentId() == null || studentDTO.getStudentPassword() == null || passwordCheck == null) {
             return -3; // 적절한 에러 코드 반환
         }
 
         // 아이디 중복 체크
         Optional<StudentEntity> existingStudent = studentRepository.findByStudentId(studentDTO.getStudentId());
-        if(existingStudent.isPresent()) { // 아이디 중복
+        if (existingStudent.isPresent()) { // 아이디 중복
             return -1;
-        }
-        else if(!studentDTO.getStudentPassword().equals(passwordCheck)) { // 비밀번호 불일치
+        } else if (!studentDTO.getStudentPassword().equals(passwordCheck)) { // 비밀번호 불일치
             return -2;
-        }
-        else { // 회원가입 성공
+        } else { // 회원가입 성공
             StudentEntity studentEntity = StudentEntity.toStudent(studentDTO);
             studentEntity.setStudentBirthDate(studentDTO.getStudentBirthDate());
             studentEntity.setStudentPhoneNumber(studentDTO.getStudentPhoneNumber());
@@ -41,9 +46,9 @@ public class StudentService {
     public StudentDTO login(StudentDTO studentDTO) {
         Optional<StudentEntity> byStudentId = studentRepository.findByStudentId(studentDTO.getStudentId());
 
-        if(byStudentId.isPresent()) {
+        if (byStudentId.isPresent()) {
             StudentEntity studentEntity = byStudentId.get();
-            if(studentEntity.getStudentPassword().equals(studentDTO.getStudentPassword())) {
+            if (studentEntity.getStudentPassword().equals(studentDTO.getStudentPassword())) {
                 System.out.println("로그인 성공!");
 
                 return StudentDTO.toStudentDTO(studentEntity);
@@ -63,24 +68,41 @@ public class StudentService {
     }
 
     // 비밀번호 찾기
-    public Optional<String> findStudentPasswordByStudentIdAndStudentNameAndPhoneNumber(String studentId, String studentName, String studentPhoneNumber) {
-        return studentRepository.findStudentPasswordByStudentIdAndStudentNameAndPhoneNumber(studentId, studentName, studentPhoneNumber);
+    public Optional<StudentDTO> findStudentByStudentIdAndStudentNameAndPhoneNumber(String studentId, String studentName, String studentPhoneNumber) {
+        return studentRepository.findByStudentIdAndStudentNameAndStudentPhoneNumber(studentId, studentName, studentPhoneNumber)
+                .map(StudentDTO::toStudentDTO);
+    }
+
+    public Optional<StudentDTO> findStudentByEmail(String email) {
+        return studentRepository.findByStudentEmail(email).map(StudentDTO::toStudentDTO);
+    }
+
+    public void updateStudentPassword(Long studentId, String newPassword) {
+        studentRepository.findById(studentId).ifPresent(studentEntity -> {
+            studentEntity.setStudentPassword(newPassword);
+            studentRepository.save(studentEntity);
+        });
     }
 
     //사용자 정보 수정
     public int updateStudent(StudentDTO studentDTO) {
         Optional<StudentEntity> existingStudent = studentRepository.findById(studentDTO.getId());
-        if(existingStudent.isPresent()) {
+        if (existingStudent.isPresent()) {
             StudentEntity studentEntity = existingStudent.get();
             studentEntity.setStudentName(studentDTO.getStudentName());
             studentEntity.setStudentPhoneNumber(studentDTO.getStudentPhoneNumber());
             studentEntity.setStudentBirthDate(studentDTO.getStudentBirthDate());
+            studentEntity.setProfilePictureUrl(studentDTO.getProfilePictureUrl());
             studentRepository.save(studentEntity);
             return 1; // 성공
         }
         return -1; // 실패
     }
 
+    public StudentDTO findStudentById(Long id) {
+        Optional<StudentEntity> studentEntity = studentRepository.findById(id);
+        return studentEntity.map(StudentDTO::toStudentDTO).orElse(null);
+    }
 }
 
 

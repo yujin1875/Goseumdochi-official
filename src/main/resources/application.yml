@@ -7,6 +7,27 @@ spring:
     hikari:
       connection-test-query: select 1 from dual
 
+    cloud:
+      gcp:
+        storage:
+          credentials:
+            location: classpath:midas-vm-instance-03c538b381b1.json
+      project-id: midas-vm-instance
+      bucket: studentprofile
+
+  spring:
+    mail:
+      host: smtp.naver.com
+      port: 587
+      username: goseum24@naver.com
+      password: goseumdochi4
+      properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
+
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect

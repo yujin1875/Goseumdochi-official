@@ -16,6 +16,7 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
     Optional<String> findStudentIdByStudentNameAndPhoneNumber(@Param("studentName") String studentName, @Param("studentPhoneNumber") String studentPhoneNumber);
 
     // 비밀번호 찾기를 위한 쿼리, studentPhoneNumber 필드 사용
-    @Query("SELECT s.studentPassword FROM StudentEntity s WHERE s.studentId = :studentId AND s.studentName = :studentName AND s.studentPhoneNumber = :studentPhoneNumber")
-    Optional<String> findStudentPasswordByStudentIdAndStudentNameAndPhoneNumber(@Param("studentId") String studentId, @Param("studentName") String studentName, @Param("studentPhoneNumber") String studentPhoneNumber);
+    @Query("SELECT s FROM StudentEntity s WHERE s.studentId = :studentId AND s.studentName = :studentName AND s.studentPhoneNumber = :studentPhoneNumber")
+    Optional<StudentEntity> findByStudentIdAndStudentNameAndStudentPhoneNumber(String studentId, String studentName, String studentPhoneNumber);
+    Optional<StudentEntity> findByStudentEmail(String email);
 }
