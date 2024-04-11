@@ -19,7 +19,7 @@
     </style>
 </head>
 <body>
-<h1>Academy Forms</h1>
+<h1>학원신청서 목록</h1>
 <table>
     <thead>
     <tr>
@@ -43,13 +43,20 @@
         <td th:text="${academyForm.academyAddress}"></td>
         <td th:text="${academyForm.academyAddressDetail}"></td>
         <td>
-                    <span th:if="${academyForm.authStatus == 0}">
-                        <button type="button" onclick="location.href='/admin/success'">수락</button>
-                        <button type="button" onclick="location.href='/admin/fail'">거절</button>
-                    </span>
+    <span th:if="${academyForm.authStatus == 0}">
+        <form th:action="@{/admin/accept}" method="post">
+            <input type="hidden" name="academyFormId" th:value="${academyForm.id}">
+            <button type="submit">수락</button>
+        </form>
+        <form th:action="@{/admin/reject}" method="post">
+            <input type="hidden" name="academyFormId" th:value="${academyForm.id}">
+            <button type="submit">거절</button>
+        </form>
+    </span>
             <span th:if="${academyForm.authStatus == 1}">o</span>
             <span th:if="${academyForm.authStatus == -1}">x</span>
         </td>
+
     </tr>
     </tbody>
 </table>
