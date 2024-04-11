@@ -1,60 +1,57 @@
 package com.midas.goseumdochi.admin.controller;
 
+import com.midas.goseumdochi.admin.dto.AcademyFormDTO;
 import com.midas.goseumdochi.admin.service.AcademyFormServ;
 import com.midas.goseumdochi.director.entity.AcademyFormEntity;
 import com.midas.goseumdochi.director.repository.AcademyFormRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/api/admin")
 public class AcademyFormCont {
 
     private final AcademyFormRepository academyFormRepository;
+    private final AcademyFormServ academyFormServ;
+    private final HttpSession httpSession;
 
     @Autowired
-    public AcademyFormCont(AcademyFormRepository academyFormRepository) {
+    public AcademyFormCont(AcademyFormRepository academyFormRepository, AcademyFormServ academyFormServ, HttpSession httpSession) {
         this.academyFormRepository = academyFormRepository;
+        this.academyFormServ = academyFormServ;
+        this.httpSession = httpSession;
     }
 
-    @Autowired
-    private HttpSession httpSession;
-
     private boolean isLoggedIn() {
-        // 세션에서 관리자 ID를 가져와서 확인
         return httpSession.getAttribute("adminId") != null;
     }
 
-    @GetMapping("/admin/academyForm")
-    public String getAllAcademyForms(Model model) {
-        // 로그인 상태를 확인하고, 로그인되지 않은 경우, 로그인 페이지로 ㄱㄱ
+    @GetMapping("/academyForms")
+    public ResponseEntity<List<AcademyFormEntity>> getAllAcademyForms() {
         if (!isLoggedIn()) {
-            return "redirect:/admin/login";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
         List<AcademyFormEntity> academyForms = academyFormRepository.findAll();
-        model.addAttribute("academyForms", academyForms);
-        return "admin/academyForm";
+        return ResponseEntity.ok(academyForms);
     }
 
-    @Autowired
-    private AcademyFormServ academyFormServ;
-
-    @PostMapping("/admin/accept") // 수락 버튼 눌렀을 때
-    public String acceptAcademyForm(@RequestParam Long academyFormId) {
+    @PostMapping("/accept") // 수락 버튼 눌렀을 때
+    public ResponseEntity<String> acceptAcademyForm(@RequestBody AcademyFormDTO academyFormDTO) {
+        Long academyFormId = academyFormDTO.getId();
         academyFormServ.acceptAcademyForm(academyFormId);
-        return "redirect:/admin/academyForm";
+        return ResponseEntity.ok("수락되었습니다");
     }
 
-    @PostMapping("/admin/reject") // 거절 버튼 눌렀을 때
-    public String rejectAcademyForm(@RequestParam Long academyFormId) {
+    @PostMapping("/reject") // 거절 버튼 눌렀을 때
+    public ResponseEntity<String> rejectAcademyForm(@RequestBody AcademyFormDTO academyFormDTO) {
+        Long academyFormId = academyFormDTO.getId();
         academyFormServ.rejectAcademyForm(academyFormId);
-        return "redirect:/admin/academyForm";
+        return ResponseEntity.ok("거절되었습니다");
     }
 }
