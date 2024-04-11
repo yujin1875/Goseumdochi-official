@@ -18,6 +18,7 @@ public class AcademyFormDTO {
     private String academyAddress;
     private String academyAddressDetail;
     private int authStatus;
+    private String authNumber; // 인증번호 DTO에는 필요
 
     // AcademyFormEntity -> AcademyFormDTO
     public static AcademyFormDTO academyFormDTO(AcademyFormEntity academyFormEntity) {
@@ -27,8 +28,8 @@ public class AcademyFormDTO {
         academyFormDTO.setDirectorPhoneNumber(academyFormEntity.getDirectorPhoneNumber());
         academyFormDTO.setAcademyName(academyFormEntity.getAcademyName());
         academyFormDTO.setAcademyPhoneNumber(academyFormEntity.getAcademyPhoneNumber());
-        academyFormDTO.setAcademyPostcode(academyFormDTO.getAcademyPostcode());
-        academyFormDTO.setAcademyAddress(academyFormDTO.getAcademyAddress());
+        academyFormDTO.setAcademyPostcode(academyFormEntity.getAcademyPostcode());
+        academyFormDTO.setAcademyAddress(academyFormEntity.getAcademyAddress());
         academyFormDTO.setAcademyAddressDetail(academyFormEntity.getAcademyAddressDetail());
         academyFormDTO.setAuthStatus(academyFormEntity.getAuthStatus()); // boolean 타입은 is~ 으로 getter 생성
 

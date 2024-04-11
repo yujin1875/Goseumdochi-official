@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 @Component
 public class OtherComponent {
     // Alert 팝업창 띄우기 함수
-    public void AlertMessage(HttpServletResponse response, String message) throws IOException {
+    public static void AlertMessage(HttpServletResponse response, String message) throws IOException {
         String script = String.format("<script>alert('%s'); history.go(-1);</script>", message);
         PrintWriter out = response.getWriter();
         response.setCharacterEncoding("UTF-8");
