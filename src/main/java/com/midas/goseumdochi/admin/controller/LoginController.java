@@ -3,6 +3,7 @@ package com.midas.goseumdochi.admin.controller;
 import com.midas.goseumdochi.admin.entity.AdminEntity;
 import com.midas.goseumdochi.admin.repository.AdminRepository;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,9 @@ public class LoginController {
 
     @Autowired
     private AdminRepository adminRepository;
+
+    @Autowired
+    private HttpSession httpSession;
 
     private Map<String, String> adminCredentials;
 
@@ -40,9 +44,9 @@ public class LoginController {
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
                         Model model) {
-        // 입력된 사용자 이름이 맵에 있는지 확인하고 비밀번호가 일치하는지 확인
         if (adminCredentials.containsKey(username) && adminCredentials.get(username).equals(password)) {
-            // 로그인 성공 시 메인 페이지로 이동합니다.
+            // 로그인 성공 시 세션에 사용자 ID를 저장 (나중에 관리자인지 확인용)
+            httpSession.setAttribute("adminId", username);
             return "admin/main";
         } else {
             // 로그인 실패

@@ -73,4 +73,9 @@ public class AcademyFormEntity {
 
         return academyFormEntity;
     }
+
+    // 상태 변경하려고 만듬 (하은)
+    public void setAuthStatus(int authStatus) {
+        this.authStatus = authStatus;
+    }
 }

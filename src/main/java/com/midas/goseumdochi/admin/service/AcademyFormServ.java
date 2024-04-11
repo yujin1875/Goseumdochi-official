@@ -1,0 +1,74 @@
+package com.midas.goseumdochi.admin.service;
+
+import com.midas.goseumdochi.admin.entity.AcademyEntity;
+import com.midas.goseumdochi.admin.entity.DirectorEntity2;
+import com.midas.goseumdochi.admin.repository.AcademyRepository;
+import com.midas.goseumdochi.admin.repository.DirectorRepository;
+import com.midas.goseumdochi.director.entity.AcademyFormEntity;
+import com.midas.goseumdochi.director.repository.AcademyFormRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@Transactional
+public class AcademyFormServ {
+
+    private final AcademyFormRepository academyFormRepository;
+    private final AcademyRepository academyRepository;
+    private final DirectorRepository directorRepository;
+
+    @Autowired
+    public AcademyFormServ(AcademyFormRepository academyFormRepository, AcademyRepository academyRepository, DirectorRepository directorRepository) {
+        this.academyFormRepository = academyFormRepository;
+        this.academyRepository = academyRepository;
+        this.directorRepository = directorRepository;
+    }
+
+    public List<AcademyFormEntity> getAllAcademyForms() {
+        return academyFormRepository.findAll();
+    }
+
+    public void acceptAcademyForm(Long academyFormId) {
+        AcademyFormEntity academyFormEntity = academyFormRepository.findById(academyFormId)
+                .orElseThrow(() -> new RuntimeException("학원신청서를 찾을 수 없음: " + academyFormId));
+
+        // 수락 처리
+        academyFormEntity.setAuthStatus(1); // 수락 상태로 변경 (1로 변경)
+        academyFormRepository.save(academyFormEntity);
+
+        // 학원 정보 저장
+        AcademyEntity academyEntity = AcademyEntity.builder()
+                .name(academyFormEntity.getAcademyName())
+                .pnum(academyFormEntity.getAcademyPhoneNumber())
+                .postcode(academyFormEntity.getAcademyPostcode())
+                .address(academyFormEntity.getAcademyAddress())
+                .addressDetail(academyFormEntity.getAcademyAddressDetail())
+                .build();
+        academyRepository.save(academyEntity);
+
+        String phoneNumber = academyFormEntity.getDirectorPhoneNumber();
+        String lastFourDigits = phoneNumber.substring(phoneNumber.length() - 4);
+
+        // 원장 정보 저장 (아이디: 학원신청서 기본키 번호 4자리 + 폰 번호 마지막 네자리)
+        String academyFormIdStr = String.format("%04d", academyFormId); // 학원신청서 기본키번호를 네 자리 숫자로 포맷팅
+        String directorId = academyFormIdStr + academyFormEntity.getDirectorPhoneNumber().substring(academyFormEntity.getDirectorPhoneNumber().length() - 4); // 원장 ID 생성
+        DirectorEntity2 directorEntity = DirectorEntity2.builder()
+                .name(academyFormEntity.getDirectorName())
+                .pnum(academyFormEntity.getDirectorPhoneNumber())
+                .password("0000") // 비밀번호 초기화
+                .id(directorId) // 원장 ID 설정
+                .build();
+        directorRepository.save(directorEntity);
+    }
+
+    public void rejectAcademyForm(Long academyFormId) {
+        AcademyFormEntity academyFormEntity = academyFormRepository.findById(academyFormId)
+                .orElseThrow(() -> new RuntimeException("학원신청서를 찾을 수 없음: " + academyFormId));
+
+        // 거절 처리
+        academyFormEntity.setAuthStatus(-1); // 거절 상태로 변경
+    }
+}
