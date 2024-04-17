@@ -7,7 +7,7 @@ import App4 from './components/academy.js';
 import App5 from './components/afterlogin.js';
 import App6 from './components/main.js';
 import Test from './components/test.js';
-import AcademyRegister from './components/academy_register.js';
+import AcademyForm from './components/academy_register.js';
 import { Component } from 'react';
 
 class App extends Component{
@@ -30,7 +30,7 @@ class App extends Component{
               <Route path='/afterlogin' element={<App5/>}/>
               <Route path='/main' element={<App6/>}/>
               <Route path='/test' element={<Test/>}/>
-              <Route path='/academyregister' element={<AcademyRegister/>}/>
+              <Route path='/academyform' element={<AcademyRegister/>}/>
             </Routes>   
         </BrowserRouter> 
       </div>
