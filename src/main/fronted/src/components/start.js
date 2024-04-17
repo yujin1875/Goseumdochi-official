@@ -19,7 +19,7 @@ function App1() {
     }
 
     const GoAcademyRegister=()=>{
-        window.location.href='/academyregister'
+        window.location.href='/academyform'
     }
 
     return (
