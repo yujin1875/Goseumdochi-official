@@ -42,11 +42,6 @@
     vertical-align: center;
 }
 
-#notice_afterlogin>a{
-    float:left;
-    margin:auto;
-}
-
 #buttons_afterlogin{
     width: 100%;
     height:384px;

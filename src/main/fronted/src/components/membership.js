@@ -15,13 +15,8 @@ function App2() {
                     <input type="password" placeholder="비밀번호"/><hr/>
                     <input type="password" placeholder="비밀번호 확인"/><hr/>
                     <input type="name" placeholder="이름"/><hr/>
-                    <input type="date" placeholder="출생연도"/><hr/>
-                    <div id="phone_number">
-                        <input type="phonenumber" placeholder="010" id="pn1"/>
-                        <input type="phonenumber" placeholder="0000" id="pn2"/>
-                        <input type="phonenumber" placeholder="0000" id="pn3"/>
-                        <input type="submit" value="인증" id="sub_btn"/>
-                    </div><hr/>
+                    <input type="phonenumber" placeholder="N"/><hr/>
+                    <input type="text" placeholder="C"/><hr/>
                     <input type="text" placeholder="인증번호"/><hr/>
                     <input type="submit" value="회원가입" id="create_btn"/>
                 </div>

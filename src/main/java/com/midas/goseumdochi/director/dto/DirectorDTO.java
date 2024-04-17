@@ -25,13 +25,13 @@ public class DirectorDTO {
     // DirectorEntity -> DirectorDTO
     public static DirectorDTO toDirectorDTO(DirectorEntity directorEntity) {
         DirectorDTO directorDTO = new DirectorDTO();
-        directorDTO.setId(directorDTO.getId());
-        directorDTO.setName(directorDTO.getName());
-        directorDTO.setLoginid(directorDTO.getLoginid());
-        directorDTO.setPassword(directorDTO.getPassword());
+        directorDTO.setId(directorEntity.getId());
+        directorDTO.setName(directorEntity.getName());
+        directorDTO.setLoginid(directorEntity.getLoginid());
+        directorDTO.setPassword(directorEntity.getPassword());
         directorDTO.setPhoneNumber(directorEntity.getPhoneNumber());
         directorDTO.setBirthdate(directorEntity.getBirthdate());
-        directorDTO.setEmail(directorDTO.getEmail());
+        directorDTO.setEmail(directorEntity.getEmail());
 
         return directorDTO;
     }

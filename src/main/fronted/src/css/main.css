@@ -34,6 +34,17 @@
     height: 100px;
 }
 
+#buttons_main>#rect{
+    position: absolute;
+    width: 1086px;
+    height: 5px;
+    left: 417px;
+    top: 226px;
+    z-index: 1;
+
+    background: #7A7A7A;
+}
+
 #buttons_main>input{
     position: relative;
     display:block;
@@ -53,19 +64,6 @@
 
 #buttons_main>#notice_btn{
     margin-left:202px;
-}
-
-#buttons_main>#rect{
-    position: relative;
-    top:28px;
-    left: 50%;
-    transform: translateX(-50%);
-    display:block;
-    width: 1086px;
-    height: 5px;
-    z-index: 1;
-
-    background: #7A7A7A;
 }
 
 #main-menu>#contents_main{

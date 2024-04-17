@@ -27,13 +27,22 @@ public class StudentEntity {
     @Column
     private String studentPhoneNumber;
 
+    @Column
+    private String studentEmail;
+
+    @Column
+    private String profilePictureUrl;
+
     public static StudentEntity toStudent(StudentDTO studentDTO){
         StudentEntity studentEntity = new StudentEntity();
+        studentEntity.setId(studentDTO.getId());
         studentEntity.setStudentId(studentDTO.getStudentId());
         studentEntity.setStudentPassword(studentDTO.getStudentPassword());
         studentEntity.setStudentName(studentDTO.getStudentName());
+        studentEntity.setStudentBirthDate(studentDTO.getStudentBirthDate());
+        studentEntity.setStudentPhoneNumber(studentDTO.getStudentPhoneNumber());
+        studentEntity.setStudentEmail(studentDTO.getStudentEmail());
+        studentEntity.setProfilePictureUrl(studentDTO.getProfilePictureUrl());
         return studentEntity;
     }
 }
-
-// 커밋테스트

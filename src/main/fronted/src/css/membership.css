@@ -16,7 +16,7 @@ hr{
 
 #membership_write>#membership_write_header{
     width: 556px;
-    height: 200px;
+    height: 230px;
     border-top: solid 3px #000000;
 }
 
@@ -42,81 +42,11 @@ hr{
     height: 48px;
     background-color: #FFFFFF;
     margin:10px auto;
-    border-color: #EAEAEA;
+    border-color: #6A6A6A;
     border-radius: 15px;
 
     font-size: 15px;
     color:#6A6A6A;
-    box-shadow: none;
-    
-}
-
-#membership_write_buttons>#phone_number{
-    display:block;
-    width: 380px;
-    height: 48px;
-    margin:10px auto;
-}
-
-#phone_number>#pn1{
-    display:block;
-    float:left;
-    width: 75px;
-    height: 48px;
-    background-color: #FFFFFF;
-    margin-right:6pt;
-    border-color: #EAEAEA;
-    border-radius: 15px;
-
-    font-size: 15px;
-    color:#6A6A6A;
-    box-shadow: none;
-    
-}
-
-#phone_number>#pn2{
-    display:block;
-    float:left;
-    width: 104px;
-    height: 48px;
-    background-color: #FFFFFF;
-    margin-right:6pt;
-    border-color: #EAEAEA;
-    border-radius: 15px;
-
-    font-size: 15px;
-    color:#6A6A6A;
-    box-shadow: none;
-    
-}
-
-#phone_number>#pn3{
-    display:block;  
-    float:left;
-    width: 104px;
-    height: 48px;
-    background-color: #FFFFFF;
-    margin-right:6pt;
-    border-color: #EAEAEA;
-    border-radius: 15px;
-
-    font-size: 15px;
-    color:#6A6A6A;
-    box-shadow: none;
-    
-}
-
-#phone_number>#sub_btn{
-    display:block;  
-    float:right;
-    width: 58px;
-    height: 48px;
-    background-color: #E78753;
-    border-color: #E78753;
-    border-radius: 15px;
-
-    font-size: 15px;
-    color:#FFFFFF;
     box-shadow: none;
     
 }
