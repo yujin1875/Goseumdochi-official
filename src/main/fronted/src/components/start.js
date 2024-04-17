@@ -18,8 +18,8 @@ function App1() {
         window.location.href='/test'
     }
 
-    const GoAcademyForm=()=>{
-        window.location.href='/academyForm'
+    const GoAcademyRegister=()=>{
+        window.location.href='/academyregister'
     }
 
     return (
@@ -39,7 +39,7 @@ function App1() {
                 </div>
                 <input type="submit" value="테스트" id="test_btn" onClick={GoTest}/>
                 <hr/>
-                <input type="submit" value="테스트 신청서 작성" id="academyForm_btn" onClick={GoAcademyForm}/>
+                <input type="submit" value="테스트 신청서 작성" id="academyForm_btn" onClick={GoAcademyRegister}/>
                 <hr/>
             </div>
             <div id="footer_start">
