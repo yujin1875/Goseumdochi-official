@@ -35,12 +35,8 @@ function App1() {
                 <hr/>
                 <div id="btn_start">
                     <input type="submit" value="학원등록1" id="academy1_btn" onClick={Goaca}/>
-                    <input type="submit" value="학원등록2" id="academy2_btn" onClick={Goaca}/>
+                    <input type="submit" value="학원등록2" id="academy2_btn" onClick={GoAcademyRegister}/>
                 </div>
-                <input type="submit" value="테스트" id="test_btn" onClick={GoTest}/>
-                <hr/>
-                <input type="submit" value="테스트 신청서 작성" id="academyForm_btn" onClick={GoAcademyRegister}/>
-                <hr/>
             </div>
             <div id="footer_start">
                 <a>문의 | midas2024.ver01@gmail.com</a>
