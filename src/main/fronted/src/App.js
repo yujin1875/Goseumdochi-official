@@ -30,7 +30,7 @@ class App extends Component{
               <Route path='/afterlogin' element={<App5/>}/>
               <Route path='/main' element={<App6/>}/>
               <Route path='/test' element={<Test/>}/>
-              <Route path='/academyform' element={<AcademyRegister/>}/>
+              <Route path='/academyform' element={<AcademyForm/>}/>
             </Routes>   
         </BrowserRouter> 
       </div>
