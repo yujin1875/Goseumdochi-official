@@ -2,7 +2,6 @@ package com.midas.goseumdochi.admin.controller;
 
 import com.midas.goseumdochi.admin.entity.NoticeEntity;
 import com.midas.goseumdochi.admin.repository.NoticeRepository;
-import com.midas.goseumdochi.director.entity.AcademyFormEntity;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

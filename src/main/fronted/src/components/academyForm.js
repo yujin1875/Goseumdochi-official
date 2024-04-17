@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-//* 에러나누
 import { useNavigate } from 'react-router-dom'; // useHistory 훅 말고 useNavigate!! 임포트합니다.
 import Post from "../components/util/post";
 
@@ -14,6 +13,7 @@ function AcademyForm() {
         academyAddressDetail: '',
         directorName: '',
         directorPhoneNumber: '',
+        directorEmail: '',
         authNumber: ''
     });
     // 페이지 변경 위해
@@ -134,6 +134,16 @@ function AcademyForm() {
                             value={inputs.directorPhoneNumber}
                             onChange={handleChange}
                             placeholder="전화번호"
+                            required
+                        />
+                    </label>
+                    <label>이메일
+                        <input
+                            type="email"
+                            name="directorEmail"
+                            value={inputs.directorEmail}
+                            onChange={handleChange}
+                            placeholder="user@example.com"
                             required
                         />
                     </label>

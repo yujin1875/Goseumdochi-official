@@ -1,8 +1,8 @@
-package com.midas.goseumdochi.director.service;
+package com.midas.goseumdochi.academy.service;
 
-import com.midas.goseumdochi.director.dto.AcademyFormDTO;
-import com.midas.goseumdochi.director.entity.AcademyFormEntity;
-import com.midas.goseumdochi.director.repository.AcademyFormRepository;
+import com.midas.goseumdochi.academy.dto.AcademyFormDTO;
+import com.midas.goseumdochi.academy.entity.AcademyFormEntity;
+import com.midas.goseumdochi.academy.repository.AcademyFormRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,8 @@ public class AcademyFormService {
         // 처음 신청서 등록할 때, id(pk)랑 authStatus(default"0")는 값이 없음
         AcademyFormEntity academyFormEntity = AcademyFormEntity.builder()
                 .directorName(academyFormDTO.getDirectorName())
-                .directorPhoneNumber(academyFormDTO.getAcademyPhoneNumber())
+                .directorPhoneNumber(academyFormDTO.getDirectorPhoneNumber())
+                .directorEmail(academyFormDTO.getDirectorEmail())
                 .academyName(academyFormDTO.getAcademyName())
                 .academyPhoneNumber(academyFormDTO.getAcademyPhoneNumber())
                 .academyPostcode(academyFormDTO.getAcademyPostcode())
@@ -55,7 +56,7 @@ public class AcademyFormService {
         Optional<AcademyFormEntity> resultAcademyForm = academyFormRepository.findByDirectorNameAndDirectorPhoneNumber(directorName, directorPhoneNumber);
 
         if(resultAcademyForm.isPresent()) { // 찾기 성공
-            return AcademyFormDTO.academyFormDTO(resultAcademyForm.get());
+            return AcademyFormDTO.toAcademyFormDTO(resultAcademyForm.get());
         }
         else { // 찾는 결과 없음
             return null;

@@ -19,25 +19,25 @@
                 <!-- th:for label의 for 속성, input의 id와 연결 -->
                 <!-- th:object, th:field 는 세트? model에서 받아온 ? -->
                 <label th:for="academyName">이름</label>
-                <input type="text" th:field="*{academyName}" id="academyName" placeholder="이름" required>
+                <input type="text" th:field="*{academyName}" id="academyName" placeholder="이름" required readonly>
             </div>
             <div>
                 <label th:for="academyPhoneNumber">전화번호</label>
                 <input type="text" th:field="*{academyPhoneNumber}" id="academyPhoneNumber"
-                       path="phone" oninput="numberphone(this)" placeholder="전화번호" maxlength="13" required>
+                       path="phone" oninput="numberphone(this)" placeholder="전화번호" maxlength="13" required readonly>
             </div>
             <div>
                 <label th:for="academyPostcode">우편주소</label>
-                <input type="text" th:field="*{academyPostcode}" id="academyPostcode" placeholder="우편주소" readonly required>
+                <input type="text" th:field="*{academyPostcode}" id="academyPostcode" placeholder="우편주소" required readonly>
                 <input type="button" onclick="findPostcode()" value="우편번호 찾기"><br>
             </div>
             <div>
                 <label th:for="academyAddress">주소</label>
-                <input type="text" th:field="*{academyAddress}" id="academyAddress" placeholder="주소" readonly required>
+                <input type="text" th:field="*{academyAddress}" id="academyAddress" placeholder="주소" required readonly>
             </div>
             <div>
                 <label th:for="academyAddressDetail">상세주소</label>
-                <input type="text" th:field="*{academyAddressDetail}" id="academyAddressDetail" placeholder="상세주소" required>
+                <input type="text" th:field="*{academyAddressDetail}" id="academyAddressDetail" placeholder="상세주소" required readonly>
             </div>
         </div>
         <div>
@@ -46,11 +46,15 @@
             </div>
             <div>
                 <label th:for="directorName">이름</label>
-                <input type="text" th:field="*{directorName}" id="directorName" placeholder="이름" required>
+                <input type="text" th:field="*{directorName}" id="directorName" placeholder="이름" required readonly>
             </div>
             <div>
                 <label th:for="directorPhoneNumber">전화번호</label>
-                <input type="text" th:field="*{directorPhoneNumber}" id="directorPhoneNumber" placeholder="전화번호" required>
+                <input type="text" th:field="*{directorPhoneNumber}" id="directorPhoneNumber" placeholder="전화번호" required readonly>
+            </div>
+            <div>
+                <label th:for="directorEmail">이메일</label>
+                <input type="text" th:field="*{directorEmail}" id="directorEmail" placeholder="전화번호" required readonly>
             </div>
         </div>
         <div>
@@ -59,7 +63,10 @@
         </div>
         <div>
             <div>
-                <button type="submit">수정</button>
+<!--                <button type="submit">수정</button>-->
+                <button type="button" id="editBtn" onclick="enableEdit()">수정</button>
+                <button type="submit" id="saveBtn" value="저장하기" style="display: none;">저장</button>
+<!--                <input type="submit" id="saveBtn" value="저장하기" style="display: none;">-->
             </div>
             <div>
                 <button onclick="location.href='/'" type="button">취소</button>
@@ -104,6 +111,19 @@
         if(e.value.length>13){
             e.value=e.value.slice(0,13);
         }
+    }
+</script>
+<!--수정하기 버튼 눌렀을 때 함수-->
+<script>
+    function enableEdit() {
+        document.getElementById('academyName').removeAttribute('readonly');
+        document.getElementById('academyPhoneNumber').removeAttribute('readonly');
+        // 우편번호 애들은 readonly 안 지워도 됨
+        document.getElementById('academyAddressDetail').removeAttribute('readonly');
+        document.getElementById('directorName').removeAttribute('readonly');
+        document.getElementById('directorPhoneNumber').removeAttribute('readonly');
+        document.getElementById('directorEmail').removeAttribute('readonly');
+        document.getElementById('saveBtn').style.display = 'block';
     }
 </script>
 
