@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Post from "../components/util/post";
 
-function AcademyForm() {
+function App7() {
     const [inputs, setInputs] = useState({
         academyName: '',
         academyPhoneNumber: '',
@@ -152,4 +152,4 @@ function AcademyForm() {
     );
 }
 
-export default AcademyForm;
+export default App7;
