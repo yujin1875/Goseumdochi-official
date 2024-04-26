@@ -4,8 +4,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Post from "../components/util/post";
+import { useLocation } from 'react-router-dom';
 
 function App7() {
+    const location = useLocation();
+    const inputDirectorName = location.state?.inputDirectorName || '';
+    const inputsDirectorPhoneNumber = location.state?.inputsDirectorPhoneNumber || '';
+
     const [inputs, setInputs] = useState({
         academyName: '',
         academyPhoneNumber: '',
@@ -63,18 +68,18 @@ function App7() {
                         <input
                             type="text"
                             name="directorName"
-                            value={inputs.directorName}
+                            value={inputs.directorName} // inputDirectorName
                             onChange={handleChange}
-                            placeholder="이름"
+                            placeholder={inputDirectorName}
                             id="name"
                             required
                         /><hr/>
                         <input
                             type="text"
                             name="directorPhoneNumber"
-                            value={inputs.directorPhoneNumber}
+                            value={inputs.directorPhoneNumber} // inputsDirectorPhoneNumber
                             onChange={handleChange}
-                            placeholder="010-0000-0000"
+                            placeholder={inputsDirectorPhoneNumber}
                             required
                         />
                         <input type="submit" value="인증" id="sub1_btn"/><hr/>
