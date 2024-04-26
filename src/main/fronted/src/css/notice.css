@@ -1,4 +1,4 @@
-#main-menu{
+#notice-menu{
     display: block;
     width: 1358px;
     height: 1080px;
@@ -7,13 +7,13 @@
     border-radius: 100px;
 }
 
-#main-menu>#header_main{
+#notice-menu>#header_notice{
     width:1358px;
     height:200px;
 
 }
 
-#header_main>img{
+#header_notice>img{
     display:block;
     width: 162px;
     height: 162px;
@@ -21,7 +21,7 @@
     object-fit: cover;
 }
 
-#header_main>#user_info{
+#header_notice>#user_info{
     display:block;
     width: 238px;
     height: 34px;
@@ -29,13 +29,13 @@
     margin-left:984px;
 }
 
-#main-menu>#buttons_main{
+#notice-menu>#buttons_notice{
     display: block;
     width: 1358px;
     height: 100px;
 }
 
-#buttons_main>#rect{
+#buttons_notice>#rect{
     position: absolute;
     float:left;
     width: 1086px;
@@ -47,7 +47,7 @@
     background: #7A7A7A;
 }
 
-#buttons_main>input{
+#buttons_notice>input{
     position: relative;
     display:block;
     float:left;
@@ -64,28 +64,32 @@
     outline: none;
 }
 
-#buttons_main>input:hover {
+input>#notice_btn{
+    background-color: #E78753;
+}
+
+#buttons_notice>input:hover {
     background:#E78753;
     color:#fff;
 }
 
-#buttons_main>#notice_btn{
+#buttons_notice>#notice_btn{
     margin-left:202px;
 }
 
-#main-menu>#contents_main{
+#notice-menu>#contents_notice{
     display: block;
     width: 1358px;
     height: 700px;
 }
 
-#main-menu>#footer_main{
+#notice-menu>#footer_notice{
     display: block;
     width: 1358px;
     height: 80px;
 }
 
-#footer_main>a{
+#footer_notice>a{
     display:block;
     font-size: 16px;
     color:#838383;

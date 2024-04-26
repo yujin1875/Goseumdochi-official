@@ -8,6 +8,9 @@ import App5 from './components/afterlogin.js';
 import App6 from './components/main.js';
 import Test from './components/test.js';
 import App7 from './components/academy_register.js';
+import App8 from './components/findID.js';
+import App9 from './components/findPW.js';
+import App10 from './components/notice.js';
 import { Component } from 'react';
 
 class App extends Component{
@@ -31,6 +34,9 @@ class App extends Component{
               <Route path='/main' element={<App6/>}/>
               <Route path='/test' element={<Test/>}/>
               <Route path='/academyform' element={<App7/>}/>
+              <Route path='/findID' element={<App8/>}/>
+              <Route path='/findPW' element={<App9/>}/>
+              <Route path='/notice' element={<App10/>}/>
             </Routes>   
         </BrowserRouter> 
       </div>

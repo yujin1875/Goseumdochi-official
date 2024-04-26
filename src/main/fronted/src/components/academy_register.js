@@ -8,8 +8,8 @@ import { useLocation } from 'react-router-dom';
 
 function App7() {
     const location = useLocation();
-    const inputDirectorName = location.state?.inputDirectorName || '';
-    const inputsDirectorPhoneNumber = location.state?.inputsDirectorPhoneNumber || '';
+    const inputDirectorName = location.state?.inputDirectorName || '이름';
+    const inputsDirectorPhoneNumber = location.state?.inputsDirectorPhoneNumber || '010-0000-0000';
 
     const [inputs, setInputs] = useState({
         academyName: '',
