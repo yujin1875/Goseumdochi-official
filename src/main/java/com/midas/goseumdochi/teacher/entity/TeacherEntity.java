@@ -33,10 +33,10 @@ public class TeacherEntity {
     @Column(name = "teacher_phoneno", length = 13)
     private String phoneNumber;
 
-    @Column(name = "director_birthdate")
+    @Column(name = "teacher_birthdate")
     private LocalDate birthdate;
 
-    @Column(name = "director_email", length = 32)
+    @Column(name = "teacher_email", length = 32)
     private String email;
 
     // 원장과 N:1 매핑

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 //@CrossOrigin // react와 spring을 연결 시킬 수 있다. API를 연결해준다
 @RequestMapping("/api/academy/form")
 @RequiredArgsConstructor
-public class FormController {
+public class AcademyFormController {
     private final AcademyFormService academyFormService;
 
     // 학원 신청서 폼 작성 후
