@@ -11,6 +11,8 @@ import App7 from './components/academy_register.js';
 import App8 from './components/findID.js';
 import App9 from './components/findPW.js';
 import App10 from './components/notice.js';
+import App11 from './components/newPW.js';
+import App12 from './components/mypage.js';
 import { Component } from 'react';
 
 class App extends Component{
@@ -37,6 +39,8 @@ class App extends Component{
               <Route path='/findID' element={<App8/>}/>
               <Route path='/findPW' element={<App9/>}/>
               <Route path='/notice' element={<App10/>}/>
+              <Route path='/newPW' element={<App11/>}/>
+              <Route path='/mypage' element={<App12/>}/>
             </Routes>   
         </BrowserRouter> 
       </div>
