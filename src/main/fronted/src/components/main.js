@@ -2,6 +2,9 @@ import '../css/main.css';
 import logo from './images/goseumdochi_moving.gif';
 
 function App6() {
+    const Gomain=()=>{
+        window.location.href='/main'
+    }
     const Gonotice=()=>{
         window.location.href='/notice'
     }
@@ -13,7 +16,7 @@ function App6() {
         <div id="App">
             <div id="main-menu">
                 <div id="header_main">
-                    <img src={logo}/>
+                    <img src={logo} onClick={Gomain}/>
                     <div id="user_info"></div>
                 </div>
                 <div id="buttons_main">

@@ -2,6 +2,9 @@ import '../css/notice.css';
 import logo from './images/goseumdochi.png';
 
 function App10() {
+    const Gomain=()=>{
+        window.location.href='/main'
+    }
 
     const Gonotice=()=>{
         window.location.href='/notice'
@@ -15,7 +18,7 @@ function App10() {
         <div id="App">
             <div id="notice-menu">
                 <div id="header_notice">
-                    <img src={logo}/>
+                    <img src={logo} onClick={Gomain}/>
                     <div id="user_info"></div>
                 </div>
                 <div id="buttons_notice">

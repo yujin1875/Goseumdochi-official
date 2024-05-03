@@ -2,6 +2,9 @@ import '../css/mypage.css';
 import logo from './images/goseumdochi.png';
 
 function App12() {
+    const Gomain=()=>{
+        window.location.href='/main'
+    }
     const Gonotice=()=>{
         window.location.href='/notice'
     }
@@ -14,7 +17,7 @@ function App12() {
         <div id="App">
             <div id="mypage-menu">
                 <div id="header_mypage">
-                    <img src={logo}/>
+                    <img src={logo} onClick={Gomain}/>
                     <div id="user_info"></div>
                 </div>
                 <div id="buttons_mypage">
