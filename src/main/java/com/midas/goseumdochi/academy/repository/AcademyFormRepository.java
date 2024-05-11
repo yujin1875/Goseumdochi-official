@@ -1,6 +1,6 @@
-package com.midas.goseumdochi.director.repository;
+package com.midas.goseumdochi.academy.repository;
 
-import com.midas.goseumdochi.director.entity.AcademyFormEntity;
+import com.midas.goseumdochi.academy.entity.AcademyFormEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

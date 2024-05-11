@@ -1,6 +1,6 @@
-package com.midas.goseumdochi.director.entity;
+package com.midas.goseumdochi.academy.entity;
 
-import com.midas.goseumdochi.director.dto.AcademyFormDTO;
+import com.midas.goseumdochi.academy.dto.AcademyFormDTO;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,6 +23,9 @@ public class AcademyFormEntity {
     @Column(name = "aca_form_director_phonno", length = 11)
     private String directorPhoneNumber;
 
+    @Column(name = "aca_form_director_email", length = 64)
+    private String directorEmail;
+
     @Column(name = "aca_form_aca_name", length = 32)
     private String academyName;
 
@@ -43,12 +46,13 @@ public class AcademyFormEntity {
     private int authStatus; // 신청서 인증여부
 
     @Builder
-    public AcademyFormEntity(long id, String directorName, String directorPhoneNumber, String academyName,
-                             String academyPhoneNumber, String academyPostcode, String academyAddress,
-                             String academyAddressDetail, int authStatus) {
+    public AcademyFormEntity(long id, String directorName, String directorPhoneNumber, String directorEmail
+            , String academyName, String academyPhoneNumber, String academyPostcode, String academyAddress
+            , String academyAddressDetail, int authStatus) {
         this.id = id;
         this.directorName = directorName;
         this.directorPhoneNumber = directorPhoneNumber;
+        this.directorEmail = directorEmail;
         this.academyName = academyName;
         this.academyPhoneNumber = academyPhoneNumber;
         this.academyPostcode = academyPostcode;
@@ -63,6 +67,7 @@ public class AcademyFormEntity {
                 .id(academyFormDTO.getId())
                 .directorName(academyFormDTO.getDirectorName())
                 .directorPhoneNumber(academyFormDTO.getDirectorPhoneNumber())
+                .directorEmail(academyFormDTO.getDirectorEmail())
                 .academyName(academyFormDTO.getAcademyName())
                 .academyPhoneNumber(academyFormDTO.getAcademyPhoneNumber())
                 .academyPostcode(academyFormDTO.getAcademyPostcode())

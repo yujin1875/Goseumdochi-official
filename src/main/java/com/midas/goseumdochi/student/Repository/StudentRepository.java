@@ -19,4 +19,7 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
     @Query("SELECT s FROM StudentEntity s WHERE s.studentId = :studentId AND s.studentName = :studentName AND s.studentPhoneNumber = :studentPhoneNumber")
     Optional<StudentEntity> findByStudentIdAndStudentNameAndStudentPhoneNumber(String studentId, String studentName, String studentPhoneNumber);
     Optional<StudentEntity> findByStudentEmail(String email);
+
+    @Query("SELECT s FROM StudentEntity s WHERE s.studentName = :studentName And s.studentPhoneNumber = :studentPhoneNumber")
+    Optional<StudentEntity> findByNameAndPhoneNumber(@Param("studentName") String studentName, @Param("studentPhoneNumber") String studentPhoneNumber);
 }

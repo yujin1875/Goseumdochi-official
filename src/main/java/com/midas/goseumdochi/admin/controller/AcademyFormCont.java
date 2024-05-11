@@ -2,8 +2,8 @@ package com.midas.goseumdochi.admin.controller;
 
 import com.midas.goseumdochi.admin.dto.AcademyFormDTO;
 import com.midas.goseumdochi.admin.service.AcademyFormServ;
-import com.midas.goseumdochi.director.entity.AcademyFormEntity;
-import com.midas.goseumdochi.director.repository.AcademyFormRepository;
+import com.midas.goseumdochi.academy.entity.AcademyFormEntity;
+import com.midas.goseumdochi.academy.repository.AcademyFormRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

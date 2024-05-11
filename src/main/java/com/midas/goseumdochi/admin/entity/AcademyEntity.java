@@ -1,5 +1,6 @@
 package com.midas.goseumdochi.admin.entity;
 
+import com.midas.goseumdochi.director.entity.DirectorEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,6 +35,10 @@ public class AcademyEntity {
 
     @Column(name = "acaAddressDetail")
     private String addressDetail;
+
+    // 원장과 1:1 양방향 매핑 (보조 엔터티 (읽기전용))
+    @OneToOne(mappedBy = "academyEntity")
+    private DirectorEntity directorEntity;
 
     @Builder
     public AcademyEntity(int num, String name, String pnum, String postcode, String address, String addressDetail) {
