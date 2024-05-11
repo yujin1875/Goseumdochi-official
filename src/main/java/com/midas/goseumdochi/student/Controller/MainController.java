@@ -2,18 +2,17 @@ package com.midas.goseumdochi.student.Controller;
 
 import com.midas.goseumdochi.student.entity.StudentEntity;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import com.midas.goseumdochi.student.Dto.StudentDTO;
 import com.midas.goseumdochi.student.Repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
-@Controller
+@RestController
+@RequestMapping("/api")
 public class MainController {
 
     private final StudentRepository studentRepository;
@@ -23,65 +22,27 @@ public class MainController {
         this.studentRepository = studentRepository;
     }
 
-    @GetMapping("/")
-    public String indexPage() {
-        return "index";
-    }
-
-    @GetMapping("/signup")
-    public String signUpPage(@ModelAttribute("student") StudentEntity studentEntity) {
-        return "signup";
-    }
-
+    // 회원 가입을 위한 엔티티를 받고 저장 후 결과 반환
     @PostMapping("/signup")
-    public String signUp(@ModelAttribute("student") StudentEntity studentEntity) {
-        return "redirect:/login";
+    public ResponseEntity<?> signUp(@ModelAttribute StudentEntity studentEntity) {
+        studentRepository.save(studentEntity);
+        return ResponseEntity.ok("회원가입이 완료되었습니다. 로그인 해주세요.");
     }
 
-    @GetMapping("/login")
-    public String loginPage() {
-        return "login";
-    }
-
-    @GetMapping("/main")
-    public String mainPage() {
-        return "main";
-    }
-
-    @GetMapping("/findStudentId")
-    public String findStudentIdPage() { return "/findStudentId"; // 아이디 찾기 페이지로 이동
-    }
-
-    @GetMapping("/findStudentPassword")
-    public String findStudentPasswordPageIn() {
-        return "/findStudentPassword"; // 비밀번호 찾기 페이지로 이동
-    }
-
-    @GetMapping("/lecture-portal")
-    public String lecturePortal() {
-        return "/lecture-portal"; // 강의포털 페이지로 이동
-    }
-
+    // 사용자의 마이 페이지 정보를 조회하여 반환
     @GetMapping("/myPage")
-    public String myPage(HttpSession session, Model model) {
+    public ResponseEntity<?> myPage(HttpSession session) {
         Long studentId = (Long) session.getAttribute("loginId");
-        if(studentId == null) {
-            return "redirect:/login"; // 로그인되지 않았다면 로그인 페이지로 리다이렉트
+        if (studentId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
         }
-        // DB에서 사용자 정보 조회
+
         Optional<StudentEntity> studentEntity = studentRepository.findById(studentId);
-        studentEntity.ifPresent(entity -> model.addAttribute("student", StudentDTO.toStudentDTO(entity)));
+        if (!studentEntity.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
 
-        // 세션에서 사용자 정보 가져오기
-        String studentName = (String) session.getAttribute("studentName");
-        String studentPhoneNumber = (String) session.getAttribute("studentPhoneNumber");
-        String studentBirthDate = (String) session.getAttribute("studentBirthDate");
-
-        // 모델에 사용자 정보 추가
-        model.addAttribute("studentName", studentName);
-        model.addAttribute("studentPhoneNumber", studentPhoneNumber);
-        model.addAttribute("studentBirthDate", studentBirthDate);
-
-        return "/myPage"; // 마이페이지로 이동
+        StudentDTO studentDTO = StudentDTO.toStudentDTO(studentEntity.get());
+        return ResponseEntity.ok(studentDTO);
     }
 }
