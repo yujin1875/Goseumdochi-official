@@ -103,12 +103,6 @@ public class StudentService {
         Optional<StudentEntity> studentEntity = studentRepository.findById(id);
         return studentEntity.map(StudentDTO::toStudentDTO).orElse(null);
     }
-
-    // 학생 찾기 (이름, 전화번호 이용)
-    public StudentDTO findStudentByNameAndPhoneNumber(String name, String phonenumber) {
-        Optional<StudentEntity> studentEntity = studentRepository.findByNameAndPhoneNumber(name, phonenumber);
-        return (studentEntity.isPresent())? StudentDTO.toStudentDTO(studentEntity.get()) : null; // 학생 찾으면 DTO 리턴, 없으면 null
-    }
 }
 
 

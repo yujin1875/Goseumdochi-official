@@ -5,6 +5,12 @@ function App3() {
     const GoAfterlogin=()=>{
         window.location.href='/afterlogin'
     }
+    const GoFindID=()=>{
+        window.location.href='/findID'
+    }
+    const GoFindPW=()=>{
+        window.location.href='/findPW'
+    }
 
     return (
         <div id="App">
@@ -18,7 +24,8 @@ function App3() {
                     <input type="text" placeholder="ID"/><hr/>
                     <input type="password" placeholder="PW"/><hr/>
                     <div id="letter_Login">
-                        &nbsp;<a>아이디 찾기 | 비밀번호 찾기</a>&nbsp;
+                        <button id='findid' onClick={GoFindID}>아이디 찾기</button>
+                        <button id='findpw' onClick={GoFindPW}>비밀번호 찾기</button>
                     </div>
                     <input type="submit" value="Login" id="Login_btn" onClick={GoAfterlogin}/>
                 </div>
