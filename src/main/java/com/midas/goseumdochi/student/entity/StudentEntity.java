@@ -1,10 +1,7 @@
 package com.midas.goseumdochi.student.entity;
-import com.midas.goseumdochi.director.entity.StudentDirectorEntity;
 import com.midas.goseumdochi.student.Dto.StudentDTO;
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.List;
 
 
 @Entity
@@ -35,10 +32,6 @@ public class StudentEntity {
 
     @Column
     private String profilePictureUrl;
-
-    // 관계 엔터티와 1:N 연결 (원장과 N:M 연결을 위해)
-    @OneToMany(mappedBy = "studentEntity", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<StudentDirectorEntity> studentDirectorEntityList;
 
     public static StudentEntity toStudent(StudentDTO studentDTO){
         StudentEntity studentEntity = new StudentEntity();

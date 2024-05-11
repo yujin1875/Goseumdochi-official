@@ -10,6 +10,7 @@
 #main-menu>#header_main{
     width:1358px;
     height:200px;
+
 }
 
 #header_main>img{
@@ -36,10 +37,11 @@
 
 #buttons_main>#rect{
     position: absolute;
+    float:left;
     width: 1086px;
     height: 5px;
-    left: 417px;
-    top: 226px;
+    margin: 30px auto auto;
+    margin-left:136px;
     z-index: 1;
 
     background: #7A7A7A;
@@ -51,7 +53,7 @@
     float:left;
     width: 281px;
     height: 68px;
-    background-color: #E78753;
+    background-color: #F6B28E;
     margin: auto 28px;
     z-index: 2;
 
@@ -60,6 +62,11 @@
     box-shadow: none;
     border:none;
     outline: none;
+}
+
+#buttons_main>input:hover {
+    background:#E78753;
+    color:#fff;
 }
 
 #buttons_main>#notice_btn{
