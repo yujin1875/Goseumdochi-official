@@ -1,13 +1,11 @@
 package com.midas.goseumdochi.util.Dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class MailDTO {
     private String address; // 이메일 받는 사람 주소

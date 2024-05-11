@@ -1,5 +1,6 @@
 package com.midas.goseumdochi.director.entity;
 
+import com.midas.goseumdochi.academy.entity.SubjectEntity;
 import com.midas.goseumdochi.admin.entity.AcademyEntity;
 import com.midas.goseumdochi.director.dto.DirectorDTO;
 import com.midas.goseumdochi.teacher.entity.TeacherEntity;
@@ -49,6 +50,12 @@ public class DirectorEntity {
     // 선생과 1:N 매핑
     @OneToMany(mappedBy = "directorEntity", cascade = CascadeType.ALL, orphanRemoval = true) // cascade, orphanRemoval 옵션 모두 부모 삭제시 자식 삭제. 근데 앞에껀 DB는 삭제x 뒤에껀 DB도 삭제됨
     private List<TeacherEntity> teacherEntityList = new ArrayList<>();
+
+    // 학생과 양방향 연결을 위한다면 매핑 추가하기
+
+    // 과목과 1:N 매핑
+    @OneToMany(mappedBy = "directorEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SubjectEntity> subjectEntityList;
 
     @Builder
     public DirectorEntity(Long id, String name, String loginid, String password, String phoneNumber, LocalDate birthdate, String email) {
