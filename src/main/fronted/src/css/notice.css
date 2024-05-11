@@ -1,0 +1,240 @@
+#notice-menu{
+    display: block;
+    width: 1358px;
+    height: 1080px;
+    margin: auto;
+    background-color: #FFFFFF;
+    border-radius: 100px;
+}
+
+#notice-menu>#header_notice{
+    width:1358px;
+    height:200px;
+
+}
+
+#header_notice>img{
+    display:block;
+    width: 162px;
+    height: 162px;
+    margin:auto;
+    object-fit: cover;
+}
+
+#header_notice>#user_info{
+    display:block;
+    width: 238px;
+    height: 34px;
+    background-color: #646464;
+    margin-left:984px;
+}
+
+#notice-menu>#buttons_notice{
+    display: block;
+    width: 1358px;
+    height: 100px;
+}
+
+#buttons_notice>#rect{
+    position: absolute;
+    float:left;
+    width: 1086px;
+    height: 5px;
+    margin: 30px auto auto;
+    margin-left:136px;
+    z-index: 1;
+
+    background: #7A7A7A;
+}
+
+#buttons_notice>input{
+    position: relative;
+    display:block;
+    float:left;
+    width: 281px;
+    height: 68px;
+    background-color: #F6B28E;
+    margin: auto 28px;
+    z-index: 2;
+
+    font-size: 25px;
+    color:aliceblue;
+    box-shadow: none;
+    border:none;
+    outline: none;
+}
+
+input>#notice_btn{
+    background-color: #E78753;
+}
+
+#buttons_notice>input:hover {
+    background:#E78753;
+    color:#fff;
+}
+
+#buttons_notice>#notice_btn{
+    margin-left:202px;
+}
+
+#notice-menu>#contents_notice{
+    display: block;
+    width: 1358px;
+    height: 700px;
+}
+
+#contents_notice>#aboutNotice_notice{
+    width: 1190px;
+    height: 668px;
+    margin:auto;
+    margin-top:40px;
+    background-color: #363636;
+    border-radius: 10px;
+}
+
+#aboutNotice_notice>#category_aboutNotice_notice{
+    width: 1190px;
+    height: 60px;
+}
+
+#category_aboutNotice_notice>ul{
+    position: absolute;
+    width: 759px;
+    height: 40px;
+    margin-top:10px;
+    margin-left:426px;
+}
+
+ul>li{
+    float: left;
+    width: 141px;
+    height: 40px;
+    background-color: #EAEAEA;
+    margin-right:10px;
+    border-radius: 5px;
+}
+
+li>a{
+    margin-top: 5px;
+    display: block;
+    font-size: 20px;
+    color:#000000;
+    box-shadow: none;
+    border:none;
+    outline: none;
+    text-align: center;
+}
+
+#aboutNotice_notice>#contents_aboutNotice_notice{
+    width: 1156px;
+    height: 582px;
+    margin:auto;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+}
+
+#contents_aboutNotice_notice>#category_contents_notice{
+    width: 1075px;
+    height: 70px;
+    margin:auto;
+}
+
+#category_contents_notice>#num{
+    float:left;
+    display: block;
+    width: 67px;
+    height: 50px;
+    margin-top:20px;
+
+    font-size: 24px;
+    color:#000000;
+    box-shadow: none;
+    border:none;
+    outline: none;
+    text-align: center;
+    font-weight: bold;
+}
+
+#category_contents_notice>#title{
+    float:left;
+    display: block;
+    width: 567px;
+    height: 50px;
+    margin-top:20px;
+
+    font-size: 24px;
+    color:#000000;
+    box-shadow: none;
+    border:none;
+    outline: none;
+    text-align: center;
+    font-weight: bold;
+}
+
+#category_contents_notice>#postperson{
+    float:left;
+    display: block;
+    width: 167px;
+    height: 50px;
+    margin-top:20px;
+
+    font-size: 24px;
+    color:#000000;
+    box-shadow: none;
+    border:none;
+    outline: none;
+    text-align: center;
+    font-weight: bold;
+}
+
+#category_contents_notice>#postdate{
+    float:left;
+    display: block;
+    width: 190px;
+    height: 50px;
+    margin-top:20px;
+
+    font-size: 24px;
+    color:#000000;
+    box-shadow: none;
+    border:none;
+    outline: none;
+    text-align: center;
+    font-weight: bold;
+}
+
+#category_contents_notice>#visit{
+    float:left;
+    display: block;
+    width: 84px;
+    height: 50px;
+    margin-top:20px;
+
+    font-size: 24px;
+    color:#000000;
+    box-shadow: none;
+    border:none;
+    outline: none;
+    text-align: center;
+    font-weight: bold;
+}
+
+#contents_aboutNotice_notice>#body_contents_notice{
+    width: 1075px;
+    height: 512px;
+    margin:auto;
+    background-color:blueviolet
+}
+
+#notice-menu>#footer_notice{
+    width: 1358px;
+    height: 40px;
+}
+
+#footer_notice>a{
+    display:block;
+    font-size: 16px;
+    color:#838383;
+    text-align: center;
+    margin:auto;
+}
