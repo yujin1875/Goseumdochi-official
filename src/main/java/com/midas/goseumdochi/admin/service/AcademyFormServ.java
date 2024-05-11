@@ -1,11 +1,11 @@
 package com.midas.goseumdochi.admin.service;
 
 import com.midas.goseumdochi.admin.entity.AcademyEntity;
-import com.midas.goseumdochi.admin.entity.DirectorEntity2;
+import com.midas.goseumdochi.director.entity.DirectorEntity;
 import com.midas.goseumdochi.admin.repository.AcademyRepository;
-import com.midas.goseumdochi.admin.repository.DirectorRepository;
 import com.midas.goseumdochi.academy.entity.AcademyFormEntity;
 import com.midas.goseumdochi.academy.repository.AcademyFormRepository;
+import com.midas.goseumdochi.director.repository.DirectorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,13 +18,14 @@ public class AcademyFormServ {
 
     private final AcademyFormRepository academyFormRepository;
     private final AcademyRepository academyRepository;
-    private final DirectorRepository directorRepository;
+
+    private final DirectorRepository directorRepos;
 
     @Autowired
-    public AcademyFormServ(AcademyFormRepository academyFormRepository, AcademyRepository academyRepository, DirectorRepository directorRepository) {
+    public AcademyFormServ(AcademyFormRepository academyFormRepository, AcademyRepository academyRepository, DirectorRepository directorRepos) {
         this.academyFormRepository = academyFormRepository;
         this.academyRepository = academyRepository;
-        this.directorRepository = directorRepository;
+        this.directorRepos = directorRepos;
     }
 
     public List<AcademyFormEntity> getAllAcademyForms() {
@@ -55,13 +56,13 @@ public class AcademyFormServ {
         // 원장 정보 저장 (아이디: 학원신청서 기본키 번호 4자리 + 폰 번호 마지막 네자리)
         String academyFormIdStr = String.format("%04d", academyFormId); // 학원신청서 기본키번호를 네 자리 숫자로 포맷팅
         String directorId = academyFormIdStr + "0000"; // 원장 ID 생성
-        DirectorEntity2 directorEntity = DirectorEntity2.builder()
+        DirectorEntity directorEntity = DirectorEntity.builder()
                 .name(academyFormEntity.getDirectorName())
-                .pnum(academyFormEntity.getDirectorPhoneNumber())
+                .phoneNumber(academyFormEntity.getDirectorPhoneNumber())
                 .password("0000") // 비밀번호 초기화
-                .id(directorId) // 원장 ID 설정
+                .loginid(directorId) // 원장 ID 설정
                 .build();
-        directorRepository.save(directorEntity);
+        directorRepos.save(directorEntity);
     }
 
     public void rejectAcademyForm(Long academyFormId) {
