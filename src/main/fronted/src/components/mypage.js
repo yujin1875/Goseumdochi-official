@@ -29,7 +29,19 @@ function App12() {
                 <div id="contents_mypage">
                     <div id="contents1_mypage">
                         <div id="info_mypage">
-
+                            <div id="category_info_mypage">
+                                <div id="cate_name">이름</div>
+                                <div id="cate_phonenum">휴대전화</div>
+                                <div id="cate_birthdate">생년월일</div>
+                                <div id="cate_academy">등록된 학원</div>
+                            </div>
+                            <div id="user_info_mypage">
+                                <div id="blank"/>
+                                <div id="user_name">학생이름</div>
+                                <div id="user_phonenum">000-0000-0000</div>
+                                <div id="user_birthdate">0000.00.00</div>
+                                <div id="user_academy">컴퓨터 학원, 코딩학원</div>
+                            </div>
                         </div>
                         <div id="userphoto_mypage">
                             <div id="photo">
