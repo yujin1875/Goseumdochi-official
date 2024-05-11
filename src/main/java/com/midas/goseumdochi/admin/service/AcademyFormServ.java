@@ -54,7 +54,7 @@ public class AcademyFormServ {
 
         // 원장 정보 저장 (아이디: 학원신청서 기본키 번호 4자리 + 폰 번호 마지막 네자리)
         String academyFormIdStr = String.format("%04d", academyFormId); // 학원신청서 기본키번호를 네 자리 숫자로 포맷팅
-        String directorId = academyFormIdStr + academyFormEntity.getDirectorPhoneNumber().substring(academyFormEntity.getDirectorPhoneNumber().length() - 4); // 원장 ID 생성
+        String directorId = academyFormIdStr + "0000"; // 원장 ID 생성
         DirectorEntity2 directorEntity = DirectorEntity2.builder()
                 .name(academyFormEntity.getDirectorName())
                 .pnum(academyFormEntity.getDirectorPhoneNumber())
