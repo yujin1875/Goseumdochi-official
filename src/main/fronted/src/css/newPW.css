@@ -1,0 +1,101 @@
+#header_newPW{
+    width:100%;
+    height:300px;
+}
+#write_newPW{
+    position: relative;
+    display:block;
+    width: 556px;
+    height: 415px;
+    background-color: #FFFFFF;
+    border-top: solid 3px #000000;
+    margin: auto;
+}
+hr{
+    border:0 ;
+}
+
+#write_newPW>h2{
+    font-size: 40px;
+    color:#000000;
+    text-align: center;
+    font-weight: bold;
+    margin-left: auto;
+    margin-top: 70px;
+    margin-bottom: 40px;
+}
+
+#write_newPW>input{
+    position: relative;
+    float:left;
+    display:block;
+    width: 380px;
+    height: 48px;
+    background-color: #FFFFFF;
+    margin-top:10px;
+    margin-left:88px;
+    border-color: #EAEAEA;
+    border-radius: 15px;
+
+    font-size: 16px;
+    color:#6A6A6A;
+    box-shadow: none;
+}
+
+#write_newPW>#PWcheck{
+    position: relative;
+        float:left;
+        display:block;
+        width: 380px;
+        height: 48px;
+        background-color: #FFFFFF;
+        margin-top:10px;
+        margin-left:88px;
+        border-color: #EAEAEA;
+        border-radius: 15px;
+
+        font-size: 16px;
+        color:#6A6A6A;
+        box-shadow: none;
+}
+
+#write_newPW>#sub_btn{
+    float:left;
+    display:block;
+    width: 58px;
+    height: 48px;
+    background-color: #E78753;
+    margin-top:10px;
+    margin-left:10px;
+    border-color: #E78753;
+    border-radius: 15px;
+
+    font-size: 14px;
+    color:#FFFFFF;
+    box-shadow: none;
+}
+
+#write_newPW>#newPW_btn{
+    position: relative;
+    float:left;
+    display:block;
+    width: 380px;
+    height: 48px;
+    background-color: #363636;
+    margin-top:10px;
+    margin-left:88px;
+    border-color: #EAEAEA;
+    border-radius: 15px;
+
+    font-size: 16px;
+    color:aliceblue;
+    box-shadow: none;
+    border:none;
+    outline: none;
+}
+
+#footer_newPW{
+    position:relative;
+    width:100%;
+    height:300px;
+}
