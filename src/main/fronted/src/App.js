@@ -6,7 +6,6 @@ import App3 from './components/login.js';
 import App4 from './components/academy.js';
 import App5 from './components/afterlogin.js';
 import App6 from './components/main.js';
-import Test from './components/test.js';
 import App7 from './components/academy_register.js';
 import App8 from './components/findID.js';
 import App9 from './components/findPW.js';
@@ -34,7 +33,6 @@ class App extends Component{
               <Route path='/academy' element={<App4/>}/>
               <Route path='/afterlogin' element={<App5/>}/>
               <Route path='/main' element={<App6/>}/>
-              <Route path='/test' element={<Test/>}/>
               <Route path='/academyform' element={<App7/>}/>
               <Route path='/findID' element={<App8/>}/>
               <Route path='/findPW' element={<App9/>}/>

@@ -28,8 +28,38 @@ function App10() {
                     <div id="rect"/>
                 </div>
                 <div id="contents_notice">
-                    <div id="contents_notice">
+                    <div id="aboutNotice_notice">
+                        <div id="category_aboutNotice_notice">
+                            <ul>
+                                <li><a>공지사항</a></li>
+                                <li><a>강의자료</a></li>
+                                <li><a>온라인강의</a></li>
+                                <li><a>과제</a></li>
+                                <li><a>시험</a></li>
+                            </ul>
+                        </div>
+                        <div id="contents_aboutNotice_notice">
+                            <div id="category_contents_notice">
+                                <div id="num">
+                                    번호
+                                </div>
+                                <div id="title">
+                                    제목
+                                </div>
+                                <div id="postperson">
+                                    게시자
+                                </div>
+                                <div id="postdate">
+                                    게시일
+                                </div>
+                                <div id="visit">
+                                    조회수
+                                </div>
+                            </div>
+                            <div id="body_contents_notice">
 
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="footer_notice">
