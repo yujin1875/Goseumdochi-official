@@ -91,6 +91,7 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("정보 수정에 실패하였습니다.");
     }
 
+    // 프로필 사진
     @PostMapping("/uploadProfilePicture")
     public ResponseEntity<?> uploadProfilePicture(@RequestParam("profilePicture") MultipartFile file, HttpSession session) {
         Long studentId = (Long) session.getAttribute("loginId");
@@ -115,6 +116,38 @@ public class StudentController {
         } catch (IOException e) { // 파일 업로드중 예외 캐치
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("파일 업로드 중 오류가 발생했습니다.");
         }
+    }
+
+    // 비밀번호 변경
+    @PostMapping("/changePassword")
+    public ResponseEntity<?> changePassword(@RequestParam("currentPassword") String currentPassword,
+                                            @RequestParam("newPassword") String newPassword,
+                                            @RequestParam("confirmNewPassword") String confirmNewPassword,
+                                            HttpSession session) {
+        Long studentId = (Long) session.getAttribute("loginId");
+        if (studentId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+
+        StudentDTO student = studentService.findStudentById(studentId);
+        if (student == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("사용자 정보가 없습니다.");
+        }
+
+        if (!student.getStudentPassword().equals(currentPassword)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("현재 비밀번호가 일치하지 않습니다.");
+        }
+
+        if (currentPassword.equals(newPassword)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("새 비밀번호는 현재 비밀번호와 달라야 합니다.");
+        }
+
+        if (!newPassword.equals(confirmNewPassword)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("새 비밀번호 확인이 일치하지 않습니다.");
+        }
+
+        studentService.updateStudentPassword(studentId, newPassword);
+        return ResponseEntity.ok("비밀번호가 변경되었습니다.");
     }
 
 }

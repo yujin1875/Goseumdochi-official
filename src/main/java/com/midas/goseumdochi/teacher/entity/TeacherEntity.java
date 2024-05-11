@@ -33,10 +33,10 @@ public class TeacherEntity {
     @Column(name = "teacher_phoneno", length = 13)
     private String phoneNumber;
 
-    @Column(name = "director_birthdate")
+    @Column(name = "teacher_birthdate")
     private LocalDate birthdate;
 
-    @Column(name = "director_email", length = 32)
+    @Column(name = "teacher_email", length = 32)
     private String email;
 
     // 원장과 N:1 매핑
@@ -46,7 +46,7 @@ public class TeacherEntity {
     // 빌더랑 toTeacherEntity 좀 수정 해야함
 
     @Builder
-    public TeacherEntity(Long id, String name, String loginid, String password, String phoneNumber, LocalDate birthdate, String email) {
+    public TeacherEntity(Long id, String name, String loginid, String password, String phoneNumber, LocalDate birthdate, String email, DirectorEntity directorEntity) {
         this.id = id;
         this.name = name;
         this.loginid = loginid;
@@ -54,10 +54,11 @@ public class TeacherEntity {
         this.phoneNumber = phoneNumber;
         this.birthdate = birthdate;
         this.email = email;
+        this.directorEntity = directorEntity;
     }
 
     // TeacherDTO -> TeacherEntity
-    public static TeacherEntity toTeacherEntity(TeacherDTO teacherDTO) {
+    public static TeacherEntity toTeacherEntity(TeacherDTO teacherDTO, DirectorEntity directorEntity) {
         TeacherEntity teacherEntity = TeacherEntity.builder()
                 .id(teacherDTO.getId())
                 .name(teacherDTO.getName())
@@ -65,6 +66,7 @@ public class TeacherEntity {
                 .password(teacherDTO.getPassword())
                 .birthdate(teacherDTO.getBirthdate())
                 .email(teacherDTO.getEmail())
+                .directorEntity(directorEntity)
                 .build();
 
         return teacherEntity;
