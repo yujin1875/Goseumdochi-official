@@ -3,7 +3,7 @@ package com.midas.goseumdochi.academy.service;
 import com.midas.goseumdochi.academy.dto.SubjectDTO;
 import com.midas.goseumdochi.academy.entity.SubjectEntity;
 import com.midas.goseumdochi.academy.repository.SubjectRepository;
-import com.midas.goseumdochi.director.repository.DirectorRepos;
+import com.midas.goseumdochi.director.repository.DirectorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SubjectService {
     private final SubjectRepository subjectRepository;
-    private final DirectorRepos directorRepository;
+    private final DirectorRepository directorRepository;
 
     // 원장(학원)마다 과목 이름 있는지 검사
     public SubjectDTO findByNameAndDirectorId(String name, Long directorId) {
