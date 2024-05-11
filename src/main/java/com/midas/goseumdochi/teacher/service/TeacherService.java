@@ -1,7 +1,7 @@
 package com.midas.goseumdochi.teacher.service;
 
 import com.midas.goseumdochi.director.entity.DirectorEntity;
-import com.midas.goseumdochi.director.repository.DirectorRepos;
+import com.midas.goseumdochi.director.repository.DirectorRepository;
 import com.midas.goseumdochi.teacher.dto.TeacherDTO;
 import com.midas.goseumdochi.teacher.entity.TeacherEntity;
 import com.midas.goseumdochi.teacher.repository.TeacherRepository;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TeacherService {
     final private TeacherRepository teacherRepository;
-    final private DirectorRepos directorRepository;
+    final private DirectorRepository directorRepository;
 
     // 선생의 loginid와 password를 설정해야함
     public TeacherDTO setLoginidAndPassword(TeacherDTO teacherDTO) {
