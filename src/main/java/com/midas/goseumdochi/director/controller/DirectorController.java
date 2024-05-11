@@ -1,51 +1,65 @@
 package com.midas.goseumdochi.director.controller;
 
 import com.midas.goseumdochi.director.dto.DirectorDTO;
-import com.midas.goseumdochi.director.service.DirectorService;
-import com.midas.goseumdochi.student.Component.OtherComponent;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import com.midas.goseumdochi.director.dto.StudentDirectorDTO;
+import com.midas.goseumdochi.director.service.StudentDirectorService;
+import com.midas.goseumdochi.student.Dto.StudentDTO;
+import com.midas.goseumdochi.student.Service.StudentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import com.midas.goseumdochi.director.service.DirectorService;
 
-@Controller
-@RequestMapping("/director")
+
+@RestController
+@RequestMapping("/api/director")
 @RequiredArgsConstructor
 public class DirectorController {
     private final DirectorService directorService;
-
-    // 로그인 폼
-    @GetMapping("/login")
-    public String loginForm(){
-        return "director/login";
-    }
+    private final StudentService studentService;
+    private final StudentDirectorService studentDirectorService;
 
     // 로그인 폼 작성 후
     @PostMapping("/login")
-    public String login(@RequestParam("directorLoginid") String directorName,
-                        @RequestParam("directorPassword") String directorPhoneNumber,
-                        Model model, HttpSession session, HttpServletResponse response) throws IOException {
-        DirectorDTO directorDTO = directorService.findDirector(directorName, directorPhoneNumber);
+    public ResponseEntity<?> login(@RequestParam String directorLoginid, @RequestParam String directorPassword) {
+        DirectorDTO directorDTO = directorService.findDirector(directorLoginid, directorPassword);
 
         if(directorDTO == null) { // 로그인 실패
-            OtherComponent.AlertMessage(response, "원장 로그인 실패");
-            return null;
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body("원장 로그인 실패");
         }
         // 로그인 성공
-        session.setAttribute("directorId", directorDTO.getId());
-        return "director/main";
+        return ResponseEntity.ok(directorDTO.getId()); // 원장 id 리턴
     }
 
-    // 선생님 등록 화면
-    @GetMapping("/regist_teacher")
-    public String registTeacherForm() {
-        return "regist_teacher";
+    // 원장님이 학생 찾을 때 (이름, 전화번호 이용) *--> 학생 Controller에 보내도 됨
+    @PostMapping("/findStudent")
+    public ResponseEntity<?> findStudent(@RequestParam String studentName, @RequestParam String studentPhoneNumber) {
+        StudentDTO studentDTO = studentService.findStudentByNameAndPhoneNumber(studentName, studentPhoneNumber);
+
+        if(studentDTO == null) { // 찾기 실패
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body("해당 학생이 존재하지 않습니다.");
+        }
+        // 학생 찾기 성공
+        return ResponseEntity.ok(studentDTO); // -> 리액트에서 찾기 성공했을 때 변수 설정 해줘야함
+    }
+
+    // 학생 등록
+    @PostMapping("/registStudent")
+    public ResponseEntity<?> registStudent(@RequestBody StudentDirectorDTO studentDirectorDTO) { // 학생id, 원장id 입력받음
+        // 학생 등록 실패 로직
+        if(studentDirectorDTO.getStudentId() == null) {
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body("학생 등록 실패. 학생을 선택해주세요!");
+        }
+        // 학생 등록 성공
+        studentDirectorService.registStudentDirector(studentDirectorDTO); // 등록
+        return ResponseEntity.ok("학생 등록 성공.");
     }
 }
