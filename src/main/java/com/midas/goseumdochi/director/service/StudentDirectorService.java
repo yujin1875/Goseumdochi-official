@@ -2,7 +2,7 @@ package com.midas.goseumdochi.director.service;
 
 import com.midas.goseumdochi.director.dto.StudentDirectorDTO;
 import com.midas.goseumdochi.director.entity.StudentDirectorEntity;
-import com.midas.goseumdochi.director.repository.DirectorRepos;
+import com.midas.goseumdochi.director.repository.DirectorRepository;
 import com.midas.goseumdochi.director.repository.StudentDirectorRepository;
 import com.midas.goseumdochi.student.Repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class StudentDirectorService {
     private final StudentDirectorRepository studentDirectorRepository;
     private final StudentRepository studentRepository;
-    private final DirectorRepos directorRepos;
+    private final DirectorRepository directorRepos;
 
     public void registStudentDirector(StudentDirectorDTO studentDirectorDTO) {
         StudentDirectorEntity studentDirectorEntity = StudentDirectorEntity.builder()
