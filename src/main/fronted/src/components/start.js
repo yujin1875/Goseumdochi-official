@@ -14,10 +14,6 @@ function App1() {
         window.location.href='/academy'
     }
 
-    const GoTest=()=>{
-        window.location.href='/test'
-    }
-
     const GoAcademyForm=()=>{
         window.location.href='/academyForm'
     }
@@ -37,8 +33,6 @@ function App1() {
                     <input type="submit" value="학원등록1" id="academy1_btn" onClick={Goaca}/>
                     <input type="submit" value="학원등록2" id="academy2_btn" onClick={Goaca}/>
                 </div>
-                <input type="submit" value="테스트" id="test_btn" onClick={GoTest}/>
-                <hr/>
                 <input type="submit" value="테스트 신청서 작성" id="academyForm_btn" onClick={GoAcademyForm}/>
                 <hr/>
             </div>
