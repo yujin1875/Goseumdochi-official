@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface DirectorRepos extends JpaRepository<DirectorEntity, Long> {
+public interface DirectorRepository extends JpaRepository<DirectorEntity, Long> {
     @Query("SELECT d FROM DirectorEntity d WHERE d.loginid = :loginid And d.password = :password")
     Optional<DirectorEntity> findByLoginidAndPassword(@Param("loginid") String loginid,
                                                                          @Param("password") String password);
