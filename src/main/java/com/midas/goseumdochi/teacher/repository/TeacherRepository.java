@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface TeacherRepository extends JpaRepository<TeacherEntity, Long> {
-    @Query("SELECT t FROM TeacherEntity t WHERE t.directorEntity.id = :directorId")
-    List<TeacherEntity> findAllByDirectorId(@Param("directorId") Long directorId);
+    //fk로 찾기
+    @Query("SELECT t FROM TeacherEntity t WHERE t.academyEntity.id = :academyId")
+    List<TeacherEntity> findAllByAcademyId(@Param("academyId") Long academyId);
 }
