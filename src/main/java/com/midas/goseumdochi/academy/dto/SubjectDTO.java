@@ -11,14 +11,14 @@ import lombok.*;
 public class SubjectDTO {
     private Long id;
     private String name;
-    private Long directorId;
+    private Long academyId;
 
     // Entity -> DTO
     public static SubjectDTO toSubjectDTO(SubjectEntity subjectEntity) {
         SubjectDTO subjectDTO = new SubjectDTO();
         subjectDTO.setId(subjectEntity.getId());
         subjectDTO.setName(subjectEntity.getName());
-        subjectDTO.setDirectorId(subjectEntity.getDirectorEntity().getId());
+        subjectDTO.setAcademyId(subjectEntity.getAcademyEntity().getId());
 
         return subjectDTO;
     }

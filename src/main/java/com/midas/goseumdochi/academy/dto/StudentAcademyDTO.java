@@ -1,4 +1,4 @@
-package com.midas.goseumdochi.director.dto;
+package com.midas.goseumdochi.academy.dto;
 
 import lombok.*;
 
@@ -7,8 +7,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class StudentDirectorDTO {
+public class StudentAcademyDTO {
     private Long id;
     private Long studentId;
-    private Long directorId;
+    private Long academyId;
 }

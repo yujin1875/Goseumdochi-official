@@ -10,6 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface SubjectRepository extends JpaRepository<SubjectEntity, Long> {
-    @Query("SELECT s FROM SubjectEntity s WHERE s.name = :name And s.directorEntity.id = :directorId")
-    Optional<SubjectEntity> findByNameAndDirectorId(@Param("name") String name, @Param("directorId") Long directorId);
+    @Query("SELECT s FROM SubjectEntity s WHERE s.name = :name And s.academyEntity.id = :academyId")
+    Optional<SubjectEntity> findByNameAndAcademyId(@Param("name") String name, @Param("academyId") Long academyId);
 }
