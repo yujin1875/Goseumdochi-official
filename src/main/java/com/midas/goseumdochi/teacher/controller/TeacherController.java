@@ -23,7 +23,7 @@ public class TeacherController {
         teacherService.regist(teacherDTO);
 
         // 선생 등록 성공
-        mailService.mailSend(teacherService.getMailDTOByRegist(teacherDTO)); // 원장에게 메일 전송
+        mailService.mailSend(teacherService.getMailDTOForRegist(teacherDTO)); // 원장에게 메일 전송
 
         return ResponseEntity.ok(teacherDTO); // 선생 dto 리턴
     }

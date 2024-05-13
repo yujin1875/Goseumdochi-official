@@ -1,8 +1,8 @@
 package com.midas.goseumdochi.director.controller;
 
 import com.midas.goseumdochi.director.dto.DirectorDTO;
-import com.midas.goseumdochi.director.dto.StudentDirectorDTO;
-import com.midas.goseumdochi.director.service.StudentDirectorService;
+import com.midas.goseumdochi.academy.dto.StudentAcademyDTO;
+import com.midas.goseumdochi.academy.service.StudentAcademyService;
 import com.midas.goseumdochi.student.Dto.StudentDTO;
 import com.midas.goseumdochi.student.Service.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import com.midas.goseumdochi.director.service.DirectorService;
 public class DirectorController {
     private final DirectorService directorService;
     private final StudentService studentService;
-    private final StudentDirectorService studentDirectorService;
+    private final StudentAcademyService studentDirectorService;
 
     // 로그인 폼 작성 후
     @PostMapping("/login")
@@ -51,15 +51,15 @@ public class DirectorController {
 
     // 학생 등록
     @PostMapping("/registStudent")
-    public ResponseEntity<?> registStudent(@RequestBody StudentDirectorDTO studentDirectorDTO) { // 학생id, 원장id 입력받음
+    public ResponseEntity<?> registStudent(@RequestBody StudentAcademyDTO studentAcademyDTO) { // (학생id, 학원id) 입력받음
         // 학생 등록 실패 로직
-        if(studentDirectorDTO.getStudentId() == null) {
+        if(studentAcademyDTO.getStudentId() == null) {
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
                     .body("학생 등록 실패. 학생을 선택해주세요!");
         }
         // 학생 등록 성공
-        studentDirectorService.registStudentDirector(studentDirectorDTO); // 등록
+        studentDirectorService.registStudentAcademy(studentAcademyDTO); // 등록
         return ResponseEntity.ok("학생 등록 성공.");
     }
 }
