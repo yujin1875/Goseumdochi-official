@@ -1,8 +1,8 @@
 package com.midas.goseumdochi.admin.service;
 
-import com.midas.goseumdochi.admin.entity.AcademyEntity;
+import com.midas.goseumdochi.academy.entity.AcademyEntity;
+import com.midas.goseumdochi.academy.repository.AcademyRepository;
 import com.midas.goseumdochi.director.entity.DirectorEntity;
-import com.midas.goseumdochi.admin.repository.AcademyRepository;
 import com.midas.goseumdochi.academy.entity.AcademyFormEntity;
 import com.midas.goseumdochi.academy.repository.AcademyFormRepository;
 import com.midas.goseumdochi.director.repository.DirectorRepository;
@@ -43,7 +43,7 @@ public class AcademyFormServ {
         // 학원 정보 저장
         AcademyEntity academyEntity = AcademyEntity.builder()
                 .name(academyFormEntity.getAcademyName())
-                .pnum(academyFormEntity.getAcademyPhoneNumber())
+                .phoneNumber(academyFormEntity.getAcademyPhoneNumber())
                 .postcode(academyFormEntity.getAcademyPostcode())
                 .address(academyFormEntity.getAcademyAddress())
                 .addressDetail(academyFormEntity.getAcademyAddressDetail())

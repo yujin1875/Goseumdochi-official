@@ -17,8 +17,8 @@ public class SubjectController {
     private final SubjectService subjectService;
 
     @PostMapping("/regist")
-    public ResponseEntity<?> registSubject(@RequestBody SubjectDTO subjectDTO) { // (이름, 원장 id) 전달
-        SubjectDTO findSubjectDTO = subjectService.findByNameAndDirectorId(subjectDTO.getName(), subjectDTO.getDirectorId());
+    public ResponseEntity<?> registSubject(@RequestBody SubjectDTO subjectDTO) { // (이름, 학원 id) 전달
+        SubjectDTO findSubjectDTO = subjectService.findByNameAndAcademyId(subjectDTO.getName(), subjectDTO.getAcademyId());
 
         if(findSubjectDTO != null) { // 중복된 과목이 존재
             return ResponseEntity

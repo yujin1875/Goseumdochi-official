@@ -18,7 +18,7 @@ public class TeacherDTO { // 원장이랑 일단 똑같음
     private String phoneNumber;
     private LocalDate birthdate;
     private String email;
-    private Long directorId; // fk
+    private Long academyId; // fk
 
     // TeacherEntity -> TeacherDTO
     public static TeacherDTO toTeacherDTO(TeacherEntity teacherEntity) {
@@ -29,7 +29,7 @@ public class TeacherDTO { // 원장이랑 일단 똑같음
         teacherDTO.setPassword(teacherEntity.getPassword());
         teacherDTO.setBirthdate(teacherEntity.getBirthdate());
         teacherDTO.setEmail(teacherEntity.getEmail());
-        teacherDTO.setDirectorId(teacherEntity.getDirectorEntity().getId()); // fk
+        teacherDTO.setAcademyId(teacherEntity.getAcademyEntity().getId()); // fk
 
         return teacherDTO;
     }
