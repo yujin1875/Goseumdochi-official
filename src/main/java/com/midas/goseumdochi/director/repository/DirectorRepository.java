@@ -13,4 +13,8 @@ public interface DirectorRepository extends JpaRepository<DirectorEntity, Long> 
     @Query("SELECT d FROM DirectorEntity d WHERE d.loginid = :loginid And d.password = :password")
     Optional<DirectorEntity> findByLoginidAndPassword(@Param("loginid") String loginid,
                                                                          @Param("password") String password);
+
+    // fk 조회
+    @Query("SELECT d FROM DirectorEntity d WHERE d.academyEntity.id = :academyId")
+    Optional<DirectorEntity> findByAcademyId(@Param("academyId") Long academyId);
 }

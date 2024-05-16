@@ -1,7 +1,6 @@
 package com.midas.goseumdochi.academy.entity;
 
 import com.midas.goseumdochi.academy.dto.SubjectDTO;
-import com.midas.goseumdochi.director.entity.DirectorEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,24 +19,24 @@ public class SubjectEntity {
     @Column(name = "subject_name")
     private String name;
 
-    // 원장과 N:1 매핑
+    // 학원과 N:1 매핑
     @ManyToOne
-    @JoinColumn(name = "director_id")
-    private DirectorEntity directorEntity;
+    @JoinColumn(name = "academy_id")
+    private AcademyEntity academyEntity;
 
     // DTO -> Entity
     @Builder
-    public SubjectEntity(Long id, String name, DirectorEntity directorEntity) {
+    public SubjectEntity(Long id, String name, AcademyEntity academyEntity) {
         this.id = id;
         this.name = name;
-        this.directorEntity = directorEntity;
+        this.academyEntity = academyEntity;
     }
 
-    public static SubjectEntity toSubjectEntity(SubjectDTO subjectDTO, DirectorEntity directorEntity) {
+    public static SubjectEntity toSubjectEntity(SubjectDTO subjectDTO, AcademyEntity academyEntity) {
         SubjectEntity subjectEntity = SubjectEntity.builder()
                 .id(subjectDTO.getId())
                 .name(subjectDTO.getName())
-                .directorEntity(directorEntity)
+                .academyEntity(academyEntity)
                 .build();
 
         return subjectEntity;

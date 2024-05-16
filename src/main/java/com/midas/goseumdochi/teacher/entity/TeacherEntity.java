@@ -1,6 +1,6 @@
 package com.midas.goseumdochi.teacher.entity;
 
-import com.midas.goseumdochi.director.entity.DirectorEntity;
+import com.midas.goseumdochi.academy.entity.AcademyEntity;
 import com.midas.goseumdochi.teacher.dto.TeacherDTO;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -39,14 +39,14 @@ public class TeacherEntity {
     @Column(name = "teacher_email", length = 32)
     private String email;
 
-    // 원장과 N:1 매핑
+    // 학원과 N:1 매핑
     @ManyToOne
-    @JoinColumn(name = "directer_id")
-    private DirectorEntity directorEntity;
+    @JoinColumn(name = "academy_id")
+    private AcademyEntity academyEntity;
     // 빌더랑 toTeacherEntity 좀 수정 해야함
 
     @Builder
-    public TeacherEntity(Long id, String name, String loginid, String password, String phoneNumber, LocalDate birthdate, String email, DirectorEntity directorEntity) {
+    public TeacherEntity(Long id, String name, String loginid, String password, String phoneNumber, LocalDate birthdate, String email, AcademyEntity academyEntity) {
         this.id = id;
         this.name = name;
         this.loginid = loginid;
@@ -54,11 +54,11 @@ public class TeacherEntity {
         this.phoneNumber = phoneNumber;
         this.birthdate = birthdate;
         this.email = email;
-        this.directorEntity = directorEntity;
+        this.academyEntity = academyEntity;
     }
 
     // TeacherDTO -> TeacherEntity
-    public static TeacherEntity toTeacherEntity(TeacherDTO teacherDTO, DirectorEntity directorEntity) {
+    public static TeacherEntity toTeacherEntity(TeacherDTO teacherDTO, AcademyEntity academyEntity) {
         TeacherEntity teacherEntity = TeacherEntity.builder()
                 .id(teacherDTO.getId())
                 .name(teacherDTO.getName())
@@ -66,7 +66,7 @@ public class TeacherEntity {
                 .password(teacherDTO.getPassword())
                 .birthdate(teacherDTO.getBirthdate())
                 .email(teacherDTO.getEmail())
-                .directorEntity(directorEntity)
+                .academyEntity(academyEntity)
                 .build();
 
         return teacherEntity;
