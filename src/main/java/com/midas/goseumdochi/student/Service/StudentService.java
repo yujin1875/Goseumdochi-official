@@ -3,17 +3,17 @@ package com.midas.goseumdochi.student.Service;
 import com.midas.goseumdochi.student.Dto.StudentDTO;
 import com.midas.goseumdochi.student.Repository.StudentRepository;
 import com.midas.goseumdochi.student.entity.StudentEntity;
+import com.midas.goseumdochi.util.ai.EncDecService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
-
-    public StudentService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
+    private final EncDecService encDecService;
 
     //회원가입 로직
     public int join(StudentDTO studentDTO, String passwordCheck) {
@@ -37,6 +37,7 @@ public class StudentService {
             StudentEntity studentEntity = StudentEntity.toStudent(studentDTO);
             studentEntity.setStudentBirthDate(studentDTO.getStudentBirthDate());
             studentEntity.setStudentPhoneNumber(studentDTO.getStudentPhoneNumber());
+            studentEntity.setStudentPassword(encDecService.encrypt(studentDTO.getStudentPassword())); // 암호화하여 비밀번호 저장
             studentRepository.save(studentEntity);
             return 1;
         }
@@ -48,7 +49,7 @@ public class StudentService {
 
         if (byStudentId.isPresent()) {
             StudentEntity studentEntity = byStudentId.get();
-            if (studentEntity.getStudentPassword().equals(studentDTO.getStudentPassword())) {
+            if (studentDTO.getStudentPassword().equals(encDecService.decrypt(studentEntity.getStudentPassword()))) { // 복호화 비밀번호 검사
                 System.out.println("로그인 성공!");
 
                 return StudentDTO.toStudentDTO(studentEntity);
@@ -79,7 +80,7 @@ public class StudentService {
 
     public void updateStudentPassword(Long studentId, String newPassword) {
         studentRepository.findById(studentId).ifPresent(studentEntity -> {
-            studentEntity.setStudentPassword(newPassword);
+            studentEntity.setStudentPassword(encDecService.encrypt(newPassword)); //암호화하여 새 비밀번호 저장
             studentRepository.save(studentEntity);
         });
     }

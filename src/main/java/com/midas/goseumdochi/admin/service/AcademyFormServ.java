@@ -6,6 +6,7 @@ import com.midas.goseumdochi.director.entity.DirectorEntity;
 import com.midas.goseumdochi.academy.entity.AcademyFormEntity;
 import com.midas.goseumdochi.academy.repository.AcademyFormRepository;
 import com.midas.goseumdochi.director.repository.DirectorRepository;
+import com.midas.goseumdochi.util.ai.EncDecService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,14 +19,16 @@ public class AcademyFormServ {
 
     private final AcademyFormRepository academyFormRepository;
     private final AcademyRepository academyRepository;
-
     private final DirectorRepository directorRepos;
+    private final EncDecService encDecService;
 
     @Autowired
-    public AcademyFormServ(AcademyFormRepository academyFormRepository, AcademyRepository academyRepository, DirectorRepository directorRepos) {
+    public AcademyFormServ(AcademyFormRepository academyFormRepository, AcademyRepository academyRepository,
+                           DirectorRepository directorRepos, EncDecService encDecService) {
         this.academyFormRepository = academyFormRepository;
         this.academyRepository = academyRepository;
         this.directorRepos = directorRepos;
+        this.encDecService = encDecService;
     }
 
     public List<AcademyFormEntity> getAllAcademyForms() {
@@ -52,6 +55,7 @@ public class AcademyFormServ {
 
         String phoneNumber = academyFormEntity.getDirectorPhoneNumber();
         String lastFourDigits = phoneNumber.substring(phoneNumber.length() - 4);
+        String password = "0000"; // 비밀번호 초기화
 
         // 원장 정보 저장 (아이디: 학원신청서 기본키 번호 4자리 + 폰 번호 마지막 네자리)
         String academyFormIdStr = String.format("%04d", academyFormId); // 학원신청서 기본키번호를 네 자리 숫자로 포맷팅
@@ -59,7 +63,7 @@ public class AcademyFormServ {
         DirectorEntity directorEntity = DirectorEntity.builder()
                 .name(academyFormEntity.getDirectorName())
                 .phoneNumber(academyFormEntity.getDirectorPhoneNumber())
-                .password("0000") // 비밀번호 초기화
+                .password(encDecService.encrypt(password)) // 비밀번호 암호화하여 저장
                 .loginid(directorId) // 원장 ID 설정
                 .build();
         directorRepos.save(directorEntity);

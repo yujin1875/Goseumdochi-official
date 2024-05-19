@@ -7,6 +7,7 @@ import com.midas.goseumdochi.teacher.dto.TeacherDTO;
 import com.midas.goseumdochi.teacher.entity.TeacherEntity;
 import com.midas.goseumdochi.teacher.repository.TeacherRepository;
 import com.midas.goseumdochi.util.Dto.MailDTO;
+import com.midas.goseumdochi.util.ai.EncDecService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public class TeacherService {
     final private TeacherRepository teacherRepository;
     final private DirectorRepository directorRepository;
     final private AcademyRepository academyRepository;
+    final private EncDecService encDecService;
 
     // 선생의 loginid와 password를 설정해야함
     public TeacherDTO setLoginidAndPassword(TeacherDTO teacherDTO) {
@@ -36,6 +38,7 @@ public class TeacherService {
 
     // 선생 처음 등록
     public void regist(TeacherDTO teacherDTO) {
+        teacherDTO.setPassword(encDecService.encrypt(teacherDTO.getPassword())); // 비밀번호 암호화하여 DB 저장
         // 에러나면 처음 static 함수 추가
         TeacherEntity teacherEntity = TeacherEntity.toTeacherEntity(teacherDTO,
                 academyRepository.findById(teacherDTO.getAcademyId()).get());

@@ -2,6 +2,8 @@ package com.midas.goseumdochi.util.Service;
 
 import com.midas.goseumdochi.student.entity.StudentEntity;
 import com.midas.goseumdochi.util.Dto.MailDTO;
+import com.midas.goseumdochi.util.ai.EncDecService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import com.midas.goseumdochi.student.Repository.StudentRepository;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class MailService {
 
     @Autowired
@@ -18,6 +21,8 @@ public class MailService {
 
     @Autowired
     private StudentRepository studentRepository;
+
+    private final EncDecService encDecService;
 
     // 메일 내용을 생성하고 임시 비밀번호로 회원 비밀번호를 변경
     public MailDTO createMailAndChangePassword(String memberEmail, Long id) {
@@ -63,7 +68,7 @@ public class MailService {
     public void updatePassword(String tempPassword, String userEmail){
         Optional<StudentEntity> studentOptional = studentRepository.findByStudentEmail(userEmail);
         studentOptional.ifPresent(student -> {
-            student.setStudentPassword(tempPassword);
+            student.setStudentPassword(encDecService.decrypt(tempPassword)); // 암호화하여 저장
             studentRepository.save(student);
         });
     }
