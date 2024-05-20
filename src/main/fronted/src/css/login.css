@@ -64,13 +64,25 @@ hr{
     box-shadow: none;
 }
 
-#letter_Login>a{
+#letter_Login>#findid{
     float:left;
     display:block;
     font-size: 12px;
     color:#6A6A6A;
     text-align: center;
     margin-left:320px;
+    border: none;
+    background-color:#FFFFFF
+}
+#letter_Login>#findpw{
+    float:left;
+    display:block;
+    font-size: 12px;
+    color:#6A6A6A;
+    text-align: center;
+    margin-left:10px;
+    border: none;
+    background-color:#FFFFFF
 }
 
 #footer_Login{
