@@ -14,8 +14,8 @@ function App1() {
         window.location.href='/academy'
     }
 
-    const GoAcademyForm=()=>{
-        window.location.href='/academyForm'
+    const GoAcademyRegister=()=>{
+        window.location.href='/academyform'
     }
 
     return (
@@ -30,11 +30,9 @@ function App1() {
                 <input type="submit" value="로그인" id="login_btn" onClick={Gologin}/>
                 <hr/>
                 <div id="btn_start">
-                    <input type="submit" value="학원등록1" id="academy1_btn" onClick={Goaca}/>
-                    <input type="submit" value="학원등록2" id="academy2_btn" onClick={Goaca}/>
+                    <input type="submit" value="학원등록" id="academy1_btn" onClick={GoAcademyRegister}/>
+                    <input type="submit" value="학원열람" id="academy2_btn" onClick={Goaca}/>
                 </div>
-                <input type="submit" value="테스트 신청서 작성" id="academyForm_btn" onClick={GoAcademyForm}/>
-                <hr/>
             </div>
             <div id="footer_start">
                 <a>문의 | midas2024.ver01@gmail.com</a>

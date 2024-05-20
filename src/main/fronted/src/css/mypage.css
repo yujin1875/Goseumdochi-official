@@ -1,0 +1,190 @@
+#mypage-menu{
+    display: block;
+    width: 1358px;
+    height: 1080px;
+    margin: auto;
+    background-color: #FFFFFF;
+    border-radius: 100px;
+}
+
+#mypage-menu>#header_mypage{
+    width:1358px;
+    height:200px;
+
+}
+
+#header_mypage>img{
+    display:block;
+    width: 162px;
+    height: 162px;
+    margin:auto;
+    object-fit: cover;
+}
+
+#header_mypage>#user_info{
+    display:block;
+    width: 238px;
+    height: 34px;
+    /*background-color: #646464;*/
+    margin-left:984px;
+}
+
+#mypage-menu>#buttons_mypage{
+    display: block;
+    width: 1358px;
+    height: 100px;
+}
+
+#buttons_mypage>#rect{
+    position: absolute;
+    float:left;
+    width: 1086px;
+    height: 5px;
+    margin: 30px auto auto;
+    margin-left:136px;
+    z-index: 1;
+
+    background: #7A7A7A;
+}
+
+#buttons_mypage>input{
+    position: relative;
+    display:block;
+    float:left;
+    width: 281px;
+    height: 68px;
+    background-color: #F6B28E;
+    margin: auto 28px;
+    z-index: 2;
+
+    font-size: 25px;
+    color:aliceblue;
+    box-shadow: none;
+    border:none;
+    outline: none;
+}
+
+input>#notice_btn{
+    background-color: #E78753;
+}
+
+#buttons_mypage>input:hover {
+    background:#E78753;
+    color:#fff;
+}
+
+#buttons_mypage>#notice_btn{
+    margin-left:202px;
+}
+
+#mypage-menu>#contents_mypage{
+    display: block;
+    width: 1358px;
+    height: 500px;
+}
+
+#contents_mypage>#contents1_mypage{
+    position:relative;
+    display: block;
+    width: 1000px;
+    height: 400px;
+    margin: auto;
+    margin-top: 130px;
+}
+
+#contents1_mypage>#info_mypage{
+    float:left;
+    width: 740px;
+    height: 400px;
+}
+
+#info_mypage>#category_info_mypage{
+    width: 200px;
+    height: 400px;
+    float: left;
+}
+
+#category_info_mypage>div{
+    float:left;
+    width: 200px;
+    height: 100px;
+    margin:auto;
+    
+    font-size: 32px;
+    color:#000000;
+    box-shadow: none;
+    border:none;
+    outline: none;
+    text-align: right;
+}
+
+#info_mypage>#user_info_mypage{
+    float: left;
+    width: 540px;
+    height: 400px;
+}
+
+#user_info_mypage>#blank{
+    float: left;
+    width: 100px;
+    height: 400px;
+}
+
+#user_info_mypage>div{
+    width: 440px;
+    height: 100px;
+    margin:auto;
+    
+    font-size: 32px;
+    color:#000000;
+    box-shadow: none;
+    border:none;
+    outline: none;
+    text-align: left;
+}
+
+#contents1_mypage>#userphoto_mypage{
+    float:left;
+    width: 260px;
+    height: 400px;
+}
+
+#userphoto_mypage>#photo{
+    width: 258px;
+    height: 350px;
+    background-color:#EDEDED;
+    margin:auto;
+
+    font-size: 32px;
+    color:#000000;
+    box-shadow: none;
+    border:none;
+    outline: none;
+    text-align: center;
+}
+#photo>#header_photo{
+    width:260px;
+    height:100px;
+}
+#userphoto_mypage>a{
+    display:block;
+    text-decoration: underline;
+    font-size: 24px;
+    margin:auto;
+    margin-top:10px;
+    text-align: center;
+}
+
+#mypage-menu>#footer_mypage{
+    width: 1358px;
+    height: 60px;
+    margin-top:90px;
+}
+
+#footer_mypage>a{
+    display:block;
+    font-size: 16px;
+    color:#838383;
+    text-align: center;
+    margin:auto;
+}
