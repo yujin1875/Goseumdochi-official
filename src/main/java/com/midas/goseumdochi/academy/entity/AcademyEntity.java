@@ -22,7 +22,7 @@ public class AcademyEntity {
     @Column(name = "academy_name", length = 32)
     private String name;
 
-    @Column(name = "academy_phoneno", length = 13)
+    @Column(name = "academy_phoneno", length = 11)
     private String phoneNumber;
 
     @Column(name = "academy_postcode", length = 5)

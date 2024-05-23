@@ -29,7 +29,7 @@ public class AcademyFormEntity {
     @Column(name = "aca_form_aca_name", length = 32)
     private String academyName;
 
-    @Column(name = "aca_form_aca_phoneno", length = 13)
+    @Column(name = "aca_form_aca_phoneno", length = 11)
     private String academyPhoneNumber;
 
     @Column(name = "aca_form_aca_postcode", length = 5)
