@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Optional;
-
 @RestController
 @RequestMapping("/api/student")
 @RequiredArgsConstructor
@@ -26,13 +25,23 @@ public class StudentController {
     // 회원가입 페이지 폼 작성 데이터 받기
     @PostMapping("/signup")
     public ResponseEntity<?> join(@RequestBody StudentDTO studentDTO) {
+        System.out.println("Received studentDTO: " + studentDTO);
         if (!studentDTO.getStudentPhoneNumber().matches("^\\d{3}-\\d{4}-\\d{4}$")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("전화번호 형식이 올바르지 않습니다.");
         }
 
         int joinResult = studentService.join(studentDTO, studentDTO.getConfirmPassword());
-        if (joinResult < 0) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("회원가입 실패!!");
+        // 결과에 따른 응답 처리
+        if (joinResult == -4) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이메일 또는 생년월일 형식이 잘못되었습니다.");
+        } else if (joinResult == -3) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("필수 필드가 누락되었습니다.");
+        } else if (joinResult == -2) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 일치하지 않습니다.");
+        } else if (joinResult == -1) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("아이디가 이미 존재합니다.");
+        } else if (joinResult < 0) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 실패!!");
         }
         return ResponseEntity.ok("회원가입 성공. 로그인해주세요.");
     }
