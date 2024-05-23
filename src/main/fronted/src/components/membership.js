@@ -24,16 +24,22 @@ function App2() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("Form data:", inputs);
         try {
-            const response = await
-                axios.post('/api/student/signup', inputs);
+            const response = await axios.post('/api/student/signup', inputs);
             console.log('Form Submit success:', response.data);
             alert("회원가입 성공");
         } catch (error) {
             console.error('Form Submit error:', error);
-            alert(`${error.response.data}`);
+            if (error.response) {
+                console.log("Error response data:", error.response.data);
+                alert(`${error.response.data}`);
+            } else {
+                alert('An error occurred. Please try again later.');
+            }
         }
     };
+
 
     return (
         <div id="App">
