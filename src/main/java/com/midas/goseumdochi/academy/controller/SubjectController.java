@@ -5,10 +5,9 @@ import com.midas.goseumdochi.academy.service.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/subject")
@@ -29,5 +28,18 @@ public class SubjectController {
         // 과목 등록 성공
         subjectService.regist(subjectDTO);
         return ResponseEntity.ok(subjectDTO);
+    }
+
+    @PostMapping("/findList")
+    public ResponseEntity<?> findSubjectList(@RequestParam Long academyId) {
+        List<SubjectDTO> subjectDTOList = subjectService.findAllByAcademyId(academyId);
+
+        if(subjectDTOList.isEmpty()) { // 등록된 과목이 없음
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED) // 에러 상태
+                    .body("등록된 과목이 없습니다.");
+        }
+
+        return ResponseEntity.ok(subjectDTOList);
     }
 }

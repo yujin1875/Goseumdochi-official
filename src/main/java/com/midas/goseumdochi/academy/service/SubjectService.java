@@ -7,6 +7,8 @@ import com.midas.goseumdochi.academy.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,5 +31,13 @@ public class SubjectService {
         SubjectEntity subjectEntity = SubjectEntity.toSubjectEntity(subjectDTO,
                 academyRepository.findById(subjectDTO.getAcademyId()).get());
         subjectRepository.save(subjectEntity);
+    }
+
+    // 과목 리스트 리턴
+    public List<SubjectDTO> findAllByAcademyId(Long academyId) {
+        List<SubjectDTO> subjectDTOList = new ArrayList<>();
+        for (SubjectEntity subjectEntity : subjectRepository.findAllByAcademyId(academyId))
+            subjectDTOList.add(SubjectDTO.toSubjectDTO(subjectEntity));
+        return subjectDTOList;
     }
 }

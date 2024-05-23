@@ -29,7 +29,7 @@ public class DirectorEntity {
     @Column(name = "director_pwd", length = 20)
     private String password;
 
-    @Column(name = "director_phoneno", length = 13)
+    @Column(name = "director_phoneno", length = 11)
     private String phoneNumber;
 
     @Column(name = "director_birthdate")

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -30,7 +31,7 @@ public class TeacherEntity {
     @Column(name = "teacher_pwd", length = 20)
     private String password;
 
-    @Column(name = "teacher_phoneno", length = 13)
+    @Column(name = "teacher_phoneno", length = 11)
     private String phoneNumber;
 
     @Column(name = "teacher_birthdate")
@@ -44,6 +45,10 @@ public class TeacherEntity {
     @JoinColumn(name = "academy_id")
     private AcademyEntity academyEntity;
     // 빌더랑 toTeacherEntity 좀 수정 해야함
+
+    // 강의와 1:N 매핑
+    @OneToMany(mappedBy = "teacherEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LectureEntity> lectureEntityList;
 
     @Builder
     public TeacherEntity(Long id, String name, String loginid, String password, String phoneNumber, LocalDate birthdate, String email, AcademyEntity academyEntity) {
