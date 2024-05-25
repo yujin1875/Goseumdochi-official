@@ -24,6 +24,8 @@ public class SubjectEntity {
     @JoinColumn(name = "academy_id")
     private AcademyEntity academyEntity;
 
+    // 선생-강의와 양방향 연결을 위한다면 매핑 추가하기
+
     // DTO -> Entity
     @Builder
     public SubjectEntity(Long id, String name, AcademyEntity academyEntity) {

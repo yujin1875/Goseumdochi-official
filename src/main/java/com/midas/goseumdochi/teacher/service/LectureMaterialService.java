@@ -60,4 +60,13 @@ public class LectureMaterialService {
         entity.setAttachmentPath(lectureMaterialDTO.getAttachmentPath());
         lectureMaterialRepository.save(entity);
     }
+
+    // 강의 자료 삭제
+    public void deleteLectureMaterial(Long id) {
+        if (!lectureMaterialRepository.existsById(id)) {
+            throw new IllegalArgumentException("해당 수업 자료가 존재하지 않습니다. ID: " + id);
+        }
+        lectureMaterialRepository.deleteById(id);
+    }
+
 }
