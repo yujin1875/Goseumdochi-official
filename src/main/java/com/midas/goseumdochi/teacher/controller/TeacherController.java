@@ -1,9 +1,11 @@
 package com.midas.goseumdochi.teacher.controller;
 
 import com.midas.goseumdochi.teacher.dto.AssignmentDTO;
+import com.midas.goseumdochi.teacher.dto.LectureDTO;
 import com.midas.goseumdochi.teacher.dto.TeacherDTO;
 import com.midas.goseumdochi.teacher.dto.LectureMaterialDTO;
 import com.midas.goseumdochi.teacher.service.AssignmentService;
+import com.midas.goseumdochi.teacher.service.LectureService;
 import com.midas.goseumdochi.teacher.service.TeacherService;
 import com.midas.goseumdochi.teacher.service.LectureMaterialService;
 import com.midas.goseumdochi.util.Service.MailService;
@@ -30,7 +32,9 @@ public class TeacherController {
     private final MailService mailService;
     private final LectureMaterialService lectureMaterialService;
     private final AssignmentService assignmentService;
+    private final LectureService lectureService;
 
+    // 선생 등록
     @PostMapping("/regist")
     public ResponseEntity<?> registTeacher(@RequestBody TeacherDTO inputTeacherDTO) {
         TeacherDTO teacherDTO = teacherService.setLoginidAndPassword(inputTeacherDTO);
@@ -40,6 +44,14 @@ public class TeacherController {
         mailService.mailSend(teacherService.getMailDTOForRegist(teacherDTO));
 
         return ResponseEntity.ok(teacherDTO); // 선생 dto 리턴
+    }
+
+    // 강의 등록
+    @PostMapping("/lecture/regist")
+    public ResponseEntity<?> registLecture(@RequestBody LectureDTO lectureDTO) {
+        lectureService.regist(lectureDTO);
+
+        return ResponseEntity.ok(lectureDTO);
     }
 
     // 새로운 강의 자료 생성
