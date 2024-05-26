@@ -18,6 +18,12 @@ import App15 from './components/subject_register.js';
 import App16 from './components/teacher_register.js';
 import App17 from './components/findacademyform.js';
 import App18 from './components/adminmain.js';
+import App19 from './components/adminnotice.js';
+import App20 from './components/adminnotice_write.js';
+import App21 from './components/adminacademyregister.js';
+import App22 from './components/adminacademymanage.js';
+import App23 from './components/adminstudentmanage.js';
+import App24 from './components/community.js';
 import { Component } from 'react';
 
 class App extends Component{
@@ -51,6 +57,12 @@ class App extends Component{
               <Route path='/teacherregister' element={<App16/>}/>
               <Route path='/findacademyform' element={<App17/>}/>
               <Route path='/adminmain' element={<App18/>}/>
+              <Route path='/adminnotice' element={<App19/>}/>
+              <Route path='/adminnoticewrite' element={<App20/>}/>
+              <Route path='/adminacademyregister' element={<App21/>}/>
+              <Route path='/adminacademymanage' element={<App22/>}/>
+              <Route path='/adminstudentmanage' element={<App23/>}/>
+              <Route path='/community' element={<App24/>}/>
             </Routes>   
         </BrowserRouter> 
       </div>
