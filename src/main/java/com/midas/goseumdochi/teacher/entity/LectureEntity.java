@@ -1,6 +1,7 @@
 package com.midas.goseumdochi.teacher.entity;
 
 import com.midas.goseumdochi.academy.entity.SubjectEntity;
+import com.midas.goseumdochi.teacher.dto.LectureDTO;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,5 +39,16 @@ public class LectureEntity {
         this.name = name;
         this.teacherEntity = teacherEntity;
         this.subjectEntity = subjectEntity;
+    }
+
+    public static LectureEntity toLectureEntity(LectureDTO lectureDTO, TeacherEntity teacherEntity, SubjectEntity subjectEntity) {
+        LectureEntity lectureEntity = LectureEntity.builder()
+                .id(lectureDTO.getId())
+                .name(lectureDTO.getName())
+                .teacherEntity(teacherEntity)
+                .subjectEntity(subjectEntity)
+                .build();
+
+        return lectureEntity;
     }
 }
