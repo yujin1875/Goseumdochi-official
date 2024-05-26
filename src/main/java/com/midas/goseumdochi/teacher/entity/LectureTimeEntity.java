@@ -1,5 +1,6 @@
 package com.midas.goseumdochi.teacher.entity;
 
+import com.midas.goseumdochi.teacher.dto.LectureTimeDTO;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,5 +38,17 @@ public class LectureTimeEntity {
         this.startTime = startTime;
         this.endTime = endTime;
         this.lectureEntity = lectureEntity;
+    }
+
+    public static LectureTimeEntity toLectureTimeEntity(LectureTimeDTO lectureTimeDTO, LectureEntity lectureEntity) {
+        LectureTimeEntity lectureTimeEntity = LectureTimeEntity.builder()
+                .id(lectureTimeDTO.getId())
+                .day(lectureTimeDTO.getDay())
+                .startTime(lectureTimeDTO.getStartTime())
+                .endTime(lectureTimeDTO.getEndTime())
+                .lectureEntity(lectureEntity)
+                .build();
+
+        return lectureTimeEntity;
     }
 }

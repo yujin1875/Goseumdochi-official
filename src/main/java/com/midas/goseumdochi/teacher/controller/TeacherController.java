@@ -1,11 +1,10 @@
 package com.midas.goseumdochi.teacher.controller;
 
 import com.midas.goseumdochi.teacher.dto.AssignmentDTO;
+import com.midas.goseumdochi.teacher.dto.LectureDTO;
 import com.midas.goseumdochi.teacher.dto.TeacherDTO;
 import com.midas.goseumdochi.teacher.dto.LectureMaterialDTO;
-import com.midas.goseumdochi.teacher.service.AssignmentService;
-import com.midas.goseumdochi.teacher.service.TeacherService;
-import com.midas.goseumdochi.teacher.service.LectureMaterialService;
+import com.midas.goseumdochi.teacher.service.*;
 import com.midas.goseumdochi.util.Service.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +29,10 @@ public class TeacherController {
     private final MailService mailService;
     private final LectureMaterialService lectureMaterialService;
     private final AssignmentService assignmentService;
+    private final LectureService lectureService;
+    private final LectureInfoService lectureInfoService;
 
+    // 선생 등록
     @PostMapping("/regist")
     public ResponseEntity<?> registTeacher(@RequestBody TeacherDTO inputTeacherDTO) {
         TeacherDTO teacherDTO = teacherService.setLoginidAndPassword(inputTeacherDTO);
@@ -40,6 +42,33 @@ public class TeacherController {
         mailService.mailSend(teacherService.getMailDTOForRegist(teacherDTO));
 
         return ResponseEntity.ok(teacherDTO); // 선생 dto 리턴
+    }
+
+    // 강의 등록
+    @PostMapping("/lecture/regist")
+    public ResponseEntity<?> registLecture(@RequestBody LectureDTO lectureDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        TeacherDTO currentTeacher = teacherService.findByLoginid(currentUserName);
+        lectureDTO.setTeacherId(currentTeacher.getId());
+
+        lectureService.regist(lectureDTO);
+
+        return ResponseEntity.ok(lectureDTO);
+    }
+
+    // 강의 정보 조회
+    @GetMapping("/lecture/{id}")
+    public ResponseEntity<LectureDTO> getLectureInfo(@PathVariable Long id) {
+        LectureDTO lectureDTO = lectureInfoService.getLectureInfo(id);
+        return ResponseEntity.ok(lectureDTO);
+    }
+
+    // 강의 정보 업데이트
+    @PutMapping("/lecture/update")
+    public ResponseEntity<?> updateLectureInfo(@RequestBody LectureDTO lectureDTO) {
+        lectureInfoService.updateLectureInfo(lectureDTO);
+        return ResponseEntity.ok("강의 정보가 성공적으로 업데이트되었습니다.");
     }
 
     // 새로운 강의 자료 생성
@@ -158,4 +187,41 @@ public class TeacherController {
         AssignmentDTO assignment = assignmentService.getAssignmentById(id);
         return ResponseEntity.ok(assignment);
     }
+
+    // 과제 업데이트
+    @PutMapping("/assignment/{id}")
+    public ResponseEntity<?> updateAssignment(@PathVariable Long id,
+                                              @RequestPart("assignment") AssignmentDTO assignmentDTO,
+                                              @RequestPart("file") MultipartFile file) throws IOException {
+        String uploadDir = "uploads/assignments/";
+        File directory = new File(uploadDir);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        String fileName = file.getOriginalFilename();
+        Path filePath = Paths.get(uploadDir, fileName);
+        Files.write(filePath, file.getBytes());
+
+        // 현재 로그인된 사용자 정보 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+
+        TeacherDTO currentTeacher = teacherService.findByLoginid(currentUserName);
+
+        assignmentDTO.setAuthor(currentTeacher.getName());
+        assignmentDTO.setAttachmentPath(filePath.toString());
+
+        assignmentService.updateAssignment(id, assignmentDTO);
+
+        return ResponseEntity.ok("과제가 성공적으로 업데이트되었습니다.");
+    }
+
+    // 과제 삭제
+    @DeleteMapping("/assignment/{id}")
+    public ResponseEntity<?> deleteAssignment(@PathVariable Long id) {
+        assignmentService.deleteAssignment(id);
+        return ResponseEntity.ok("과제가 성공적으로 삭제되었습니다.");
+    }
+
 }
