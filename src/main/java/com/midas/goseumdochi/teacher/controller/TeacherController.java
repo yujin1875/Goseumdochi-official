@@ -1,5 +1,7 @@
 package com.midas.goseumdochi.teacher.controller;
 
+import com.midas.goseumdochi.student.Dto.StudentDTO;
+import com.midas.goseumdochi.student.Service.RegistLectureService;
 import com.midas.goseumdochi.teacher.dto.AssignmentDTO;
 import com.midas.goseumdochi.teacher.dto.LectureDTO;
 import com.midas.goseumdochi.teacher.dto.TeacherDTO;
@@ -10,6 +12,7 @@ import com.midas.goseumdochi.teacher.service.TeacherService;
 import com.midas.goseumdochi.teacher.service.LectureMaterialService;
 import com.midas.goseumdochi.util.Service.MailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,6 +36,7 @@ public class TeacherController {
     private final LectureMaterialService lectureMaterialService;
     private final AssignmentService assignmentService;
     private final LectureService lectureService;
+    private final RegistLectureService registLectureService;
 
     // 선생 등록
     @PostMapping("/regist")
@@ -52,6 +56,49 @@ public class TeacherController {
         lectureService.regist(lectureDTO);
 
         return ResponseEntity.ok(lectureDTO);
+    }
+
+    // 선생의 모든 강의+시간 조희
+    @GetMapping("/{teacherId}/lecture")
+    public ResponseEntity<?> showLectureAndTimeList(@PathVariable Long teacherId) {
+        List<LectureDTO> lectureDTOList = lectureService.getLectureAndTimeListByTeacher(teacherId);
+        return ResponseEntity.ok(lectureDTOList);
+    }
+
+    // 검색어로 선생 강의+시간 조희
+    @GetMapping("/{teacherId}/lecture/search")
+    public ResponseEntity<?> searchLectureAndTimeList(@PathVariable Long teacherId, @RequestParam String word) {
+        List<LectureDTO> lectureDTOList = lectureService.searchLectureAndTimeListByTeacher(teacherId, word);
+        return ResponseEntity.ok(lectureDTOList);
+    }
+
+    // 강의를 수강하는 학생 리스트 출력
+    @GetMapping("lecture/{lectureId}/student/exist")
+    public ResponseEntity<?> showStudentExist(@PathVariable Long lectureId) {
+        List<StudentDTO> studentDTOList = registLectureService.getExistStudentDTOList(lectureId);
+        return ResponseEntity.ok(studentDTOList);
+    }
+
+    // 강의를 수강하지 않는 학생 리스트 출력
+    @GetMapping("lecture/{lectureId}/student/non-exist")
+    public ResponseEntity<?> showStudentNonExist(@PathVariable Long lectureId) {
+        List<StudentDTO> studentDTOList = registLectureService.getNonExistStudentDTOList(lectureId);
+        return ResponseEntity.ok(studentDTOList);
+    }
+
+    // 강의에 학생 등록
+    @PostMapping("/lecture/{lectureId}/student/regist")
+    public ResponseEntity<?> registStudentToLecture(@PathVariable Long lectureId, @RequestParam Long studentId) {
+        registLectureService.regist(lectureId, studentId);
+        return ResponseEntity.ok("강의 학생 등록 성공");
+    }
+
+    // 강의에 등록된 학생 삭제
+    @PostMapping("lecture/{lectureId}/student/delete")
+    public ResponseEntity<?> deleteStudentToLecture(@PathVariable Long lectureId, @RequestParam Long studentId) {
+        if (registLectureService.delete(lectureId, studentId) == false)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("수강 삭제 실패");
+        return ResponseEntity.ok("수강 삭제 성공");
     }
 
     // 새로운 강의 자료 생성

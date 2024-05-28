@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
 
@@ -22,6 +23,13 @@ public class LectureEntity {
     @Column(name = "lecture_name", length = 32)
     private String name;
 
+    @Column(name = "lecture_max_count")
+    private int maxCount; // 최대 인원수
+
+    @Column(name = "lecture_head_count")
+    @ColumnDefault("0")
+    private int headCount; // 현재 인원수
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
     private TeacherEntity teacherEntity;
@@ -34,9 +42,11 @@ public class LectureEntity {
     private List<LectureTimeEntity> lectureTimeEntityList;
 
     @Builder
-    public LectureEntity(Long id, String name, TeacherEntity teacherEntity, SubjectEntity subjectEntity) {
+    public LectureEntity(Long id, String name, int maxCount, int headCount, TeacherEntity teacherEntity, SubjectEntity subjectEntity) {
         this.id = id;
         this.name = name;
+        this.maxCount = maxCount;
+        this.headCount = headCount;
         this.teacherEntity = teacherEntity;
         this.subjectEntity = subjectEntity;
     }
@@ -45,6 +55,8 @@ public class LectureEntity {
         LectureEntity lectureEntity = LectureEntity.builder()
                 .id(lectureDTO.getId())
                 .name(lectureDTO.getName())
+                .maxCount(lectureDTO.getMaxCount())
+                .headCount(lectureDTO.getHeadCount())
                 .teacherEntity(teacherEntity)
                 .subjectEntity(subjectEntity)
                 .build();

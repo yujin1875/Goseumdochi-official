@@ -42,8 +42,13 @@ public class StudentEntity {
     @Column
     private String profilePictureUrl;
 
+    // 학원과 매핑
     @OneToMany(mappedBy = "studentEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StudentAcademyEntity> studentAcademyEntityList;
+
+    // 강의와 매핑
+    @OneToMany(mappedBy = "studentEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RegistLectureEntity> registLectureEntityList;
 
     public static StudentEntity toStudent(StudentDTO studentDTO) {
         return StudentEntity.builder()
