@@ -75,4 +75,24 @@ public class AssignmentService {
         Files.write(filePath, file.getBytes());
         return filePath.toString();
     }
+
+    public void updateAssignment(Long id, AssignmentDTO assignmentDTO) {
+        AssignmentEntity entity = assignmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("해당 과제를 찾을 수 없습니다: " + id));
+        entity.setTitle(assignmentDTO.getTitle());
+        entity.setContent(assignmentDTO.getContent());
+        entity.setDeadline(assignmentDTO.getDeadline());
+        entity.setPoints(assignmentDTO.getPoints());
+        entity.setExamType(assignmentDTO.getExamType());
+        entity.setAttachmentPath(assignmentDTO.getAttachmentPath());
+        assignmentRepository.save(entity);
+    }
+
+    public void deleteAssignment(Long id) {
+        if (!assignmentRepository.existsById(id)) {
+            throw new IllegalArgumentException("해당 과제가 존재하지 않습니다. ID: " + id);
+        }
+        assignmentRepository.deleteById(id);
+    }
+
 }
