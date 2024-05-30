@@ -5,6 +5,8 @@ import com.midas.goseumdochi.director.entity.DirectorNoticeEntity;
 import com.midas.goseumdochi.director.repository.DirectorNoticeRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable; // Pageable import 경로 중요
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,5 +64,11 @@ public class DirectorNoticeController {
         noticeRepository.save(notice);
 
         return ResponseEntity.ok("공지사항이 추가되었습니다");
+    }
+
+    // 원장 공지사항 리스트 페이징
+    @GetMapping("/{directorId}/notice/paging")
+    public ResponseEntity<?> pagingNotice(@PathVariable Long directorId, @PageableDefault(page=1) Pageable pageable) { // ?page: 페이지 번호
+        return ResponseEntity.ok("아직!!! 수정 필요");
     }
 }

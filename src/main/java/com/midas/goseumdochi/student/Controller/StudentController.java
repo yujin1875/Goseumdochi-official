@@ -2,6 +2,8 @@ package com.midas.goseumdochi.student.Controller;
 import com.midas.goseumdochi.student.Dto.StudentDTO;
 import com.midas.goseumdochi.student.Service.FileStorageService;
 import com.midas.goseumdochi.student.Service.StudentService;
+import com.midas.goseumdochi.teacher.dto.LectureDTO;
+import com.midas.goseumdochi.teacher.service.LectureService;
 import com.midas.goseumdochi.util.Dto.MailDTO;
 import com.midas.goseumdochi.util.Service.MailService;
 import jakarta.servlet.http.HttpSession;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 @RestController
 @RequestMapping("/api/student")
@@ -21,6 +24,7 @@ public class StudentController {
     private final StudentService studentService;
     private final FileStorageService fileStorageService;
     private final MailService mailService;
+    private final LectureService lectureService;
 
     // 회원가입 페이지 폼 작성 데이터 받기
     @PostMapping("/signup")
@@ -143,5 +147,12 @@ public class StudentController {
 
         studentService.updateStudentPassword(studentId, studentDTO.getNewPassword());
         return ResponseEntity.ok("비밀번호가 변경되었습니다.");
+    }
+
+    // 학생이 수강하는 강의 리스트 출력 (강의시간 포함)
+    @GetMapping("/{studentId}/lecture")
+    public ResponseEntity<?> showLectureAndTimeList(@PathVariable Long studentId) {
+        List<LectureDTO> lectureDTOList = lectureService.getLectureAndTimeListByStudent(studentId);
+        return ResponseEntity.ok(lectureDTOList);
     }
 }

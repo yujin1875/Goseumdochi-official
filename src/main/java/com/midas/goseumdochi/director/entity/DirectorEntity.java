@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -42,6 +43,10 @@ public class DirectorEntity {
     @OneToOne
     @JoinColumn(name = "academy_id") // name: DB에 저장되는 이름, referencedColumnName 지정 안 하면 자동으로 pk와 매핑
     private AcademyEntity academyEntity;
+
+    // 원장 공사항과 1:N 연경
+    @OneToMany(mappedBy = "directorEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DirectorNoticeEntity> directorNoticeEntityList;
 
     @Builder
     public DirectorEntity(Long id, String name, String loginid, String password, String phoneNumber, LocalDate birthdate, String email) {
