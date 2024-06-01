@@ -35,6 +35,9 @@ public class TeacherController {
     @Autowired
     private FileStorageService fileStorageService;
 
+    @Autowired
+    private FileStorageService fileStorageService;
+
     // 선생 등록
     @PostMapping("/regist")
     public ResponseEntity<?> registTeacher(@RequestBody TeacherDTO inputTeacherDTO) {
