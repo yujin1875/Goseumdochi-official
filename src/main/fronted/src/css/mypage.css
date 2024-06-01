@@ -183,9 +183,24 @@ input>#notice_btn{
     border:none;
 }
 
+#mypage-menu>#b_mypage{
+    width:1358px;
+    height:30px;
+}
+
+#b_mypage>button{
+    float:left;
+    font-size:20px;
+    margin-left:10px;
+}
+
+#b_mypage>#change_btn{
+    margin-left:1100px;
+}
+
 #mypage-menu>#footer_mypage{
     width: 1358px;
-    height: 60px;
+    height: 30px;
     margin-top:90px;
 }
 
@@ -195,4 +210,21 @@ input>#notice_btn{
     color:#838383;
     text-align: center;
     margin:auto;
+}
+
+#info_mypage>#ChangePassWord_mypage{
+    width: 840px;
+    height: 500px;
+}
+
+#ChangePassWord_mypage>h2{
+    margin-left:120px;
+    margin-bottom:40px;
+}
+
+#ChangePassWord_mypage>input{
+    margin-left:120px;
+    width: 500px;
+    height: 50px;
+    margin-top: 30px;
 }

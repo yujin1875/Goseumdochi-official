@@ -29,6 +29,7 @@ function App2() {
             const response = await axios.post('/api/student/signup', inputs);
             console.log('Form Submit success:', response.data);
             alert("회원가입 성공");
+            window.location.href='/login';
         } catch (error) {
             console.error('Form Submit error:', error);
             if (error.response) {

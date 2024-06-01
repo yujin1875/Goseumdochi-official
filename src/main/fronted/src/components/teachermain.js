@@ -19,7 +19,8 @@ function App25() {
                     <div id="contents1_teachermain">
                         <div id="calendar">
                         </div>
-
+                        <div id="lectureSchedule">
+                        </div>
                     </div>
                     <div id="contents2_teachermain">
 
