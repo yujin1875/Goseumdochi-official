@@ -108,22 +108,16 @@ hr{
     margin-top:22px;
 }
 
-#findsomething>#write_btn{
+#findsomething>button{
     float:right;
     width:103px;
     height:51px;
     background-color:#6F7C86;
+    border-color:#6F7C86;
     margin:auto;
     margin-top:22px;
     font-size:24px;
     color:#FFFFFF;
-}
-
-#write_btn>a{
-    float:left;
-    margin:auto;
-    margin-top:8px;
-    margin-left:15px;
 }
 
 #contents_community>#contents_contents_community{
@@ -160,10 +154,9 @@ hr{
     margin-left:40px;
 }
 
-#footer_contents_community>#back_write_btn>a{
+#footer_contents_community>#back_write_btn>span{
     float:left;
     margin:auto;
-    margin-top:5px;
     margin-left:21px;
 }
 
@@ -181,9 +174,8 @@ hr{
     margin-left:20px;
 }
 
-#footer_contents_community>#next_write_btn>a{
+#footer_contents_community>#next_write_btn>span{
     float:left;
     margin:auto;
-    margin-top:5px;
     margin-left:21px;
 }

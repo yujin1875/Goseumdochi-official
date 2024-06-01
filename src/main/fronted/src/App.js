@@ -24,6 +24,7 @@ import App21 from './components/adminacademyregister.js';
 import App22 from './components/adminacademymanage.js';
 import App23 from './components/adminstudentmanage.js';
 import App24 from './components/community.js';
+import App25 from './components/teachermain.js';
 import { Component } from 'react';
 
 class App extends Component{
@@ -63,6 +64,7 @@ class App extends Component{
               <Route path='/adminacademymanage' element={<App22/>}/>
               <Route path='/adminstudentmanage' element={<App23/>}/>
               <Route path='/community' element={<App24/>}/>
+              <Route path='/teachermain' element={<App25/>}/>
             </Routes>   
         </BrowserRouter> 
       </div>

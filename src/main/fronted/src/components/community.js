@@ -28,9 +28,9 @@ return (
                     <div id="findsomething">
                         <input type="text" placeholder="제목" id="find_title"/>
                         <input type="submit" value="검색" id="find_btn"/>
-                        <div id="write_btn">
-                            <a>글쓰기</a>
-                        </div>
+                        <button id="write" value="글쓰기">
+                            <span>글쓰기</span>
+                        </button>
                     </div>
                 </div>
                 <div id="contents_contents_community">
@@ -39,12 +39,12 @@ return (
                     </div>
                 </div>
                 <div id="footer_contents_community">
-                    <div id="back_write_btn">
-                        <a>이전</a>
-                    </div>
-                    <div id="next_write_btn">
-                        <a>다음</a>
-                    </div>
+                    <button id="back_write_btn">
+                        <span>이전</span>
+                    </button>
+                    <button id="next_write_btn">
+                        <span>다음</span>
+                    </button>
                     <div id="page_number">
                     </div>
                 </div>

@@ -1,0 +1,90 @@
+#teachermain-menu{
+    display: block;
+    width: 1358px;
+    height: 1507px;
+    margin: auto;
+    background-color: #FFFFFF;
+    border-radius: 100px;
+}
+
+#teachermain-menu>#header_teachermain{
+    width:1358px;
+    height:200px;
+
+}
+
+#header_teachermain>img{
+    display:block;
+    width: 162px;
+    height: 162px;
+    margin:auto;
+    object-fit: cover;
+}
+
+#teachermain-menu>#buttons_teachermain{
+    display: block;
+    width: 1358px;
+    height: 100px;
+}
+
+#buttons_teachermain>input{
+    position: relative;
+    display:block;
+    float:left;
+    width: 281px;
+    height: 68px;
+    background-color: #F6B28E;
+    margin: auto 28px;
+    z-index: 2;
+
+    font-size: 25px;
+    color:aliceblue;
+    box-shadow: none;
+    border:none;
+    outline: none;
+}
+
+#buttons_teachermain>#lecture_btn{
+    margin-left:202px;
+}
+
+#buttons_teachermain>#rect{
+    position: absolute;
+    float:left;
+    width: 1086px;
+    height: 5px;
+    margin: 30px auto auto;
+    margin-left:136px;
+    z-index: 1;
+
+    background: #7A7A7A;
+}
+
+#buttons_teachermain>input:hover {
+    background:#E78753;
+    color:#fff;
+}
+
+#buttons_teachermain>#notice_btn{
+    margin-left:202px;
+}
+
+#teachermain-menu>#contents_teachermain{
+    display: block;
+    width: 1358px;
+    height: 1130px;
+}
+
+#teachermain-menu>#footer_teachermain{
+    display: block;
+    width: 1358px;
+    height: 80px;
+}
+
+#footer_teachermain>a{
+    display:block;
+    font-size: 16px;
+    color:#838383;
+    text-align: center;
+    margin:auto;
+}
