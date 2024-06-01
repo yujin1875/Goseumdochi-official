@@ -17,9 +17,13 @@ public class FileStorageService {
     private final String bucketName = "studentprofile"; // GCS 버킷 이름
     private final Storage storage = StorageOptions.getDefaultInstance().getService();
 
-    public String uploadFile(MultipartFile file) throws IOException {
+    // 파일 유형별로 폴더를 구분하여 파일을 업로드
+    public String uploadFile(MultipartFile file, String folder) throws IOException {
+        if (file.isEmpty()) {
+            throw new IllegalStateException("업로드할 파일이 없습니다.");
+        }
         String originalFilename = file.getOriginalFilename();
-        String blobId = UUID.randomUUID().toString() + "-" + originalFilename;
+        String blobId = folder + "/" + UUID.randomUUID().toString() + "-" + originalFilename; // 폴더 경로 추가
         BlobId blobInfo = BlobId.of(bucketName, blobId);
         Blob blob = storage.create(BlobInfo.newBuilder(blobInfo).build(), file.getBytes());
 

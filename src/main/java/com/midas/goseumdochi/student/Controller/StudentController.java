@@ -109,7 +109,7 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일이 선택되지 않았습니다.");
         }
         try {
-            String imageUrl = fileStorageService.uploadFile(file); // 파일 업로드 서비스 호출
+            String imageUrl = fileStorageService.uploadFile(file, "profile_pictures"); // 폴더 경로 지정
             StudentDTO studentDTO = studentService.findStudentById(studentId);
 
             if (studentDTO == null) {
