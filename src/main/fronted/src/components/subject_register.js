@@ -1,4 +1,4 @@
-import '../css/subject_register.css';
+ import '../css/subject_register.css';
 import logo from './images/goseumdochi.png';
 
 function App15() {
