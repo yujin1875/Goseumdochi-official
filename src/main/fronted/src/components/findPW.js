@@ -70,7 +70,7 @@ function App9() {
                     placeholder="인증번호"
                 />
                 <input type="submit" value="찾기" id="findPW_btn"/><hr/>
-            </div>
+            </form>
             <div id="footer_findPW"/>
         </div>
     );

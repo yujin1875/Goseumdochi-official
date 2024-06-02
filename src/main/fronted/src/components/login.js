@@ -74,7 +74,7 @@ function App3() {
                         <button id='findpw' onClick={GoFindPW}>비밀번호 찾기</button>
                     </div>
                     <input type="submit" value="Login" id="Login_btn"/>
-                </div>
+                </form>
             </div>
             <div id="footer_Login"/>
         </div>

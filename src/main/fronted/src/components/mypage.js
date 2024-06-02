@@ -136,7 +136,7 @@ function App12() {
                                         id="confirmNewPassword"
                                         required
                                     /><hr/>
-                                </div>
+                                </form>
                               </>
                             )}
                         </div>
