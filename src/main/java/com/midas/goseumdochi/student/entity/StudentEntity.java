@@ -1,6 +1,7 @@
 package com.midas.goseumdochi.student.entity;
 
 import com.midas.goseumdochi.academy.entity.StudentAcademyEntity;
+import com.midas.goseumdochi.community.entity.PostEntity;
 import com.midas.goseumdochi.student.Dto.StudentDTO;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -60,5 +61,17 @@ public class StudentEntity {
                 .studentEmail(studentDTO.getStudentEmail())
                 .profilePictureUrl(studentDTO.getProfilePictureUrl())
                 .build();
+    }
+
+    // 좋아요한 글 목록
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "liked_posts",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id"))
+    private List<PostEntity> likedPosts;
+
+    // 좋아요한 글 목록 조회 메서드
+    public List<PostEntity> getLikedPosts() {
+        return likedPosts;
     }
 }
