@@ -18,6 +18,10 @@ function App1() {
         window.location.href='/academyform'
     }
 
+    const GoYewon=()=>{
+        window.location.href='/yewon'
+    }
+
     return (
         <div id="App">
             <div id="header_start">
@@ -33,6 +37,9 @@ function App1() {
                     <input type="submit" value="학원등록" id="academy1_btn" onClick={GoAcademyRegister}/>
                     <input type="submit" value="학원열람" id="academy2_btn" onClick={Goaca}/>
                 </div>
+
+                <input type="submit" value="예원 테스트" id="yewon_btn" onClick={GoYewon}/>
+
             </div>
             <div id="footer_start">
                 <a>문의 | midas2024.ver01@gmail.com</a>

@@ -15,6 +15,8 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())  // CSRF 보호 비활성화
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/integrate/login").permitAll()
+                        .requestMatchers("/api/admin/**").permitAll()
                         .requestMatchers("/api/student/signup").permitAll()
                         .requestMatchers("/api/student/login").permitAll()
                         .requestMatchers("/api/student/findStudentId").permitAll()

@@ -2,6 +2,10 @@ import '../css/adminmain.css';
 import logo from './images/goseumdochi.png';
 
 function App18() {
+    const GoAdminAcademyFormManage=()=>{
+        window.location.href='/adminAcademyFormManage'
+    }
+
     return (
         <div id="App">
             <div id="header_adminmain">
@@ -19,7 +23,7 @@ function App18() {
                 <ul>
                     <li><a>전체 공지사항</a></li>
                     <li><a>학원 신청서</a></li>
-                    <li><a>학원 관리</a></li>
+                    <li><button onClick={GoAdminAcademyFormManage}>학원 관리</button></li>
                     <li><a>학생 관리</a></li>
                     <li><a>커뮤니티</a></li>
                 </ul>

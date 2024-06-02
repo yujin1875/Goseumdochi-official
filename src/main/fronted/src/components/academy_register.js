@@ -9,7 +9,8 @@ import { useLocation } from 'react-router-dom';
 function App7() {
     const location = useLocation();
     const inputDirectorName = location.state?.inputDirectorName || '이름';
-    const inputsDirectorPhoneNumber = location.state?.inputsDirectorPhoneNumber || '010-0000-0000';
+    const inputDirectorEmail = location.state?.inputDirectorEmail || 'example@goseumdochi.com';
+    const inputsDirectorPhoneNumber = location.state?.inputsDirectorPhoneNumber || '010XXXXXXXX';
 
     const [inputs, setInputs] = useState({
         academyName: '',
@@ -18,6 +19,7 @@ function App7() {
         academyAddress: '',
         academyAddressDetail: '',
         directorName: '',
+        directorEmail: '',
         directorPhoneNumber: '',
         authNumber: ''
     });
@@ -74,6 +76,14 @@ function App7() {
                             id="name"
                             required
                         /><hr/>
+                        <input
+                            type="email"
+                            name="directorEmail"
+                            value={inputs.directorEmail} // inputDirectorEmail
+                            onChange={handleChange}
+                            placeholder={inputDirectorEmail}
+                            required
+                        />
                         <input
                             type="text"
                             name="directorPhoneNumber"
