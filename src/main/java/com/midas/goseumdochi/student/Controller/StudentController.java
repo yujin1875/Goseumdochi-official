@@ -71,7 +71,7 @@ public class StudentController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 정보와 일치하는 사용자가 없습니다."));
     }
 
-    // 비밀번호 찾기 처리
+    // 비밀번호 찾기 - 임시 비밀번호 전송
     @PostMapping("/findStudentPassword")
     public ResponseEntity<?> findStudentPassword(@RequestBody StudentDTO studentDTO) {
         Optional<StudentDTO> studentOptional = studentService.findStudentByStudentIdAndStudentNameAndPhoneNumber(studentDTO.getStudentId(), studentDTO.getStudentName(), studentDTO.getStudentPhoneNumber());
