@@ -15,6 +15,8 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())  // CSRF 보호 비활성화
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/integrate/login").permitAll()
+                        .requestMatchers("/api/admin/**").permitAll()
                         .requestMatchers("/api/student/signup").permitAll()
                         .requestMatchers("/api/academy/form").permitAll()  // 회원가입 엔드포인트 인증 비활성화
                         .requestMatchers("/api/posts/upload").permitAll()  // 커뮤니티 게시글 작성

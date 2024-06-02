@@ -28,7 +28,7 @@ public class TeacherEntity {
     @Column(name = "teacher_loginid", length = 8)
     private String loginid;
 
-    @Column(name = "teacher_pwd", length = 20)
+    @Column(name = "teacher_pwd")
     private String password;
 
     @Column(name = "teacher_phoneno", length = 11)

@@ -18,16 +18,13 @@ public class LoginController {
     private final EncDecService encDecService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AdminDTO adminDTO) {
-        String username = adminDTO.getId();
-        String password = adminDTO.getPassword();
-
-        if ("admin".equals(username) && "password".equals(encDecService.decrypt(password))) { //복호화하여 비교
+    public ResponseEntity<?> login(@RequestParam String loginid, @RequestParam String password) {
+        if ("admin".equals(loginid) && "admin".equals(password)) { //복호화하여 비교
             return ResponseEntity.ok().build(); // 로그인 성공
         } else {
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
-                    .body("어드민 로그인 실패"); // 로그인 실패
+                    .body("관리자 로그인 실패"); // 로그인 실패
         }
     }
 }
