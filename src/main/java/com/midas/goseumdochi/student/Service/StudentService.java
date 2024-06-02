@@ -76,10 +76,6 @@ public class StudentService {
                 .map(StudentDTO::toStudentDTO);
     }
 
-    public Optional<StudentDTO> findStudentByEmail(String email) {
-        return studentRepository.findByStudentEmail(email).map(StudentDTO::toStudentDTO);
-    }
-
     public void updateStudentPassword(Long studentId, String newPassword) {
         studentRepository.findById(studentId).ifPresent(studentEntity -> {
             studentEntity.setStudentPassword(encDecService.encrypt(newPassword)); //암호화하여 새 비밀번호 저장
