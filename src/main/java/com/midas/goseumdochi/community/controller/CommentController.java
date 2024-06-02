@@ -14,9 +14,9 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @PostMapping("/add")
-    public CommentDTO addComment(@RequestBody CommentDTO commentDTO) {
-        return commentService.addComment(commentDTO);
+    @PostMapping("/create")
+    public CommentDTO createComment(@RequestBody CommentDTO commentDTO) {
+        return commentService.createComment(commentDTO);
     }
 
     @GetMapping("/post/{postId}")

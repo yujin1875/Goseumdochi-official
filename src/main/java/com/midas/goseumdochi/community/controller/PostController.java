@@ -24,8 +24,13 @@ public class PostController {
         return postService.getAllPosts();
     }
 
-    @GetMapping("/{id}")
-    public PostDTO getPostById(@PathVariable Long id) {
-        return postService.getPostById(id);
+    @GetMapping("/hot")
+    public List<PostDTO> getHotPosts() {
+        return postService.getPostsByMinimumLikes(10);
+    }
+
+    @GetMapping("/{id}/with-comments")
+    public PostDTO getPostByIdWithComments(@PathVariable Long id) {
+        return postService.getPostByIdWithComments(id);
     }
 }

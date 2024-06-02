@@ -25,17 +25,18 @@ public class CommentService {
     @Autowired
     private StudentRepository studentRepository;
 
-    public CommentDTO addComment(CommentDTO commentDTO) {
-        PostEntity post = postRepository.findById(commentDTO.getPostId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid post ID"));
-
+    public CommentDTO createComment(CommentDTO commentDTO) {
         StudentEntity writer = studentRepository.findById(commentDTO.getWriterId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid writer ID"));
 
+        PostEntity post = postRepository.findById(commentDTO.getPostId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid post ID"));
+
         CommentEntity commentEntity = CommentEntity.builder()
                 .text(commentDTO.getText())
-                .post(post)
+                .createDate(commentDTO.getCreateDate())
                 .writer(writer)
+                .post(post)
                 .build();
 
         commentRepository.save(commentEntity);

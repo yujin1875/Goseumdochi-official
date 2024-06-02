@@ -22,6 +22,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/posts/categories").permitAll()
                         .requestMatchers("/api/admin/management/students").permitAll()
                         .requestMatchers("/api/admin/management/academy").permitAll()
+                        .requestMatchers("/api/posts/${id}/with-comments").permitAll()
+                        .requestMatchers("/api/mypage/posts/{id}").permitAll()
+                        .requestMatchers("/api/mypage/liked-posts/{id}").permitAll()
+                        .requestMatchers("/api/mypage/comments/{id}").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();

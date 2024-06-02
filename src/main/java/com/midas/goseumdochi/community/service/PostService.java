@@ -1,9 +1,12 @@
 package com.midas.goseumdochi.community.service;
 
+import com.midas.goseumdochi.community.dto.CommentDTO;
 import com.midas.goseumdochi.community.dto.PostDTO;
 import com.midas.goseumdochi.community.entity.CategoryEntity;
+import com.midas.goseumdochi.community.entity.CommentEntity;
 import com.midas.goseumdochi.community.entity.PostEntity;
 import com.midas.goseumdochi.community.repository.CategoryRepository;
+import com.midas.goseumdochi.community.repository.CommentRepository;
 import com.midas.goseumdochi.community.repository.PostRepository;
 import com.midas.goseumdochi.student.Repository.StudentRepository;
 import com.midas.goseumdochi.student.entity.StudentEntity;
@@ -30,7 +33,6 @@ public class PostService {
         StudentEntity writer = studentRepository.findById(postDTO.getWriterId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid writer ID"));
 
-        // Load or create the category
         CategoryEntity category = categoryRepository.findById(postDTO.getCategoryId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid category ID"));
 
@@ -41,7 +43,7 @@ public class PostService {
                 .views(postDTO.getViews())
                 .likeCount(postDTO.getLikeCount())
                 .writer(writer)
-                .category(category) // Set the category
+                .category(category)
                 .isModified(postDTO.isModified()) // Set the modified status
                 .build();
 
@@ -72,7 +74,7 @@ public class PostService {
                 .likeCount(postEntity.getLikeCount())
                 .writerId(postEntity.getWriter().getId())
                 .categoryId((long) postEntity.getCategory().getId())
-                .isModified(postEntity.isModified()) // Include modified status
+                .isModified(postEntity.isModified())
                 .build();
     }
 
@@ -86,11 +88,47 @@ public class PostService {
         postEntity.setTitle(postDTO.getTitle());
         postEntity.setContent(postDTO.getContent());
         postEntity.setCategory(category);
-        postEntity.setModified(true); // Set the post as modified
+        postEntity.setModified(true);
         postEntity.setCreateDate(LocalDateTime.now());
 
         postRepository.save(postEntity);
 
         return convertToDTO(postEntity);
+    }
+
+    // Hot게시물 찾기 위함
+    public List<PostDTO> getPostsByMinimumLikes(int minimumLikes) {
+        return postRepository.findByLikeCountGreaterThanEqual(minimumLikes).stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    // 댓글 기능
+
+    @Autowired
+    private CommentRepository commentRepository;
+
+    public PostDTO getPostByIdWithComments(Long id) {
+        PostEntity postEntity = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Post not found"));
+
+        List<CommentDTO> comments = commentRepository.findByPostId(id).stream()
+                .map(this::convertToCommentDTO)
+                .collect(Collectors.toList());
+
+        PostDTO postDTO = convertToDTO(postEntity);
+        postDTO.setComments(comments);
+
+        return postDTO;
+    }
+
+    private CommentDTO convertToCommentDTO(CommentEntity commentEntity) {
+        return CommentDTO.builder()
+                .id(commentEntity.getId())
+                .text(commentEntity.getText())
+                .createDate(commentEntity.getCreateDate())
+                .writerId(commentEntity.getWriter().getId())
+                .postId(commentEntity.getPost().getId())
+                .build();
     }
 }
