@@ -117,8 +117,10 @@ public class TeacherController {
         return ResponseEntity.ok("강의 정보가 성공적으로 업데이트되었습니다.");
     }
 
-    @PostMapping("/lecture-material/new")
-    public ResponseEntity<?> createNewMaterial(@RequestPart("material") LectureMaterialDTO lectureMaterialDTO,
+    // 새로운 강의 자료 생성
+    @PostMapping("/lecture/{lectureId}/lecture-material/new")
+    public ResponseEntity<?> createNewMaterial(@PathVariable Long lectureId,
+                                               @RequestPart("material") LectureMaterialDTO lectureMaterialDTO,
                                                @RequestPart("file") MultipartFile file) throws IOException {
         if (file.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일이 선택되지 않았습니다.");
@@ -131,12 +133,12 @@ public class TeacherController {
 
         lectureMaterialDTO.setAuthor(currentTeacher.getName());
         lectureMaterialDTO.setAttachmentPath(imageUrl);
+        lectureMaterialDTO.setLectureId(lectureId); // fk
+
         lectureMaterialService.saveLectureMaterial(lectureMaterialDTO);
 
         return ResponseEntity.ok("새로운 강의 자료가 생성되었습니다.");
     }
-
-
 
     // 모든 강의 자료 목록 조회
     @GetMapping("/lecture-material/list")
@@ -181,8 +183,9 @@ public class TeacherController {
     }
 
     // 과제 추가
-    @PostMapping("/assignment/new")
-    public ResponseEntity<?> createNewAssignment(@RequestPart("assignment") AssignmentDTO assignmentDTO,
+    @PostMapping("/lecture/{lectureId}/assignment/new")
+    public ResponseEntity<?> createNewAssignment(@PathVariable Long lectureId,
+                                                 @RequestPart("assignment") AssignmentDTO assignmentDTO,
                                                  @RequestPart("file") MultipartFile file) throws IOException {
         if (file.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일이 선택되지 않았습니다.");
@@ -196,6 +199,7 @@ public class TeacherController {
         assignmentDTO.setAuthor(currentTeacher.getName());
         assignmentDTO.setAttachmentPath(fileUrl);
         assignmentDTO.setCreatedAt(LocalDateTime.now());
+        assignmentDTO.setLectureId(lectureId); // fk
 
         assignmentService.saveAssignment(assignmentDTO);
         return ResponseEntity.ok("새로운 과제가 생성되었습니다.");

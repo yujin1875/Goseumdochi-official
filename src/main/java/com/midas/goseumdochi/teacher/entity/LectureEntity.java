@@ -52,6 +52,12 @@ public class LectureEntity {
     @OneToMany(mappedBy = "lectureEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LectureTimeEntity> lectureTimeEntityList;
 
+    @OneToMany(mappedBy = "lectureEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LectureMaterialEntity> lectureMaterialEntityList;
+
+    @OneToMany(mappedBy = "lectureEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AssignmentEntity> assignmentEntityList;
+
     @Builder
     public LectureEntity(Long id, String name, int maxCount, int headCount, String lectureLocation, String lectureDetails,
                          String lectureWeeklyPlan, TeacherEntity teacherEntity, SubjectEntity subjectEntity) {
