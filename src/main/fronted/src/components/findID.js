@@ -41,7 +41,7 @@ function App8() {
     return (
         <div id="App">
             <div id="header_findID"/>
-            <div id="write_findID" onSubmit={handleSubmit}>
+            <form id="write_findID" onSubmit={handleSubmit}>
                 <h2>아이디 찾기</h2>
                 <input
                     type="text"

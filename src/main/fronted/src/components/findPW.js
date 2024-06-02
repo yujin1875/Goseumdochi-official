@@ -38,7 +38,7 @@ function App9() {
     return (
         <div id="App">
             <div id="header_findPW"/>
-            <div id="write_findPW" onSubmit={handleSubmit}>
+            <form id="write_findPW" onSubmit={handleSubmit}>
                 <h2>비밀번호 찾기</h2>
                 <input
                     type="text"

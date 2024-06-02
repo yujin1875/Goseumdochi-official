@@ -110,7 +110,7 @@ function App12() {
                             )}
                             {visibleDiv === 'ChangePW' && (
                               <>
-                                <div id="ChangePassWord_mypage" onSubmit={handleSubmit}>
+                                <form id="ChangePassWord_mypage" onSubmit={handleSubmit}>
                                     <h2>비밀번호 변경</h2>
                                     <input
                                         type="text"

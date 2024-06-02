@@ -51,7 +51,7 @@ function App3() {
                     <img src={logo}/>
                     <a>로그인</a>
                 </div>
-                <div id="login_write_buttons" onSubmit={handleSubmit}>
+                <form id="login_write_buttons" onSubmit={handleSubmit}>
                     <input
                         type="text"
                         name="studentId"
