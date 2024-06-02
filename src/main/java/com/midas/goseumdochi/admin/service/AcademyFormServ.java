@@ -7,6 +7,8 @@ import com.midas.goseumdochi.academy.entity.AcademyFormEntity;
 import com.midas.goseumdochi.academy.repository.AcademyFormRepository;
 import com.midas.goseumdochi.director.repository.DirectorRepository;
 import com.midas.goseumdochi.util.Service.MailService;
+import com.midas.goseumdochi.util.ai.EncDecService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,27 +17,15 @@ import java.util.List;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class AcademyFormServ {
 
     private final AcademyFormRepository academyFormRepository;
     private final AcademyRepository academyRepository;
-
-    private final DirectorRepository directorRepos;
-
-
+    private final DirectorRepository directorRepository;
     // 원장 id,pw 메일 전송
     private final MailService mailService;
-
-
-    @Autowired
-    public AcademyFormServ(AcademyFormRepository academyFormRepository, AcademyRepository academyRepository, DirectorRepository directorRepos, MailService mailService) {
-        this.academyFormRepository = academyFormRepository;
-        this.academyRepository = academyRepository;
-        this.directorRepos = directorRepos;
-        this.mailService = mailService;
-    }
-
-
+    private final EncDecService encDecService;
 
     public List<AcademyFormEntity> getAllAcademyForms() {
         return academyFormRepository.findAll();
@@ -57,22 +47,22 @@ public class AcademyFormServ {
                 .address(academyFormEntity.getAcademyAddress())
                 .addressDetail(academyFormEntity.getAcademyAddressDetail())
                 .build();
-        academyRepository.save(academyEntity);
+        academyEntity = academyRepository.save(academyEntity);
 
-        String phoneNumber = academyFormEntity.getDirectorPhoneNumber();
-        String lastFourDigits = phoneNumber.substring(phoneNumber.length() - 4);
-
-        // 원장 정보 저장 (아이디: 학원신청서 기본키 번호 4자리 + 폰 번호 마지막 네자리)
-        String academyFormIdStr = String.format("%04d", academyFormId); // 학원신청서 기본키번호를 네 자리 숫자로 포맷팅
-        String directorId = academyFormIdStr + "0000"; // 원장 ID 생성
+        // 원장 정보 저장 (아이디: 학원 기본키 번호 4자리 + 0000 4자리)
+        // 어짜피 학원이랑 원장이랑 기본키 번호 같음
+        String directorLoginid = String.format("%04d", academyEntity.getId()) + "0000"; // 원장 로그인ID 설정
         DirectorEntity directorEntity = DirectorEntity.builder()
                 .name(academyFormEntity.getDirectorName())
+                .loginid(directorLoginid)
+                .password(encDecService.encrypt("0000")) // 임시비밀번호 0000
                 .phoneNumber(academyFormEntity.getDirectorPhoneNumber())
-                .password("0000") // 비밀번호 초기화
-                .loginid(directorId) // 원장 ID 설정
+                .email(academyFormEntity.getDirectorEmail())
+                .academyEntity(academyEntity)
                 .build();
-        directorRepos.save(directorEntity);
-        mailService.directorMailSend(academyFormEntity.getDirectorEmail(), directorId); // 원장 id를 이메일로 전송
+        directorRepository.save(directorEntity);
+
+        mailService.directorMailSend(academyFormEntity.getDirectorEmail(), directorLoginid); // 원장 id를 이메일로 전송
     }
 
     public void rejectAcademyForm(Long academyFormId) {

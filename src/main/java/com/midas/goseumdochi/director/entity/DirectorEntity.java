@@ -27,7 +27,7 @@ public class DirectorEntity {
     @Column(name = "director_loginid", length = 8)
     private String loginid; // 8자리 숫자 (자릿수마다 의마가 있어서 문자열로)
 
-    @Column(name = "director_pwd", length = 20)
+    @Column(name = "director_pwd")
     private String password;
 
     @Column(name = "director_phoneno", length = 11)
@@ -49,7 +49,7 @@ public class DirectorEntity {
     private List<DirectorNoticeEntity> directorNoticeEntityList;
 
     @Builder
-    public DirectorEntity(Long id, String name, String loginid, String password, String phoneNumber, LocalDate birthdate, String email) {
+    public DirectorEntity(Long id, String name, String loginid, String password, String phoneNumber, LocalDate birthdate, String email, AcademyEntity academyEntity) {
         this.id = id;
         this.name = name;
         this.loginid = loginid;
@@ -57,6 +57,7 @@ public class DirectorEntity {
         this.phoneNumber = phoneNumber;
         this.birthdate = birthdate;
         this.email = email;
+        this.academyEntity = academyEntity;
     }
 
     // directorDTO -> directorEntity
