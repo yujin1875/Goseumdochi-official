@@ -9,6 +9,10 @@ function App6() {
         window.location.href='/notice'
     }
 
+    const Gocommunity=()=>{
+        window.location.href='/community'
+    }
+
     const Gomypage=()=>{
         window.location.href='/mypage'
     }
@@ -21,7 +25,7 @@ function App6() {
                 </div>
                 <div id="buttons_main">
                     <input type="submit" value="공지사항" id="notice_btn" onClick={Gonotice}/>
-                    <input type="submit" value="커뮤니티" id="community_btn"/>
+                    <input type="submit" value="커뮤니티" id="community_btn" onClick={Gocommunity}/>
                     <input type="submit" value="마이페이지" id="mypage_btn" onClick={Gomypage}/>
                     <div id="rect"/>
                 </div>

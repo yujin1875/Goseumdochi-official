@@ -1,0 +1,98 @@
+hr{
+    border:0 ;
+}
+#menu_teacherportal{
+    float:left;
+    width:295px;
+    height:1080px;
+    background-color:#D9D9D9;
+}
+
+#menu_teacherportal>#teacher_info{
+    float:left;
+    width:295px;
+    height:91px;
+    background-color:#BCBCBC;
+}
+
+#teacher_info>img{
+    float:left;
+    display:block;
+    width: 91px;
+    height: 91px;
+    margin-left:30px;
+    object-fit: cover;
+}
+
+#teacher_info>h2{
+    float:left;
+    margin-top:30px;
+    margin-left:15px;
+}
+
+#menu_teacherportal>ul>li{
+    width:295px;
+    height:80px;
+    background-color:#D9D9D9;
+}
+
+#menu_teacherportal>ul>li:hover{
+    width:295px;
+    height:80px;
+    background-color:#BCBCBC;
+}
+
+#menu_teacherportal>ul>li>a{
+    margin:auto;
+    margin-top:25px;
+}
+
+#teacherportal_header{
+    width:1920px;
+    height:91px;
+    background-color:#6F7C86;
+    margin:auto;
+    min-width:600px;
+    max-width:1920px;
+}
+
+#contents_teacherportal{
+    width:1920px;
+    height:989px;
+    background-color:#EAEAEA;
+}
+
+#contents_teacherportal>#Home_teacherportal{
+    width:1920px;
+    height:989px;
+}
+
+#contents_teacherportal>#Lecturedata_teacherportal{
+    width:1920px;
+    height:989px;
+}
+
+#Lecturedata_teacherportal>h2{
+    display:block;
+    margin-left:350px;
+}
+
+#Lecturedata_teacherportal>#Lecturedata{
+    width:1920px;
+    height:800px;
+    margin-top:30px;
+    background-color:aqua;
+}
+
+#Lecturedata_teacherportal>button{
+    float:right;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin:auto;
+    margin-top:22px;
+    margin-right:20px;
+    font-size:15px;
+    color:#FFFFFF;
+}

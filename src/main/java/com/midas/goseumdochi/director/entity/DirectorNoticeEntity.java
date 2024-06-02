@@ -14,7 +14,7 @@ public class DirectorNoticeEntity {
     @Id
     @Column(name = "nNum")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int num;
+    private Long num;
 
     @Column(name = "nTitle", length = 25)
     private String title;
@@ -34,7 +34,7 @@ public class DirectorNoticeEntity {
     private DirectorEntity directorEntity;
 
     @Builder
-    public DirectorNoticeEntity(int num, String title, String content, Date regdate, String writer, DirectorEntity directorEntity) {
+    public DirectorNoticeEntity(Long num, String title, String content, Date regdate, String writer, DirectorEntity directorEntity) {
         this.num = num;
         this.title = title;
         this.content = content;
