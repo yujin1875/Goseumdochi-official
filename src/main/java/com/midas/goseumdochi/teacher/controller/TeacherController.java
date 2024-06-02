@@ -1,14 +1,13 @@
 package com.midas.goseumdochi.teacher.controller;
 
 import com.midas.goseumdochi.student.Dto.StudentDTO;
+import com.midas.goseumdochi.student.Service.FileStorageService;
 import com.midas.goseumdochi.student.Service.RegistLectureService;
-import com.midas.goseumdochi.teacher.dto.AssignmentDTO;
-import com.midas.goseumdochi.teacher.dto.LectureDTO;
-import com.midas.goseumdochi.teacher.dto.TeacherDTO;
-import com.midas.goseumdochi.teacher.dto.LectureMaterialDTO;
+import com.midas.goseumdochi.teacher.dto.*;
 import com.midas.goseumdochi.teacher.service.*;
 import com.midas.goseumdochi.util.Service.MailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -16,11 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,6 +30,10 @@ public class TeacherController {
     private final LectureService lectureService;
     private final RegistLectureService registLectureService;
     private final LectureInfoService lectureInfoService;
+    private final SubjectNoticeService subjectNoticeService;
+
+    @Autowired
+    private FileStorageService fileStorageService;
 
     // 선생 등록
     @PostMapping("/regist")
@@ -118,33 +117,26 @@ public class TeacherController {
         return ResponseEntity.ok("강의 정보가 성공적으로 업데이트되었습니다.");
     }
 
-    // 새로운 강의 자료 생성
     @PostMapping("/lecture-material/new")
     public ResponseEntity<?> createNewMaterial(@RequestPart("material") LectureMaterialDTO lectureMaterialDTO,
                                                @RequestPart("file") MultipartFile file) throws IOException {
-        String uploadDir = "uploads/";
-        File directory = new File(uploadDir);
-        if (!directory.exists()) {
-            directory.mkdirs();
+        if (file.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일이 선택되지 않았습니다.");
         }
+        String imageUrl = fileStorageService.uploadFile(file, "lecture_materials"); // 인스턴스를 통한 파일 업로드
 
-        String fileName = file.getOriginalFilename();
-        Path filePath = Paths.get(uploadDir, fileName);
-        Files.write(filePath, file.getBytes());
-
-        // 현재 로그인된 사용자 정보 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
-
         TeacherDTO currentTeacher = teacherService.findByLoginid(currentUserName);
 
         lectureMaterialDTO.setAuthor(currentTeacher.getName());
-        lectureMaterialDTO.setAttachmentPath(filePath.toString());
-
+        lectureMaterialDTO.setAttachmentPath(imageUrl);
         lectureMaterialService.saveLectureMaterial(lectureMaterialDTO);
 
-        return ResponseEntity.ok("새로운 강의 자료 생성 완료");
+        return ResponseEntity.ok("새로운 강의 자료가 생성되었습니다.");
     }
+
+
 
     // 모든 강의 자료 목록 조회
     @GetMapping("/lecture-material/list")
@@ -165,28 +157,20 @@ public class TeacherController {
     public ResponseEntity<?> updateMaterial(@PathVariable Long id,
                                             @RequestPart("material") LectureMaterialDTO lectureMaterialDTO,
                                             @RequestPart("file") MultipartFile file) throws IOException {
-        String uploadDir = "uploads/";
-        File directory = new File(uploadDir);
-        if (!directory.exists()) {
-            directory.mkdirs();
+        if (file.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일이 선택되지 않았습니다.");
         }
+        String imageUrl = fileStorageService.uploadFile(file, "lecture_materials");  // 파일을 GCS에 업로드
 
-        String fileName = file.getOriginalFilename();
-        Path filePath = Paths.get(uploadDir, fileName);
-        Files.write(filePath, file.getBytes());
-
-        // 현재 로그인된 사용자 정보 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
-
         TeacherDTO currentTeacher = teacherService.findByLoginid(currentUserName);
 
         lectureMaterialDTO.setAuthor(currentTeacher.getName());
-        lectureMaterialDTO.setAttachmentPath(filePath.toString());
-
+        lectureMaterialDTO.setAttachmentPath(imageUrl);
         lectureMaterialService.updateLectureMaterial(id, lectureMaterialDTO);
 
-        return ResponseEntity.ok("강의 자료 성공적으로 업데이트");
+        return ResponseEntity.ok("강의 자료가 성공적으로 업데이트되었습니다.");
     }
 
     // 수업자료 삭제
@@ -200,21 +184,17 @@ public class TeacherController {
     @PostMapping("/assignment/new")
     public ResponseEntity<?> createNewAssignment(@RequestPart("assignment") AssignmentDTO assignmentDTO,
                                                  @RequestPart("file") MultipartFile file) throws IOException {
-        String uploadDir = "uploads/assignments/";
-        File directory = new File(uploadDir);
-        if (!directory.exists()) {
-            directory.mkdirs();
+        if (file.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일이 선택되지 않았습니다.");
         }
-        String fileName = file.getOriginalFilename();
-        Path filePath = Paths.get(uploadDir, fileName);
-        Files.write(filePath, file.getBytes());
+        String fileUrl = fileStorageService.uploadFile(file, "assignments");
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
         TeacherDTO currentTeacher = teacherService.findByLoginid(currentUserName);
 
         assignmentDTO.setAuthor(currentTeacher.getName());
-        assignmentDTO.setAttachmentPath(filePath.toString());
+        assignmentDTO.setAttachmentPath(fileUrl);
         assignmentDTO.setCreatedAt(LocalDateTime.now());
 
         assignmentService.saveAssignment(assignmentDTO);
@@ -240,24 +220,17 @@ public class TeacherController {
     public ResponseEntity<?> updateAssignment(@PathVariable Long id,
                                               @RequestPart("assignment") AssignmentDTO assignmentDTO,
                                               @RequestPart("file") MultipartFile file) throws IOException {
-        String uploadDir = "uploads/assignments/";
-        File directory = new File(uploadDir);
-        if (!directory.exists()) {
-            directory.mkdirs();
+        if (file.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일이 선택되지 않았습니다.");
         }
+        String fileUrl = fileStorageService.uploadFile(file, "assignments"); // 과제 폴더 지정
 
-        String fileName = file.getOriginalFilename();
-        Path filePath = Paths.get(uploadDir, fileName);
-        Files.write(filePath, file.getBytes());
-
-        // 현재 로그인된 사용자 정보 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
-
         TeacherDTO currentTeacher = teacherService.findByLoginid(currentUserName);
 
         assignmentDTO.setAuthor(currentTeacher.getName());
-        assignmentDTO.setAttachmentPath(filePath.toString());
+        assignmentDTO.setAttachmentPath(fileUrl);
 
         assignmentService.updateAssignment(id, assignmentDTO);
 
@@ -269,6 +242,53 @@ public class TeacherController {
     public ResponseEntity<?> deleteAssignment(@PathVariable Long id) {
         assignmentService.deleteAssignment(id);
         return ResponseEntity.ok("과제가 성공적으로 삭제되었습니다.");
+    }
+
+    // 공지사항 목록 조회
+    @GetMapping("/notices")
+    public ResponseEntity<List<SubjectNoticeDTO>> getAllNotices() {
+        List<SubjectNoticeDTO> notices = subjectNoticeService.getAllNotices();
+        return ResponseEntity.ok(notices);
+    }
+
+    // 공지사항 조회
+    @GetMapping("/notice/{id}")
+    public ResponseEntity<SubjectNoticeDTO> getNoticeById(@PathVariable Long id) {
+        SubjectNoticeDTO notice = subjectNoticeService.getNoticeById(id);
+        return ResponseEntity.ok(notice);
+    }
+
+    // 공지사항 생성
+    @PostMapping("/notice/new")
+    public ResponseEntity<?> createNewNotice(@RequestPart("notice") SubjectNoticeDTO subjectNoticeDTO,
+                                             @RequestPart("file") MultipartFile file) throws IOException {
+        if (!file.isEmpty()) {
+            String fileUrl = fileStorageService.uploadFile(file, "notice");
+            subjectNoticeDTO.setAttachmentPath(fileUrl);
+        }
+        subjectNoticeDTO.setCreatedAt(LocalDateTime.now());
+        subjectNoticeService.saveNotice(subjectNoticeDTO);
+        return ResponseEntity.ok("새로운 공지사항이 생성되었습니다.");
+    }
+
+    // 공지사항 수정
+    @PutMapping("/notice/{id}")
+    public ResponseEntity<?> updateNotice(@PathVariable Long id,
+                                          @RequestPart("notice") SubjectNoticeDTO subjectNoticeDTO,
+                                          @RequestPart("file") MultipartFile file) throws IOException {
+        if (!file.isEmpty()) {
+            String fileUrl = fileStorageService.uploadFile(file, "notice");
+            subjectNoticeDTO.setAttachmentPath(fileUrl);
+        }
+        subjectNoticeService.updateNotice(id, subjectNoticeDTO);
+        return ResponseEntity.ok("공지사항이 성공적으로 업데이트되었습니다.");
+    }
+
+    // 공지사항 삭제
+    @DeleteMapping("/notice/{id}")
+    public ResponseEntity<?> deleteNotice(@PathVariable Long id) {
+        subjectNoticeService.deleteNotice(id);
+        return ResponseEntity.ok("공지사항이 성공적으로 삭제되었습니다.");
     }
 
 }
