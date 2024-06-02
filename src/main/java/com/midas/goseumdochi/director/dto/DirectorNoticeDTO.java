@@ -3,20 +3,27 @@ package com.midas.goseumdochi.director.dto;
 import java.sql.Date;
 
 public class DirectorNoticeDTO {
+    private Long num; // pk
     private String title;
     private String content;
     private String writer;
     private Date regdate;
+    private Long directorId;
 
     public DirectorNoticeDTO() {
     }
 
-    public DirectorNoticeDTO(String title, String content, String writer, Date regdate) {
+    // directorId 만 없는 생성자
+    public DirectorNoticeDTO(Long num, String title, String content, String writer, Date regdate) {
+        this.num = num;
         this.title = title;
         this.content = content;
         this.writer = writer;
         this.regdate = regdate;
     }
+
+    public Long getNum() {return num;}
+    public void setNum(Long num) {this.num = num;}
 
     public String getTitle() {
         return title;
@@ -49,4 +56,7 @@ public class DirectorNoticeDTO {
     public void setRegdate(Date regdate) {
         this.regdate = regdate;
     }
+
+    public Long getDirectorId() {return directorId;}
+    public void setDirectorId(Long directorId) {this.directorId = directorId;}
 }

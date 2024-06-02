@@ -119,8 +119,9 @@ public class TeacherController {
     }
 
     // 새로운 강의 자료 생성
-    @PostMapping("/lecture-material/new")
-    public ResponseEntity<?> createNewMaterial(@RequestPart("material") LectureMaterialDTO lectureMaterialDTO,
+    @PostMapping("/lecture/{lectureId}/lecture-material/new")
+    public ResponseEntity<?> createNewMaterial(@PathVariable Long lectureId,
+                                               @RequestPart("material") LectureMaterialDTO lectureMaterialDTO,
                                                @RequestPart("file") MultipartFile file) throws IOException {
         String uploadDir = "uploads/";
         File directory = new File(uploadDir);
@@ -140,6 +141,7 @@ public class TeacherController {
 
         lectureMaterialDTO.setAuthor(currentTeacher.getName());
         lectureMaterialDTO.setAttachmentPath(filePath.toString());
+        lectureMaterialDTO.setLectureId(lectureId); // fk
 
         lectureMaterialService.saveLectureMaterial(lectureMaterialDTO);
 
@@ -197,8 +199,9 @@ public class TeacherController {
     }
 
     // 과제 추가
-    @PostMapping("/assignment/new")
-    public ResponseEntity<?> createNewAssignment(@RequestPart("assignment") AssignmentDTO assignmentDTO,
+    @PostMapping("/lecture/{lectureId}/assignment/new")
+    public ResponseEntity<?> createNewAssignment(@PathVariable Long lectureId,
+                                                 @RequestPart("assignment") AssignmentDTO assignmentDTO,
                                                  @RequestPart("file") MultipartFile file) throws IOException {
         String uploadDir = "uploads/assignments/";
         File directory = new File(uploadDir);
@@ -216,6 +219,7 @@ public class TeacherController {
         assignmentDTO.setAuthor(currentTeacher.getName());
         assignmentDTO.setAttachmentPath(filePath.toString());
         assignmentDTO.setCreatedAt(LocalDateTime.now());
+        assignmentDTO.setLectureId(lectureId); // fk
 
         assignmentService.saveAssignment(assignmentDTO);
         return ResponseEntity.ok("새로운 과제가 생성되었습니다.");
