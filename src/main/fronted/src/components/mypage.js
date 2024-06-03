@@ -21,7 +21,8 @@ function App12() {
         studentName: '',
         studentPhoneNumber: '',
         studentBirthDate: '',
-        studentEmail: ''
+        studentEmail: '',
+        profilePictureUrl: ''
     });
 
     const [editInputs, setEditInputs] = useState({
@@ -31,16 +32,23 @@ function App12() {
         studentEmail: ''
     });
 
+    const [profilePicture, setProfilePicture] = useState(null);
+
     useEffect(() => {
         async function fetchUserInfo() {
             try {
-                const response = await axios.get('/api/student/info');
+                const response = await axios.get('/api/student/info', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
                 const data = response.data;
                 setUserInfo({
                     studentName: data.studentName,
                     studentPhoneNumber: data.studentPhoneNumber,
                     studentBirthDate: data.studentBirthDate,
-                    studentEmail: data.studentEmail
+                    studentEmail: data.studentEmail,
+                    profilePictureUrl: data.profilePictureUrl
                 });
             } catch (error) {
                 console.error('Error fetching user info:', error);
@@ -70,10 +78,42 @@ function App12() {
         setIsEditing(true);
     };
 
+    const handleProfilePictureChange = (e) => {
+        setProfilePicture(e.target.files[0]);
+    };
+
     const handleSaveClick = async () => {
         try {
-            const response = await axios.post('/api/student/update', editInputs);
-            setUserInfo(editInputs);
+            // 정보 수정 요청
+            await axios.post('/api/student/update', editInputs, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            setUserInfo(prevInfo => ({
+                ...prevInfo,
+                ...editInputs
+            }));
+
+
+            // 프로필 사진 업로드 요청
+            if (profilePicture) {
+                const formData = new FormData();
+                formData.append('profilePicture', profilePicture);
+                const response = await axios.post('/api/student/uploadProfilePicture', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                // 프로필 사진 URL 업데이트
+                const updatedProfilePictureUrl = response.data.profilePictureUrl;
+                setUserInfo(prevInfo => ({
+                    ...prevInfo,
+                    profilePictureUrl: updatedProfilePictureUrl
+                }));
+            }
+
             setIsEditing(false);
             alert('정보 수정 성공');
         } catch (error) {
@@ -132,8 +172,21 @@ function App12() {
                         <div id="userphoto_mypage">
                             <div id="photo">
                                 <div id="header_photo"/>
-                                등록된<hr/>사진이<hr/>없습니다
+                                {userInfo.profilePictureUrl ? (
+                                    <img src={userInfo.profilePictureUrl} alt="Profile" className="profile-img"/>
+                                ) : (
+                                    <>등록된
+                                        <hr/>
+                                        사진이
+                                        <hr/>
+                                        없습니다</>
+                                )}
                             </div>
+                            {isEditing && (
+                                <>
+                                    <input type="file" accept="image/*" onChange={handleProfilePictureChange} />
+                                </>
+                            )}
                             <button id="my" onClick={showDivProfile}>
                                 <span>내 프로필</span>
                             </button><hr/>

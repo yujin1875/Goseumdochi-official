@@ -11,9 +11,10 @@ spring:
       gcp:
         storage:
           credentials:
-            location: classpath:midas-424214-233054b9a007.json
-      project-id: midas-vm-instance
+            location: classpath:midas-424214-e642912c0adf.json
+      project-id: midas-424214
       bucket: sprofile
+
   spring:
     mail:
       host: smtp.naver.com

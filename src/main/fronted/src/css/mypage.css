@@ -43,6 +43,11 @@
     padding-left: 10px;
 }
 
+#userphoto_mypage > input[type="file"] {
+    display: block;
+    margin: 10px auto;
+}
+
 #mypage-menu>#buttons_mypage{
     display: block;
     width: 1358px;
@@ -168,6 +173,10 @@ input>#notice_btn{
     height: 350px;
     background-color:#EDEDED;
     margin:auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     font-size: 32px;
     color:#000000;
@@ -175,6 +184,12 @@ input>#notice_btn{
     border:none;
     outline: none;
     text-align: center;
+}
+
+.profile-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
 }
 #photo>#header_photo{
     width:260px;
