@@ -91,6 +91,7 @@ public class StudentService {
             studentEntity.setStudentName(studentDTO.getStudentName());
             studentEntity.setStudentPhoneNumber(studentDTO.getStudentPhoneNumber());
             studentEntity.setStudentBirthDate(studentDTO.getStudentBirthDate());
+            studentEntity.setStudentEmail(studentDTO.getStudentEmail());
             studentEntity.setProfilePictureUrl(studentDTO.getProfilePictureUrl());
             studentRepository.save(studentEntity);
             return 1; // 성공

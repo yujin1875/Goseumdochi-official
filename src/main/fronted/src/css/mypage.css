@@ -29,6 +29,20 @@
     margin-left:984px;
 }
 
+#user_info_mypage > input {
+    width: 450px;
+    height: 70px;
+    margin: auto;
+    margin-bottom: 25px;
+    font-size: 32px;
+    color: #000000;
+    box-shadow: none;
+    border: 1px solid #ccc;
+    outline: none;
+    text-align: left;
+    padding-left: 10px;
+}
+
 #mypage-menu>#buttons_mypage{
     display: block;
     width: 1358px;
