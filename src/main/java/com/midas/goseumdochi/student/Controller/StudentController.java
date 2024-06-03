@@ -83,6 +83,20 @@ public class StudentController {
         return ResponseEntity.ok("임시 비밀번호가 이메일로 발송되었습니다.");
     }
 
+    // 마이페이지 사용자 정보 조회
+    @GetMapping("/info")
+    public ResponseEntity<?> getStudentInfo(HttpSession session) {
+        Long studentId = (Long) session.getAttribute("loginId");
+        if (studentId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+        StudentDTO studentDTO = studentService.findStudentById(studentId);
+        if (studentDTO == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("학생 정보를 찾을 수 없습니다.");
+        }
+        return ResponseEntity.ok(studentDTO);
+    }
+
     // 사용자 정보 수정
     @PostMapping("/update")
     public ResponseEntity<?> updateStudent(@RequestBody StudentDTO studentDTO, HttpSession session) {

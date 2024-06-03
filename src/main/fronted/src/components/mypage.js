@@ -1,6 +1,6 @@
 import '../css/mypage.css';
 import logo from './images/goseumdochi.png';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function App12() {
@@ -16,6 +16,30 @@ function App12() {
     }
 
     const [visibleDiv, setVisibleDiv] = useState('Profile');
+    const [userInfo, setUserInfo] = useState({
+        studentName: '',
+        studentPhoneNumber: '',
+        studentBirthDate: '',
+        studentEmail: ''
+    });
+
+    useEffect(() => {
+        async function fetchUserInfo() {
+            try {
+                const response = await axios.get('/api/student/info');
+                const data = response.data;
+                setUserInfo({
+                    studentName: data.studentName,
+                    studentPhoneNumber: data.studentPhoneNumber,
+                    studentBirthDate: data.studentBirthDate,
+                    studentEmail: data.studentEmail
+                });
+            } catch (error) {
+                console.error('Error fetching user info:', error);
+            }
+        }
+        fetchUserInfo();
+    }, []);
 
     const showDivProfile = () => {
         setVisibleDiv('Profile');
@@ -99,10 +123,10 @@ function App12() {
                                 </div>
                                 <div id="user_info_mypage">
                                     <div id="blank"/>
-                                    <div id="user_name">학생이름</div>
-                                    <div id="user_phonenum">000-0000-0000</div>
-                                    <div id="user_birthdate">0000.00.00</div>
-                                    <div id="user_email">abc@gmail.com</div>
+                                    <div id="user_name">{userInfo.studentName}</div>
+                                    <div id="user_phonenum">{userInfo.studentPhoneNumber}</div>
+                                    <div id="user_birthdate">{userInfo.studentBirthDate}</div>
+                                    <div id="user_email">{userInfo.studentEmail}</div>
                                     <div id="user_academy">컴퓨터 학원, 코딩학원</div>
                                 </div>
 
