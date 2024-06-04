@@ -4,11 +4,11 @@ function Yewon() {
     const navigate = useNavigate();
 
     const GologinAdmin=()=>{
-        window.location.href='/loginAdmin'
+        window.location.href='/admin/login'
     }
 
     const GologinIntegrate=()=>{
-        window.location.href='/loginIntegrate'
+        window.location.href='/integrate/login'
     }
 
     return (

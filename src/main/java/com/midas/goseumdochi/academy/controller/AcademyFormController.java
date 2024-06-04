@@ -34,11 +34,11 @@ public class AcademyFormController {
     }
 
     // 학원 신청서 찾기 작성 후
-    @PostMapping("/find")
-    public ResponseEntity<?> openAcademyForm(@RequestBody AcademyFormDTO academyFormDTO) {
+    @GetMapping("/find")
+    public ResponseEntity<?> openAcademyForm(@RequestParam String directorName, @RequestParam String directorPhoneNumber) {
         // 클라이언트에게 원장 이름, 원장 비밀번호 입력받았음
-        AcademyFormDTO findAcademyFormDTO = academyFormService.findAcademyForm(academyFormDTO.getDirectorName()
-                , academyFormDTO.getDirectorPhoneNumber());
+        AcademyFormDTO findAcademyFormDTO = academyFormService.findAcademyForm(directorName
+                , directorPhoneNumber);
 
         if(findAcademyFormDTO == null) { // 찾기 실패 (존재하지 않는 원장)
             return ResponseEntity
