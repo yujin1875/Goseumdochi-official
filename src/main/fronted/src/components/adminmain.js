@@ -3,7 +3,7 @@ import logo from './images/goseumdochi.png';
 
 function App18() {
     const GoAdminAcademyFormManage=()=>{
-        window.location.href='/admin/academy/form/manage'
+        window.location.href='/adminAcademyFormManage'
     }
 
     return (
