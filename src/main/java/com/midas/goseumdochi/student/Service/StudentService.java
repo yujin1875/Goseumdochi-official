@@ -76,9 +76,10 @@ public class StudentService {
                 .map(StudentDTO::toStudentDTO);
     }
 
+    // 비밀번호 수정
     public void updateStudentPassword(Long studentId, String newPassword) {
         studentRepository.findById(studentId).ifPresent(studentEntity -> {
-            studentEntity.setStudentPassword(encDecService.encrypt(newPassword)); //암호화하여 새 비밀번호 저장
+            studentEntity.setStudentPassword(encDecService.encrypt(newPassword));
             studentRepository.save(studentEntity);
         });
     }

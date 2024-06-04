@@ -20,10 +20,11 @@ public class SecurityConfig {
                         .requestMatchers("/api/student/signup").permitAll()
                         .requestMatchers("/api/student/login").permitAll()
                         .requestMatchers("/api/student/findStudentId").permitAll()
-                        .requestMatchers("/api/student//findStudentPassword").permitAll()
+                        .requestMatchers("/api/student/findStudentPassword").permitAll()
                         .requestMatchers("/api/student/info").permitAll()
                         .requestMatchers("/api/student/update").permitAll()
                         .requestMatchers("/api/student/uploadProfilePicture").permitAll()
+                        .requestMatchers("/api/student/changePassword").permitAll()
                         .requestMatchers("/api/academy/form").permitAll()  // 회원가입 엔드포인트 인증 비활성화
                         .requestMatchers("/api/posts/upload").permitAll()  // 커뮤니티 게시글 작성
                         .requestMatchers("/api/posts/list").permitAll()
