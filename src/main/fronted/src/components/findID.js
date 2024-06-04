@@ -26,6 +26,7 @@ function App8() {
         try {
             const response = await axios.post('/api/student/findStudentId', inputs);
             console.log('Form Submit success:', response.data);
+            alert(`아이디는 ${response.data}입니다`);
             window.location.href='/login';
         } catch (error) {
             console.error('Form Submit error:', error);
@@ -58,11 +59,6 @@ function App8() {
                     placeholder="010-0000-0000"
                     id="PhoneNum"
                     required
-                />
-                <input type="submit" value="인증" id="sub_btn"/><hr/>
-                <input
-                    type="text"
-                    placeholder="인증번호"
                 />
                 <input type="submit" value="찾기" id="findID_btn"/><hr/>
             </form>

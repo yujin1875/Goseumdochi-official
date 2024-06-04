@@ -5,6 +5,7 @@ import axios from 'axios';
 
 function App26() {
     const [visibleDiv, setVisibleDiv] = useState('Home');
+    const [visiblesubDiv, setVisiblesubDiv] = useState('List');
 
     const showDivHome = () => {
         setVisibleDiv('Home');
@@ -12,6 +13,18 @@ function App26() {
 
     const showDivLecturedata = () => {
         setVisibleDiv('Lecturedata');
+    };
+
+    const showsubDivList = () => {
+        setVisiblesubDiv('List');
+    };
+
+    const showsubDivView= () => {
+        setVisiblesubDiv('View');
+    };
+
+    const showsubDivWrite = () => {
+        setVisiblesubDiv('Write');
     };
 
 return (
@@ -52,11 +65,42 @@ return (
                     <div id="Lecturedata_teacherportal">
                         <h2>수업자료실</h2>
                         <div id="Lecturedata">
+                            {visiblesubDiv === 'List' && (
+                              <>
+                                <div id="List_teacherportal">
+                                    <div id="List">
 
+                                    </div>
+                                    <button id="newRegister" onClick={showsubDivWrite}>
+                                        <span>새로 등록하기</span>
+                                    </button>
+                                </div>
+                              </>
+                            )}
+                            {visiblesubDiv === 'View' && (
+                              <>
+                                <div id="View_teacherportal">
+                                    <div id="View">
+
+                                    </div>
+                                    <button id="newRegister" onClick={showsubDivWrite}>
+                                        <span>수정</span>
+                                    </button>
+                                </div>
+                              </>
+                            )}
+                            {visiblesubDiv === 'Write' && (
+                              <>
+                                <div id="Write_teacherportal">
+                                    <div id="write">
+                                    </div>
+                                    <button id="save" onClick={showsubDivList}>
+                                        <span>저장</span>
+                                    </button>
+                                </div>
+                              </>
+                            )}
                         </div>
-                        <button id="newRegister">
-                            <span>새로 등록하기</span>
-                        </button>
                     </div>
                   </>
                 )}

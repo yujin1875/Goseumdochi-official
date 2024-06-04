@@ -79,12 +79,60 @@ hr{
 
 #Lecturedata_teacherportal>#Lecturedata{
     width:1920px;
-    height:800px;
+    height:900px;
     margin-top:30px;
-    background-color:aqua;
 }
 
-#Lecturedata_teacherportal>button{
+#List_teacherportal>#List{
+    width:1920px;
+    height:800px;
+    background-color:#FFFFFF;
+}
+
+#List_teacherportal>button{
+    float:right;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin:auto;
+    margin-top:22px;
+    margin-right:20px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#View_teacherportal>#View{
+    width:1920px;
+    height:800px;
+    background-color:#FFFFFF;
+}
+
+#View_teacherportal>button{
+    float:right;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin:auto;
+    margin-top:22px;
+    margin-right:20px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#Lecturedata>#Write_teacherportal{
+     width:1920px;
+     height:800px;
+}
+
+#Write_teacherportal>#Write{
+    width:1920px;
+    height:800px;
+    background-color:#FFFFFF;
+}
+
+#Write_teacherportal>button{
     float:right;
     width:103px;
     height:51px;

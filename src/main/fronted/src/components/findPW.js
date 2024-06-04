@@ -22,7 +22,8 @@ function App9() {
         console.log("Form data:", inputs);
         try {
             const response = await axios.post('/api/student/findStudentPassword', inputs);
-            console.log('Form Submit success:', response.data);
+            console.log('임시 비밀번호가 이메일로 발송되었습니다.', response.data);
+            alert('임시 비밀번호가 이메일로 발송되었습니다.');
             window.location.href='/login';
         } catch (error) {
             console.error('Form Submit error:', error);
@@ -63,11 +64,6 @@ function App9() {
                     onChange={handleChange}
                     placeholder="010-0000-0000"
                     required
-                />
-                <input type="submit" value="인증" id="sub_btn"/><hr/>
-                <input
-                    type="text"
-                    placeholder="인증번호"
                 />
                 <input type="submit" value="찾기" id="findPW_btn"/><hr/>
             </form>
