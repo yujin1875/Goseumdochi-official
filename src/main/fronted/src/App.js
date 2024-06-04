@@ -27,9 +27,15 @@ import App24 from './components/community.js';
 import App25 from './components/teachermain.js';
 import App26 from './components/teacherportal.js';
 import Yewon from './components/yewon/test';
-import LoginAdmin from './components/yewon/login_admin';
-import LoginIntegrate from './components/yewon/login_integrate';
+import AdminLogin from './components/yewon/admin_login';
+import IntegrateLogin from './components/yewon/integrate_login';
 import AdminAcademyFormManage from './components/yewon/admin_academyForm_manage'
+import AcademyFormUpdate from './components/yewon/academyForm_update'
+import DirectorMain from './components/yewon/director_main'
+import DirectorStudentManage from './components/yewon/director_student_manage'
+import DirectorStudentRegist from './components/yewon/director_student_regist'
+import DirectorTeacherManage from './components/yewon/director_teacher_manage'
+import DirectorTeacherRegist from './components/yewon/director_teacher_regist'
 import { Component } from 'react';
 
 class App extends Component{
@@ -72,9 +78,15 @@ class App extends Component{
               <Route path='/teachermain' element={<App25/>}/>
               <Route path='/teacherportal' element={<App26/>}/>
               <Route path='/yewon' element={<Yewon/>}/>
-              <Route path='/loginAdmin' element={<LoginAdmin/>}/>
-              <Route path='/loginIntegrate' element={<LoginIntegrate/>}/>
-              <Route path='/adminAcademyFormManage' element={<AdminAcademyFormManage/>}/>
+              <Route path='/admin/login' element={<AdminLogin/>}/>
+              <Route path='/integrate/login' element={<IntegrateLogin/>}/>
+              <Route path='/admin/academy/form/manage' element={<AdminAcademyFormManage/>}/>
+              <Route path='/academy/form/update' element={<AcademyFormUpdate/>}/>
+              <Route path='/director/main' element={<DirectorMain/>}/>
+              <Route path='/director/student/manage' element={<DirectorStudentManage/>}/>
+              <Route path='/director/student/regist' element={<DirectorStudentRegist/>}/>
+              <Route path='/director/teacher/manage' element={<DirectorTeacherManage/>}/>
+              <Route path='/director/teacher/regist' element={<DirectorTeacherRegist/>}/>
             </Routes>
         </BrowserRouter> 
       </div>

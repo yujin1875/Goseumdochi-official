@@ -38,13 +38,13 @@ public class TeacherController {
     // 선생 등록
     @PostMapping("/regist")
     public ResponseEntity<?> registTeacher(@RequestBody TeacherDTO inputTeacherDTO) {
-        TeacherDTO teacherDTO = teacherService.setLoginidAndPassword(inputTeacherDTO);
-        teacherService.regist(teacherDTO);
+        inputTeacherDTO = teacherService.setLoginidAndPassword(inputTeacherDTO);
+        TeacherDTO registTeacherDTO = teacherService.regist(inputTeacherDTO);
 
         // 선생 등록 성공, 원장에게 메일 전송
-        mailService.mailSend(teacherService.getMailDTOForRegist(teacherDTO));
+        mailService.mailSend(teacherService.getMailDTOForRegist(registTeacherDTO));
 
-        return ResponseEntity.ok(teacherDTO); // 선생 dto 리턴
+        return ResponseEntity.ok(registTeacherDTO); // 선생 dto 리턴
     }
 
     // 강의 등록

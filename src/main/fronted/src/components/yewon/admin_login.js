@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 
-function LoginIntegrate() {
+function AdminLogin() {
     const [loginid, setLoginid] = useState('');
     const [password, setPassword] = useState('');
 
@@ -53,4 +53,4 @@ function LoginIntegrate() {
     );
 }
 
-export default LoginIntegrate;
+export default AdminLogin;

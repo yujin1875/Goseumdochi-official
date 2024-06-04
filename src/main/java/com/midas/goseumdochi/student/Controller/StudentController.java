@@ -39,7 +39,8 @@ public class StudentController {
     @PostMapping("/signup")
     public ResponseEntity<?> join(@RequestBody StudentDTO studentDTO) {
         System.out.println("Received studentDTO: " + studentDTO);
-        if (!studentDTO.getStudentPhoneNumber().matches("^\\d{3}-\\d{4}-\\d{4}$")) {
+        // 전화번호 형식 - 있는 거에서 -> 없는 것으로 (숫자 11자)
+        if (!studentDTO.getStudentPhoneNumber().matches("^\\d{11}$")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("전화번호 형식이 올바르지 않습니다.");
         }
 

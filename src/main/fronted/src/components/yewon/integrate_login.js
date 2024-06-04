@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-function LoginIntegrate() {
+function IntegrateLogin() {
     const [loginid, setLoginid] = useState('');
     const [password, setPassword] = useState('');
+
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault(); // 폼 제출 시 페이지 새로고침 방지
@@ -20,6 +23,7 @@ function LoginIntegrate() {
             const {id, role} = response.data;
             if (role === 'director') { // 원장 로그인 성공
                 alert("환영합니다 원장님");
+                navigate('/director/main', { state: { user: response.data } })
             }
             else if (role === 'teacher') { // 선생 로그인 성공
                 alert("환영합니다 선생님")
@@ -59,4 +63,4 @@ function LoginIntegrate() {
     );
 }
 
-export default LoginIntegrate;
+export default IntegrateLogin;
