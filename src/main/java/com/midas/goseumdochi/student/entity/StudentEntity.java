@@ -62,16 +62,4 @@ public class StudentEntity {
                 .profilePictureUrl(studentDTO.getProfilePictureUrl())
                 .build();
     }
-
-    // 좋아요한 글 목록
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "liked_posts",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id"))
-    private List<PostEntity> likedPosts;
-
-    // 좋아요한 글 목록 조회 메서드
-    public List<PostEntity> getLikedPosts() {
-        return likedPosts;
-    }
 }

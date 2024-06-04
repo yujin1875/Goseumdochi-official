@@ -1,21 +1,16 @@
 package com.midas.goseumdochi.community.entity;
 
+import com.midas.goseumdochi.academy.entity.AcademyEntity;
 import com.midas.goseumdochi.student.entity.StudentEntity;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
 
+// 학원 리뷰 게시판
 @Entity
-@Table(name = "post")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class PostEntity {
+@Table(name = "post_academyReview")
+public class AcademyReviewEntity {
+    // 리뷰 수정 불가능 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,13 +33,11 @@ public class PostEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id", nullable = false)
     private StudentEntity writer;
-
+    
+    // 학원이랑 연결
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", nullable = false, columnDefinition = "integer default 1") // 디폴트값 1
-    private CategoryEntity category;
-
-    @Column(nullable = false, columnDefinition = "boolean default false")
-    private boolean isModified;
+    @JoinColumn(name = "academy_id", nullable = false)
+    private AcademyEntity academy_id;
 
     @PrePersist
     protected void onCreateDate() {
@@ -60,14 +53,5 @@ public class PostEntity {
     public void incrementLikes() {
         this.likeCount++;
     }
-
-    // 게시글 수정 여부 설정 함수
-    public void setModified(boolean isModified) {
-        this.isModified = isModified;
-    }
-
-    // CategoryEntity를 설정하는 메서드 추가
-    public void setCategory(CategoryEntity category) {
-        this.category = category;
-    }
 }
+

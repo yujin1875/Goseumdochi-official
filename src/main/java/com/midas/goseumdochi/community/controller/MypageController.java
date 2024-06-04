@@ -1,7 +1,6 @@
 package com.midas.goseumdochi.community.controller;
 
 import com.midas.goseumdochi.community.dto.PostDTO;
-import com.midas.goseumdochi.community.dto.CommentDTO;
 import com.midas.goseumdochi.community.service.MypageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +24,9 @@ public class MypageController {
         return mypageService.getLikedPostsByWriterId(writerId);
     }
 
-    @GetMapping("/comments/{writerId}")
-    public List<CommentDTO> getCommentsByWriterId(@PathVariable Long writerId) {
-        return mypageService.getCommentsByWriterId(writerId);
+    @GetMapping("/commented-posts/{writerId}")
+    public List<PostDTO> getCommentedPostsByWriterId(@PathVariable Long writerId) {
+        return mypageService.getCommentedPostsByWriterId(writerId);
     }
+
 }

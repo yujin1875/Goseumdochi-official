@@ -19,13 +19,15 @@ public class SecurityConfig {
                         .requestMatchers("/api/academy/form").permitAll()  // 회원가입 엔드포인트 인증 비활성화
                         .requestMatchers("/api/posts/upload").permitAll()  // 커뮤니티 게시글 작성
                         .requestMatchers("/api/posts/list").permitAll()
-                        .requestMatchers("/api/posts/categories").permitAll()
                         .requestMatchers("/api/admin/management/students").permitAll()
                         .requestMatchers("/api/admin/management/academy").permitAll()
                         .requestMatchers("/api/posts/${id}/with-comments").permitAll()
                         .requestMatchers("/api/mypage/posts/{id}").permitAll()
-                        .requestMatchers("/api/mypage/liked-posts/{id}").permitAll()
-                        .requestMatchers("/api/mypage/comments/{id}").permitAll()
+                        .requestMatchers("/api/mypage/liked-posts/**").permitAll()
+                        .requestMatchers("/api/mypage/commented-posts/**").permitAll()
+                        .requestMatchers("/api/posts/category/**").permitAll()
+                        .requestMatchers("/api/posts/categories").permitAll()
+                        .requestMatchers("/api/posts").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();

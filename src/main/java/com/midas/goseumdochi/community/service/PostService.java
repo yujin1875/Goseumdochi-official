@@ -131,4 +131,20 @@ public class PostService {
                 .postId(commentEntity.getPost().getId())
                 .build();
     }
+
+    // 카테고리별 게시판
+    public List<PostDTO> getPostsByCategory(String category) {
+        CategoryEntity categoryEntity = categoryRepository.findByName(category);
+        if (categoryEntity == null) {
+            throw new IllegalArgumentException("Category not found");
+        }
+
+        return postRepository.findByCategory(categoryEntity)
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+
+
 }
