@@ -26,6 +26,10 @@ import App23 from './components/adminstudentmanage.js';
 import App24 from './components/community.js';
 import App25 from './components/teachermain.js';
 import App26 from './components/teacherportal.js';
+import Yewon from './components/yewon/test';
+import LoginAdmin from './components/yewon/login_admin';
+import LoginIntegrate from './components/yewon/login_integrate';
+import AdminAcademyFormManage from './components/yewon/admin_academyForm_manage'
 import { Component } from 'react';
 
 class App extends Component{
@@ -67,7 +71,11 @@ class App extends Component{
               <Route path='/community' element={<App24/>}/>
               <Route path='/teachermain' element={<App25/>}/>
               <Route path='/teacherportal' element={<App26/>}/>
-            </Routes>   
+              <Route path='/yewon' element={<Yewon/>}/>
+              <Route path='/loginAdmin' element={<LoginAdmin/>}/>
+              <Route path='/loginIntegrate' element={<LoginIntegrate/>}/>
+              <Route path='/adminAcademyFormManage' element={<AdminAcademyFormManage/>}/>
+            </Routes>
         </BrowserRouter> 
       </div>
     )
