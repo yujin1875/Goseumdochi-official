@@ -45,18 +45,36 @@ function App12() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Form data:", inputs);
+        if (!inputs.currentPassword || !inputs.newPassword || !inputs.confirmNewPassword) {
+            alert('모든 필드를 입력해 주세요.');
+            return;
+        }
+        console.log("폼 데이터:", inputs);
         try {
-            const response = await axios.post('/api/student/changePassword', inputs);
-            console.log('Form Submit success:', response.data);
-            window.location.href='/login';
+            const response = await axios.post('/api/student/changePassword', inputs, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            console.log('폼 제출 성공:', response.data);
+            alert('비밀번호가 변경되었습니다.');
+            window.location.href = '/login';
         } catch (error) {
-            console.error('Form Submit error:', error);
+            console.error('폼 제출 오류:', error);
             if (error.response) {
-                console.log("Error response data:", error.response.data);
-                alert(`${error.response.data}`);
+                console.log("오류 응답 데이터:", error.response.data);
+                switch (error.response.data) {
+                    case "현재 비밀번호가 일치하지 않습니다.":
+                    case "새 비밀번호는 현재 비밀번호와 달라야 합니다.":
+                    case "새 비밀번호 확인이 일치하지 않습니다.":
+                    case "로그인이 필요합니다.":
+                        alert(error.response.data);
+                        break;
+                    default:
+                        alert('오류가 발생했습니다. 나중에 다시 시도해 주세요.');
+                }
             } else {
-                alert('An error occurred. Please try again later.');
+                alert('오류가 발생했습니다. 나중에 다시 시도해 주세요.');
             }
         }
     };
@@ -114,33 +132,40 @@ function App12() {
                             )}
                             {visibleDiv === 'ChangePW' && (
                               <>
-                                <form id="ChangePassWord_mypage" onSubmit={handleSubmit}>
-                                    <h2>비밀번호 변경</h2>
-                                    <input
-                                        type="text"
-                                        name="currentPassword"
-                                        value={inputs.currentPassword}
-                                        placeholder="현재 비밀번호"
-                                        id="currentPassword"
-                                        required
-                                    /><hr/>
-                                    <input
-                                        type="text"
-                                        name="newPassword"
-                                        value={inputs.newPassword}
-                                        placeholder="새 비밀번호"
-                                        id="newPassword"
-                                        required
-                                    /><hr/>
-                                    <input
-                                        type="text"
-                                        name="confirmNewPassword"
-                                        value={inputs.confirmNewPassword}
-                                        placeholder="새 비밀번호 확인"
-                                        id="confirmNewPassword"
-                                        required
-                                    /><hr/>
-                                </form>
+                                  <form id="ChangePassWord_mypage" onSubmit={handleSubmit}>
+                                      <h2>비밀번호 변경</h2>
+                                      <input
+                                          type="password"
+                                          name="currentPassword"
+                                          value={inputs.currentPassword}
+                                          placeholder="현재 비밀번호"
+                                          onChange={handleChange}
+                                          id="currentPassword"
+                                          required
+                                      />
+                                      <hr/>
+                                      <input
+                                          type="password"
+                                          name="newPassword"
+                                          value={inputs.newPassword}
+                                          placeholder="새 비밀번호"
+                                          onChange={handleChange}
+                                          id="newPassword"
+                                          required
+                                      />
+                                      <hr/>
+                                      <input
+                                          type="password"
+                                          name="confirmNewPassword"
+                                          value={inputs.confirmNewPassword}
+                                          placeholder="새 비밀번호 확인"
+                                          onChange={handleChange}
+                                          id="confirmNewPassword"
+                                          required
+                                      />
+                                      <hr/>
+                                      <input type="submit" value="비밀번호 변경"/>
+                                  </form>
                               </>
                             )}
                         </div>
