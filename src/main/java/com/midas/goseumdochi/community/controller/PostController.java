@@ -33,4 +33,9 @@ public class PostController {
     public PostDTO getPostByIdWithComments(@PathVariable Long id) {
         return postService.getPostByIdWithComments(id);
     }
+
+    @GetMapping("/category/{category}")
+    public List<PostDTO> getPostsByCategory(@PathVariable String category) {
+        return postService.getPostsByCategory(category);
+    }
 }

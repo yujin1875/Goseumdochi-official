@@ -4,6 +4,8 @@ import com.midas.goseumdochi.community.dto.PostDTO;
 import com.midas.goseumdochi.community.dto.CommentDTO;
 import com.midas.goseumdochi.community.entity.PostEntity;
 import com.midas.goseumdochi.community.entity.CommentEntity;
+import com.midas.goseumdochi.community.entity.PostLikeEntity;
+import com.midas.goseumdochi.community.repository.PostLikeRepository;
 import com.midas.goseumdochi.community.repository.PostRepository;
 import com.midas.goseumdochi.community.repository.CommentRepository;
 import com.midas.goseumdochi.student.entity.StudentEntity;
@@ -24,6 +26,9 @@ public class MypageService {
     private PostRepository postRepository;
 
     @Autowired
+    private PostLikeRepository postLikeRepository;
+
+    @Autowired
     private CommentRepository commentRepository;
 
     public List<PostDTO> getPostsByWriterId(Long writerId) {
@@ -33,20 +38,22 @@ public class MypageService {
     }
 
     public List<PostDTO> getLikedPostsByWriterId(Long writerId) {
-        StudentEntity writer = studentRepository.findById(writerId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid writer ID"));
+        List<PostLikeEntity> likedPosts = postLikeRepository.findByStudentId(writerId);
 
-        return writer.getLikedPosts().stream()
+        return likedPosts.stream()
+                .map(PostLikeEntity::getPost)
                 .map(this::convertPostToDTO)
                 .collect(Collectors.toList());
     }
 
-    public List<CommentDTO> getCommentsByWriterId(Long writerId) {
+
+    public List<PostDTO> getCommentedPostsByWriterId(Long writerId) {
         return commentRepository.findByWriterId(writerId).stream()
-                .map(this::convertCommentToDTO)
+                .map(CommentEntity::getPost) // 댓글이 달린 게시글을 가져옴
+                .distinct() // 중복된 게시글을 제거
+                .map(this::convertPostToDTO) // 게시글 엔티티를 DTO로 변환
                 .collect(Collectors.toList());
     }
-
     private PostDTO convertPostToDTO(PostEntity postEntity) {
         return PostDTO.builder()
                 .id(postEntity.getId())
