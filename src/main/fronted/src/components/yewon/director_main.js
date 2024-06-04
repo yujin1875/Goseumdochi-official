@@ -9,6 +9,10 @@ function DirectorMain() {
 
     const { user } = location.state || {}; // id, role 전달
 
+    const GoTeacherManage=()=>{
+        navigate('/director/teacher/manage', { state: { user: user } })
+    }
+
     const GoStudentManage=()=>{
         navigate('/director/student/manage', { state: { user: user } })
     }
@@ -21,7 +25,7 @@ function DirectorMain() {
                 </div>
                 <div id="buttons_teachermain">
                     <input type="submit" value="과목관리" id="lecture_btn"/>
-                    <input type="submit" value="선생관리" id="studentmanage_btn"/>
+                    <input type="submit" value="선생관리" id="studentmanage_btn " onClick={GoTeacherManage}/>
                     <input type="submit" value="학생관리" id="mypage_btn" onClick={GoStudentManage}/>
                     <div id="rect"/>
                 </div>

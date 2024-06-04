@@ -19,6 +19,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/admin/**").permitAll()
                         .requestMatchers("/api/director/**").permitAll()
                         .requestMatchers("/api/academy/form/**").permitAll()
+                        .requestMatchers("/api/teacher/**").permitAll()
                         .requestMatchers("/api/student/signup").permitAll()
                         .requestMatchers("/api/student/login").permitAll()
                         .requestMatchers("/api/student/findStudentId").permitAll()
