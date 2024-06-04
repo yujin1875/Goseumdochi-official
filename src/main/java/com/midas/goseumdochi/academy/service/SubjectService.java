@@ -26,11 +26,16 @@ public class SubjectService {
     }
 
     // 처음 과목 등록
-    public void regist(SubjectDTO subjectDTO) {
+    public SubjectDTO regist(String subjectName, Long academyId) {
+        SubjectDTO subjectDTO = new SubjectDTO();
+        subjectDTO.setName(subjectName);
         // 이것도 에러나면 처음 static 함수 추가
         SubjectEntity subjectEntity = SubjectEntity.toSubjectEntity(subjectDTO,
-                academyRepository.findById(subjectDTO.getAcademyId()).get());
-        subjectRepository.save(subjectEntity);
+                academyRepository.findById(academyId).get());
+
+        subjectDTO = SubjectDTO.toSubjectDTO(subjectRepository.save(subjectEntity));
+
+        return subjectDTO;
     }
 
     // 과목 리스트 리턴
@@ -38,6 +43,10 @@ public class SubjectService {
         List<SubjectDTO> subjectDTOList = new ArrayList<>();
         for (SubjectEntity subjectEntity : subjectRepository.findAllByAcademyId(academyId))
             subjectDTOList.add(SubjectDTO.toSubjectDTO(subjectEntity));
+
+        //if(subjectDTOList.isEmpty())
+        //    return null;
+
         return subjectDTOList;
     }
 }

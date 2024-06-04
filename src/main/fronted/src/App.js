@@ -36,6 +36,8 @@ import DirectorStudentManage from './components/yewon/director_student_manage'
 import DirectorStudentRegist from './components/yewon/director_student_regist'
 import DirectorTeacherManage from './components/yewon/director_teacher_manage'
 import DirectorTeacherRegist from './components/yewon/director_teacher_regist'
+import DirectorSubjectmanage from './components/yewon/director_subject_manage'
+import DirectorSubjectRegist from './components/yewon/director_subject_regist'
 import { Component } from 'react';
 
 class App extends Component{
@@ -87,6 +89,8 @@ class App extends Component{
               <Route path='/director/student/regist' element={<DirectorStudentRegist/>}/>
               <Route path='/director/teacher/manage' element={<DirectorTeacherManage/>}/>
               <Route path='/director/teacher/regist' element={<DirectorTeacherRegist/>}/>
+              <Route path='/director/subject/manage' element={<DirectorSubjectmanage/>}/>
+              <Route path='/director/subject/regist' element={<DirectorSubjectRegist/>}/>
             </Routes>
         </BrowserRouter> 
       </div>

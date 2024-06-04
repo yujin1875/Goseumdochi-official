@@ -15,9 +15,9 @@ import java.util.List;
 public class SubjectController {
     private final SubjectService subjectService;
 
-    @PostMapping("/regist")
-    public ResponseEntity<?> registSubject(@RequestBody SubjectDTO subjectDTO) { // (이름, 학원 id) 전달
-        SubjectDTO findSubjectDTO = subjectService.findByNameAndAcademyId(subjectDTO.getName(), subjectDTO.getAcademyId());
+    @PostMapping("/regist/academy/{academyId}")
+    public ResponseEntity<?> registSubject(@PathVariable Long academyId, @RequestParam String inputSubjectName) { // (이름, 학원 id) 전달
+        SubjectDTO findSubjectDTO = subjectService.findByNameAndAcademyId(inputSubjectName, academyId);
 
         if(findSubjectDTO != null) { // 중복된 과목이 존재
             return ResponseEntity
@@ -26,19 +26,13 @@ public class SubjectController {
         }
 
         // 과목 등록 성공
-        subjectService.regist(subjectDTO);
-        return ResponseEntity.ok(subjectDTO);
+        SubjectDTO registSubjectDTO = subjectService.regist(inputSubjectName, academyId);
+        return ResponseEntity.ok(registSubjectDTO);
     }
 
-    @PostMapping("/findList")
-    public ResponseEntity<?> findSubjectList(@RequestParam Long academyId) {
+    @GetMapping("/findList/academy/{academyId}")
+    public ResponseEntity<?> findSubjectList(@PathVariable Long academyId) {
         List<SubjectDTO> subjectDTOList = subjectService.findAllByAcademyId(academyId);
-
-        if(subjectDTOList.isEmpty()) { // 등록된 과목이 없음
-            return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED) // 에러 상태
-                    .body("등록된 과목이 없습니다.");
-        }
 
         return ResponseEntity.ok(subjectDTOList);
     }
