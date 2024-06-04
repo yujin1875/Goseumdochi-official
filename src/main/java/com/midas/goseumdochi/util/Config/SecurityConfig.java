@@ -28,6 +28,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/posts/category/**").permitAll()
                         .requestMatchers("/api/posts/categories").permitAll()
                         .requestMatchers("/api/posts").permitAll()
+                        .requestMatchers("/api/academy-reviews").permitAll()
+                        .requestMatchers("/api/academies").permitAll()
+                        .requestMatchers("/api/admin/main/info").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();

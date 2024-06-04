@@ -9,12 +9,15 @@ function App24() {
     const [likedPosts, setLikedPosts] = useState([]);
     const [commentedPosts, setCommentedPosts] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [reviews, setReviews] = useState([]);
     const [newPost, setNewPost] = useState({
         title: '',
         content: '',
         categoryId: '',
-        writerId: 1 // 실제 사용자 ID로 변경
+        writerId: 1, // 실제 사용자 ID로 변경
+        star: null // 별점 초기 값으로 null 설정
     });
+    const [academies, setAcademies] = useState([]); // 학원 목록을 저장할 상태 추가
 
     useEffect(() => {
         fetchCategories();
@@ -29,6 +32,10 @@ function App24() {
             fetchPostsByCategory('질문');
         } else if (visibleDiv === 'Mypage') {
             fetchMypageData();
+        } else if (visibleDiv === '학원리뷰') {
+            fetchAcademyReviews();
+        } else if (visibleDiv === '글쓰기') { // '글쓰기' 화면일 때 학원 목록을 불러옴
+            fetchAcademies(); // 학원 목록을 가져오는 함수 호출
         }
     }, [visibleDiv]);
 
@@ -51,18 +58,47 @@ function App24() {
     };
 
     const fetchMypageData = async () => {
-            try {
-                const myPostsResponse = await axios.get(`/api/mypage/posts/${newPost.writerId}`);
-                setPosts(myPostsResponse.data);
+        try {
+            const myPostsResponse = await axios.get(`/api/mypage/posts/${newPost.writerId}`);
+            setPosts(myPostsResponse.data);
 
-                const likedPostsResponse = await axios.get(`/api/mypage/liked-posts/${newPost.writerId}`);
-                setLikedPosts(likedPostsResponse.data);
-                const commentedPostsResponse = await axios.get(`/api/mypage/commented-posts/${newPost.writerId}`);
-                setCommentedPosts(commentedPostsResponse.data);
-            } catch (error) {
-                console.error("Error fetching mypage data", error);
+            const likedPostsResponse = await axios.get(`/api/mypage/liked-posts/${newPost.writerId}`);
+            setLikedPosts(likedPostsResponse.data);
+            const commentedPostsResponse = await axios.get(`/api/mypage/commented-posts/${newPost.writerId}`);
+            setCommentedPosts(commentedPostsResponse.data);
+        } catch (error) {
+            console.error("Error fetching mypage data", error);
+        }
+    };
+
+    const fetchAcademyReviews = async () => {
+        try {
+            const reviewsResponse = await axios.get('/api/academy-reviews');
+            setReviews(reviewsResponse.data);
+        } catch (error) {
+            console.error("Error fetching academy reviews", error);
+        }
+    };
+
+    const fetchAcademies = async () => {
+        try {
+            const academiesResponse = await axios.get('/api/academies');
+            let academiesData = academiesResponse.data;
+            if (Array.isArray(academiesData)) {
+                // 데이터가 이미 배열 형태이므로 그대로 사용합니다.
+                setAcademies(academiesData);
+            } else if (typeof academiesData === 'object') {
+                // 데이터가 객체 형태이므로 객체의 값을 배열로 변환합니다.
+                academiesData = Object.values(academiesData);
+                setAcademies(academiesData);
+            } else {
+                console.error("Unexpected data format for academies:", academiesData);
             }
-        };
+        } catch (error) {
+            console.error("Error fetching academies", error);
+        }
+    };
+
 
     const showDivHome = () => {
         setVisibleDiv('자유');
@@ -75,6 +111,10 @@ function App24() {
 
     const showDivByCategory = (category) => {
         setVisibleDiv(category);
+    };
+
+    const showDivReviews = () => {
+        setVisibleDiv('학원리뷰');
     };
 
     const showWriteForm = () => {
@@ -93,26 +133,20 @@ function App24() {
         e.preventDefault();
         try {
             if (!newPost.categoryId) {
-                // 카테고리를 선택하지 않았을 때 오류 메시지 표시
                 alert("카테고리를 선택해주세요.");
                 return;
             }
 
-            // 서버에 게시글 등록 요청을 보냄
             const response = await axios.post('/api/posts/upload', {
                 ...newPost,
-                // writerId를 숫자로 변환하여 Long 타입으로 전송
                 writerId: parseInt(newPost.writerId, 10)
             });
             console.log('Post created successfully', response.data);
-            // 등록된 게시글을 화면에 표시하기 위해 해당 카테고리로 이동
             showDivByCategory(newPost.categoryId);
         } catch (error) {
             console.error('Error creating post', error);
         }
     };
-
-
 
     return (
         <div id="App">
@@ -130,7 +164,7 @@ function App24() {
                     <li onClick={() => showDivByCategory('대입')}><a>대입 게시판</a></li>
                     <li onClick={() => showDivByCategory('질문')}><a>질문 게시판</a></li>
                     <li><a>대학 입결 정보</a></li>
-                    <li><a>학원 리뷰</a></li>
+                    <li onClick={showDivReviews}><a>학원 리뷰</a></li>
                     <li onClick={showDivMypage}><a>마이페이지</a></li>
                 </ul>
             </div>
@@ -150,8 +184,8 @@ function App24() {
                     {visibleDiv === '글쓰기' && (
                         <div id="write_contents_community">
                             <form onSubmit={handleFormSubmit}>
-                            <label htmlFor="writerId" >작성자 아이디: </label>
-                            <input type="text" id="writerId" value={newPost.writerId} disabled />
+                                <label htmlFor="writerId" >작성자 아이디: </label>
+                                <input type="text" id="writerId" value={newPost.writerId} disabled />
                                 <label htmlFor="categoryId">카테고리: </label>
                                 <select id="categoryId" onChange={handleInputChange} value={newPost.categoryId}>
                                     <option value="">카테고리를 선택하세요</option>
@@ -159,6 +193,19 @@ function App24() {
                                         <option key={index} value={category}>{category}</option>
                                     ))}
                                 </select>
+                                {newPost.categoryId === '학원리뷰' && (
+                                    <span>
+                                        <label htmlFor="academy">학원 선택: </label>
+                                        <select id="academy" onChange={handleInputChange}>
+                                            <option value="">학원을 선택하세요</option>
+                                            {academies.map((academy, index) => (
+                                                <option key={index} value={academy.id}>{academy.name}</option>
+                                            ))}
+                                        </select>
+                                        <label htmlFor="star">별점: </label>
+                                        <input type="number" id="star" min="1" max="5" onChange={handleInputChange} value={newPost.star || ''} />
+                                    </span>
+                                )}
                                 <label htmlFor="title">제목: </label>
                                 <input type="text" id="title" onChange={handleInputChange} value={newPost.title} />
                                 <label htmlFor="content">내용: </label>
@@ -167,6 +214,7 @@ function App24() {
                             </form>
                         </div>
                     )}
+
                     {visibleDiv === '자유' && (
                         <div id="letter_contents_community">
                             <ul>
@@ -218,6 +266,25 @@ function App24() {
                             </ul>
                         </div>
                     )}
+                    {visibleDiv === '학원리뷰' && (
+                        <div id="letter_contents_community">
+                            <ul>
+                                {reviews
+                                    .slice()
+                                    .sort((a, b) => new Date(b.createDate) - new Date(a.createDate)) // 날짜 기준으로 최신 순 정렬
+                                    .map(review => (
+                                        <li key={review.id}>
+                                            <div>{review.likeCount} 좋아요</div>
+                                            <div>{review.title}</div>
+                                            <div>{review.views} 조회수</div>
+                                            <div>{review.createDate.split('T')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
+                                            <div>{review.star} 별점</div> {/* 별점 추가 */}
+                                        </li>
+                                    ))}
+                            </ul>
+                        </div>
+                    )}
+
                     {visibleDiv === 'Mypage' && (
                         <div id="mypage_contents_community">
                             <div className="mypage_section">
