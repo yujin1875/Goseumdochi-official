@@ -13,6 +13,7 @@ function App26() {
 
     const showDivLecturedata = () => {
         setVisibleDiv('Lecturedata');
+        setVisiblesubDiv('List');
     };
 
     const showsubDivList = () => {
