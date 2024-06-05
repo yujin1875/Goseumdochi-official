@@ -11,6 +11,10 @@ function App26() {
         setVisibleDiv('Home');
     };
 
+    const showDivAssignment = () => {
+        setVisibleDiv('Assignment');
+    };
+
     const showDivLecturedata = () => {
         setVisibleDiv('Lecturedata');
         setVisiblesubDiv('List');
@@ -39,7 +43,7 @@ return (
                     <li onClick={showDivHome}><a>교과정보</a></li>
                     <li><a>강의관리</a></li>
                     <li onClick={showDivLecturedata}><a>수업자료</a></li>
-                    <li><a>과제조회/제출</a></li>
+                    <li onClick={showDivAssignment}><a>과제조회/제출</a></li>
                     <li><a>평가관리</a></li>
                     <li><a>시험관리</a></li>
                     <li><a>과목공지</a></li>
@@ -57,6 +61,13 @@ return (
                 {visibleDiv === 'Home' && (
                   <>
                     <div id="Home_teacherportal">
+
+                    </div>
+                  </>
+                )}
+                {visibleDiv === 'Assignment' && (
+                  <>
+                    <div id="Assignment_teacherportal">
 
                     </div>
                   </>
