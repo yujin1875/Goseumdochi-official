@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import '../css/adminacademymanage.css';
 import logo from './images/goseumdochi.png';
 
@@ -78,6 +77,9 @@ const App22 = () => {
                         </div>
                         <div id="directorEmail">
                             원장님 이메일
+                        </div>
+                        <div id="academyNum">
+                            학원 번호
                         </div>
                         <div id="academyPostnum">
                             학원 우편번호

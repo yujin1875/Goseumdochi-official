@@ -82,6 +82,7 @@ function App7() {
                             value={inputs.directorEmail} // inputDirectorEmail
                             onChange={handleChange}
                             placeholder={inputDirectorEmail}
+                            id="email"
                             required
                         />
                         <input

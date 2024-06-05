@@ -11,8 +11,13 @@ function App26() {
         setVisibleDiv('Home');
     };
 
+    const showDivAssignment = () => {
+        setVisibleDiv('Assignment');
+    };
+
     const showDivLecturedata = () => {
         setVisibleDiv('Lecturedata');
+        setVisiblesubDiv('List');
     };
 
     const showsubDivList = () => {
@@ -38,7 +43,7 @@ return (
                     <li onClick={showDivHome}><a>교과정보</a></li>
                     <li><a>강의관리</a></li>
                     <li onClick={showDivLecturedata}><a>수업자료</a></li>
-                    <li><a>과제조회/제출</a></li>
+                    <li onClick={showDivAssignment}><a>과제조회/제출</a></li>
                     <li><a>평가관리</a></li>
                     <li><a>시험관리</a></li>
                     <li><a>과목공지</a></li>
@@ -60,6 +65,13 @@ return (
                     </div>
                   </>
                 )}
+                {visibleDiv === 'Assignment' && (
+                  <>
+                    <div id="Assignment_teacherportal">
+
+                    </div>
+                  </>
+                )}
                 {visibleDiv === 'Lecturedata' && (
                   <>
                     <div id="Lecturedata_teacherportal">
@@ -69,7 +81,35 @@ return (
                               <>
                                 <div id="List_teacherportal">
                                     <div id="List">
-
+                                        <div id="cate_List">
+                                            <div id="no">
+                                                no
+                                            </div>
+                                            <div id="title">
+                                                제목
+                                            </div>
+                                            <div id="writer">
+                                                작성자
+                                            </div>
+                                            <div id="writedate">
+                                                작성일자
+                                            </div>
+                                        </div>
+                                        <div id="rect"/>
+                                        <div id="body_List">
+                                            <div id="body_no">
+                                                no
+                                            </div>
+                                            <div id="body_title" onClick={showsubDivView}>
+                                                제목
+                                            </div>
+                                            <div id="body_writer">
+                                                작성자
+                                            </div>
+                                            <div id="body_writedate">
+                                                작성일자
+                                            </div>
+                                        </div>
                                     </div>
                                     <button id="newRegister" onClick={showsubDivWrite}>
                                         <span>새로 등록하기</span>
@@ -81,9 +121,20 @@ return (
                               <>
                                 <div id="View_teacherportal">
                                     <div id="View">
-
+                                        <div id="title_View">
+                                            전년도 문제
+                                        </div>
+                                        <div id="content_View">
+                                            내용
+                                        </div>
+                                        <div id="file_View">
+                                            첨부파일
+                                        </div>
                                     </div>
-                                    <button id="newRegister" onClick={showsubDivWrite}>
+                                    <button id="back" onClick={showsubDivList}>
+                                        <span>뒤로가기</span>
+                                    </button>
+                                    <button id="revise" onClick={showsubDivWrite}>
                                         <span>수정</span>
                                     </button>
                                 </div>
@@ -92,7 +143,22 @@ return (
                             {visiblesubDiv === 'Write' && (
                               <>
                                 <div id="Write_teacherportal">
-                                    <div id="write">
+                                    <div id="Write">
+                                        <div id="title_Write">
+                                            <div id="tWrite">제목</div>
+                                            <input type="text" id="titleWrite"/>
+                                        </div>
+                                        <div id="content_Write">
+                                            <div id="cWrite">내용</div>
+                                            <input type="text" id="contentWrite"/>
+                                        </div>
+                                        <div id="file_Write">
+                                            <div id="fWrite">첨부파일</div>
+                                            <input type="text" id="fileWrite"/>
+                                            <button id="find">
+                                                찾아보기
+                                            </button>
+                                        </div>
                                     </div>
                                     <button id="save" onClick={showsubDivList}>
                                         <span>저장</span>
