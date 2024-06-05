@@ -31,7 +31,8 @@ function App3() {
         try {
             const response = await axios.post('/api/student/login', inputs);
             console.log('Form Submit success:', response.data);
-            window.location.href='/main';
+            localStorage.setItem('userId', inputs.studentId);
+            window.location.href = '/main';
         } catch (error) {
             console.error('Form Submit error:', error);
             if (error.response) {
@@ -42,6 +43,7 @@ function App3() {
             }
         }
     };
+
 
     return (
         <div id="App">
