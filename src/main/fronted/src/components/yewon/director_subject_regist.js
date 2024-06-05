@@ -15,7 +15,7 @@ function DirectorSubjectRegist() {
     useEffect(() => {
         const fetchSubjectList = async () => {
             try {
-                const response = await axios.get(`/api/subject/findList/academy/${user.id}`);
+                const response = await axios.get(`/api/subject/findList/academy/${user.academyId}`);
                 setSubjectList(response.data);
             } catch (error) {
                 console.error(error);
@@ -30,7 +30,7 @@ function DirectorSubjectRegist() {
         e.preventDefault(); // 폼 제출 시 페이지 리로드 방지
 
         try {
-            const response = await axios.post(`/api/subject/regist/academy/${user.id}`, null, {
+            const response = await axios.post(`/api/subject/regist/academy/${user.academyId}`, null, {
                 params: {
                     inputSubjectName: inputSubjectName,
                 },
@@ -70,7 +70,7 @@ function DirectorSubjectRegist() {
                 </form>
             </div>
             <div>
-                <h1>과목 리스트</h1>
+                <h1>등록된 과목 리스트</h1>
                 {(subjectList.length === 0)? (<div>등록된 과목이 없습니다.</div>)
                     : (subjectList.map(subject => (
                     <li key={subject.id}>{subject.name}</li>

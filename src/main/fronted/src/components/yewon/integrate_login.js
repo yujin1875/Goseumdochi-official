@@ -20,16 +20,21 @@ function IntegrateLogin() {
             console.log(response.data);
             // 로그인 성공
 
-            const {id, role} = response.data;
+            const {id, role, } = response.data;
             if (role === 'director') { // 원장 로그인 성공
                 alert("환영합니다 원장님");
+                console.log(response.data)
                 navigate('/director/main', { state: { user: response.data } })
             }
             else if (role === 'teacher') { // 선생 로그인 성공
                 alert("환영합니다 선생님")
+                console.log(response.data)
+                navigate('/teachermain', { state: { user: response.data } })
             }
             else if (role === 'student') {
+                console.log(response.data)
                 alert("환영합니다 학생");
+                navigate('/main', { state: { user: response.data } })
             }
         } catch (error) {
             console.error('로그인 실패:', error.response || error);

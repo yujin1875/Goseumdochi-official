@@ -1,7 +1,16 @@
 import '../css/teachermain.css';
 import logo from './images/goseumdochi_moving.gif';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 function App25() {
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const { user } = location.state || {};
+
+    const GoLectureManage=()=>{
+        navigate('/teacher/lecture/manage', { state: { user: user } })
+    }
 
     return (
         <div id="App">
@@ -10,7 +19,7 @@ function App25() {
                     <img src={logo}/>
                 </div>
                 <div id="buttons_teachermain">
-                    <input type="submit" value="강의관리" id="lecture_btn"/>
+                    <input type="submit" value="강의관리" id="lecture_btn" onClick={GoLectureManage}/>
                     <input type="submit" value="학생관리" id="studentmanage_btn"/>
                     <input type="submit" value="학생문의함" id="mypage_btn"/>
                     <div id="rect"/>

@@ -48,13 +48,9 @@ public class TeacherController {
     }
 
     // 강의 등록
-    @PostMapping("/lecture/regist")
-    public ResponseEntity<?> registLecture(@RequestBody LectureDTO lectureDTO) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getName();
-        TeacherDTO currentTeacher = teacherService.findByLoginid(currentUserName);
-        lectureDTO.setTeacherId(currentTeacher.getId());
-
+    @PostMapping("/{teacherId}/lecture/regist")
+    public ResponseEntity<?> registLecture(@PathVariable Long teacherId, @RequestBody LectureDTO lectureDTO) {
+        lectureDTO.setTeacherId(teacherId);
         lectureService.regist(lectureDTO);
 
         return ResponseEntity.ok(lectureDTO);

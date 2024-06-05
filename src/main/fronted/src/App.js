@@ -38,6 +38,8 @@ import DirectorTeacherManage from './components/yewon/director_teacher_manage'
 import DirectorTeacherRegist from './components/yewon/director_teacher_regist'
 import DirectorSubjectmanage from './components/yewon/director_subject_manage'
 import DirectorSubjectRegist from './components/yewon/director_subject_regist'
+import TeacherLectureManage from './components/yewon/teacher_lecture_manage'
+import TeacherLectureRegist from './components/yewon/teacher_lecture_regist'
 import { Component } from 'react';
 
 class App extends Component{
@@ -91,6 +93,8 @@ class App extends Component{
               <Route path='/director/teacher/regist' element={<DirectorTeacherRegist/>}/>
               <Route path='/director/subject/manage' element={<DirectorSubjectmanage/>}/>
               <Route path='/director/subject/regist' element={<DirectorSubjectRegist/>}/>
+              <Route path='/teacher/lecture/manage' element={<TeacherLectureManage/>}/>
+              <Route path='/teacher/lecture/regist' element={<TeacherLectureRegist/>}/>
             </Routes>
         </BrowserRouter> 
       </div>
