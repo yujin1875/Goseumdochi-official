@@ -39,8 +39,8 @@ public class DirectorController {
     }
 
     // 원장님이 학생 찾을 때 (이름, 전화번호 이용) *--> 학생 Controller에 보내도 됨
-    @GetMapping("/{directorId}/findStudent")
-    public ResponseEntity<?> findStudent(@PathVariable Long directorId, @RequestParam String inputStudentName, @RequestParam String inputStudentPhoneNumber) {
+    @GetMapping("/academy/{academyId}/findStudent")
+    public ResponseEntity<?> findStudent(@PathVariable Long academyId, @RequestParam String inputStudentName, @RequestParam String inputStudentPhoneNumber) {
         StudentDTO studentDTO = studentService.findStudentByNameAndPhoneNumber(inputStudentName, inputStudentPhoneNumber);
 
         if(studentDTO == null) { // 찾기 실패
@@ -49,7 +49,7 @@ public class DirectorController {
                     .body("해당 학생이 존재하지 않습니다.");
         }
         // 학생 찾기 성공 후 학원에 등록되어있는지 검사
-        StudentAcademyDTO registDTO = studentAcademyService.getStudentDto(studentDTO.getId(), directorId);
+        StudentAcademyDTO registDTO = studentAcademyService.getStudentDto(studentDTO.getId(), academyId);
         Map<String, Object> result = new HashMap<>();
 
         if(registDTO == null) // 학생이 아직 학원에 등록되지 않음
@@ -62,8 +62,8 @@ public class DirectorController {
     }
 
     // 학생 등록
-    @PostMapping("/{directorId}/registStudent")
-    public ResponseEntity<?> registStudent(@PathVariable Long directorId, @RequestParam Long studentId) { // (학생id, 학원id) 입력받음
+    @PostMapping("/academy/{academyId}/registStudent")
+    public ResponseEntity<?> registStudent(@PathVariable Long academyId, @RequestParam Long studentId) { // (학생id, 학원id) 입력받음
         // 학생 등록 실패 로직
         if(studentId == null) {
             return ResponseEntity
@@ -71,7 +71,7 @@ public class DirectorController {
                     .body("학생 등록 실패.");
         }
         // 학생 등록 성공
-        StudentAcademyDTO studentAcademyDTO = studentAcademyService.registStudentAcademy(studentId, directorId);// 등록
+        StudentAcademyDTO studentAcademyDTO = studentAcademyService.registStudentAcademy(studentId, academyId);// 등록
         return ResponseEntity.ok(studentAcademyDTO);
     }
 }
