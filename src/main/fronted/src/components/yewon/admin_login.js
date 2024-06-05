@@ -1,3 +1,4 @@
+import './subcss/admin_login.css';
 import React, { useState } from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
@@ -29,27 +30,36 @@ function AdminLogin() {
     };
 
     return (
-        <form onSubmit={handleLogin}>
-            <div>
-                <label htmlFor="loginid">ID: </label>
-                <input
-                    type="text"
-                    id="loginid"
-                    value={loginid}
-                    onChange={(e) => setLoginid(e.target.value)}
-                />
+        <div id="App">
+            <div id="header_adminLogin"/>
+            <div id="adminLogin_write">
+                <div id="adminLogin_write_header">
+                    <a>관리자 로그인</a>
+                </div>
+                <form onSubmit={handleLogin}>
+                    <div id="id_adminLogin">
+                            <input
+                                type="text"
+                                id="loginid"
+                                value={loginid}
+                                placeholder="아이디"
+                                onChange={(e) => setLoginid(e.target.value)}
+                            />
+                    </div>
+                    <div id="password_adminLogin">
+                            <input
+                                type="password"
+                                id="password"
+                                value={password}
+                                placeholder="비밀번호"
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                    </div>
+                    <button type="submit">로그인</button>
+                </form>
             </div>
-            <div>
-                <label htmlFor="password">Password: </label>
-                <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </div>
-            <button type="submit">로그인</button>
-        </form>
+            <div id="footer_adminLogin"/>
+        </div>
     );
 }
 
