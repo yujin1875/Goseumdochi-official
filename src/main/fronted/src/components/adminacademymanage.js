@@ -18,16 +18,16 @@ return (
                             학원 이름
                         </div>
                         <div id="directorName">
-                            원장님 이름
+                            원장 이름
                         </div>
                         <div id="directorNum">
-                            원장님 번호
+                            원장 전화번호
                         </div>
                         <div id="directorEmail">
-                            원장님 이메일
+                            원장 이메일
                         </div>
                         <div id="academyNum">
-                            학원 번호
+                            학원 전화번호
                         </div>
                         <div id="academyPostnum">
                             학원 우편번호
