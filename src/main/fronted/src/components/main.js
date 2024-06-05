@@ -1,5 +1,6 @@
 import '../css/main.css';
 import logo from './images/goseumdochi_moving.gif';
+import React, { useState, useEffect } from 'react';
 
 function App6() {
     const Gomain=()=>{
@@ -16,13 +17,22 @@ function App6() {
     const Gomypage=()=>{
         window.location.href='/mypage'
     }
-    return (
-        <div id="App">
-            <div id="main-menu">
-                <div id="header_main">
-                    <img src={logo} onClick={Gomain}/>
-                    <div id="user_info"></div>
-                </div>
+
+    const [userName, setUserName] = useState('');
+        useEffect(() => {
+            const userIdFromLocalStorage = localStorage.getItem('userId');
+            console.log("User id from localStorage:", userIdFromLocalStorage); // 로컬 스토리지에서 사용자 이름 확인
+            setUserName(userIdFromLocalStorage); // 사용자 이름 상태 업데이트
+        }, []);
+
+
+        return (
+            <div id="App">
+                <div id="main-menu">
+                    <div id="header_main">
+                        <img src={logo} onClick={Gomain}/>
+                        <div id="user_info">{userName && `${userName}님`}</div>
+                    </div>
                 <div id="buttons_main">
                     <input type="submit" value="공지사항" id="notice_btn" onClick={Gonotice}/>
                     <input type="submit" value="커뮤니티" id="community_btn" onClick={Gocommunity}/>

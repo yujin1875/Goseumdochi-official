@@ -1,5 +1,6 @@
 package com.midas.goseumdochi.academy.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.midas.goseumdochi.director.entity.DirectorEntity;
 import com.midas.goseumdochi.teacher.entity.TeacherEntity;
 import jakarta.persistence.*;
@@ -12,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "academy") //* 합치면서 바꾸깅
+@Table(name = "academy")
 public class AcademyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,13 +37,12 @@ public class AcademyEntity {
 
     // 원장과 1:1 양방향 매핑 (보조 엔터티 (읽기전용))
     @OneToOne(mappedBy = "academyEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private DirectorEntity directorEntity;
 
     // 선생과 1:N 매핑
-    @OneToMany(mappedBy = "academyEntity", cascade = CascadeType.ALL, orphanRemoval = true) // cascade, orphanRemoval 옵션 모두 부모 삭제시 자식 삭제. 근데 앞에껀 DB는 삭제x 뒤에껀 DB도 삭제됨
+    @OneToMany(mappedBy = "academyEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TeacherEntity> teacherEntityList;
-
-    // 학생과 양방향 연결을 위한다면 매핑 추가하기
 
     // 과목과 1:N 매핑
     @OneToMany(mappedBy = "academyEntity", cascade = CascadeType.ALL, orphanRemoval = true)

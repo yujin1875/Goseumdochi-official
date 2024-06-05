@@ -38,6 +38,8 @@ import DirectorTeacherManage from './components/yewon/director_teacher_manage'
 import DirectorTeacherRegist from './components/yewon/director_teacher_regist'
 import { Component } from 'react';
 
+import App40 from './components/community_admin';
+
 class App extends Component{
   constructor(props){
     super(props)
@@ -87,6 +89,7 @@ class App extends Component{
               <Route path='/director/student/regist' element={<DirectorStudentRegist/>}/>
               <Route path='/director/teacher/manage' element={<DirectorTeacherManage/>}/>
               <Route path='/director/teacher/regist' element={<DirectorTeacherRegist/>}/>
+              <Route path='/community_admin' element={<App40/>}/>
             </Routes>
         </BrowserRouter> 
       </div>
