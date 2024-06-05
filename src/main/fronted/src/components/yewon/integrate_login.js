@@ -9,6 +9,13 @@ function IntegrateLogin() {
 
     const navigate = useNavigate();
 
+    const GoFindID=()=>{
+        window.location.href='/findID'
+    }
+    const GoFindPW=()=>{
+        window.location.href='/findPW'
+    }
+
     const handleLogin = async (e) => {
         e.preventDefault(); // 폼 제출 시 페이지 새로고침 방지
         try {
@@ -69,6 +76,10 @@ function IntegrateLogin() {
                                 placeholder="비밀번호"
                                 onChange={(e) => setPassword(e.target.value)}
                             />
+                    </div>
+                    <div id="letter_Login">
+                        <button id='findid' onClick={GoFindID}>학생 아이디 찾기</button>
+                        <button id='findpw' onClick={GoFindPW}>학생 비밀번호 찾기</button>
                     </div>
                     <button type="submit">로그인</button>
                 </form>
