@@ -74,19 +74,39 @@ hr{
 
 #Lecturedata_teacherportal>h2{
     display:block;
+    width:1920px;
+    height:60px;
     margin-left:350px;
 }
 
 #Lecturedata_teacherportal>#Lecturedata{
     width:1920px;
     height:900px;
-    margin-top:30px;
 }
 
 #List_teacherportal>#List{
     width:1920px;
     height:800px;
     background-color:#FFFFFF;
+}
+
+#List>#cate_List{
+    width:1920px;
+    height:50px;
+    background-color:aqua;
+}
+
+#cate_List>#no{
+    float:left;
+    width:100px;
+    height:50px;
+    background-color:brown;
+}
+
+#no>span{
+    font-size:20px;
+    margin:auto;
+    margin-top:20px;
 }
 
 #List_teacherportal>button{

@@ -13,7 +13,6 @@ function App26() {
 
     const showDivLecturedata = () => {
         setVisibleDiv('Lecturedata');
-        setVisiblesubDiv('List');
     };
 
     const showsubDivList = () => {
@@ -70,7 +69,23 @@ return (
                               <>
                                 <div id="List_teacherportal">
                                     <div id="List">
+                                        <div id="cate_List">
+                                            <div id="no">
+                                                <span>no</span>
+                                            </div>
+                                            <div id="title">
+                                                <span>제목</span>
+                                            </div>
+                                            <div id="writer">
+                                                <span>작성자</span>
+                                            </div>
+                                            <div id="writedate">
+                                                <span>작성일자</span>
+                                            </div>
+                                        </div>
+                                        <div id="body_List">
 
+                                        </div>
                                     </div>
                                     <button id="newRegister" onClick={showsubDivWrite}>
                                         <span>새로 등록하기</span>
