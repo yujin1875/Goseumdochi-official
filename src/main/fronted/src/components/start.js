@@ -2,8 +2,8 @@ import '../css/start.css';
 import logo from './images/goseumdochi.png';
 
 function App1() {
-    const Gologin=()=>{
-        window.location.href='/login'
+    const GoIntegratelogin=()=>{
+        window.location.href='/integrate/login'
     }
 
     const GoMem=()=>{
@@ -18,10 +18,6 @@ function App1() {
         window.location.href='/academyform'
     }
 
-    const GoYewon=()=>{
-        window.location.href='/yewon'
-    }
-
     return (
         <div id="App">
             <div id="header_start">
@@ -31,14 +27,12 @@ function App1() {
             <div id="buttons_start">
                 <input type="submit" value="회원가입 (학생 전용)" id="membership_btn" onClick={GoMem}/>
                 <hr/>
-                <input type="submit" value="로그인" id="login_btn" onClick={Gologin}/>
+                <input type="submit" value="통합로그인" id="login_btn" onClick={GoIntegratelogin}/>
                 <hr/>
                 <div id="btn_start">
                     <input type="submit" value="학원등록" id="academy1_btn" onClick={GoAcademyRegister}/>
                     <input type="submit" value="학원열람" id="academy2_btn" onClick={Goaca}/>
                 </div>
-
-                <input type="submit" value="예원 테스트" id="yewon_btn" onClick={GoYewon}/>
 
             </div>
             <div id="footer_start">

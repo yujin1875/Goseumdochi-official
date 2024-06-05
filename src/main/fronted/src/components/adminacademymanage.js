@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import '../css/adminacademymanage.css';
 import logo from './images/goseumdochi.png';
 

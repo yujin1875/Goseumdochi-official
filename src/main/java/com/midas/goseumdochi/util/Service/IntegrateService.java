@@ -9,6 +9,7 @@ import com.midas.goseumdochi.teacher.entity.TeacherEntity;
 import com.midas.goseumdochi.teacher.repository.TeacherRepository;
 import com.midas.goseumdochi.util.Dto.UserDTO;
 import com.midas.goseumdochi.util.ai.EncDecService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class IntegrateService {
     private final EncDecService encDecService;
 
     // 통합 로그인 (성공: UserDTO 리턴, 실패: 실패 메시지 리턴)
-    public ResponseEntity<?> login(String loginid, String password) {
+    public ResponseEntity<?> login(String loginid, String password, HttpSession session) {
         // 원장 로그인
         Optional<DirectorEntity> findDirector = directorRepository.findByLoginid(loginid);
         if (findDirector.isPresent()) { // 로그인id으로 찾음
@@ -52,6 +53,11 @@ public class IntegrateService {
         Optional<StudentEntity> findStudent = studentRepository.findByStudentId(loginid);
         if (findStudent.isPresent()) {
             if (encDecService.decrypt(findStudent.get().getStudentPassword()).equals(password)) { // 로그인 성공
+                // 세션저장
+                session.setAttribute("loginstudentId", findStudent.get().getStudentId());
+                session.setAttribute("loginId", findStudent.get().getId());
+                session.setAttribute("studentName", findStudent.get().getStudentName());
+
                 List<Long> academyIdList = new ArrayList<>();
                 for (StudentAcademyEntity entity : findStudent.get().getStudentAcademyEntityList())
                     academyIdList.add(entity.getAcademyEntity().getId()); // 학생은 학원 id 리스트 저장
