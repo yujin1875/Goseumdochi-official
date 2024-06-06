@@ -127,26 +127,26 @@ public class TeacherController {
         return ResponseEntity.ok("강의 정보가 성공적으로 업데이트되었습니다.");
     }
 
+    // 공통 파일 업로드 로직
+    private String handleFileUpload(MultipartFile file, String uploadDir) throws IOException {
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("파일이 선택되지 않았습니다.");
+        }
+        return fileStorageService.uploadFile(file, uploadDir);
+    }
+
     // 새로운 강의 자료 생성
     @PostMapping("/lecture/{lectureId}/lecture-material/new")
     public ResponseEntity<?> createNewMaterial(@PathVariable Long lectureId,
                                                @RequestPart("material") LectureMaterialDTO lectureMaterialDTO,
                                                @RequestPart("file") MultipartFile file,
                                                @RequestParam("id") Long id) throws IOException {
-        if (file.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일이 선택되지 않았습니다.");
-        }
-        String imageUrl = null;
-        if (file != null && !file.isEmpty()) {
-            imageUrl = fileStorageService.uploadFile(file, "lecture_materials");
-        } // 인스턴스를 통한 파일 업로드
-
-        // ID로 선생님 정보를 찾기
+        String imageUrl = handleFileUpload(file, "lecture_materials");
         TeacherDTO currentTeacher = teacherService.findById(id);
 
         lectureMaterialDTO.setAuthor(currentTeacher.getName());
         lectureMaterialDTO.setAttachmentPath(imageUrl);
-        lectureMaterialDTO.setLectureId(lectureId); // fk
+        lectureMaterialDTO.setLectureId(lectureId);
 
         lectureMaterialService.saveLectureMaterial(lectureMaterialDTO);
 
@@ -172,13 +172,7 @@ public class TeacherController {
     public ResponseEntity<?> updateMaterial(@PathVariable Long id,
                                             @RequestPart("material") LectureMaterialDTO lectureMaterialDTO,
                                             @RequestPart("file") MultipartFile file) throws IOException {
-        if (file.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일이 선택되지 않았습니다.");
-        }
-        String imageUrl = null;
-        if (file != null && !file.isEmpty()) {
-            imageUrl = fileStorageService.uploadFile(file, "lecture_materials");
-        }
+        String imageUrl = handleFileUpload(file, "lecture_materials");
         lectureMaterialDTO.setAttachmentPath(imageUrl);
         lectureMaterialService.updateLectureMaterial(id, lectureMaterialDTO);
         return ResponseEntity.ok("강의 자료가 성공적으로 업데이트되었습니다.");
@@ -201,29 +195,39 @@ public class TeacherController {
     @PostMapping("/lecture/{lectureId}/assignment/new")
     public ResponseEntity<?> createNewAssignment(@PathVariable Long lectureId,
                                                  @RequestPart("assignment") AssignmentDTO assignmentDTO,
-                                                 @RequestPart("file") MultipartFile file) throws IOException {
-        if (file.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일이 선택되지 않았습니다.");
-        }
-        String fileUrl = fileStorageService.uploadFile(file, "assignments");
+                                                 @RequestPart("file") MultipartFile file,
+                                                 @RequestParam("id") Long id) throws IOException {
+        String fileUrl = handleFileUpload(file, "assignments");
+        TeacherDTO currentTeacher = teacherService.findById(id);
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getName();
-        TeacherDTO currentTeacher = teacherService.findByLoginid(currentUserName);
 
         assignmentDTO.setAuthor(currentTeacher.getName());
         assignmentDTO.setAttachmentPath(fileUrl);
         assignmentDTO.setCreatedAt(LocalDateTime.now());
-        assignmentDTO.setLectureId(lectureId); // fk
+        assignmentDTO.setLectureId(lectureId);
 
         assignmentService.saveAssignment(assignmentDTO);
         return ResponseEntity.ok("새로운 과제가 생성되었습니다.");
     }
-
     // 과제 목록 조회
+
     @GetMapping("/assignments")
     public ResponseEntity<List<AssignmentDTO>> getAllAssignments() {
         List<AssignmentDTO> assignments = assignmentService.getAllAssignments();
+        return ResponseEntity.ok(assignments);
+    }
+
+    @GetMapping("/lecture/{lectureId}/assignments")
+    public ResponseEntity<List<AssignmentDTO>> getAssignmentsByLecture(@PathVariable Long lectureId) {
+        List<AssignmentDTO> assigments = assignmentService.getAssignmentsByLectureId(lectureId);
+        return ResponseEntity.ok(assigments);
+    }
+
+
+    // 모든 강의 자료 목록 조회
+    @GetMapping("/assignments/list/{lectureId}")
+    public ResponseEntity<List<AssignmentDTO>> getAssignmentsByLectureId(@PathVariable Long lectureId) {
+        List<AssignmentDTO> assignments = assignmentService.getAssignmentsByLectureId(lectureId);
         return ResponseEntity.ok(assignments);
     }
 
@@ -239,16 +243,7 @@ public class TeacherController {
     public ResponseEntity<?> updateAssignment(@PathVariable Long id,
                                               @RequestPart("assignment") AssignmentDTO assignmentDTO,
                                               @RequestPart("file") MultipartFile file) throws IOException {
-        if (file.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일이 선택되지 않았습니다.");
-        }
-        String fileUrl = fileStorageService.uploadFile(file, "assignments"); // 과제 폴더 지정
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getName();
-        TeacherDTO currentTeacher = teacherService.findByLoginid(currentUserName);
-
-        assignmentDTO.setAuthor(currentTeacher.getName());
+        String fileUrl = handleFileUpload(file, "assignments");
         assignmentDTO.setAttachmentPath(fileUrl);
 
         assignmentService.updateAssignment(id, assignmentDTO);
@@ -262,7 +257,6 @@ public class TeacherController {
         assignmentService.deleteAssignment(id);
         return ResponseEntity.ok("과제가 성공적으로 삭제되었습니다.");
     }
-
     // 공지사항 목록 조회
     @GetMapping("/notices")
     public ResponseEntity<List<SubjectNoticeDTO>> getAllNotices() {

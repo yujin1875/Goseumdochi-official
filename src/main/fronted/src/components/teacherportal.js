@@ -2,7 +2,7 @@ import '../css/teacherportal.css';
 import logo from './images/goseumdochi.png';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {useLocation, useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function App26() {
     const location = useLocation();
@@ -11,9 +11,12 @@ function App26() {
     const [visibleDiv, setVisibleDiv] = useState('Home');
     const [visiblesubDiv, setVisiblesubDiv] = useState('List');
     const [materials, setMaterials] = useState([]);
+    const [assignments, setAssignments] = useState([]);
     const [currentMaterial, setCurrentMaterial] = useState(null);
+    const [currentAssignment, setCurrentAssignment] = useState(null);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [points, setPoints] = useState('');
     const [file, setFile] = useState(null);
     const [existingFile, setExistingFile] = useState('');
     const [id, setId] = useState('');
@@ -21,6 +24,8 @@ function App26() {
     useEffect(() => {
         if (visibleDiv === 'Lecturedata' && visiblesubDiv === 'List') {
             fetchMaterials();
+        } else if (visibleDiv === 'Assignment') {
+            fetchAssignments();
         }
     }, [visibleDiv, visiblesubDiv]);
 
@@ -30,6 +35,15 @@ function App26() {
             setMaterials(response.data);
         } catch (error) {
             console.error("There was an error fetching the materials!", error);
+        }
+    };
+
+    const fetchAssignments = async () => {
+        try {
+            const response = await axios.get(`/api/teacher/lecture/${lectureId}/assignments`);
+            setAssignments(response.data);
+        } catch (error) {
+            console.error("There was an error fetching the assignments!", error);
         }
     };
 
@@ -43,6 +57,20 @@ function App26() {
             showsubDivView();
         } catch (error) {
             console.error("There was an error fetching the material!", error);
+        }
+    };
+
+    const handleAssignmentClick = async (id) => {
+        try {
+            const response = await axios.get(`/api/teacher/assignment/${id}`);
+            setCurrentAssignment(response.data);
+            setTitle(response.data.title);
+            setContent(response.data.content);
+            setPoints(response.data.points);
+            setExistingFile(response.data.attachmentPath);
+            showDivAssignmentRead();
+        } catch (error) {
+            console.error("There was an error fetching the assignment!", error);
         }
     };
 
@@ -73,6 +101,33 @@ function App26() {
         }
     };
 
+    const handleUpdateAssignment = async () => {
+        const formData = new FormData();
+        formData.append('assignment', new Blob([JSON.stringify({ title, content, points })], { type: "application/json" }));
+        if (file) {
+            formData.append('file', file);
+        }
+        try {
+            if (currentAssignment) {
+                await axios.put(`/api/teacher/assignment/${currentAssignment.id}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+            } else {
+                await axios.post(`/api/teacher/lecture/${lectureId}/assignment/new`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+            }
+            showDivAssignment();
+            fetchAssignments();
+        } catch (error) {
+            console.error("There was an error updating the assignment!", error);
+        }
+    };
+
     const handleDeleteMaterial = async (id) => {
         try {
             await axios.delete(`/api/teacher/lecture-material/${id}`);
@@ -80,6 +135,16 @@ function App26() {
             fetchMaterials();
         } catch (error) {
             console.error("There was an error deleting the material!", error);
+        }
+    };
+
+    const handleDeleteAssignment = async (id) => {
+        try {
+            await axios.delete(`/api/teacher/assignment/${id}`);
+            showDivAssignment();
+            fetchAssignments();
+        } catch (error) {
+            console.error("There was an error deleting the assignment!", error);
         }
     };
 
@@ -105,23 +170,55 @@ function App26() {
             if (response.status === 200) {
                 alert("새로운 강의 자료가 생성되었습니다.");
                 showsubDivList();
-                fetchMaterials(lectureId);
+                fetchMaterials();
             }
         } catch (error) {
             if (error.response) {
-                // 서버 응답이 2xx 범위 밖일 때
                 console.error('응답 에러:', error.response.data);
             } else if (error.request) {
-                // 요청이 만들어졌으나 응답을 받지 못함
                 console.error('요청 에러:', error.request);
             } else {
-                // 요청을 만들기 전에 발생한 에러
                 console.error('에러:', error.message);
             }
             alert("강의 자료 생성에 실패했습니다. 다시 시도하세요.");
         }
     };
 
+    const handleSaveAssignment = async () => {
+        if (!title || !content || !file) {
+            alert("제목, 내용, 파일을 모두 입력하세요.");
+            return;
+        }
+
+        const assignmentDTO = { title, content, points };
+
+        const formData = new FormData();
+        formData.append('assignment', new Blob([JSON.stringify(assignmentDTO)], { type: "application/json" }));
+        formData.append('file', file);
+        formData.append('id', user.id);
+
+        try {
+            const response = await axios.post(`/api/teacher/lecture/${lectureId}/assignment/new`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            if (response.status === 200) {
+                alert("새로운 과제가 생성되었습니다.");
+                showDivAssignment();
+                fetchAssignments();
+            }
+        } catch (error) {
+            if (error.response) {
+                console.error('응답 에러:', error.response.data);
+            } else if (error.request) {
+                console.error('요청 에러:', error.request);
+            } else {
+                console.error('에러:', error.message);
+            }
+            alert("과제 생성에 실패했습니다. 다시 시도하세요.");
+        }
+    };
 
     const showDivHome = () => {
         setVisibleDiv('Home');
@@ -130,10 +227,17 @@ function App26() {
     const showDivAssignment = () => {
         setVisibleDiv('Assignment');
     };
-    const showDivAssignmentadd = () => {
+
+    const showDivAssignmentAdd = () => {
         setVisibleDiv('Assignmentadd');
+        setTitle('');
+        setContent('');
+        setPoints('');
+        setFile(null);
+        setCurrentAssignment(null);
     };
-    const showDivAssignmentread = () => {
+
+    const showDivAssignmentRead = () => {
         setVisibleDiv('Assignmentread');
     };
 
@@ -200,7 +304,7 @@ function App26() {
                         <div id="Assignment_teacherportal">
                             <div id="but">
                                 <h2>과제 조회/제출</h2>
-                                <button id="add_btn" onClick={showDivAssignmentadd}>
+                                <button id="add_btn" onClick={showDivAssignmentAdd}>
                                     추가
                                 </button>
                             </div>
@@ -214,16 +318,17 @@ function App26() {
                                     <div id="opendate">공개일</div>
                                     <div id="closedate">마감일</div>
                                 </div>
-                                <div id="rect" />
-                                <div id="body_Assignment">
-                                    <div id="Ano">번호</div>
-                                    <div id="Atitle" onClick={showDivAssignmentread}>제목</div>
-                                    <div id="Asubmission">제출인원</div>
-                                    <div id="Ascore">배점</div>
-                                    <div id="Aestimation">평가</div>
-                                    <div id="Aopendate">공개일</div>
-                                    <div id="Aclosedate">마감일</div>
-                                </div>
+                                {assignments.map(assignment => (
+                                    <div key={assignment.id} id="body_Assignment">
+                                        <div id="Ano">{assignment.id}</div>
+                                        <div id="Atitle" onClick={() => handleAssignmentClick(assignment.id)}>{assignment.title}</div>
+                                        <div id="Asubmission">제출인원</div>
+                                        <div id="Ascore">{assignment.points}</div>
+                                        <div id="Aestimation">평가</div>
+                                        <div id="Aopendate">{assignment.createdAt}</div>
+                                        <div id="Aclosedate">{assignment.deadline}</div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </>
@@ -237,7 +342,7 @@ function App26() {
                         </div>
                         <div id="title_Assignmentadd">
                             <h2>제목</h2>
-                            <input type="text" id="Assignmentadd_title"/>
+                            <input type="text" id="Assignmentadd_title" value={title} onChange={(e) => setTitle(e.target.value)} />
                         </div>
                         <div id="method_Assignmentadd">
                             <h2>제출 방식</h2>
@@ -248,22 +353,22 @@ function App26() {
                         </div>
                         <div id="date_Assignmentadd">
                             <h2 id="open">공개일</h2>
-                            <input type="date" id="Assignmentadd_opendate"/>
+                            <input type="date" id="Assignmentadd_opendate" />
                             <h2 id="close">마감일</h2>
-                            <input type="date" id="Assignmentadd_closedate"/>
+                            <input type="date" id="Assignmentadd_closedate" />
                         </div>
                         <div id="score_Assignmentadd">
                             <h2>배점</h2>
-                            <input type="text" id="Assignmentadd_score"/>
+                            <input type="text" id="Assignmentadd_score" value={points} onChange={(e) => setPoints(e.target.value)} />
                         </div>
                         <div id="content_Assignmentadd">
-                            <input type="text" id="Assignmentadd_content"/>
+                            <input type="text" id="Assignmentadd_content" value={content} onChange={(e) => setContent(e.target.value)} />
                         </div>
                         <div id="file_Assignmentadd">
-                            <input type="file" id="Assignmentadd_file"/>
+                            <input type="file" id="Assignmentadd_file" onChange={(e) => setFile(e.target.files[0])} />
                         </div>
                         <div id="buttons_Assignmentadd">
-                            <button id="save" onClick={showDivAssignment}>
+                            <button id="save" onClick={handleSaveAssignment}>
                                 저장
                             </button>
                             <button id="back" onClick={showDivAssignment}>
@@ -281,47 +386,33 @@ function App26() {
                         </div>
                         <div id="title_Assignmentread">
                             <h2>제목</h2>
-                            <div id="Assignmentread_title">
-                                제목
-                            </div>
+                            <div id="Assignmentread_title">{currentAssignment?.title}</div>
                         </div>
                         <div id="method_Assignmentread">
                             <h2>제출 방식</h2>
-                            <div id="Assignmentread_method">
-                                온라인
-                            </div>
+                            <div id="Assignmentread_method">온라인</div>
                         </div>
                         <div id="date_Assignmentread">
                             <h2 id="open">공개일</h2>
-                            <div id="Assignmentread_opendate">
-                                공개일 날짜
-                            </div>
+                            <div id="Assignmentread_opendate">{currentAssignment?.createdAt}</div>
                             <h2 id="close">마감일</h2>
-                            <div id="Assignmentread_closedate">
-                                마감일 날짜
-                            </div>
+                            <div id="Assignmentread_closedate">{currentAssignment?.deadline}</div>
                         </div>
                         <div id="score_Assignmentread">
                             <h2>배점</h2>
-                            <div id="Assignmentread_score">
-                                100
-                            </div>
+                            <div id="Assignmentread_score">{currentAssignment?.points}</div>
                         </div>
                         <div id="content_Assignmentread">
-                            <div id="Assignmentread_content">
-                                내용
-                            </div>
+                            <div id="Assignmentread_content">{currentAssignment?.content}</div>
                         </div>
                         <div id="file_Assignmentread">
-                            <div id="Assignmentread_file">
-                                첨부파일
-                            </div>
+                            <div id="Assignmentread_file"><a href={currentAssignment?.attachmentPath} download>첨부파일</a></div>
                         </div>
                         <div id="buttons_Assignmentread">
-                            <button id="save">
+                            <button id="save" onClick={handleUpdateAssignment}>
                                 수정
                             </button>
-                            <button id="delete">
+                            <button id="delete" onClick={() => handleDeleteAssignment(currentAssignment.id)}>
                                 삭제
                             </button>
                             <button id="back" onClick={showDivAssignment}>
