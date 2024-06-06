@@ -11,6 +11,7 @@ function App26() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [file, setFile] = useState(null);
+    const [existingFile, setExistingFile] = useState('');
 
     useEffect(() => {
         if (visibleDiv === 'Lecturedata' && visiblesubDiv === 'List') {
@@ -33,6 +34,7 @@ function App26() {
             setCurrentMaterial(response.data);
             setTitle(response.data.title);
             setContent(response.data.content);
+            setExistingFile(response.data.attachmentPath);
             showsubDivView();
         } catch (error) {
             console.error("There was an error fetching the material!", error);
@@ -122,14 +124,12 @@ function App26() {
                 <div id="menu_btn" />
                 <div id="home_btn" />
                 <div id="title">
-
                 </div>
             </div>
             <div id="contents_teacherportal">
                 {visibleDiv === 'Home' && (
                     <>
                         <div id="Home_teacherportal">
-
                         </div>
                     </>
                 )}
@@ -169,7 +169,6 @@ function App26() {
                 {visibleDiv === 'Assignmentadd' && (
                     <>
                         <div id="Assignmentadd_teacherportal">
-
                         </div>
                     </>
                 )}
@@ -254,6 +253,7 @@ function App26() {
                                             <div id="file_reviseWrite">
                                                 <div id="freviseWrite">첨부파일</div>
                                                 <input type="file" id="filereviseWrite" onChange={(e) => setFile(e.target.files[0])} />
+                                                {existingFile && <div><a href={existingFile} download>기존 첨부파일</a></div>}
                                             </div>
                                         </div>
                                         <button id="revise_save" onClick={handleUpdateMaterial}>

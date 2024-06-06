@@ -35,11 +35,8 @@ public class RegistLectureService {
                 .build();
         registLectureRepository.save(registLectureEntity);
 
-        // 강의 현재 인원수 ++ 업데이트
-        LectureDTO lectureDTO = LectureDTO.toLectureAndTimeDTO(lectureEntity.get());
-        lectureDTO.setHeadCount(lectureDTO.getHeadCount() + 1);
-        lectureRepository.save(LectureEntity.toLectureEntity(lectureDTO, lectureEntity.get().getTeacherEntity(),
-                lectureEntity.get().getSubjectEntity()));
+        lectureEntity.get().setHeadCount(lectureEntity.get().getHeadCount() + 1);
+        lectureRepository.save(lectureEntity.get());
     }
 
     // 강의에 등록된 학생 삭제
@@ -52,10 +49,10 @@ public class RegistLectureService {
 
         // 강의 현재 인원수 -- 업데이트
         LectureEntity lectureEntity = registLectureEntity.get().getLectureEntity();
-        LectureDTO lectureDTO = LectureDTO.toLectureAndTimeDTO(lectureEntity);
-        lectureDTO.setHeadCount(lectureDTO.getHeadCount() - 1);
-        lectureRepository.save(LectureEntity.toLectureEntity(lectureDTO, lectureEntity.getTeacherEntity(),
-                lectureEntity.getSubjectEntity()));
+        lectureEntity.setHeadCount(lectureEntity.getHeadCount() - 1);
+        //LectureDTO lectureDTO = LectureDTO.toLectureAndTimeDTO(lectureEntity);
+        //lectureDTO.setHeadCount(lectureDTO.getHeadCount() - 1);
+        lectureRepository.save(lectureEntity);
         return true;
     }
 

@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface StudentAcademyRepository extends JpaRepository<StudentAcademyEntity, Long> {
-    @Query("SELECT sa FROM StudentAcademyEntity sa WHERE sa.academyEntity.id = :academyId")
+    @Query("SELECT sa.studentEntity FROM StudentAcademyEntity sa WHERE sa.academyEntity.id = :academyId")
     List<StudentEntity> findAllStudentByAcademyId(@Param("academyId") Long academyId);
 
     @Query("SELECT sa FROM StudentAcademyEntity sa WHERE sa.studentEntity.id = :studentId and sa.academyEntity.id = :academyId")
