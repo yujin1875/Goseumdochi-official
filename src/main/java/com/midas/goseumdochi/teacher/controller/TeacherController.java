@@ -154,9 +154,9 @@ public class TeacherController {
     }
 
     // 모든 강의 자료 목록 조회
-    @GetMapping("/lecture-material/list")
-    public ResponseEntity<List<LectureMaterialDTO>> getAllMaterials() {
-        List<LectureMaterialDTO> materials = lectureMaterialService.getAllLectureMaterials();
+    @GetMapping("/lecture-material/list/{lectureId}")
+    public ResponseEntity<List<LectureMaterialDTO>> getMaterialsByLectureId(@PathVariable Long lectureId) {
+        List<LectureMaterialDTO> materials = lectureMaterialService.getLectureMaterialsByLectureId(lectureId);
         return ResponseEntity.ok(materials);
     }
 

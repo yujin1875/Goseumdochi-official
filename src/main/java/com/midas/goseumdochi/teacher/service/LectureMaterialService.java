@@ -35,9 +35,9 @@ public class LectureMaterialService {
         lectureMaterialRepository.save(entity);
     }
 
-    // 모든 강의 자료를 조회
-    public List<LectureMaterialDTO> getAllLectureMaterials() {
-        return lectureMaterialRepository.findAll().stream().map(entity -> new LectureMaterialDTO(
+    // 특정 강의의 모든 자료를 조회
+    public List<LectureMaterialDTO> getLectureMaterialsByLectureId(Long lectureId) {
+        return lectureMaterialRepository.findAllByLectureId(lectureId).stream().map(entity -> new LectureMaterialDTO(
                 entity.getId(),
                 entity.getTitle(),
                 entity.getContent(),
