@@ -31,6 +31,10 @@ function App6() {
         navigate('/lectureportal', { state: { user: user, lecture: lecture } });
     };
 
+    const GoRecommendUniv = () => {
+        navigate('/student/recommend/univ', { state: { user: user } });
+    };
+
     const [userName, setUserName] = useState('');
 
     useEffect(() => {
@@ -67,24 +71,38 @@ function App6() {
                     <input type="submit" value="마이페이지" id="mypage_btn" onClick={Gomypage}/>
                     <div id="rect"/>
                 </div>
+                <div>
+                    <button onClick={GoRecommendUniv}>대학 학과추천</button>
+                </div>
                 <div id="contents_main">
                     <div id="contents1_main">
                         {/* 수강과목 리스트*/}
                         <div>
                             <h2>수강과목</h2>
-                            {lectureList.map((lecture) => (
-                                <div key={lecture.id} onClick={() => GoLecturePotal(lecture)} style={{ cursor: 'pointer' }}>
-                                    <h3>{lecture.name}</h3>
-                                    <ul>
-                                        {lecture.lectureTimeDTOList.map((time) => (
-                                            <li key={time.id}>
-                                                {time.day}: {time.startTime} - {time.endTime}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            ))}
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>과목명</th>
+                                    <th>시간</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {lectureList.map((lecture) => (
+                                    <tr key={lecture.id} onClick={() => GoLecturePotal(lecture)} style={{ cursor: 'pointer' }}>
+                                        <td>{lecture.name}</td>
+                                        <td>
+                                            {lecture.lectureTimeDTOList.map((time, index) => (
+                                                <div key={time.id}>
+                                                    {time.day} {time.startTime} - {time.endTime}{lecture.lectureTimeDTOList.length - 1 !== index && ", "}
+                                                </div>
+                                            ))}
+                                        </td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
                         </div>
+
                     </div>
                     <div id="contents2_main">
 

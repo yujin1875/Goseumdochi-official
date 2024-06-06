@@ -82,25 +82,49 @@ function TeacherLectureStudentManage() {
             <div>
                 <div>
                     <h3>수강중인 학생</h3>
-                    <ul>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>학생 이름</th>
+                            <th>학번</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         {existingStudentList.map((student) => (
-                            <li key={student.id}>
-                                {student.studentName} ({student.studentId})
-                                <button onClick={() => handleDelete(student)}>삭제</button>
-                            </li>
+                            <tr key={student.id}>
+                                <td>{student.studentName}</td>
+                                <td>{student.studentId}</td>
+                                <td>
+                                    <button onClick={() => handleDelete(student)}>삭제</button>
+                                </td>
+                            </tr>
                         ))}
-                    </ul>
+                        </tbody>
+                    </table>
                 </div>
                 <div>
                     <h3>수강하지 않는 학생</h3>
-                    <ul>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>학생 이름</th>
+                            <th>학생 ID</th>
+                            <th>동작</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         {nonExistingStudentList.map((student) => (
-                            <li key={student.id}>
-                                {student.studentName} ({student.studentId})
-                                <button onClick={() => handleRegist(student)}>등록</button>
-                            </li>
+                            <tr key={student.id}>
+                                <td>{student.studentName}</td>
+                                <td>{student.studentId}</td>
+                                <td>
+                                    <button onClick={() => handleRegist(student)}>등록</button>
+                                </td>
+                            </tr>
                         ))}
-                    </ul>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

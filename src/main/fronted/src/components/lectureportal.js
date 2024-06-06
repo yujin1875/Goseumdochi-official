@@ -24,6 +24,10 @@ function App10() {
         navigate('/lecture/material/paging', { state: { user: user, lecture: lecture } });
     };
 
+    const GoLectureAssignment = () => {
+        navigate('/lecture/assignment/paging', { state: { user: user, lecture: lecture } });
+    };
+
     return (
         <div id="App">
             <div id="lectureportal-menu">
@@ -44,7 +48,7 @@ function App10() {
                                 <li><a>공지사항</a></li>
                                 <li><a onClick={GoLectureMaterial}>강의자료</a></li>
                                 <li><a>온라인강의</a></li>
-                                <li><a>과제</a></li>
+                                <li><a onClick={GoLectureAssignment}>과제</a></li>
                                 <li><a>시험</a></li>
                             </ul>
                         </div>

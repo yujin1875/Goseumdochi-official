@@ -51,7 +51,7 @@ public class LectureController {
         int endPage = pageComponent.getEndPage(startPage, blockLimit, assignmentDTOPage.getTotalPages());
 
         Map<String, Object> response = new HashMap<>();
-        response.put("material", assignmentDTOPage);
+        response.put("assignment", assignmentDTOPage);
         response.put("startPage", startPage);
         response.put("endPage", endPage);
 
