@@ -94,6 +94,10 @@ function App26() {
         setVisiblesubDiv('Write');
     };
 
+    const showsubDivreviseWrite = () => {
+        setVisiblesubDiv('reviseWrite');
+    };
+
     return (
         <div id="App">
             <div id="menu_teacherportal">
@@ -205,7 +209,7 @@ function App26() {
                                         <button id="back" onClick={showsubDivList}>
                                             <span>뒤로가기</span>
                                         </button>
-                                        <button id="revise" onClick={showsubDivWrite}>
+                                        <button id="revise" onClick={showsubDivreviseWrite}>
                                             <span>수정</span>
                                         </button>
                                         <button id="delete" onClick={() => handleDeleteMaterial(currentMaterial.id)}>
@@ -230,6 +234,27 @@ function App26() {
                                             </div>
                                         </div>
                                         <button id="save" onClick={handleUpdateMaterial}>
+                                            <span>저장</span>
+                                        </button>
+                                    </div>
+                                )}
+                                {visiblesubDiv === 'reviseWrite' && (
+                                    <div id="reviseWrite_teacherportal">
+                                        <div id="reviseWrite">
+                                            <div id="title_reviseWrite">
+                                                <div id="treviseWrite">제목</div>
+                                                <input type="text" id="titlereviseWrite" value={title} onChange={(e) => setTitle(e.target.value)} />
+                                            </div>
+                                            <div id="content_reviseWrite">
+                                                <div id="creviseWrite">내용</div>
+                                                <input type="text" id="contentreviseWrite" value={content} onChange={(e) => setContent(e.target.value)} />
+                                            </div>
+                                            <div id="file_reviseWrite">
+                                                <div id="freviseWrite">첨부파일</div>
+                                                <input type="file" id="filereviseWrite" onChange={(e) => setFile(e.target.files[0])} />
+                                            </div>
+                                        </div>
+                                        <button id="revise_save" onClick={handleUpdateMaterial}>
                                             <span>저장</span>
                                         </button>
                                     </div>
