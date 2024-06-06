@@ -13,6 +13,4 @@ import java.util.List;
 public interface SubjectNoticeRepository extends JpaRepository<SubjectNoticeEntity, Long> {
     @Query("SELECT n FROM SubjectNoticeEntity n WHERE n.lectureEntity.id = :lectureId")
     List<SubjectNoticeEntity> findAllByLectureId(@Param("lectureId") Long lectureId);
-
-
 }

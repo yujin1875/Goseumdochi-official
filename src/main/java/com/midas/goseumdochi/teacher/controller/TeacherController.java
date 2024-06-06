@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpSession;
@@ -273,22 +271,21 @@ public class TeacherController {
     }
 
     // 새로운 과목 공지사항 생성
-    @PostMapping("/subject-notice/new")
+    @PostMapping("/lecture/{lectureId}/subject-notice/new")
     public ResponseEntity<?> createNewNotice(@PathVariable Long lectureId,
                                              @RequestPart("notice") SubjectNoticeDTO subjectNoticeDTO,
                                              @RequestPart("file") MultipartFile file,
                                              @RequestParam("id") Long id) throws IOException {
 
         String fileUrl = handleFileUpload(file, "subject_notice");
-        TeacherDTO currentTeacher = teacherService.findById(id);
-
         subjectNoticeDTO.setCreatedAt(LocalDateTime.now());
-        subjectNoticeDTO.setLectureId(lectureId);
+        subjectNoticeDTO.setLectureId(lectureId); // lectureId 변수를 경로 변수로 받음
         subjectNoticeDTO.setAttachmentPath(fileUrl);
         subjectNoticeService.saveNotice(subjectNoticeDTO);
 
         return ResponseEntity.ok("새로운 공지사항이 생성되었습니다.");
     }
+
 
 
     // 과목 공지사항 수정
@@ -310,7 +307,7 @@ public class TeacherController {
         return ResponseEntity.ok("공지사항이 성공적으로 삭제되었습니다.");
     }
 
-    @GetMapping("/lecture/{lectureId}/materials")
+    @GetMapping("/lecture/{lectureId}/notices")
     public ResponseEntity<List<SubjectNoticeDTO>> getNoticesByLecture(@PathVariable Long lectureId) {
         List<SubjectNoticeDTO> notices = subjectNoticeService.getNoticesByLectureId(lectureId);
         return ResponseEntity.ok(notices);
