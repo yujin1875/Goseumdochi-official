@@ -1007,3 +1007,303 @@ hr{
 #buttons_Assignmentread>#back{
     margin-left:20px;
 }
+
+/* 과목 공지 */
+#Subject_teacherportal>#but{
+    width:1920px;
+    height:80px;
+}
+
+#but>h2{
+    float:left;
+    display:block;
+    width:500px;
+    height:60px;
+    margin-top:20px;
+    margin-left:70px;
+}
+
+#but>#add_btn{
+    float:left;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin-top:15px;
+    margin-left:870px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#Subject_teacherportal>#Subject>#rect{
+    width:1920px;
+    height:7px;
+    background-color:#363636;
+    margin:auto;
+    border-radius:5px;
+}
+
+#Subject_teacherportal>#Subject{
+    width:1920px;
+    height:800px;
+    background-color:#FFFFFF;
+}
+
+#Subject>#cate_Subject{
+    width:1920px;
+    height:50px;
+}
+
+#cate_Subject>#no{
+    float:left;
+    width:100px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#cate_Subject>#title{
+    float:left;
+    width:1100px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#cate_Subject>#opendate{
+    float:left;
+    width:400px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#Subject>#rect{
+    width:1625px;
+    height:7px;
+    background-color:#363636;
+    margin:auto;
+    border-radius:5px;
+}
+
+#body_Subject>#Sno{
+    float:left;
+    width:100px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#body_Subject>#Stitle{
+    float:left;
+    width:1100px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#body_Subject>#Sopendate{
+    float:left;
+    width:400px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+/* 과목 추가 */
+
+#Subjectadd_teacherportal>#but{
+    width:1920px;
+    height:80px;
+}
+
+#but>h2{
+    float:left;
+    display:block;
+    width:500px;
+    height:60px;
+    margin-top:20px;
+    margin-left:70px;
+}
+
+#title_Subjectadd{
+    width:1920px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#title_Subjectadd>h2{
+    float:left;
+    width:100px;
+    height:30px;
+    margin-top:5px;
+    margin-left:110px;
+}
+
+#title_Subjectadd>input{
+    float:left;
+    width:1200px;
+    height:30px;
+    margin-top:7px;
+    margin-left:40px;
+}
+
+#content_Subjectadd{
+    width:1920px;
+    height:600px;
+    background-color:#FFFFFF;
+}
+
+#content_Subjectadd>input{
+    width:1400px;
+    height:550px;
+    margin:auto;
+    margin-top:30px;
+    margin-left:110px;
+}
+
+#file_Subjectadd{
+    width:1920px;
+    height:100px;
+    background-color:#FFFFFF;
+}
+
+#file_Subjectadd>input{
+    width:1000px;
+    height:50px;
+    margin:auto;
+    margin-top:30px;
+    margin-left:120px;
+}
+
+#buttons_Subjectadd{
+    width:1920px;
+    height:100px;
+    background-color:#FFFFFF;
+}
+
+#buttons_Subjectadd>button{
+    float:left;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin-top:15px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#buttons_Subjectadd>#save{
+    margin-left:1350px;
+}
+
+#buttons_Subjectadd>#back{
+    margin-left:20px;
+}
+
+/* 과목 공지 읽는 */
+
+#Subjectread_teacherportal>#but{
+    width:1920px;
+    height:80px;
+}
+
+#but>h2{
+    float:left;
+    display:block;
+    width:500px;
+    height:60px;
+    margin-top:20px;
+    margin-left:70px;
+}
+
+#title_Subjectread{
+    width:1920px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#title_Subjectread>h2{
+    float:left;
+    width:100px;
+    height:30px;
+    margin-top:5px;
+    margin-left:110px;
+}
+
+#title_Subjectread>#Subjectread_title{
+    float:left;
+    width:1200px;
+    height:30px;
+    margin-top:7px;
+    margin-left:40px;
+}
+
+#content_Subjectread{
+    width:1920px;
+    height:600px;
+    background-color:#FFFFFF;
+}
+
+#content_Subjectread>#Subjectread_content{
+    width:1400px;
+    height:550px;
+    margin:auto;
+    margin-top:30px;
+    margin-left:110px;
+}
+
+#file_Subjectread{
+    width:1920px;
+    height:100px;
+    background-color:#FFFFFF;
+}
+
+#file_Subjectread>#Subjectread_file{
+    width:1000px;
+    height:50px;
+    margin:auto;
+    margin-top:30px;
+    margin-left:120px;
+}
+
+#buttons_Subjectread{
+    width:1920px;
+    height:100px;
+    background-color:#FFFFFF;
+}
+
+#buttons_Subjectread>button{
+    float:left;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin-top:15px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#buttons_Subjectread>#revise{
+    margin-left:1200px;
+}
+
+#buttons_Subjectread>#delete{
+    margin-left:20px;
+}
+
+#buttons_Subjectread>#back{
+    margin-left:20px;
+}

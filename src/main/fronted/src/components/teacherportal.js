@@ -174,10 +174,13 @@ function App26() {
             }
         } catch (error) {
             if (error.response) {
+                // 서버 응답이 2xx 범위 밖일 때
                 console.error('응답 에러:', error.response.data);
             } else if (error.request) {
+                // 요청이 만들어졌으나 응답을 받지 못함
                 console.error('요청 에러:', error.request);
             } else {
+                // 요청을 만들기 전에 발생한 에러
                 console.error('에러:', error.message);
             }
             alert("강의 자료 생성에 실패했습니다. 다시 시도하세요.");
@@ -224,6 +227,16 @@ function App26() {
         setVisibleDiv('Home');
     };
 
+    const showDivSubject = () => {
+        setVisibleDiv('Subject');
+    };
+    const showDivSubjectadd = () => {
+        setVisibleDiv('Subjectadd');
+    };
+    const showDivSubjectread = () => {
+        setVisibleDiv('Subjectread');
+    };
+
     const showDivAssignment = () => {
         setVisibleDiv('Assignment');
     };
@@ -238,6 +251,9 @@ function App26() {
     };
 
     const showDivAssignmentRead = () => {
+        setVisibleDiv('Assignmentread');
+    };
+    const showDivAssignmentread = () => {
         setVisibleDiv('Assignmentread');
     };
 
@@ -280,7 +296,7 @@ function App26() {
                     <li onClick={showDivAssignment}><a>과제조회/제출</a></li>
                     <li><a>평가관리</a></li>
                     <li><a>시험관리</a></li>
-                    <li><a>과목공지</a></li>
+                    <li onClick={showDivSubject}><a>과목공지</a></li>
                     <li><a>강의실 나가기</a></li>
                 </ul>
             </div>
@@ -296,12 +312,102 @@ function App26() {
                     <>
                         <div id="Home_teacherportal">
 
+
+                        </div>
+                    </>
+                )}
+                {visibleDiv === 'Subject' && (
+                    <>
+                        <div id="Subject_teacherportal">
+                            <div id="but">
+                                <h2>과목 공지</h2>
+                                <button id="add_btn" onClick={showDivSubjectadd}>
+                                    추가
+                                </button>
+                            </div>
+                            <div id="Subject">
+                                <div id="cate_Subject">
+                                    <div id="no">번호</div>
+                                    <div id="title">제목</div>
+                                    <div id="opendate">공개일</div>
+                                </div>
+                                <div id="rect" />
+                                <div id="body_Subject">
+                                    <div id="Sno">번호</div>
+                                    <div id="Stitle" onClick={showDivSubjectread}>제목</div>
+                                    <div id="Sopendate">공개일</div>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )}
+                {visibleDiv === 'Subjectadd' && (
+                    <>
+                        <div id="Subjectadd_teacherportal">
+                            <div id="but">
+                                <h2>과목 공지</h2>
+                            </div>
+                        </div>
+                        <div id="title_Subjectadd">
+                            <h2>제목</h2>
+                            <input type="text" id="Subjectadd_title"/>
+                        </div>
+                        <div id="content_Subjectadd">
+                            <input type="text" id="Subjectadd_content"/>
+                        </div>
+                        <div id="file_Subjectadd">
+                            <input type="file" id="Subjectadd_file"/>
+                        </div>
+                        <div id="buttons_Subjectadd">
+                            <button id="save" onClick={showDivSubject}>
+                                저장
+                            </button>
+                            <button id="back" onClick={showDivSubject}>
+                                취소
+                            </button>
+                        </div>
+                    </>
+                )}
+                {visibleDiv === 'Subjectread' && (
+                    <>
+                        <div id="Subjectread_teacherportal">
+                            <div id="but">
+                                <h2>과목 공지</h2>
+                            </div>
+                        </div>
+                        <div id="title_Subjectread">
+                            <h2>제목</h2>
+                            <div id="Subjectread_title">
+                                제목
+                            </div>
+                        </div>
+                        <div id="content_Subjectread">
+                            <div id="Subjectread_content">
+                                내용
+                            </div>
+                        </div>
+                        <div id="file_Subjectread">
+                            <div id="Subjectread_file">
+                                첨부파일
+                            </div>
+                        </div>
+                        <div id="buttons_Subjectread">
+                            <button id="revise">
+                                수정
+                            </button>
+                            <button id="delete">
+                                삭제
+                            </button>
+                            <button id="back" onClick={showDivSubject}>
+                                목록
+                            </button>
                         </div>
                     </>
                 )}
                 {visibleDiv === 'Assignment' && (
                     <>
                         <div id="Assignment_teacherportal">
+                            <h2>과제 조회/제출</h2>
                             <div id="but">
                                 <h2>과제 조회/제출</h2>
                                 <button id="add_btn" onClick={showDivAssignmentAdd}>
