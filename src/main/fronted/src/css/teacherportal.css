@@ -74,8 +74,9 @@ hr{
 
 #Lecturedata_teacherportal>h2{
     display:block;
-    width:1920px;
+    width:920px;
     height:60px;
+    margin-top:10px;
     margin-left:350px;
 }
 
@@ -379,18 +380,26 @@ hr{
 
 #Assignment_teacherportal>#but{
     width:1920px;
-    height:100px;
+    height:80px;
+}
+
+#but>h2{
+    float:left;
+    display:block;
+    width:500px;
+    height:60px;
+    margin-top:10px;
+    margin-left:70px;
 }
 
 #but>#add_btn{
-    float:right;
+    float:left;
     width:103px;
     height:51px;
     background-color:#6F7C86;
     border-color:#6F7C86;
-    margin:auto;
-    margin-top:22px;
-    margin-right:20px;
+    margin-top:15px;
+    margin-left:870px;
     font-size:15px;
     color:#FFFFFF;
 }
@@ -401,13 +410,6 @@ hr{
     background-color:#363636;
     margin:auto;
     border-radius:5px;
-}
-
-#Assignment_teacherportal>h2{
-    display:block;
-    width:1920px;
-    height:60px;
-    margin-left:350px;
 }
 
 #Assignment_teacherportal>#Assignment{
@@ -568,3 +570,5 @@ hr{
     margin:auto;
     margin-top:5px;
 }
+
+/* 과제 추가 */
