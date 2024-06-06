@@ -10,7 +10,7 @@ function TeacherLectureFind() {
     const { user } = location.state || {};
 
     const [lectureList, setLectureList] = useState([]);
-    const [selectedLectureId, setSelectedLectureId] = useState(null);
+    const [selectedLecture, setSelectedLecture] = useState(null);
     const [searchWord, setSearchWord] = useState('');
 
     function timeSlicingHM(timeString) {
@@ -18,7 +18,7 @@ function TeacherLectureFind() {
     }
 
     const handleLectureClick = (lecture) => {
-        setSelectedLectureId(lecture.id);
+        setSelectedLecture(lecture);
     };
 
     const handleSearchWordChange = (e) => {
@@ -52,10 +52,10 @@ function TeacherLectureFind() {
     };
 
     const handleStudentManagement = () => {
-        if (selectedLectureId) {
-            navigate('/teacher/lecture/student/manage', { state: { user: user, lectureId: selectedLectureId } });
+        if (selectedLecture) {
+            navigate('/teacher/lecture/student/manage', { state: { user: user, lecture: selectedLecture } });
         } else {
-            alert("먼저 강의를 선택해주세요.");
+            alert("강의를 선택해주세요.");
         }
     };
 
@@ -78,7 +78,7 @@ function TeacherLectureFind() {
                         onClick={() => handleLectureClick(lecture)}
                         style={{
                             cursor: 'pointer',
-                            backgroundColor: selectedLectureId && selectedLectureId === lecture.id ? 'pink' : 'white'
+                            backgroundColor: selectedLecture && selectedLecture.id === lecture.id ? 'pink' : 'white'
                         }}
                     >
                         <span>{lecture.name}</span>
