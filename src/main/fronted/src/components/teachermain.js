@@ -12,6 +12,10 @@ function App25() {
         navigate('/teacher/lecture/manage', { state: { user: user } })
     }
 
+    const GoLectureFind=()=>{
+        navigate('/teacher/lecture/find', { state: { user: user } })
+    }
+
     return (
         <div id="App">
             <div id="teachermain-menu">
@@ -20,7 +24,7 @@ function App25() {
                 </div>
                 <div id="buttons_teachermain">
                     <input type="submit" value="강의관리" id="lecture_btn" onClick={GoLectureManage}/>
-                    <input type="submit" value="학생관리" id="studentmanage_btn"/>
+                    <input type="submit" value="학생관리" id="studentmanage_btn" onClick={GoLectureFind}/>
                     <input type="submit" value="학생문의함" id="mypage_btn"/>
                     <div id="rect"/>
                 </div>
