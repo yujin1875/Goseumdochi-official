@@ -136,8 +136,8 @@ function App26() {
                 {visibleDiv === 'Assignment' && (
                     <>
                         <div id="Assignment_teacherportal">
-                            <h2>과제 조회/제출</h2>
                             <div id="but">
+                                <h2>과제 조회/제출</h2>
                                 <button id="add_btn" onClick={showDivAssignmentadd}>
                                     추가
                                 </button>
