@@ -40,7 +40,7 @@ public class PostEntity {
     private StudentEntity writer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", nullable = false, columnDefinition = "integer default 1") // 디폴트값 1
+    @JoinColumn(name = "category_id", nullable = false) // 디폴트값 1
     private CategoryEntity category;
 
     @Column(nullable = false, columnDefinition = "boolean default false")
