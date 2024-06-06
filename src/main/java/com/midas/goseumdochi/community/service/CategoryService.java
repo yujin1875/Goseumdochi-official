@@ -13,10 +13,10 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public List<String> getAllCategoryNames() {
+    public List<Long> getAllCategoryIds() {
         return categoryRepository.findAll()
                 .stream()
-                .map(category -> category.getName())
+                .map(category -> category.getId())
                 .collect(Collectors.toList());
     }
 }
