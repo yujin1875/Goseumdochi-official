@@ -83,7 +83,7 @@ public class DirectorNoticeController {
     @GetMapping("/{directorId}/notice/paging")
     public ResponseEntity<?> pagingNotice(@PathVariable Long directorId, @PageableDefault(page = 1) Pageable pageable) { // ?page: 페이지 번호
         Page<DirectorNoticeDTO> directorNoticeDTOPage = directorNoticeService.pagingNotice(directorId, pageable);
-        int blockLimit = 3; // 화면에 보여줄 페이지 번호 개수
+        int blockLimit = 3; // 화면에 보여줄 페이지 번호 개수 (ex. 1 2 3 4 5 6 7 8 9 10)
         int startPage = pageComponent.getStartPage(pageable.getPageNumber(), blockLimit);
         int endPage = pageComponent.getEndPage(startPage, blockLimit, directorNoticeDTOPage.getTotalPages());
 

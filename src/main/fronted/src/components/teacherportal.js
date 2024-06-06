@@ -535,7 +535,7 @@ function App26() {
                                 {visiblesubDiv === 'List' && (
                                     <div id="List_teacherportal">
                                         <div id="cate_List">
-                                            <div id="no">no</div>
+                                            <div id="no">No</div>
                                             <div id="title">제목</div>
                                             <div id="writer">작성자</div>
                                             <div id="writedate">작성일자</div>
