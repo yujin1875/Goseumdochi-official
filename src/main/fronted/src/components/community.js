@@ -64,9 +64,7 @@ function App24() {
         } else if (visibleDiv === '학원리뷰') {
             fetchAcademyReviews();
         } else if (visibleDiv === '글쓰기') { // '글쓰기' 화면일 때 학원 목록을 불러옴
-            fetchAcademies(); // 학원 목록을 가져오는 함수 호출
-        } else if (visibleDiv === '상세보기') {
-
+            fetchAcademies();
         }
     }, [visibleDiv]);
 
@@ -114,17 +112,8 @@ function App24() {
     const fetchAcademies = async () => {
         try {
             const academiesResponse = await axios.get('/api/academies');
-            let academiesData = academiesResponse.data;
-            if (Array.isArray(academiesData)) {
-                // 데이터가 이미 배열 형태이므로 그대로 사용합니다.
-                setAcademies(academiesData);
-            } else if (typeof academiesData === 'object') {
-                // 데이터가 객체 형태이므로 객체의 값을 배열로 변환합니다.
-                academiesData = Object.values(academiesData);
-                setAcademies(academiesData);
-            } else {
-                console.error("Unexpected data format for academies:", academiesData);
-            }
+            const academiesData = academiesResponse.data;
+            setAcademies(academiesData);
         } catch (error) {
             console.error("Error fetching academies", error);
         }
@@ -166,7 +155,7 @@ function App24() {
             // 새로운 댓글 생성 요청
             const response = await axios.post('/api/comments/create', {
                 postId: selectedPostId, // 현재 선택된 게시물의 ID
-                content: newComment,
+                text: newComment,
                 writerId: newPost.writerId // 작성자 아이디
             });
             console.log('Comment created successfully', response.data);
@@ -181,6 +170,14 @@ function App24() {
         }
     };
 
+    const handleStarChange = (e) => {
+        const selectedStar = parseInt(e.target.value);
+        console.log("Selected star:", selectedStar); // 선택된 별점을 콘솔에 출력
+        setNewPost((prevPost) => ({
+            ...prevPost,
+            star: selectedStar
+        }));
+    };
 
     const showDivHome = () => {
         setVisibleDiv('자유');
@@ -205,10 +202,18 @@ function App24() {
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
-        setNewPost((prevPost) => ({
-            ...prevPost,
-            [id]: value
-        }));
+
+        if (id === 'academy') {
+            setNewPost((prevPost) => ({
+                ...prevPost,
+                academyId: value // 학원 ID를 저장
+            }));
+        } else {
+            setNewPost((prevPost) => ({
+                ...prevPost,
+                [id]: value
+            }));
+        }
     };
 
     const handleFormSubmit = async (e) => {
@@ -219,20 +224,24 @@ function App24() {
                 return;
             }
 
-            const response = await axios.post('/api/posts/upload', {
-                ...newPost,
-                writerId: newPost.writerId
-            });
-            console.log('Post created successfully', response.data);
-
-            // 학원리뷰 테이블에 저장하는 요청
             if (newPost.categoryId === '4') {
+                // 학원리뷰 테이블에 저장하는 요청
+                if(!newPost.academyId) { alert("학원 선택"); return; }
+                else if (!newPost.star) {alert("별점 선택"); return; }
+
                 const reviewResponse = await axios.post('/api/academy-reviews', {
                     ...newPost,
                     writerId: newPost.writerId,
-                    academyId: newPost.academyId // 학원 ID 추가
+                    academyId: newPost.academyId, // 학원 ID 추가
+                    star: newPost.star // 별점 추가
                 });
                 console.log('Academy review created successfully', reviewResponse.data);
+            } else {
+                const response = await axios.post('/api/posts/upload', {
+                    ...newPost,
+                    writerId: newPost.writerId
+                });
+                console.log('Post created successfully', response.data);
             }
 
             setVisibleDiv(newPost.categoryId);
@@ -240,6 +249,7 @@ function App24() {
             console.error('Error creating post', error);
         }
     };
+
 
 
     return (
@@ -280,7 +290,6 @@ function App24() {
                             <form onSubmit={handleFormSubmit}>
                                 <label>작성자 아이디: {newPost.writerId} </label>
                                 <label htmlFor="categoryId">카테고리: </label>
-                                <label htmlFor="categoryId">카테고리: </label>
                                 <select id="categoryId" onChange={handleInputChange} value={newPost.categoryId}>
                                     <option value="">카테고리를 선택하세요</option>
                                     <option value="1">자유</option>
@@ -294,11 +303,27 @@ function App24() {
                                         <select id="academy" onChange={handleInputChange}>
                                             <option value="">학원을 선택하세요</option>
                                             {academies.map((academy, index) => (
-                                                <option key={index} value={academy.id}>{academy.name}</option>
+                                                <option key={index} value={academy.id}>{academy}</option>
                                             ))}
                                         </select>
-                                        <label htmlFor="star">별점: </label>
-                                        <input type="number" id="star" min="1" max="5" onChange={handleInputChange} value={newPost.star || ''} />
+                                        <label>별점: </label>
+                                        <p className="rating">
+                                            {[...Array(5)].map((_, index) => {
+                                                const ratingValue = index + 1;
+                                                return (
+                                                    <label key={ratingValue}>
+                                                        <input
+                                                            type="radio"
+                                                            name="rating"
+                                                            value={ratingValue}
+                                                            onChange={handleStarChange}
+                                                            checked={newPost.star === ratingValue}
+                                                        />
+                                                        <span className="icon">{ratingValue}</span>
+                                                    </label>
+                                                );
+                                            })}
+                                        </p>
                                     </span>
                                 )}
                                 <label htmlFor="title">제목: </label>
@@ -320,13 +345,13 @@ function App24() {
                                             <p>{post.content}</p>
                                             <p>작성자: 익명</p>
                                             <p>작성일: {post.createDate.split('T')[0]}</p>
-                                            {/* 댓글 입력창 */}
                                             <textarea value={newComment} onChange={handleCommentChange} placeholder="댓글을 입력하세요"></textarea>
                                             <button onClick={submitComment}>작성</button>
-                                            {/* 댓글 표시 */}
                                             <h3>댓글</h3>
                                             <ul>
-                                                {/* 댓글 데이터를 표시하는 코드 */}
+                                                {comments.map(comment => (
+                                                    <p key={comment.id}>익명{/*comment.writerId*/}: {comment.text}</p>
+                                                ))}
                                             </ul>
                                         </div>
                                     );
@@ -335,6 +360,7 @@ function App24() {
                             <button onClick={() => setVisibleDiv(previousDiv)}>이전</button>
                         </div>
                     )}
+
 
                     {visibleDiv === '자유' && (
                         <div id="letter_contents_community">
@@ -438,14 +464,7 @@ function App24() {
                 </div>
                 {visibleDiv !== 'Mypage' && visibleDiv !== '글쓰기' && (
                     <div id="footer_contents_community">
-                        <button id="back_write_btn">
-                            <span>이전</span>
-                        </button>
-                        <button id="next_write_btn">
-                            <span>다음</span>
-                        </button>
-                        <div id="page_number">
-                        </div>
+                        <a>문의 | midas2024.ver01@gmail.com</a>
                     </div>
                 )}
             </div>

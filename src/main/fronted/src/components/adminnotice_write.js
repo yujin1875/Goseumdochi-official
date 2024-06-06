@@ -27,6 +27,7 @@ function App20() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(notice),
+                credentials: 'include', // 세션 쿠키를 포함하여 요청
             });
 
             if (response.ok) {

@@ -27,6 +27,7 @@ const App22 = () => {
                         return director;
                     }
 
+                    // 각 원장 정보에 해당하는 학원 정보 가져오기
                     const academyResponse = await fetch(`/api/admin/manage/academy/${director.academyEntity.id}`, {
                         headers: {
                             'Authorization': `Bearer ${token}`, // Bearer 토큰 추가
@@ -48,6 +49,7 @@ const App22 = () => {
                 console.error('Error fetching directors:', error);
             }
         };
+
 
         fetchDirectors();
     }, []);
