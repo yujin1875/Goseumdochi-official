@@ -47,6 +47,7 @@ import LectureAssignmentPaging from './components/yewon/lecture_assignment_pagin
 import { Component } from 'react';
 
 import App40 from './components/community_admin';
+import DirectorNoticeWrite from './components/director_notice_write';
 
 class App extends Component{
   constructor(props){
@@ -106,6 +107,7 @@ class App extends Component{
               <Route path='/lecture/material/paging' element={<LectureMaterialPaging/>}/>
               <Route path='/lecture/assignment/paging' element={<LectureAssignmentPaging/>}/>
               <Route path='/community_admin' element={<App40/>}/>
+              <Route path='/director_notice_write' element={<DirectorNoticeWrite/>}/>
             </Routes>
         </BrowserRouter> 
       </div>
