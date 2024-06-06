@@ -42,7 +42,9 @@ function App26() {
     const handleUpdateMaterial = async () => {
         const formData = new FormData();
         formData.append('material', new Blob([JSON.stringify({ title, content })], { type: "application/json" }));
-        formData.append('file', file);
+        if (file) {
+            formData.append('file', file);
+        }
         try {
             await axios.put(`/api/teacher/lecture-material/${currentMaterial.id}`, formData, {
                 headers: {

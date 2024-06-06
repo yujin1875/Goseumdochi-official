@@ -221,14 +221,26 @@ function App24() {
 
             const response = await axios.post('/api/posts/upload', {
                 ...newPost,
-                writerId: parseInt(newPost.writerId, 10)
+                writerId: newPost.writerId
             });
             console.log('Post created successfully', response.data);
-            showDivByCategory(newPost.categoryId);
+
+            // 학원리뷰 테이블에 저장하는 요청
+            if (newPost.categoryId === '4') {
+                const reviewResponse = await axios.post('/api/academy-reviews', {
+                    ...newPost,
+                    writerId: newPost.writerId,
+                    academyId: newPost.academyId // 학원 ID 추가
+                });
+                console.log('Academy review created successfully', reviewResponse.data);
+            }
+
+            setVisibleDiv(newPost.categoryId);
         } catch (error) {
             console.error('Error creating post', error);
         }
     };
+
 
     return (
         <div id="App">
@@ -266,16 +278,17 @@ function App24() {
                     {visibleDiv === '글쓰기' && (
                         <div id="write_contents_community">
                             <form onSubmit={handleFormSubmit}>
-                                <label htmlFor="writerId" >작성자 아이디: </label>
-                                <input type="text" id="writerId" value={newPost.writerId} disabled />
+                                <label>작성자 아이디: {newPost.writerId} </label>
+                                <label htmlFor="categoryId">카테고리: </label>
                                 <label htmlFor="categoryId">카테고리: </label>
                                 <select id="categoryId" onChange={handleInputChange} value={newPost.categoryId}>
                                     <option value="">카테고리를 선택하세요</option>
-                                    {categories.map((category, index) => (
-                                        <option key={index} value={category}>{category}</option>
-                                    ))}
+                                    <option value="1">자유</option>
+                                    <option value="2">대입</option>
+                                    <option value="3">질문</option>
+                                    <option value="4">리뷰</option>
                                 </select>
-                                {newPost.categoryId === '학원리뷰' && (
+                                {newPost.categoryId === '4' && (
                                     <span>
                                         <label htmlFor="academy">학원 선택: </label>
                                         <select id="academy" onChange={handleInputChange}>
@@ -322,9 +335,6 @@ function App24() {
                             <button onClick={() => setVisibleDiv(previousDiv)}>이전</button>
                         </div>
                     )}
-
-
-
 
                     {visibleDiv === '자유' && (
                         <div id="letter_contents_community">
