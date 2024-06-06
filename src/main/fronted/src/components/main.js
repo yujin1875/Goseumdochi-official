@@ -21,7 +21,7 @@ function App6() {
     const [userName, setUserName] = useState('');
         useEffect(() => {
             const userIdFromLocalStorage = localStorage.getItem('userId');
-            console.log("User id from localStorage:", userIdFromLocalStorage); // 로컬 스토리지에서 사용자 이름 확인
+            // console.log("User id from localStorage:", userIdFromLocalStorage); // 로컬 스토리지에서 사용자 이름 확인
             setUserName(userIdFromLocalStorage); // 사용자 이름 상태 업데이트
         }, []);
 
