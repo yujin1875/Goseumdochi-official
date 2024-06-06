@@ -2,7 +2,7 @@ hr{
     border:0 ;
 }
 #director_student_regist_frame{
-    width:1800px;
+    width:1500px;
     height:1080px;
     background-color:#FFFFFF;
     margin:auto;
@@ -20,12 +20,12 @@ hr{
     height:50px;
     margin:auto;
     margin-top:40px;
-    margin-left:650px;
+    margin-left:520px;
     text-align:center;
 }
 
 #director_student_regist_frame>#rect{
-    width:1700px;
+    width:1300px;
     height:7px;
     background-color:#363636;
     margin:auto;
@@ -51,7 +51,7 @@ form>#name{
     height:60px;
     font-size:24px;
     margin-top:30px;
-    margin-left:300px;
+    margin-left:250px;
     text-align:center;
 }
 
@@ -76,7 +76,7 @@ form>#num{
     height:60px;
     font-size:24px;
     margin-top:30px;
-    margin-left:300px;
+    margin-left:250px;
     text-align:center;
 }
 
@@ -87,6 +87,11 @@ form>#num{
     font-size:24px;
     margin-top:32px;
     text-align:center;
+}
+
+form>button{
+    float:left;
+    margin-left:560px;
 }
 
 #director_student_regist_frame>#result{
