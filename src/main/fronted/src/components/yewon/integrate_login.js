@@ -32,7 +32,7 @@ function IntegrateLogin() {
             if (role === 'director') { // 원장 로그인 성공
                 alert("환영합니다 원장님");
                 console.log(response.data)
-                navigate('/director/main', { state: { user: response.data } })
+                navigate('/director/main', { state: { user: response.data } }) // id, role, academyId 전달
             }
             else if (role === 'teacher') { // 선생 로그인 성공
                 alert("환영합니다 선생님")
@@ -77,11 +77,11 @@ function IntegrateLogin() {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                     </div>
+                    <button type="submit">로그인</button>
                     <div id="letter_Login">
                         <button id='findid' onClick={GoFindID}>학생 아이디 찾기</button>
                         <button id='findpw' onClick={GoFindPW}>학생 비밀번호 찾기</button>
                     </div>
-                    <button type="submit">로그인</button>
                 </form>
             </div>
             <div id="footer_IntegrateLogin"/>
