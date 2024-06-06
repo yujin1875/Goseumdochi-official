@@ -58,6 +58,21 @@ public class AssignmentService {
                 .collect(Collectors.toList());
     }
 
+    public List<AssignmentDTO> getAssignmentsByLectureId(Long lectureId) {
+        return assignmentRepository.findAllByLectureId(lectureId).stream()
+                .map(entity -> new AssignmentDTO(
+                        entity.getId(),
+                        entity.getTitle(),
+                        entity.getContent(),
+                        entity.getAuthor(),
+                        entity.getCreatedAt(),
+                        entity.getDeadline(),
+                        entity.getPoints(),
+                        entity.getExamType(),
+                        entity.getAttachmentPath()))
+                .collect(Collectors.toList());
+    }
+
     public AssignmentDTO getAssignmentById(Long id) {
         AssignmentEntity entity = assignmentRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Assignment not found with ID: " + id));
