@@ -244,3 +244,17 @@ hr {
     width: 100px;
     height: 100px;
 }
+
+#main-menu>#footer_main{
+    display: block;
+    width: 1358px;
+    height: 80px;
+}
+
+#footer_main>a{
+    display:block;
+    font-size: 16px;
+    color:#838383;
+    text-align: center;
+    margin:auto;
+}
