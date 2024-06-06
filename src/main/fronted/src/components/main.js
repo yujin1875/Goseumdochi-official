@@ -1,8 +1,17 @@
 import '../css/main.css';
 import logo from './images/goseumdochi_moving.gif';
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function App6() {
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const { user } = location.state || {};
+
+    const [lectureList, setLectureList] = useState([]);
+
     const Gomain=()=>{
         window.location.href='/main'
     }
@@ -18,12 +27,31 @@ function App6() {
         window.location.href='/mypage'
     }
 
+    const GoLecturePotal = (lecture) => {
+        navigate('/lectureportal', { state: { user: user, lecture: lecture } });
+    };
+
     const [userName, setUserName] = useState('');
-        useEffect(() => {
-            const userIdFromLocalStorage = localStorage.getItem('userId');
-            // console.log("User id from localStorage:", userIdFromLocalStorage); // 로컬 스토리지에서 사용자 이름 확인
-            setUserName(userIdFromLocalStorage); // 사용자 이름 상태 업데이트
-        }, []);
+
+    useEffect(() => {
+        const userIdFromLocalStorage = localStorage.getItem('userId');
+        // console.log("User id from localStorage:", userIdFromLocalStorage); // 로컬 스토리지에서 사용자 이름 확인
+        setUserName(userIdFromLocalStorage); // 사용자 이름 상태 업데이트
+    }, []);
+
+    useEffect(() => {
+        const fetchLectures = async () => {
+            try {
+                const response = await
+                    axios.get(`/api/student/${user.id}/lecture`);
+                setLectureList(response.data);
+            } catch (error) {
+                console.error('Error fetching lectures:', error);
+            }
+        };
+
+        fetchLectures();
+    }, []);
 
 
         return (
@@ -41,7 +69,22 @@ function App6() {
                 </div>
                 <div id="contents_main">
                     <div id="contents1_main">
-
+                        {/* 수강과목 리스트*/}
+                        <div>
+                            <h2>수강과목</h2>
+                            {lectureList.map((lecture) => (
+                                <div key={lecture.id} onClick={() => GoLecturePotal(lecture)} style={{ cursor: 'pointer' }}>
+                                    <h3>{lecture.name}</h3>
+                                    <ul>
+                                        {lecture.lectureTimeDTOList.map((time) => (
+                                            <li key={time.id}>
+                                                {time.day}: {time.startTime} - {time.endTime}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                     <div id="contents2_main">
 
