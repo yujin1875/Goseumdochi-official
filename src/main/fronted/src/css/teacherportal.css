@@ -147,7 +147,7 @@ hr{
 #body_List>#body_no{
     float:left;
     width:100px;
-    height:750px;
+    height:50px;
     text-align:center;
     font-size:24px;
     margin:auto;
@@ -157,7 +157,7 @@ hr{
 #body_List>#body_title{
     float:left;
     width:900px;
-    height:750px;
+    height:50px;
     text-align:center;
     font-size:24px;
     margin:auto;
@@ -167,7 +167,7 @@ hr{
 #body_List>#body_writer{
     float:left;
     width:200px;
-    height:750px;
+    height:50px;
     text-align:center;
     font-size:24px;
     margin:auto;
@@ -177,7 +177,7 @@ hr{
 #body_List>#body_writedate{
     float:left;
     width:425px;
-    height:750px;
+    height:50px;
     text-align:center;
     font-size:24px;
     margin:auto;
