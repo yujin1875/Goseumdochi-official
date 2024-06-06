@@ -18,7 +18,7 @@ public class DirectorNoticeService {
     // 원장 공지사항 페이징
     public Page<DirectorNoticeDTO> pagingNotice(Long directorid, Pageable pageable) {
         int page = pageable.getPageNumber() - 1; // 서버에서 페이지를 처리할 땐 0부터 시작해서
-        int pageLimit = 3; // 한 페이지에 보여줄 글 개수
+        int pageLimit = 5; // 한 페이지에 보여줄 글 개수 (ex. 글1 글2 글3)
         // 한페이지당 3개씩 글을 보여주고 정렬 기준은 id 기준으로 내림차순 정렬
         // PageRequest.of: Pageable 객체 생성 page: 페이지 인덱스, pageLimit: 한 페이지당 보여줄 글 개수, sort: "num" 실제 entity 필드명으로 정렬
         Page<DirectorNoticeEntity> directorNoticeEntityPage = directorNoticeRepository.findAllByDirectorId(directorid

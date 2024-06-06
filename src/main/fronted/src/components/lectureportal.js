@@ -1,7 +1,13 @@
 import '../css/lectureportal.css';
 import logo from './images/goseumdochi.png';
+import {useLocation, useNavigate} from "react-router-dom";
 
 function App10() {
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const { user, lecture } = location.state;
+
     const Gomain=()=>{
         window.location.href='/main'
     }
@@ -13,6 +19,10 @@ function App10() {
     const Gomypage=()=>{
         window.location.href='/mypage'
     }
+
+    const GoLectureMaterial = () => {
+        navigate('/lecture/material/paging', { state: { user: user, lecture: lecture } });
+    };
 
     return (
         <div id="App">
@@ -32,7 +42,7 @@ function App10() {
                         <div id="category_aboutNotice_lectureportal">
                             <ul>
                                 <li><a>공지사항</a></li>
-                                <li><a>강의자료</a></li>
+                                <li><a onClick={GoLectureMaterial}>강의자료</a></li>
                                 <li><a>온라인강의</a></li>
                                 <li><a>과제</a></li>
                                 <li><a>시험</a></li>
