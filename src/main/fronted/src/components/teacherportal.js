@@ -14,6 +14,8 @@ function App26() {
     const [assignments, setAssignments] = useState([]);
     const [currentMaterial, setCurrentMaterial] = useState(null);
     const [currentAssignment, setCurrentAssignment] = useState(null);
+    const [notices, setNotices] = useState([]);
+    const [currentNotice, setCurrentNotice] = useState(null);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [points, setPoints] = useState('');
@@ -26,8 +28,11 @@ function App26() {
             fetchMaterials();
         } else if (visibleDiv === 'Assignment') {
             fetchAssignments();
+        } else if (visibleDiv === 'Subject') {
+            fetchNotices();
         }
     }, [visibleDiv, visiblesubDiv]);
+
 
     const fetchMaterials = async () => {
         try {
@@ -223,6 +228,68 @@ function App26() {
         }
     };
 
+    const fetchNotices = async () => {
+        try {
+            const response = await axios.get(`/api/teacher/subject-notice/list/${lectureId}`);
+            setNotices(response.data);
+        } catch (error) {
+            console.error("There was an error fetching the notices!", error);
+        }
+    };
+
+    const handleNoticeClick = async (id) => {
+        try {
+            const response = await axios.get(`/api/teacher/subject-notice/${id}`);
+            setCurrentNotice(response.data);
+            setTitle(response.data.title);
+            setContent(response.data.content);
+            setExistingFile(response.data.attachmentPath);
+            showDivSubjectRead();
+        } catch (error) {
+            console.error("There was an error fetching the notice!", error);
+        }
+    };
+
+    const handleSaveNotice = async () => {
+        const formData = new FormData();
+        formData.append('notice', new Blob([JSON.stringify({ title, content })], { type: "application/json" }));
+        if (file) {
+            formData.append('file', file);
+        }
+        formData.append('id', user.id);
+
+        try {
+            if (currentNotice) {
+                await axios.put(`/api/teacher/subject-notice/${currentNotice.id}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+            } else {
+                await axios.post(`/api/teacher/subject-notice/new`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+            }
+            showDivSubject();
+            fetchNotices();
+        } catch (error) {
+            console.error("There was an error saving the notice!", error);
+        }
+    };
+
+    const handleDeleteNotice = async (id) => {
+        try {
+            await axios.delete(`/api/teacher/subject-notice/${id}`);
+            showDivSubject();
+            fetchNotices();
+        } catch (error) {
+            console.error("There was an error deleting the notice!", error);
+        }
+    };
+
+
     const showDivHome = () => {
         setVisibleDiv('Home');
     };
@@ -230,10 +297,14 @@ function App26() {
     const showDivSubject = () => {
         setVisibleDiv('Subject');
     };
-    const showDivSubjectadd = () => {
+    const showDivSubjectAdd = () => {
         setVisibleDiv('Subjectadd');
+        setTitle('');
+        setContent('');
+        setFile(null);
+        setCurrentNotice(null);
     };
-    const showDivSubjectread = () => {
+    const showDivSubjectRead = () => {
         setVisibleDiv('Subjectread');
     };
 
@@ -320,92 +391,71 @@ function App26() {
                     </>
                 )}
                 {visibleDiv === 'Subject' && (
-                    <>
-                        <div id="Subject_teacherportal">
-                            <div id="but">
-                                <h2>과목 공지</h2>
-                                <button id="add_btn" onClick={showDivSubjectadd}>
-                                    추가
-                                </button>
-                            </div>
-                            <div id="Subject">
-                                <div id="cate_Subject">
-                                    <div id="no">번호</div>
-                                    <div id="title">제목</div>
-                                    <div id="opendate">공개일</div>
-                                </div>
-                                <div id="rect" />
-                                <div id="body_Subject">
-                                    <div id="Sno">번호</div>
-                                    <div id="Stitle" onClick={showDivSubjectread}>제목</div>
-                                    <div id="Sopendate">공개일</div>
-                                </div>
-                            </div>
+                    <div id="Subject_teacherportal">
+                        <div id="but">
+                            <h2>과목 공지</h2>
+                            <button id="add_btn" onClick={showDivSubjectAdd}>추가</button>
                         </div>
-                    </>
+                        <div id="Subject">
+                            <div id="cate_Subject">
+                                <div id="no">번호</div>
+                                <div id="title">제목</div>
+                                <div id="opendate">공개일</div>
+                            </div>
+                            {notices.map(notice => (
+                                <div key={notice.id} id="body_Subject">
+                                    <div id="Sno">{notice.id}</div>
+                                    <div id="Stitle" onClick={() => handleNoticeClick(notice.id)}>{notice.title}</div>
+                                    <div id="Sopendate">{notice.createdAt}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 )}
                 {visibleDiv === 'Subjectadd' && (
-                    <>
-                        <div id="Subjectadd_teacherportal">
-                            <div id="but">
-                                <h2>과목 공지</h2>
-                            </div>
+                    <div id="Subjectadd_teacherportal">
+                        <div id="but">
+                            <h2>과목 공지</h2>
                         </div>
                         <div id="title_Subjectadd">
                             <h2>제목</h2>
-                            <input type="text" id="Subjectadd_title"/>
+                            <input type="text" id="Subjectadd_title" value={title} onChange={(e) => setTitle(e.target.value)} />
                         </div>
                         <div id="content_Subjectadd">
-                            <input type="text" id="Subjectadd_content"/>
+                            <input type="text" id="Subjectadd_content" value={content} onChange={(e) => setContent(e.target.value)} />
                         </div>
                         <div id="file_Subjectadd">
-                            <input type="file" id="Subjectadd_file"/>
+                            <input type="file" id="Subjectadd_file" onChange={(e) => setFile(e.target.files[0])} />
                         </div>
                         <div id="buttons_Subjectadd">
-                            <button id="save" onClick={showDivSubject}>
-                                저장
-                            </button>
-                            <button id="back" onClick={showDivSubject}>
-                                취소
-                            </button>
+                            <button id="save" onClick={handleSaveNotice}>저장</button>
+                            <button id="back" onClick={showDivSubject}>취소</button>
                         </div>
-                    </>
+                    </div>
                 )}
                 {visibleDiv === 'Subjectread' && (
-                    <>
-                        <div id="Subjectread_teacherportal">
-                            <div id="but">
-                                <h2>과목 공지</h2>
-                            </div>
+                    <div id="Subjectread_teacherportal">
+                        <div id="but">
+                            <h2>과목 공지</h2>
                         </div>
                         <div id="title_Subjectread">
                             <h2>제목</h2>
-                            <div id="Subjectread_title">
-                                제목
-                            </div>
+                            <div id="Subjectread_title">{currentNotice?.title}</div>
                         </div>
                         <div id="content_Subjectread">
-                            <div id="Subjectread_content">
-                                내용
-                            </div>
+                            <div id="Subjectread_content">{currentNotice?.content}</div>
                         </div>
                         <div id="file_Subjectread">
                             <div id="Subjectread_file">
-                                첨부파일
+                                <a href={currentNotice?.attachmentPath} download>첨부파일</a>
                             </div>
                         </div>
                         <div id="buttons_Subjectread">
-                            <button id="revise">
-                                수정
-                            </button>
-                            <button id="delete">
-                                삭제
-                            </button>
-                            <button id="back" onClick={showDivSubject}>
-                                목록
-                            </button>
+                            <button id="revise" onClick={showDivSubjectAdd}>수정</button>
+                            <button id="delete" onClick={() => handleDeleteNotice(currentNotice.id)}>삭제</button>
+                            <button id="back" onClick={showDivSubject}>목록</button>
                         </div>
-                    </>
+                    </div>
                 )}
                 {visibleDiv === 'Assignment' && (
                     <>

@@ -18,4 +18,9 @@ public class SubjectNoticeEntity {
     private String content;
     private String attachmentPath;
     private LocalDateTime createdAt;
+
+    // 강의와 N:1 매핑
+    @ManyToOne
+    @JoinColumn(name = "lecture_id")
+    private LectureEntity lectureEntity;
 }
