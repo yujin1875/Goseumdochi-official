@@ -42,6 +42,7 @@ import TeacherLectureManage from './components/yewon/teacher_lecture_manage'
 import TeacherLectureRegist from './components/yewon/teacher_lecture_regist'
 import TeacherLectureFind from './components/yewon/teacher_lecture_find'
 import TeacherLectureStudentManage from './components/yewon/teacher_lecture_student_manage'
+import LectureMaterialPaging from './components/yewon/lecture_material_paging'
 import { Component } from 'react';
 
 import App40 from './components/community_admin';
@@ -101,6 +102,7 @@ class App extends Component{
               <Route path='/teacher/lecture/regist' element={<TeacherLectureRegist/>}/>
               <Route path='/teacher/lecture/find' element={<TeacherLectureFind/>}/>
               <Route path='/teacher/lecture/student/manage' element={<TeacherLectureStudentManage/>}/>
+              <Route path='/lecture/material/paging' element={<LectureMaterialPaging/>}/>
               <Route path='/community_admin' element={<App40/>}/>
             </Routes>
         </BrowserRouter> 
