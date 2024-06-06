@@ -78,6 +78,9 @@ function App26() {
     const showDivAssignmentadd = () => {
         setVisibleDiv('Assignmentadd');
     };
+    const showDivAssignmentread = () => {
+        setVisibleDiv('Assignmentread');
+    };
 
     const showDivLecturedata = () => {
         setVisibleDiv('Lecturedata');
@@ -155,7 +158,7 @@ function App26() {
                                 <div id="rect" />
                                 <div id="body_Assignment">
                                     <div id="Ano">번호</div>
-                                    <div id="Atitle">제목</div>
+                                    <div id="Atitle" onClick={showDivAssignmentread}>제목</div>
                                     <div id="Asubmission">제출인원</div>
                                     <div id="Ascore">배점</div>
                                     <div id="Aestimation">평가</div>
@@ -169,7 +172,102 @@ function App26() {
                 {visibleDiv === 'Assignmentadd' && (
                     <>
                         <div id="Assignmentadd_teacherportal">
-
+                            <div id="but">
+                                <h2>과제 조회/제출</h2>
+                            </div>
+                        </div>
+                        <div id="title_Assignmentadd">
+                            <h2>제목</h2>
+                            <input type="text" id="Assignmentadd_title"/>
+                        </div>
+                        <div id="method_Assignmentadd">
+                            <h2>제출 방식</h2>
+                            <select id="numbers">
+                                <option value="1">온라인</option>
+                                <option value="2">오프라인</option>
+                            </select>
+                        </div>
+                        <div id="date_Assignmentadd">
+                            <h2 id="open">공개일</h2>
+                            <input type="date" id="Assignmentadd_opendate"/>
+                            <h2 id="close">마감일</h2>
+                            <input type="date" id="Assignmentadd_closedate"/>
+                        </div>
+                        <div id="score_Assignmentadd">
+                            <h2>배점</h2>
+                            <input type="text" id="Assignmentadd_score"/>
+                        </div>
+                        <div id="content_Assignmentadd">
+                            <input type="text" id="Assignmentadd_content"/>
+                        </div>
+                        <div id="file_Assignmentadd">
+                            <input type="file" id="Assignmentadd_file"/>
+                        </div>
+                        <div id="buttons_Assignmentadd">
+                            <button id="save" onClick={showDivAssignment}>
+                                저장
+                            </button>
+                            <button id="back" onClick={showDivAssignment}>
+                                취소
+                            </button>
+                        </div>
+                    </>
+                )}
+                {visibleDiv === 'Assignmentread' && (
+                    <>
+                        <div id="Assignmentread_teacherportal">
+                            <div id="but">
+                                <h2>과제 조회/제출</h2>
+                            </div>
+                        </div>
+                        <div id="title_Assignmentread">
+                            <h2>제목</h2>
+                            <div id="Assignmentread_title">
+                                제목
+                            </div>
+                        </div>
+                        <div id="method_Assignmentread">
+                            <h2>제출 방식</h2>
+                            <div id="Assignmentread_method">
+                                온라인
+                            </div>
+                        </div>
+                        <div id="date_Assignmentread">
+                            <h2 id="open">공개일</h2>
+                            <div id="Assignmentread_opendate">
+                                공개일 날짜
+                            </div>
+                            <h2 id="close">마감일</h2>
+                            <div id="Assignmentread_closedate">
+                                마감일 날짜
+                            </div>
+                        </div>
+                        <div id="score_Assignmentread">
+                            <h2>배점</h2>
+                            <div id="Assignmentread_score">
+                                100
+                            </div>
+                        </div>
+                        <div id="content_Assignmentread">
+                            <div id="Assignmentread_content">
+                                내용
+                            </div>
+                        </div>
+                        <div id="file_Assignmentread">
+                            <div id="Assignmentread_file">
+                                첨부파일
+                            </div>
+                        </div>
+                        <div id="buttons_Assignmentread">
+                            <button id="save">
+                                수정
+                            </button>
+                            <button id="delete">
+                                삭제
+                            </button>
+                            <button id="back" onClick={showDivAssignment}>
+                                목록
+                            </button>
                         </div>
                     </>
                 )}
