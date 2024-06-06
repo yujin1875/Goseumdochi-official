@@ -24,14 +24,18 @@ function App26() {
     const [id, setId] = useState('');
 
     useEffect(() => {
-        if (visibleDiv === 'Lecturedata' && visiblesubDiv === 'List') {
-            fetchMaterials();
-        } else if (visibleDiv === 'Assignment') {
-            fetchAssignments();
-        } else if (visibleDiv === 'Subject') {
-            fetchNotices();
+        if (lectureId) {
+            if (visibleDiv === 'Lecturedata' && visiblesubDiv === 'List') {
+                fetchMaterials();
+            } else if (visibleDiv === 'Assignment') {
+                fetchAssignments();
+            } else if (visibleDiv === 'Subject') {
+                fetchNotices();
+            }
+        } else {
+            console.error("lectureId is not defined");
         }
-    }, [visibleDiv, visiblesubDiv]);
+    }, [visibleDiv, visiblesubDiv, lectureId]);
 
 
     const fetchMaterials = async () => {
@@ -49,6 +53,15 @@ function App26() {
             setAssignments(response.data);
         } catch (error) {
             console.error("There was an error fetching the assignments!", error);
+        }
+    };
+
+    const fetchNotices = async () => {
+        try {
+            const response = await axios.get(`/api/teacher/lecture/${lectureId}/notices`);
+            setNotices(response.data);
+        } catch (error) {
+            console.error("There was an error fetching the notices!", error);
         }
     };
 
@@ -76,6 +89,19 @@ function App26() {
             showDivAssignmentRead();
         } catch (error) {
             console.error("There was an error fetching the assignment!", error);
+        }
+    };
+
+    const handleNoticeClick = async (id) => {
+        try {
+            const response = await axios.get(`/api/teacher/subject-notice/${id}`);
+            setCurrentNotice(response.data);
+            setTitle(response.data.title);
+            setContent(response.data.content);
+            setExistingFile(response.data.attachmentPath);
+            showDivSubjectRead();
+        } catch (error) {
+            console.error("There was an error fetching the notice!", error);
         }
     };
 
@@ -225,28 +251,6 @@ function App26() {
                 console.error('에러:', error.message);
             }
             alert("과제 생성에 실패했습니다. 다시 시도하세요.");
-        }
-    };
-
-    const fetchNotices = async () => {
-        try {
-            const response = await axios.get(`/api/teacher/subject-notice/list/${lectureId}`);
-            setNotices(response.data);
-        } catch (error) {
-            console.error("There was an error fetching the notices!", error);
-        }
-    };
-
-    const handleNoticeClick = async (id) => {
-        try {
-            const response = await axios.get(`/api/teacher/subject-notice/${id}`);
-            setCurrentNotice(response.data);
-            setTitle(response.data.title);
-            setContent(response.data.content);
-            setExistingFile(response.data.attachmentPath);
-            showDivSubjectRead();
-        } catch (error) {
-            console.error("There was an error fetching the notice!", error);
         }
     };
 
