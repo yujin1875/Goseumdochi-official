@@ -70,20 +70,22 @@ function App6() {
                 <div id="contents_main">
                     <div id="contents1_main">
                         {/* 수강과목 리스트*/}
-                        <div>
+                        <div id="lecturesubject">
                             <h2>수강과목</h2>
-                            {lectureList.map((lecture) => (
-                                <div key={lecture.id} onClick={() => GoLecturePotal(lecture)} style={{ cursor: 'pointer' }}>
-                                    <h3>{lecture.name}</h3>
-                                    <ul>
-                                        {lecture.lectureTimeDTOList.map((time) => (
-                                            <li key={time.id}>
-                                                {time.day}: {time.startTime} - {time.endTime}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            ))}
+                            <div id="info">
+                                {lectureList.map((lecture) => (
+                                    <div key={lecture.id} onClick={() => GoLecturePotal(lecture)} style={{ cursor: 'pointer' }}>
+                                        <h3>{lecture.name}</h3>
+                                        <ul>
+                                            {lecture.lectureTimeDTOList.map((time) => (
+                                                <li key={time.id}>
+                                                    {time.day}: {time.startTime} - {time.endTime}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                     <div id="contents2_main">

@@ -70,46 +70,57 @@ function AdminAcademyFormManage() {
     };
 
     return (
-        <div>
-            <h1>학원신청서 관리</h1>
-            {error && <p>{error}</p>}
-            <table>
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>원장 이름</th>
-                    <th>원장 전화번호</th>
-                    <th>원장 이메일</th>
-                    <th>학원 이름</th>
-                    <th>학원 전화번호</th>
-                    <th>학원 우편번호</th>
-                    <th>학원 주소</th>
-                    <th>학원 상세주소</th>
-                    <th>인증 상태</th>
-                </tr>
-                </thead>
-                <tbody>
-                {academyFormList.map((form) => (
-                    <tr key={form.id}>
-                        <td>{form.id}</td>
-                        <td>{form.directorName}</td>
-                        <td>{form.directorPhoneNumber}</td>
-                        <td>{form.directorEmail}</td>
-                        <td>{form.academyName}</td>
-                        <td>{form.academyPhoneNumber}</td>
-                        <td>{form.academyPostcode}</td>
-                        <td>{form.academyAddress}</td>
-                        <td>{form.academyAddressDetail}</td>
-                        <td>{form.authStatus === 0 ? (
-                            <>
-                                <button onClick={() => handleAccept(form.id)}>수락</button>
-                                <button onClick={() => handleReject(form.id)}>거절</button>
-                            </>
-                        ) : form.authStatus === 1 ? '0' : 'X'}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
+        <div id="adminAcademyFormManage_frame">
+            <div id="adminAcademyFormManage_header">
+                <a href="/">홈</a>
+                <h2>학원신청서 관리</h2>
+            </div>
+            <div id="rect"></div>
+            <div id="adminAcademyFormManage_body">
+
+                <div id="adminAcademyFormManage_contents">
+                    <div className="admin-academy-form-manage">
+                        {error && <p>{error}</p>}
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>원장 이름</th>
+                                <th>원장 전화번호</th>
+                                <th>원장 이메일</th>
+                                <th>학원 이름</th>
+                                <th>학원 전화번호</th>
+                                <th>학원 우편번호</th>
+                                <th>학원 주소</th>
+                                <th>학원 상세주소</th>
+                                <th>인증 상태</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {academyFormList.map((form) => (
+                                <tr key={form.id}>
+                                    <td>{form.id}</td>
+                                    <td>{form.directorName}</td>
+                                    <td>{form.directorPhoneNumber}</td>
+                                    <td>{form.directorEmail}</td>
+                                    <td>{form.academyName}</td>
+                                    <td>{form.academyPhoneNumber}</td>
+                                    <td>{form.academyPostcode}</td>
+                                    <td>{form.academyAddress}</td>
+                                    <td>{form.academyAddressDetail}</td>
+                                    <td>{form.authStatus === 0 ? (
+                                        <>
+                                            <button onClick={() => handleAccept(form.id)}>수락</button>
+                                            <button onClick={() => handleReject(form.id)}>거절</button>
+                                        </>
+                                    ) : form.authStatus === 1 ? '0' : 'X'}</td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
