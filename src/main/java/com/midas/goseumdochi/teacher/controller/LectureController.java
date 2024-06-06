@@ -21,7 +21,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/lecture")
 @RequiredArgsConstructor
-public class LecturelController {
+public class LectureController {
     private final PageComponent pageComponent;
     private final LectureMaterialService lectureMaterialService;
     private final AssignmentService assignmentService;
@@ -30,7 +30,7 @@ public class LecturelController {
     @GetMapping("/{lectureId}/material/paging")
     public ResponseEntity<?> pagingMaterial(@PathVariable Long lectureId, @PageableDefault(page = 1) Pageable pageable) {
         Page<LectureMaterialDTO> lectureMaterialDTOPage = lectureMaterialService.pagingMaterial(lectureId, pageable);
-        int blockLimit = 3;
+        int blockLimit = 4;
         int startPage = pageComponent.getStartPage(pageable.getPageNumber(), blockLimit);
         int endPage = pageComponent.getEndPage(startPage, blockLimit, lectureMaterialDTOPage.getTotalPages());
 
