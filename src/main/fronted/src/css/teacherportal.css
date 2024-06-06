@@ -1307,3 +1307,355 @@ hr{
 #buttons_Subjectread>#back{
     margin-left:20px;
 }
+
+/* home */
+
+#Home_teacherportal>#info{
+    width:1920px;
+    height:250px;
+}
+
+#info>h2{
+    float:left;
+    width:103px;
+    height:51px;
+    margin-top:20px;
+    margin-left:150px;
+}
+
+#info>#revise{
+    float:left;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin-top:10px;
+    margin-left:1100px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#info>#infobox{
+    float:left;
+    width:1400px;
+    height:150px;
+    font-size:15px;
+    margin:auto;
+    margin-top:10px;
+    margin-left:110px;
+    background-color:#FFFFFF;
+}
+
+#infobox>#subjecttitle{
+    float:left;
+    width:700px;
+    height:50px;
+    margin-top:10px;
+}
+
+#subjecttitle>h2{
+    float:left;
+    width:150px;
+    height:30px;
+    margin-top:10px;
+    text-align:center;
+    border-right: 2px solid black;
+}
+
+#subjecttitle>#infobox_subjecttitle{
+    float:left;
+    width:500px;
+    height:30px;
+    margin-top:9px;
+    text-align:center;
+    font-size:20px;
+}
+
+#infobox>#lecturetime{
+    float:left;
+    width:700px;
+    height:50px;
+    margin-top:10px;
+}
+
+#lecturetime>h2{
+    float:left;
+    width:150px;
+    height:30px;
+    margin-top:10px;
+    text-align:center;
+    border-right: 2px solid black;
+}
+
+#lecturetime>#infobox_lecturetime{
+    float:left;
+    width:500px;
+    height:30px;
+    margin-top:9px;
+    text-align:center;
+    font-size:20px;
+}
+
+#infobox>#lectureplace{
+    float:left;
+    width:700px;
+    height:50px;
+    margin-top:10px;
+}
+
+#lectureplace>h2{
+    float:left;
+    width:150px;
+    height:30px;
+    margin-top:10px;
+    text-align:center;
+    border-right: 2px solid black;
+}
+
+#lectureplace>#infobox_lectureplace{
+    float:left;
+    width:500px;
+    height:30px;
+    margin-top:9px;
+    text-align:center;
+    font-size:20px;
+}
+
+#infobox>#teacher{
+    float:left;
+    width:700px;
+    height:50px;
+    margin-top:10px;
+}
+
+#teacher>h2{
+    float:left;
+    width:150px;
+    height:30px;
+    margin-top:10px;
+    text-align:center;
+    border-right: 2px solid black;
+}
+
+#teacher>#infobox_teacher{
+    float:left;
+    width:500px;
+    height:30px;
+    margin-top:9px;
+    text-align:center;
+    font-size:20px;
+}
+
+#Home_teacherportal>#subcontent{
+    float:left;
+    width:1400px;
+    height:350px;
+    margin-left:110px;
+}
+
+#subcontent>h2{
+    margin-left:40px;
+}
+
+#subcontent>#info_subcontent{
+    width:1400px;
+    height:300px;
+    margin:auto;
+    margin-top:10px;
+    background-color:#FFFFFF;
+}
+
+#Home_teacherportal>#weekplan{
+    float:left;
+    width:1400px;
+    height:350px;
+    margin-left:110px;
+}
+
+#weekplan>h2{
+    margin-left:40px;
+}
+
+#weekplan>#info_weekplan{
+    width:1400px;
+    height:300px;
+    margin:auto;
+    margin-top:10px;
+    background-color:#FFFFFF;
+}
+
+/* home 수정*/
+
+#Homerevise_teacherportal>#info{
+    width:1920px;
+    height:250px;
+}
+
+#info>h2{
+    float:left;
+    width:103px;
+    height:51px;
+    margin-top:20px;
+    margin-left:150px;
+}
+
+#info>#save{
+    float:left;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin-top:10px;
+    margin-left:1100px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#info>#infobox{
+    float:left;
+    width:1400px;
+    height:150px;
+    font-size:15px;
+    margin:auto;
+    margin-top:10px;
+    margin-left:110px;
+    background-color:#FFFFFF;
+}
+
+#infobox>#subjecttitle{
+    float:left;
+    width:700px;
+    height:50px;
+    margin-top:10px;
+}
+
+#subjecttitle>h2{
+    float:left;
+    width:150px;
+    height:30px;
+    margin-top:10px;
+    text-align:center;
+    border-right: 2px solid black;
+}
+
+#subjecttitle>#Homerevise_subjecttitle{
+    float:left;
+    width:500px;
+    height:30px;
+    margin-top:9px;
+    text-align:center;
+    font-size:20px;
+}
+
+#infobox>#lecturetime{
+    float:left;
+    width:700px;
+    height:50px;
+    margin-top:10px;
+}
+
+#lecturetime>h2{
+    float:left;
+    width:150px;
+    height:30px;
+    margin-top:10px;
+    text-align:center;
+    border-right: 2px solid black;
+}
+
+#lecturetime>#Homerevise_lecturetime{
+    float:left;
+    width:500px;
+    height:30px;
+    margin-top:9px;
+    text-align:center;
+    font-size:20px;
+}
+
+#infobox>#lectureplace{
+    float:left;
+    width:700px;
+    height:50px;
+    margin-top:10px;
+}
+
+#lectureplace>h2{
+    float:left;
+    width:150px;
+    height:30px;
+    margin-top:10px;
+    text-align:center;
+    border-right: 2px solid black;
+}
+
+#lectureplace>#Homerevise_lectureplace{
+    float:left;
+    width:500px;
+    height:30px;
+    margin-top:9px;
+    text-align:center;
+    font-size:20px;
+}
+
+#infobox>#teacher{
+    float:left;
+    width:700px;
+    height:50px;
+    margin-top:10px;
+}
+
+#teacher>h2{
+    float:left;
+    width:150px;
+    height:30px;
+    margin-top:10px;
+    text-align:center;
+    border-right: 2px solid black;
+}
+
+#teacher>#Homerevise_teacher{
+    float:left;
+    width:500px;
+    height:30px;
+    margin-top:9px;
+    text-align:center;
+    font-size:20px;
+}
+
+#Homerevise_teacherportal>#subcontent{
+    float:left;
+    width:1400px;
+    height:350px;
+    margin-left:110px;
+}
+
+#subcontent>h2{
+    margin-left:40px;
+}
+
+#subcontent>#Homerevise_subcontent{
+    width:1400px;
+    height:300px;
+    margin:auto;
+    margin-top:10px;
+    background-color:#FFFFFF;
+}
+
+#Homerevise_teacherportal>#weekplan{
+    float:left;
+    width:1400px;
+    height:350px;
+    margin-left:110px;
+}
+
+#weekplan>h2{
+    margin-left:40px;
+}
+
+#weekplan>#Homerevise_weekplan{
+    width:1400px;
+    height:300px;
+    margin:auto;
+    margin-top:10px;
+    background-color:#FFFFFF;
+}
