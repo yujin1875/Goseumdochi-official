@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -28,7 +27,7 @@ public class NoticeController {
     private HttpSession httpSession;
 
     private boolean isLoggedIn() {
-        return httpSession.getAttribute("adminId") != null;
+        return httpSession.getAttribute("loginId") != null;
     }
 
     @GetMapping("/noticeList")
@@ -48,7 +47,7 @@ public class NoticeController {
         }
 
         // 현재 로그인된 관리자의 ID를 작성자로 저장
-        String writer = (String) httpSession.getAttribute("adminId");
+        String writer = (String) httpSession.getAttribute("loginId");
 
         // 현재 날짜를 생성 후 공지사항에 등록
         Date regdate = new Date(System.currentTimeMillis());
@@ -63,5 +62,15 @@ public class NoticeController {
         noticeRepository.save(notice);
 
         return ResponseEntity.ok("공지사항이 추가되었습니다");
+    }
+
+    @DeleteMapping("/deleteNotice/{id}")
+    public ResponseEntity<String> deleteNotice(@PathVariable Long id) {
+        if (!isLoggedIn()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        noticeRepository.deleteById(Math.toIntExact(id));
+        return ResponseEntity.ok("공지사항이 삭제되었습니다");
     }
 }
