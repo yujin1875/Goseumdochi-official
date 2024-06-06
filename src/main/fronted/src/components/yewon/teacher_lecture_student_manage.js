@@ -9,8 +9,8 @@ function TeacherLectureStudentManage() {
 
     const { user, lecture } = location.state;
 
-    const [existingStudents, setExistingStudents] = useState([]);
-    const [nonExistingStudents, setNonExistingStudents] = useState([]);
+    const [existingStudentList, setExistingStudentList] = useState([]);
+    const [nonExistingStudentList, setNonExistingStudentList] = useState([]);
 
     useEffect(() => {
         const fetchStudents = async () => {
@@ -19,8 +19,8 @@ function TeacherLectureStudentManage() {
                     axios.get(`/api/teacher/lecture/${lecture.id}/student/exist`),
                     axios.get(`/api/teacher/lecture/${lecture.id}/student/non-exist`),
                 ]);
-                setExistingStudents(existResponse.data);
-                setNonExistingStudents(nonExistResponse.data);
+                setExistingStudentList(existResponse.data);
+                setNonExistingStudentList(nonExistResponse.data);
             } catch (error) {
                 alert("에러1")
             }
@@ -29,15 +29,35 @@ function TeacherLectureStudentManage() {
         fetchStudents();
     }, []);
 
-    const handleRegist = async (studentId) => {
+    const handleRegist = async (student) => {
         //e.preventDefault();
         try {
-            const response = await axios.post(`/api/teacher/lecture/${lecture.id}/student/regist`, null, {
-                params: { studentId: studentId }
+            const response = await
+                axios.post(`/api/teacher/lecture/${lecture.id}/student/regist`, null, {
+                params: { studentId: student.id }
             });
             alert('학생 등록 완료.');
+
+            // 등록된 학생을 nonExistingStudentList 제거하고 existingStudentList에 맨 앞에 추가
+            setNonExistingStudentList(nonExistingStudentList.filter(s => s.id !== student.id)); // 제거
+            setExistingStudentList([student, ...existingStudentList]); // 추가
         } catch (error) {
             console.error('에러2.', error);
+        }
+    };
+
+    const handleDelete = async (student) => {
+        try {
+            const response = await
+                axios.post(`/api/teacher/lecture/${lecture.id}/student/delete`, null, {
+                params: { studentId: student.id }
+            });
+            alert('수강 삭제 성공');
+            // 삭제시 existingStudentList 에서 학생을 제거하고 nonExistingStudentList 맨 앞에 추가
+            setExistingStudentList(existingStudentList.filter(s => s.id !== student.id)); // 제거
+            setNonExistingStudentList([student, ...nonExistingStudentList]); // 추가
+        } catch (err) {
+            alert('에러3');
         }
     };
 
@@ -63,9 +83,10 @@ function TeacherLectureStudentManage() {
                 <div>
                     <h3>수강중인 학생</h3>
                     <ul>
-                        {existingStudents.map((student) => (
+                        {existingStudentList.map((student) => (
                             <li key={student.id}>
                                 {student.studentName} ({student.studentId})
+                                <button onClick={() => handleDelete(student)}>삭제</button>
                             </li>
                         ))}
                     </ul>
@@ -73,10 +94,10 @@ function TeacherLectureStudentManage() {
                 <div>
                     <h3>수강하지 않는 학생</h3>
                     <ul>
-                        {nonExistingStudents.map((student) => (
+                        {nonExistingStudentList.map((student) => (
                             <li key={student.id}>
                                 {student.studentName} ({student.studentId})
-                                <button onClick={() => handleRegist(student.id)}>등록</button>
+                                <button onClick={() => handleRegist(student)}>등록</button>
                             </li>
                         ))}
                     </ul>
