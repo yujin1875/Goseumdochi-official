@@ -297,6 +297,9 @@ function App26() {
     const showDivHome = () => {
         setVisibleDiv('Home');
     };
+    const showDivHomerevise = () => {
+        setVisibleDiv('Homerevise');
+    };
 
     const showDivSubject = () => {
         setVisibleDiv('Subject');
@@ -389,8 +392,78 @@ function App26() {
                 {visibleDiv === 'Home' && (
                     <>
                         <div id="Home_teacherportal">
-
-
+                            <div id="info">
+                                <h2>기본정보</h2>
+                                <button id="revise" onClick={showDivHomerevise}>수정</button>
+                                <hr/>
+                                <div id="infobox">
+                                    <div id="subjecttitle">
+                                        <h2>과목명</h2>
+                                        <div id="infobox_subjecttitle">ㅁㅁㅁ</div>
+                                    </div>
+                                    <div id="lecturetime">
+                                        <h2>강의 시간</h2>
+                                        <div id="infobox_lecturetime">ㅁㅁㅁ</div>
+                                    </div>
+                                    <div id="lectureplace">
+                                        <h2>강의 장소</h2>
+                                        <div id="infobox_lectureplace">ㅁㅁㅁ</div>
+                                    </div>
+                                    <div id="teacher">
+                                        <h2>담당 선생님</h2>
+                                        <div id="infobox_teacher">ㅁㅁㅁ</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="subcontent">
+                                <h2>세부내용</h2>
+                                <div id="info_subcontent">
+                                    ㅁㅁㅁㅁㅁㅁㅁ
+                                </div>
+                            </div>
+                            <div id="weekplan">
+                                <h2>주별계획</h2>
+                                <div id="info_weekplan">
+                                    ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )}
+                {visibleDiv === 'Homerevise' && (
+                    <>
+                        <div id="Homerevise_teacherportal">
+                            <div id="info">
+                                <h2>기본정보</h2>
+                                <button id="save" onClick={showDivHome}>저장</button>
+                                <hr/>
+                                <div id="infobox">
+                                    <div id="subjecttitle">
+                                        <h2>과목명</h2>
+                                        <input type="text" id="Homerevise_subjecttitle"/>
+                                    </div>
+                                    <div id="lecturetime">
+                                        <h2>강의 시간</h2>
+                                        <input type="text" id="Homerevise_lecturetime"/>
+                                    </div>
+                                    <div id="lectureplace">
+                                        <h2>강의 장소</h2>
+                                        <input type="text" id="Homerevise_lectureplace"/>
+                                    </div>
+                                    <div id="teacher">
+                                        <h2>담당 선생님</h2>
+                                        <input type="text" id="Homerevise_teacher"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="subcontent">
+                                <h2>세부내용</h2>
+                                <input type="text" id="Homerevise_subcontent"/>
+                            </div>
+                            <div id="weekplan">
+                                <h2>주별계획</h2>
+                                <input type="text" id="Homerevise_weekplan"/>
+                            </div>
                         </div>
                     </>
                 )}
