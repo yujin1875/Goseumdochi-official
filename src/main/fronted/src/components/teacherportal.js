@@ -48,11 +48,19 @@ function App26() {
             formData.append('file', file);
         }
         try {
-            await axios.put(`/api/teacher/lecture-material/${currentMaterial.id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
+            if (currentMaterial) {
+                await axios.put(`/api/teacher/lecture-material/${currentMaterial.id}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+            } else {
+                await axios.post('/api/teacher/lecture-material', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+            }
             showsubDivList();
             fetchMaterials();
         } catch (error) {
@@ -77,6 +85,7 @@ function App26() {
     const showDivAssignment = () => {
         setVisibleDiv('Assignment');
     };
+
     const showDivAssignmentadd = () => {
         setVisibleDiv('Assignmentadd');
     };
@@ -95,6 +104,10 @@ function App26() {
     };
 
     const showsubDivWrite = () => {
+        setTitle('');
+        setContent('');
+        setFile(null);
+        setCurrentMaterial(null);
         setVisiblesubDiv('Write');
     };
 
