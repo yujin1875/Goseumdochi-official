@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpSession;
@@ -257,51 +255,61 @@ public class TeacherController {
         assignmentService.deleteAssignment(id);
         return ResponseEntity.ok("과제가 성공적으로 삭제되었습니다.");
     }
-    // 공지사항 목록 조회
-    @GetMapping("/notices")
-    public ResponseEntity<List<SubjectNoticeDTO>> getAllNotices() {
-        List<SubjectNoticeDTO> notices = subjectNoticeService.getAllNotices();
+
+    // 과목 공지사항 목록 조회
+    @GetMapping("/subject-notice/list/{lectureId}")
+    public ResponseEntity<List<SubjectNoticeDTO>> getNoticesByLectureId(@PathVariable Long lectureId) {
+        List<SubjectNoticeDTO> notices = subjectNoticeService.getNoticesByLectureId(lectureId);
         return ResponseEntity.ok(notices);
     }
 
-    // 공지사항 조회
-    @GetMapping("/notice/{id}")
+    // 특정 과목 공지사항 조회
+    @GetMapping("/subject-notice/{id}")
     public ResponseEntity<SubjectNoticeDTO> getNoticeById(@PathVariable Long id) {
         SubjectNoticeDTO notice = subjectNoticeService.getNoticeById(id);
         return ResponseEntity.ok(notice);
     }
 
-    // 공지사항 생성
-    @PostMapping("/notice/new")
-    public ResponseEntity<?> createNewNotice(@RequestPart("notice") SubjectNoticeDTO subjectNoticeDTO,
-                                             @RequestPart("file") MultipartFile file) throws IOException {
-        if (!file.isEmpty()) {
-            String fileUrl = fileStorageService.uploadFile(file, "notice");
-            subjectNoticeDTO.setAttachmentPath(fileUrl);
-        }
+    // 새로운 과목 공지사항 생성
+    @PostMapping("/lecture/{lectureId}/subject-notice/new")
+    public ResponseEntity<?> createNewNotice(@PathVariable Long lectureId,
+                                             @RequestPart("notice") SubjectNoticeDTO subjectNoticeDTO,
+                                             @RequestPart("file") MultipartFile file,
+                                             @RequestParam("id") Long id) throws IOException {
+
+        String fileUrl = handleFileUpload(file, "subject_notice");
         subjectNoticeDTO.setCreatedAt(LocalDateTime.now());
+        subjectNoticeDTO.setLectureId(lectureId); // lectureId 변수를 경로 변수로 받음
+        subjectNoticeDTO.setAttachmentPath(fileUrl);
         subjectNoticeService.saveNotice(subjectNoticeDTO);
+
         return ResponseEntity.ok("새로운 공지사항이 생성되었습니다.");
     }
 
-    // 공지사항 수정
-    @PutMapping("/notice/{id}")
+
+
+    // 과목 공지사항 수정
+    @PutMapping("/subject-notice/{id}")
     public ResponseEntity<?> updateNotice(@PathVariable Long id,
                                           @RequestPart("notice") SubjectNoticeDTO subjectNoticeDTO,
                                           @RequestPart("file") MultipartFile file) throws IOException {
-        if (!file.isEmpty()) {
-            String fileUrl = fileStorageService.uploadFile(file, "notice");
-            subjectNoticeDTO.setAttachmentPath(fileUrl);
-        }
+
+        String fileUrl = handleFileUpload(file, "subject_notice");
+        subjectNoticeDTO.setAttachmentPath(fileUrl);
         subjectNoticeService.updateNotice(id, subjectNoticeDTO);
         return ResponseEntity.ok("공지사항이 성공적으로 업데이트되었습니다.");
     }
 
-    // 공지사항 삭제
-    @DeleteMapping("/notice/{id}")
+    // 과목 공지사항 삭제
+    @DeleteMapping("/subject-notice/{id}")
     public ResponseEntity<?> deleteNotice(@PathVariable Long id) {
         subjectNoticeService.deleteNotice(id);
         return ResponseEntity.ok("공지사항이 성공적으로 삭제되었습니다.");
     }
 
+    @GetMapping("/lecture/{lectureId}/notices")
+    public ResponseEntity<List<SubjectNoticeDTO>> getNoticesByLecture(@PathVariable Long lectureId) {
+        List<SubjectNoticeDTO> notices = subjectNoticeService.getNoticesByLectureId(lectureId);
+        return ResponseEntity.ok(notices);
+    }
 }

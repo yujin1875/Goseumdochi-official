@@ -14,6 +14,8 @@ function App26() {
     const [assignments, setAssignments] = useState([]);
     const [currentMaterial, setCurrentMaterial] = useState(null);
     const [currentAssignment, setCurrentAssignment] = useState(null);
+    const [notices, setNotices] = useState([]);
+    const [currentNotice, setCurrentNotice] = useState(null);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [points, setPoints] = useState('');
@@ -22,12 +24,19 @@ function App26() {
     const [id, setId] = useState('');
 
     useEffect(() => {
-        if (visibleDiv === 'Lecturedata' && visiblesubDiv === 'List') {
-            fetchMaterials();
-        } else if (visibleDiv === 'Assignment') {
-            fetchAssignments();
+        if (lectureId) {
+            if (visibleDiv === 'Lecturedata' && visiblesubDiv === 'List') {
+                fetchMaterials();
+            } else if (visibleDiv === 'Assignment') {
+                fetchAssignments();
+            } else if (visibleDiv === 'Subject') {
+                fetchNotices();
+            }
+        } else {
+            console.error("lectureId is not defined");
         }
-    }, [visibleDiv, visiblesubDiv]);
+    }, [visibleDiv, visiblesubDiv, lectureId]);
+
 
     const fetchMaterials = async () => {
         try {
@@ -44,6 +53,15 @@ function App26() {
             setAssignments(response.data);
         } catch (error) {
             console.error("There was an error fetching the assignments!", error);
+        }
+    };
+
+    const fetchNotices = async () => {
+        try {
+            const response = await axios.get(`/api/teacher/lecture/${lectureId}/notices`);
+            setNotices(response.data);
+        } catch (error) {
+            console.error("There was an error fetching the notices!", error);
         }
     };
 
@@ -71,6 +89,19 @@ function App26() {
             showDivAssignmentRead();
         } catch (error) {
             console.error("There was an error fetching the assignment!", error);
+        }
+    };
+
+    const handleNoticeClick = async (id) => {
+        try {
+            const response = await axios.get(`/api/teacher/subject-notice/${id}`);
+            setCurrentNotice(response.data);
+            setTitle(response.data.title);
+            setContent(response.data.content);
+            setExistingFile(response.data.attachmentPath);
+            showDivSubjectRead();
+        } catch (error) {
+            console.error("There was an error fetching the notice!", error);
         }
     };
 
@@ -223,22 +254,72 @@ function App26() {
         }
     };
 
+    const handleSaveNotice = async () => {
+        const formData = new FormData();
+        formData.append('notice', new Blob([JSON.stringify({ title, content })], { type: "application/json" }));
+        if (file) {
+            formData.append('file', file);
+        }
+        formData.append('id', user.id);
+
+        try {
+            if (currentNotice) {
+                await axios.put(`/api/teacher/subject-notice/${currentNotice.id}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+            } else {
+                await axios.post(`/api/teacher/subject-notice/new`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+            }
+            showDivSubject();
+            fetchNotices();
+        } catch (error) {
+            console.error("There was an error saving the notice!", error);
+        }
+    };
+
+    const handleDeleteNotice = async (id) => {
+        try {
+            await axios.delete(`/api/teacher/subject-notice/${id}`);
+            showDivSubject();
+            fetchNotices();
+        } catch (error) {
+            console.error("There was an error deleting the notice!", error);
+        }
+    };
+
+
     const showDivHome = () => {
         setVisibleDiv('Home');
+    };
+    const showDivHomerevise = () => {
+        setVisibleDiv('Homerevise');
     };
 
     const showDivSubject = () => {
         setVisibleDiv('Subject');
     };
-    const showDivSubjectadd = () => {
+    const showDivSubjectAdd = () => {
         setVisibleDiv('Subjectadd');
+        setTitle('');
+        setContent('');
+        setFile(null);
+        setCurrentNotice(null);
     };
-    const showDivSubjectread = () => {
+    const showDivSubjectRead = () => {
         setVisibleDiv('Subjectread');
     };
 
     const showDivAssignment = () => {
         setVisibleDiv('Assignment');
+    };
+    const showDivAssignmentrevise = () => {
+        setVisibleDiv('Assignmentrevise');
     };
 
     const showDivAssignmentAdd = () => {
@@ -311,103 +392,151 @@ function App26() {
                 {visibleDiv === 'Home' && (
                     <>
                         <div id="Home_teacherportal">
-
-
+                            <div id="info">
+                                <h2>기본정보</h2>
+                                <button id="revise" onClick={showDivHomerevise}>수정</button>
+                                <hr/>
+                                <div id="infobox">
+                                    <div id="subjecttitle">
+                                        <h2>과목명</h2>
+                                        <div id="infobox_subjecttitle">ㅁㅁㅁ</div>
+                                    </div>
+                                    <div id="lecturetime">
+                                        <h2>강의 시간</h2>
+                                        <div id="infobox_lecturetime">ㅁㅁㅁ</div>
+                                    </div>
+                                    <div id="lectureplace">
+                                        <h2>강의 장소</h2>
+                                        <div id="infobox_lectureplace">ㅁㅁㅁ</div>
+                                    </div>
+                                    <div id="teacher">
+                                        <h2>담당 선생님</h2>
+                                        <div id="infobox_teacher">ㅁㅁㅁ</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="subcontent">
+                                <h2>세부내용</h2>
+                                <div id="info_subcontent">
+                                    ㅁㅁㅁㅁㅁㅁㅁ
+                                </div>
+                            </div>
+                            <div id="weekplan">
+                                <h2>주별계획</h2>
+                                <div id="info_weekplan">
+                                    ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )}
+                {visibleDiv === 'Homerevise' && (
+                    <>
+                        <div id="Homerevise_teacherportal">
+                            <div id="info">
+                                <h2>기본정보</h2>
+                                <button id="save" onClick={showDivHome}>저장</button>
+                                <hr/>
+                                <div id="infobox">
+                                    <div id="subjecttitle">
+                                        <h2>과목명</h2>
+                                        <input type="text" id="Homerevise_subjecttitle"/>
+                                    </div>
+                                    <div id="lecturetime">
+                                        <h2>강의 시간</h2>
+                                        <input type="text" id="Homerevise_lecturetime"/>
+                                    </div>
+                                    <div id="lectureplace">
+                                        <h2>강의 장소</h2>
+                                        <input type="text" id="Homerevise_lectureplace"/>
+                                    </div>
+                                    <div id="teacher">
+                                        <h2>담당 선생님</h2>
+                                        <input type="text" id="Homerevise_teacher"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="subcontent">
+                                <h2>세부내용</h2>
+                                <input type="text" id="Homerevise_subcontent"/>
+                            </div>
+                            <div id="weekplan">
+                                <h2>주별계획</h2>
+                                <input type="text" id="Homerevise_weekplan"/>
+                            </div>
                         </div>
                     </>
                 )}
                 {visibleDiv === 'Subject' && (
-                    <>
-                        <div id="Subject_teacherportal">
-                            <div id="but">
-                                <h2>과목 공지</h2>
-                                <button id="add_btn" onClick={showDivSubjectadd}>
-                                    추가
-                                </button>
-                            </div>
-                            <div id="Subject">
-                                <div id="cate_Subject">
-                                    <div id="no">번호</div>
-                                    <div id="title">제목</div>
-                                    <div id="opendate">공개일</div>
-                                </div>
-                                <div id="rect" />
-                                <div id="body_Subject">
-                                    <div id="Sno">번호</div>
-                                    <div id="Stitle" onClick={showDivSubjectread}>제목</div>
-                                    <div id="Sopendate">공개일</div>
-                                </div>
-                            </div>
+                    <div id="Subject_teacherportal">
+                        <div id="but">
+                            <h2>과목 공지</h2>
+                            <button id="add_btn" onClick={showDivSubjectAdd}>추가</button>
                         </div>
-                    </>
+                        <div id="Subject">
+                            <div id="cate_Subject">
+                                <div id="no">번호</div>
+                                <div id="title">제목</div>
+                                <div id="opendate">공개일</div>
+                            </div>
+                            {notices.map(notice => (
+                                <div key={notice.id} id="body_Subject">
+                                    <div id="Sno">{notice.id}</div>
+                                    <div id="Stitle" onClick={() => handleNoticeClick(notice.id)}>{notice.title}</div>
+                                    <div id="Sopendate">{notice.createdAt}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 )}
                 {visibleDiv === 'Subjectadd' && (
-                    <>
-                        <div id="Subjectadd_teacherportal">
-                            <div id="but">
-                                <h2>과목 공지</h2>
-                            </div>
+                    <div id="Subjectadd_teacherportal">
+                        <div id="but">
+                            <h2>과목 공지</h2>
                         </div>
                         <div id="title_Subjectadd">
                             <h2>제목</h2>
-                            <input type="text" id="Subjectadd_title"/>
+                            <input type="text" id="Subjectadd_title" value={title} onChange={(e) => setTitle(e.target.value)} />
                         </div>
                         <div id="content_Subjectadd">
-                            <input type="text" id="Subjectadd_content"/>
+                            <input type="text" id="Subjectadd_content" value={content} onChange={(e) => setContent(e.target.value)} />
                         </div>
                         <div id="file_Subjectadd">
-                            <input type="file" id="Subjectadd_file"/>
+                            <input type="file" id="Subjectadd_file" onChange={(e) => setFile(e.target.files[0])} />
                         </div>
                         <div id="buttons_Subjectadd">
-                            <button id="save" onClick={showDivSubject}>
-                                저장
-                            </button>
-                            <button id="back" onClick={showDivSubject}>
-                                취소
-                            </button>
+                            <button id="save" onClick={handleSaveNotice}>저장</button>
+                            <button id="back" onClick={showDivSubject}>취소</button>
                         </div>
-                    </>
+                    </div>
                 )}
                 {visibleDiv === 'Subjectread' && (
-                    <>
-                        <div id="Subjectread_teacherportal">
-                            <div id="but">
-                                <h2>과목 공지</h2>
-                            </div>
+                    <div id="Subjectread_teacherportal">
+                        <div id="but">
+                            <h2>과목 공지</h2>
                         </div>
                         <div id="title_Subjectread">
                             <h2>제목</h2>
-                            <div id="Subjectread_title">
-                                제목
-                            </div>
+                            <div id="Subjectread_title">{currentNotice?.title}</div>
                         </div>
                         <div id="content_Subjectread">
-                            <div id="Subjectread_content">
-                                내용
-                            </div>
+                            <div id="Subjectread_content">{currentNotice?.content}</div>
                         </div>
                         <div id="file_Subjectread">
                             <div id="Subjectread_file">
-                                첨부파일
+                                <a href={currentNotice?.attachmentPath} download>첨부파일</a>
                             </div>
                         </div>
                         <div id="buttons_Subjectread">
-                            <button id="revise">
-                                수정
-                            </button>
-                            <button id="delete">
-                                삭제
-                            </button>
-                            <button id="back" onClick={showDivSubject}>
-                                목록
-                            </button>
+                            <button id="revise" onClick={showDivSubjectAdd}>수정</button>
+                            <button id="delete" onClick={() => handleDeleteNotice(currentNotice.id)}>삭제</button>
+                            <button id="back" onClick={showDivSubject}>목록</button>
                         </div>
-                    </>
+                    </div>
                 )}
                 {visibleDiv === 'Assignment' && (
                     <>
                         <div id="Assignment_teacherportal">
-                            <h2>과제 조회/제출</h2>
                             <div id="but">
                                 <h2>과제 조회/제출</h2>
                                 <button id="add_btn" onClick={showDivAssignmentAdd}>
@@ -483,6 +612,51 @@ function App26() {
                         </div>
                     </>
                 )}
+                {visibleDiv === 'Assignmentrevise' && (
+                    <>
+                        <div id="Assignmentrevise_teacherportal">
+                            <div id="but">
+                                <h2>과제 조회/제출</h2>
+                            </div>
+                        </div>
+                        <div id="title_Assignmentrevise">
+                            <h2>제목</h2>
+                            <input type="text" id="Assignmentrevise_title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                        </div>
+                        <div id="method_Assignmentrevise">
+                            <h2>제출 방식</h2>
+                            <select id="numbers">
+                                <option value="1">온라인</option>
+                                <option value="2">오프라인</option>
+                            </select>
+                        </div>
+                        <div id="date_Assignmentrevise">
+                            <h2 id="open">공개일</h2>
+                            <input type="date" id="Assignmentrevise_opendate" />
+                            <h2 id="close">마감일</h2>
+                            <input type="date" id="Assignmentrevise_closedate" />
+                        </div>
+                        <div id="score_Assignmentrevise">
+                            <h2>배점</h2>
+                            <input type="text" id="Assignmentrevise_score" value={points} onChange={(e) => setPoints(e.target.value)} />
+                        </div>
+                        <div id="content_Assignmentrevise">
+                            <input type="text" id="Assignmentrevise_content" value={content} onChange={(e) => setContent(e.target.value)} />
+                        </div>
+                        <div id="file_Assignmentrevise">
+                            <input type="file" id="Assignmentrevise_file" onChange={(e) => setFile(e.target.files[0])} />
+                            {existingFile && <div><a href={existingFile} download>기존 첨부파일</a></div>}
+                        </div>
+                        <div id="buttons_Assignmentrevise">
+                            <button id="revise_save" onClick={handleUpdateAssignment}>
+                                저장
+                            </button>
+                            <button id="back" onClick={showDivAssignment}>
+                                취소
+                            </button>
+                        </div>
+                    </>
+                )}
                 {visibleDiv === 'Assignmentread' && (
                     <>
                         <div id="Assignmentread_teacherportal">
@@ -515,7 +689,7 @@ function App26() {
                             <div id="Assignmentread_file"><a href={currentAssignment?.attachmentPath} download>첨부파일</a></div>
                         </div>
                         <div id="buttons_Assignmentread">
-                            <button id="save" onClick={handleUpdateAssignment}>
+                            <button id="save" onClick={showDivAssignmentrevise}>
                                 수정
                             </button>
                             <button id="delete" onClick={() => handleDeleteAssignment(currentAssignment.id)}>
@@ -557,20 +731,25 @@ function App26() {
                                 )}
                                 {visiblesubDiv === 'View' && (
                                     <div id="View_teacherportal">
-                                        <div id="title_View">{currentMaterial?.title}</div>
-                                        <div id="content_View">{currentMaterial?.content}</div>
-                                        <div id="file_View">
-                                            <a href={currentMaterial?.attachmentPath} download>첨부파일</a>
+                                        <div id="View">
+                                            <div id="View_title">
+                                                <h2>제목</h2>
+                                                <div id="title_View">{currentMaterial?.title}</div>
+                                            </div>
+                                            <div id="content_View">{currentMaterial?.content}</div>
+                                            <div id="file_View">
+                                                <a href={currentMaterial?.attachmentPath} download>첨부파일</a>
+                                            </div>
+                                            <button id="back" onClick={showsubDivList}>
+                                                <span>뒤로가기</span>
+                                            </button>
+                                            <button id="delete" onClick={() => handleDeleteMaterial(currentMaterial.id)}>
+                                                <span>삭제</span>
+                                            </button>
+                                            <button id="revise" onClick={showsubDivreviseWrite}>
+                                                <span>수정</span>
+                                            </button>
                                         </div>
-                                        <button id="back" onClick={showsubDivList}>
-                                            <span>뒤로가기</span>
-                                        </button>
-                                        <button id="revise" onClick={showsubDivreviseWrite}>
-                                            <span>수정</span>
-                                        </button>
-                                        <button id="delete" onClick={() => handleDeleteMaterial(currentMaterial.id)}>
-                                            <span>삭제</span>
-                                        </button>
                                     </div>
                                 )}
                                 {visiblesubDiv === 'Write' && (
