@@ -33,7 +33,7 @@ function App25() {
 
     const GoTeacherPortal = () => {
         if (selectedLectureId) {
-            navigate('/teacherportal', { state: { user: user, lectureId: selectedLectureId, id: user.id } });
+            navigate('/teacherportal', { state: { user: user, lectureId: selectedLectureId } });
         } else {
             alert("강의를 선택해주세요.");
         }

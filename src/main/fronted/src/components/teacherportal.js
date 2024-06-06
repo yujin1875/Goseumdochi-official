@@ -2,8 +2,12 @@ import '../css/teacherportal.css';
 import logo from './images/goseumdochi.png';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 function App26() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { user, lectureId } = location.state || {};
     const [visibleDiv, setVisibleDiv] = useState('Home');
     const [visiblesubDiv, setVisiblesubDiv] = useState('List');
     const [materials, setMaterials] = useState([]);
@@ -12,6 +16,7 @@ function App26() {
     const [content, setContent] = useState('');
     const [file, setFile] = useState(null);
     const [existingFile, setExistingFile] = useState('');
+    const [id, setId] = useState('');
 
     useEffect(() => {
         if (visibleDiv === 'Lecturedata' && visiblesubDiv === 'List') {
@@ -21,7 +26,7 @@ function App26() {
 
     const fetchMaterials = async () => {
         try {
-            const response = await axios.get('/api/teacher/lecture-material/list');
+            const response = await axios.get(`/api/teacher/lecture-material/list/${lectureId}`);
             setMaterials(response.data);
         } catch (error) {
             console.error("There was an error fetching the materials!", error);
@@ -77,6 +82,46 @@ function App26() {
             console.error("There was an error deleting the material!", error);
         }
     };
+
+    const handleSave = async () => {
+        if (!title || !content || !file) {
+            alert("제목, 내용, 파일을 모두 입력하세요.");
+            return;
+        }
+
+        const lectureMaterialDTO = { title, content };
+
+        const formData = new FormData();
+        formData.append('material', new Blob([JSON.stringify(lectureMaterialDTO)], { type: "application/json" }));
+        formData.append('file', file);
+        formData.append('id', user.id);
+
+        try {
+            const response = await axios.post(`/api/teacher/lecture/${lectureId}/lecture-material/new`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            if (response.status === 200) {
+                alert("새로운 강의 자료가 생성되었습니다.");
+                showsubDivList();
+                fetchMaterials(lectureId);
+            }
+        } catch (error) {
+            if (error.response) {
+                // 서버 응답이 2xx 범위 밖일 때
+                console.error('응답 에러:', error.response.data);
+            } else if (error.request) {
+                // 요청이 만들어졌으나 응답을 받지 못함
+                console.error('요청 에러:', error.request);
+            } else {
+                // 요청을 만들기 전에 발생한 에러
+                console.error('에러:', error.message);
+            }
+            alert("강의 자료 생성에 실패했습니다. 다시 시도하세요.");
+        }
+    };
+
 
     const showDivHome = () => {
         setVisibleDiv('Home');
@@ -247,7 +292,7 @@ function App26() {
                                                 <input type="file" id="fileWrite" onChange={(e) => setFile(e.target.files[0])} />
                                             </div>
                                         </div>
-                                        <button id="save" onClick={handleUpdateMaterial}>
+                                        <button id="save" onClick={handleSave}>
                                             <span>저장</span>
                                         </button>
                                     </div>
