@@ -22,7 +22,7 @@ function DirectorStudentRegist() {
         setError(null); // 제출 시 기존 오류 초기화
 
         try {
-            const response = await axios.get(`/api/director/${user.id}/findStudent`, {
+            const response = await axios.get(`/api/director/academy/${user.academyId}/findStudent`, {
                 params: {
                     inputStudentName,
                     inputStudentPhoneNumber,
@@ -54,7 +54,7 @@ function DirectorStudentRegist() {
         setError(null); // 제출 시 기존 오류 초기화
 
         try {
-            const response = await axios.post(`/api/director/${user.id}/registStudent`, null, {
+            const response = await axios.post(`/api/director/academy/${user.academyId}/registStudent`, null, {
                 params: {
                     studentId: student.id,
                 },

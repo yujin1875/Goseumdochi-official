@@ -60,6 +60,19 @@ public class LectureMaterialService {
         );
     }
 
+    // 특정 강의의 모든 강의 자료를 조회
+    public List<LectureMaterialDTO> getMaterialsByLectureId(Long lectureId) {
+        List<LectureMaterialEntity> entities = lectureMaterialRepository.findAllByLectureId(lectureId);
+        return entities.stream().map(entity -> new LectureMaterialDTO(
+                entity.getId(),
+                entity.getTitle(),
+                entity.getContent(),
+                entity.getAuthor(),
+                entity.getCreatedAt(),
+                entity.getAttachmentPath()
+        )).collect(Collectors.toList());
+    }
+
     // 특정 강의 자료를 업데이트
     public void updateLectureMaterial(Long id, LectureMaterialDTO lectureMaterialDTO) {
         LectureMaterialEntity entity = lectureMaterialRepository.findById(id).orElseThrow(() -> new RuntimeException("첨부파일이 존재하지 않습니다."));

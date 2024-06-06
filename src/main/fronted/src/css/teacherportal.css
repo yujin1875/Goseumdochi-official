@@ -376,6 +376,126 @@ hr{
     color:#FFFFFF;
 }
 
+/*수정할때 쓰는*/
+
+#Lecturedata>#reviseWrite_teacherportal{
+     width:1920px;
+     height:800px;
+}
+
+#reviseWrite_teacherportal>#reviseWrite{
+    width:1920px;
+    height:800px;
+    background-color:#FFFFFF;
+}
+
+#reviseWrite>#title_reviseWrite{
+    width:1920px;
+    height:100px;
+}
+
+#title_reviseWritee>#treviseWrite{
+    margin:auto;
+    margin-top:25px;
+    float:left;
+    width:300px;
+    height:50px;
+    font-size:24px;
+    text-align:right;
+}
+
+#title_reviseWrite>input{
+    float:left;
+    width:1000px;
+    height:50px;
+    margin:auto;
+    margin-top:20px;
+    margin-left:30px;
+    background-color:#FFFFFF;
+    font-size:24px;
+    text-align:left;
+}
+
+#reviseWrite>#content_reviseWrite{
+    width:1920px;
+    height:500px;
+}
+
+#content_reviseWrite>#creviseWrite{
+    margin:auto;
+    margin-top:25px;
+    float:left;
+    width:300px;
+    height:400px;
+    font-size:24px;
+    text-align:right;
+}
+
+#content_reviseWrite>input{
+    float:left;
+    width:1000px;
+    height:450px;
+    margin:auto;
+    margin-top:20px;
+    margin-left:30px;
+    background-color:#FFFFFF;
+    font-size:24px;
+    text-align:left;
+}
+
+#reviseWrite>#file_reviseWrite{
+    width:1920px;
+    height:200px;
+}
+
+#file_reviseWrite>#freviseWrite{
+    margin:auto;
+    margin-top:25px;
+    float:left;
+    width:300px;
+    height:100px;
+    font-size:24px;
+    text-align:right;
+}
+
+#file_reviseWrite>input{
+    float:left;
+    width:1000px;
+    height:50px;
+    margin:auto;
+    margin-top:20px;
+    margin-left:30px;
+    background-color:#FFFFFF;
+    font-size:24px;
+    text-align:left;
+}
+
+#file_reviseWrite>#find{
+    float:left;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin:auto;
+    margin-top:22px;
+    margin-left:20px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#reviseWrite_teacherportal>#revise_save{
+    float:right;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin:auto;
+    margin-top:22px;
+    margin-right:20px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
 /*과제*/
 
 #Assignment_teacherportal>#but{

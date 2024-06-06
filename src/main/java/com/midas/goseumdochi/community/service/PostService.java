@@ -73,10 +73,11 @@ public class PostService {
                 .views(postEntity.getViews())
                 .likeCount(postEntity.getLikeCount())
                 .writerId(postEntity.getWriter().getId())
-                .categoryId((long) postEntity.getCategory().getId())
+                .categoryId(postEntity.getCategory().getId()) // CategoryEntity가 아닌 ID만 추출
                 .isModified(postEntity.isModified())
                 .build();
     }
+
 
     public PostDTO updatePost(Long id, PostDTO postDTO) {
         PostEntity postEntity = postRepository.findById(id)

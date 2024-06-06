@@ -14,7 +14,7 @@ function DirectorTeacherRegist() {
         phoneNumber: '',
         birthdate: '',
         email: '',
-        academyId: user.id,
+        academyId: user.academyId,
     });
 
     const handleChange = (e) => {

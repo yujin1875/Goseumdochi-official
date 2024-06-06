@@ -1,30 +1,58 @@
-import '../css/adminmain.css';
+import React, { useState, useEffect } from 'react';
 import logo from './images/goseumdochi.png';
 
 function App18() {
-    const GoAdminAcademyFormManage=()=>{
-        window.location.href='/admin/academy/form/manage'
+    const [adminInfo, setAdminInfo] = useState(null);
+
+    useEffect(() => {
+        fetch('/api/admin/adminInfo')
+            .then(response => response.json())
+            .then(data => setAdminInfo(data))
+            .catch(error => console.error('Error fetching admin info:', error));
+    }, []);
+
+    const handleLogout = () => {
+        // Clear adminInfo from session on logout
+        sessionStorage.removeItem('adminInfo');
+        // Redirect to home page after logout
+        window.location.href = '/';
+    }
+
+    const GoAdminNotice = () => {
+        window.location.href = '/adminnotice';
+    }
+
+    const GoAdminAcademyFormManage = () => {
+        window.location.href = '/admin/academy/form/manage';
+    }
+
+    const GoAdminAcademy = () => {
+        window.location.href = '/adminacademymanage'; // Redirect to admin academy management page
+    }
+
+    const GoAdminStudent = () => {
+        window.location.href = '/adminstudentmanage'; // Redirect to admin student management page
     }
 
     return (
         <div id="App">
             <div id="header_adminmain">
-                <img src={logo}/>
+                <img src={logo} alt="Logo"/>
             </div>
             <div id="admin_info">
                 <div id="info">
-                    <a>관리자 : ㅇㅇㅇ 님</a>
-                    <div id="logout">
+                    {adminInfo && <a>관리자 : {adminInfo.username} 님</a>}
+                    <button id="logout" onClick={handleLogout}>
                         로그아웃
-                    </div>
+                    </button>
                 </div>
             </div>
             <div id="button_adminmain">
                 <ul>
-                    <li><a>전체 공지사항</a></li>
-                    <li><a>학원 신청서</a></li>
-                    <li><button onClick={GoAdminAcademyFormManage}>학원 관리</button></li>
-                    <li><a>학생 관리</a></li>
+                    <li><button onClick={GoAdminNotice}>공지사항</button></li>
+                    <li><button onClick={GoAdminAcademyFormManage}>학원 신청서</button></li>
+                    <li><button onClick={GoAdminAcademy}>학원 관리</button></li>
+                    <li><button onClick={GoAdminStudent}>학생 관리</button></li>
                     <li><a>커뮤니티</a></li>
                 </ul>
             </div>

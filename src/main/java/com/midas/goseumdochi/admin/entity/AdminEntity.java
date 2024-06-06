@@ -18,7 +18,7 @@ public class AdminEntity {
     private int num;
 
     @Column(name = "aId")
-    private String id;
+    private String id; // 관리자의 아이디
 
     @Column(name = "aName")
     private String name;

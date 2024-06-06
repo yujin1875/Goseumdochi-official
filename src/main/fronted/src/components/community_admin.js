@@ -3,54 +3,25 @@ import '../css/community.css';
 import logo from './images/goseumdochi.png';
 import axios from 'axios';
 
-function App24() {
+function App40() {
     const [visibleDiv, setVisibleDiv] = useState('자유');
     const [posts, setPosts] = useState([]);
     const [likedPosts, setLikedPosts] = useState([]);
     const [commentedPosts, setCommentedPosts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [reviews, setReviews] = useState([]);
-    const [academies, setAcademies] = useState([]); // 학원 목록을 저장할 상태 추가
-    const [selectedPostId, setSelectedPostId] = useState(null); // 게시물 상세보기
-    const [previousDiv, setPreviousDiv] = useState(null); // 클릭한 게시판 정보 저장 (이전으로 돌아가기 버튼을 위함)
-    const [comments, setComments] = useState([]); // 댓글 데이터 저장
-    const [newComment, setNewComment] = useState(""); // 새로운 댓글을 저장할 상태
-
     const [newPost, setNewPost] = useState({
         title: '',
         content: '',
         categoryId: '',
-        writerId: '', // 초기 값으로 빈 문자열 설정
+        writerId: 1, // 실제 사용자 ID로 변경
         star: null // 별점 초기 값으로 null 설정
     });
-
-    // 사용자 정보를 가져오는 API 요청 함수
-    const fetchStudentInfo = async () => {
-        try {
-            const response = await axios.get('/api/student/info');
-            return response.data;
-        } catch (error) {
-            console.error("Error fetching student info", error);
-            throw error;
-        }
-    };
+    const [academies, setAcademies] = useState([]); // 학원 목록을 저장할 상태 추가
 
     useEffect(() => {
-            const fetchStudentId = async () => {
-                try {
-                    const studentInfo = await fetchStudentInfo();
-                    setNewPost((prevPost) => ({
-                        ...prevPost,
-                        writerId: studentInfo.id
-                    }));
-                } catch (error) {
-                    console.error('Error fetching student ID:', error);
-                }
-            };
-
-            fetchStudentId();
-            fetchCategories();
-        }, []);
+        fetchCategories();
+    }, []);
 
     useEffect(() => {
         if (visibleDiv === '자유') {
@@ -65,8 +36,6 @@ function App24() {
             fetchAcademyReviews();
         } else if (visibleDiv === '글쓰기') { // '글쓰기' 화면일 때 학원 목록을 불러옴
             fetchAcademies(); // 학원 목록을 가져오는 함수 호출
-        } else if (visibleDiv === '상세보기') {
-
         }
     }, [visibleDiv]);
 
@@ -130,57 +99,6 @@ function App24() {
         }
     };
 
-    // 게시글 상세보기
-    const handlePostClick = (postId) => {
-        setSelectedPostId(postId); // 클릭된 게시물의 ID를 저장
-        setPreviousDiv(visibleDiv); // 이전에 선택한 게시판 정보 저장
-        setVisibleDiv('상세보기'); // 상세보기 화면으로 전환
-        fetchCommentsByPostId(postId); // 클릭된 게시물의 댓글 불러오기
-    };
-
-
-    // 이전 버튼
-    const handleBackButtonClick = () => {
-        setVisibleDiv(previousDiv); // 이전에 선택한 게시판으로 변경
-        setPreviousDiv(null); // 이전에 선택한 게시판 정보 초기화
-    };
-
-    // 댓글을 불러오는 함수
-    const fetchCommentsByPostId = async (postId) => {
-        try {
-            const response = await axios.get(`/api/comments/post/${postId}`);
-            setComments(response.data);
-        } catch (error) {
-            console.error("Error fetching comments", error);
-        }
-    };
-
-    // 댓글 입력창의 내용이 변경될 때 호출되는 함수
-    const handleCommentChange = (e) => {
-        setNewComment(e.target.value); // 입력된 댓글 내용을 상태에 저장
-    };
-
-    // 댓글을 작성하는 함수
-    const submitComment = async () => {
-        try {
-            // 새로운 댓글 생성 요청
-            const response = await axios.post('/api/comments/create', {
-                postId: selectedPostId, // 현재 선택된 게시물의 ID
-                content: newComment,
-                writerId: newPost.writerId // 작성자 아이디
-            });
-            console.log('Comment created successfully', response.data);
-
-            // 댓글 작성 후 댓글 목록 다시 불러오기
-            fetchCommentsByPostId(selectedPostId);
-
-            // 입력창 초기화
-            setNewComment("");
-        } catch (error) {
-            console.error('Error creating comment', error);
-        }
-    };
-
 
     const showDivHome = () => {
         setVisibleDiv('자유');
@@ -221,26 +139,14 @@ function App24() {
 
             const response = await axios.post('/api/posts/upload', {
                 ...newPost,
-                writerId: newPost.writerId
+                writerId: parseInt(newPost.writerId, 10)
             });
             console.log('Post created successfully', response.data);
-
-            // 학원리뷰 테이블에 저장하는 요청
-            if (newPost.categoryId === '4') {
-                const reviewResponse = await axios.post('/api/academy-reviews', {
-                    ...newPost,
-                    writerId: newPost.writerId,
-                    academyId: newPost.academyId // 학원 ID 추가
-                });
-                console.log('Academy review created successfully', reviewResponse.data);
-            }
-
-            setVisibleDiv(newPost.categoryId);
+            showDivByCategory(newPost.categoryId);
         } catch (error) {
             console.error('Error creating post', error);
         }
     };
-
 
     return (
         <div id="App">
@@ -278,17 +184,16 @@ function App24() {
                     {visibleDiv === '글쓰기' && (
                         <div id="write_contents_community">
                             <form onSubmit={handleFormSubmit}>
-                                <label>작성자 아이디: {newPost.writerId} </label>
-                                <label htmlFor="categoryId">카테고리: </label>
+                                <label htmlFor="writerId" >작성자 아이디: </label>
+                                <input type="text" id="writerId" value={newPost.writerId} disabled />
                                 <label htmlFor="categoryId">카테고리: </label>
                                 <select id="categoryId" onChange={handleInputChange} value={newPost.categoryId}>
                                     <option value="">카테고리를 선택하세요</option>
-                                    <option value="1">자유</option>
-                                    <option value="2">대입</option>
-                                    <option value="3">질문</option>
-                                    <option value="4">리뷰</option>
+                                    {categories.map((category, index) => (
+                                        <option key={index} value={category}>{category}</option>
+                                    ))}
                                 </select>
-                                {newPost.categoryId === '4' && (
+                                {newPost.categoryId === '학원리뷰' && (
                                     <span>
                                         <label htmlFor="academy">학원 선택: </label>
                                         <select id="academy" onChange={handleInputChange}>
@@ -310,32 +215,6 @@ function App24() {
                         </div>
                     )}
 
-                    {visibleDiv === '상세보기' && selectedPostId && (
-                        <div id="detail">
-                            {posts.map(post => {
-                                if (post.id === selectedPostId) {
-                                    return (
-                                        <div key={post.id}>
-                                            <h2>{post.title}</h2>
-                                            <p>{post.content}</p>
-                                            <p>작성자: 익명</p>
-                                            <p>작성일: {post.createDate.split('T')[0]}</p>
-                                            {/* 댓글 입력창 */}
-                                            <textarea value={newComment} onChange={handleCommentChange} placeholder="댓글을 입력하세요"></textarea>
-                                            <button onClick={submitComment}>작성</button>
-                                            {/* 댓글 표시 */}
-                                            <h3>댓글</h3>
-                                            <ul>
-                                                {/* 댓글 데이터를 표시하는 코드 */}
-                                            </ul>
-                                        </div>
-                                    );
-                                }
-                            })}
-                            <button onClick={() => setVisibleDiv(previousDiv)}>이전</button>
-                        </div>
-                    )}
-
                     {visibleDiv === '자유' && (
                         <div id="letter_contents_community">
                             <ul>
@@ -345,7 +224,7 @@ function App24() {
                                     .map(post => (
                                         <li key={post.id}>
                                             <div>{post.likeCount} 좋아요</div>
-                                            <button onClick={() => handlePostClick(post.id)}>{post.title}</button> {/* 상세보기 클릭 이벤트 추가 */}
+                                            <div>{post.title}</div>
                                             <div>{post.views} 조회수</div>
                                             <div>{post.createDate.split('T')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
                                         </li>
@@ -353,7 +232,6 @@ function App24() {
                             </ul>
                         </div>
                     )}
-
                     {visibleDiv === '대입' && (
                         <div id="letter_contents_community">
                             <ul>
@@ -363,7 +241,7 @@ function App24() {
                                     .map(post => (
                                         <li key={post.id}>
                                             <div>{post.likeCount} 좋아요</div>
-                                            <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
+                                            <div>{post.title}</div>
                                             <div>{post.views} 조회수</div>
                                             <div>{post.createDate.split('T')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
                                         </li>
@@ -380,7 +258,7 @@ function App24() {
                                     .map(post => (
                                         <li key={post.id}>
                                             <div>{post.likeCount} 좋아요</div>
-                                            <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
+                                            <div>{post.title}</div>
                                             <div>{post.views} 조회수</div>
                                             <div>{post.createDate.split('T')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
                                         </li>
@@ -453,4 +331,4 @@ function App24() {
     );
 }
 
-export default App24;
+export default App40;

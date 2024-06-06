@@ -4,6 +4,8 @@ public class AdminDTO {
     private String id;
     private String password;
 
+    private String username;
+
     public AdminDTO() {
     }
 
@@ -26,5 +28,15 @@ public class AdminDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+
+    public AdminDTO(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

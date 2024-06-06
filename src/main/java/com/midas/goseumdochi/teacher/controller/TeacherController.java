@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -34,6 +35,19 @@ public class TeacherController {
 
     @Autowired
     private FileStorageService fileStorageService;
+    // 선생님의 정보를 가져오는 엔드포인트
+    @GetMapping("/info")
+    public ResponseEntity<?> getTeacherInfo(HttpSession session) {
+        Long id = (Long) session.getAttribute("loginId");
+        if (id == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+        TeacherDTO teacherDTO = teacherService.findById(id);
+        if (teacherDTO == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("선생님 정보를 찾을 수 없습니다.");
+        }
+        return ResponseEntity.ok(teacherDTO);
+    }
 
     // 선생 등록
     @PostMapping("/regist")
@@ -48,13 +62,9 @@ public class TeacherController {
     }
 
     // 강의 등록
-    @PostMapping("/lecture/regist")
-    public ResponseEntity<?> registLecture(@RequestBody LectureDTO lectureDTO) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getName();
-        TeacherDTO currentTeacher = teacherService.findByLoginid(currentUserName);
-        lectureDTO.setTeacherId(currentTeacher.getId());
-
+    @PostMapping("/{teacherId}/lecture/regist")
+    public ResponseEntity<?> registLecture(@PathVariable Long teacherId, @RequestBody LectureDTO lectureDTO) {
+        lectureDTO.setTeacherId(teacherId);
         lectureService.regist(lectureDTO);
 
         return ResponseEntity.ok(lectureDTO);
@@ -121,15 +131,18 @@ public class TeacherController {
     @PostMapping("/lecture/{lectureId}/lecture-material/new")
     public ResponseEntity<?> createNewMaterial(@PathVariable Long lectureId,
                                                @RequestPart("material") LectureMaterialDTO lectureMaterialDTO,
-                                               @RequestPart("file") MultipartFile file) throws IOException {
+                                               @RequestPart("file") MultipartFile file,
+                                               @RequestParam("id") Long id) throws IOException {
         if (file.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일이 선택되지 않았습니다.");
         }
-        String imageUrl = fileStorageService.uploadFile(file, "lecture_materials"); // 인스턴스를 통한 파일 업로드
+        String imageUrl = null;
+        if (file != null && !file.isEmpty()) {
+            imageUrl = fileStorageService.uploadFile(file, "lecture_materials");
+        } // 인스턴스를 통한 파일 업로드
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getName();
-        TeacherDTO currentTeacher = teacherService.findByLoginid(currentUserName);
+        // ID로 선생님 정보를 찾기
+        TeacherDTO currentTeacher = teacherService.findById(id);
 
         lectureMaterialDTO.setAuthor(currentTeacher.getName());
         lectureMaterialDTO.setAttachmentPath(imageUrl);
@@ -162,24 +175,26 @@ public class TeacherController {
         if (file.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일이 선택되지 않았습니다.");
         }
-        String imageUrl = fileStorageService.uploadFile(file, "lecture_materials");  // 파일을 GCS에 업로드
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getName();
-        TeacherDTO currentTeacher = teacherService.findByLoginid(currentUserName);
-
-        lectureMaterialDTO.setAuthor(currentTeacher.getName());
+        String imageUrl = null;
+        if (file != null && !file.isEmpty()) {
+            imageUrl = fileStorageService.uploadFile(file, "lecture_materials");
+        }
         lectureMaterialDTO.setAttachmentPath(imageUrl);
         lectureMaterialService.updateLectureMaterial(id, lectureMaterialDTO);
-
         return ResponseEntity.ok("강의 자료가 성공적으로 업데이트되었습니다.");
     }
 
-    // 수업자료 삭제
+    // 강의 자료 삭제
     @DeleteMapping("/lecture-material/{id}")
     public ResponseEntity<?> deleteMaterial(@PathVariable Long id) {
         lectureMaterialService.deleteLectureMaterial(id);
         return ResponseEntity.ok("수업 자료가 성공적으로 삭제되었습니다.");
+    }
+
+    @GetMapping("/lecture/{lectureId}/materials")
+    public ResponseEntity<List<LectureMaterialDTO>> getMaterialsByLecture(@PathVariable Long lectureId) {
+        List<LectureMaterialDTO> materials = lectureMaterialService.getMaterialsByLectureId(lectureId);
+        return ResponseEntity.ok(materials);
     }
 
     // 과제 추가

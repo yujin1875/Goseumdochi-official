@@ -9,6 +9,13 @@ function IntegrateLogin() {
 
     const navigate = useNavigate();
 
+    const GoFindID=()=>{
+        window.location.href='/findID'
+    }
+    const GoFindPW=()=>{
+        window.location.href='/findPW'
+    }
+
     const handleLogin = async (e) => {
         e.preventDefault(); // 폼 제출 시 페이지 새로고침 방지
         try {
@@ -21,16 +28,21 @@ function IntegrateLogin() {
             console.log(response.data);
             // 로그인 성공
 
-            const {id, role} = response.data;
+            const {id, role, } = response.data;
             if (role === 'director') { // 원장 로그인 성공
                 alert("환영합니다 원장님");
-                navigate('/director/main', { state: { user: response.data } })
+                console.log(response.data)
+                navigate('/director/main', { state: { user: response.data } }) // id, role, academyId 전달
             }
             else if (role === 'teacher') { // 선생 로그인 성공
                 alert("환영합니다 선생님")
+                console.log(response.data)
+                navigate('/teachermain', { state: { user: response.data } })
             }
             else if (role === 'student') {
+                console.log(response.data)
                 alert("환영합니다 학생");
+                navigate('/main', { state: { user: response.data } })
             }
         } catch (error) {
             console.error('로그인 실패:', error.response || error);
@@ -66,6 +78,10 @@ function IntegrateLogin() {
                             />
                     </div>
                     <button type="submit">로그인</button>
+                    <div id="letter_Login">
+                        <button id='findid' onClick={GoFindID}>학생 아이디 찾기</button>
+                        <button id='findpw' onClick={GoFindPW}>학생 비밀번호 찾기</button>
+                    </div>
                 </form>
             </div>
             <div id="footer_IntegrateLogin"/>

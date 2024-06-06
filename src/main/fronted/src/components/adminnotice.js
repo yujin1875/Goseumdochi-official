@@ -2,14 +2,22 @@ import '../css/adminnotice.css';
 import logo from './images/goseumdochi.png';
 
 function App19() {
-return (
+    const goBackToAdminMain = () => {
+        window.location.href = '/adminmain';
+    }
+
+    const goToAdminNoticeWrite = () => {
+        window.location.href = '/adminnoticewrite';
+    }
+
+    return (
         <div id="App">
             <div id="adminnotice_frame">
                 <div id="adminnotice_header">
-                    <a> > </a>
+                    <a onClick={goBackToAdminMain}> &lt; </a>
                     <h2>전체 공지사항</h2>
                     <div id="write_btn">
-                        <div id="write">글쓰기</div>
+                        <div id="write" onClick={goToAdminNoticeWrite}>글쓰기</div>
                     </div>
                 </div>
                 <div id="rect"/>
