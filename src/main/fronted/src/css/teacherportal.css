@@ -374,3 +374,197 @@ hr{
     font-size:15px;
     color:#FFFFFF;
 }
+
+/*과제*/
+
+#Assignment_teacherportal>#but{
+    width:1920px;
+    height:100px;
+}
+
+#but>#add_btn{
+    float:right;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin:auto;
+    margin-top:22px;
+    margin-right:20px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#Assignment>#rect{
+    width:1920px;
+    height:7px;
+    background-color:#363636;
+    margin:auto;
+    border-radius:5px;
+}
+
+#Assignment_teacherportal>h2{
+    display:block;
+    width:1920px;
+    height:60px;
+    margin-left:350px;
+}
+
+#Assignment_teacherportal>#Assignment{
+    width:1920px;
+    height:800px;
+    background-color:#FFFFFF;
+}
+
+#Assignment>#cate_Assignment{
+    width:1920px;
+    height:50px;
+}
+
+#cate_Assignment>#no{
+    float:left;
+    width:100px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#cate_Assignment>#title{
+    float:left;
+    width:500px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#cate_Assignment>#submission{
+    float:left;
+    width:100px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#cate_Assignment>#score{
+    float:left;
+    width:100px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#cate_Assignment>#estimation{
+    float:left;
+    width:125px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#cate_Assignment>#opendate{
+    float:left;
+    width:350px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#cate_Assignment>#closedate{
+    float:left;
+    width:350px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#List>#rect{
+    width:1625px;
+    height:7px;
+    background-color:#363636;
+    margin:auto;
+    border-radius:5px;
+}
+
+#body_Assignment>#Ano{
+    float:left;
+    width:100px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#body_Assignment>#Atitle{
+    float:left;
+    width:500px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#body_Assignment>#Asubmission{
+    float:left;
+    width:100px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#body_Assignment>#Ascore{
+    float:left;
+    width:100px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#body_Assignment>#Aestimation{
+    float:left;
+    width:125px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#body_Assignment>#Aopendate{
+    float:left;
+    width:350px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#body_Assignment>#Aclosedate{
+    float:left;
+    width:350px;
+    height:50px;
+    text-align:center;
+    font-size:24px;
+    margin:auto;
+    margin-top:5px;
+}
