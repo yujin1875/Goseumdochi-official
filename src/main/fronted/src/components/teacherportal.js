@@ -494,7 +494,7 @@ function App26() {
                         </div>
                         <div id="title_Assignmentrevise">
                             <h2>제목</h2>
-                            <input type="text" id="Assignmentrevise_title"/>
+                            <input type="text" id="Assignmentrevise_title" value={title} onChange={(e) => setTitle(e.target.value)} />
                         </div>
                         <div id="method_Assignmentrevise">
                             <h2>제출 방식</h2>
@@ -511,19 +511,20 @@ function App26() {
                         </div>
                         <div id="score_Assignmentrevise">
                             <h2>배점</h2>
-                            <input type="text" id="Assignmentrevise_score"/>
+                            <input type="text" id="Assignmentrevise_score" value={points} onChange={(e) => setPoints(e.target.value)} />
                         </div>
                         <div id="content_Assignmentrevise">
-                            <input type="text" id="Assignmentrevise_content"/>
+                            <input type="text" id="Assignmentrevise_content" value={content} onChange={(e) => setContent(e.target.value)} />
                         </div>
                         <div id="file_Assignmentrevise">
-                            <input type="file" id="Assignmentrevise_file"/>
+                            <input type="file" id="Assignmentrevise_file" onChange={(e) => setFile(e.target.files[0])} />
+                            {existingFile && <div><a href={existingFile} download>기존 첨부파일</a></div>}
                         </div>
                         <div id="buttons_Assignmentrevise">
-                            <button id="save">
+                            <button id="revise_save" onClick={handleUpdateAssignment}>
                                 저장
                             </button>
-                            <button id="back">
+                            <button id="back" onClick={showDivAssignment}>
                                 취소
                             </button>
                         </div>
