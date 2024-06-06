@@ -1,3 +1,4 @@
+import './subcss/director_student_regist.css';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
@@ -76,10 +77,13 @@ function DirectorStudentRegist() {
     };
 
     return (
-        <div>
-            <h1>학생 찾기</h1>
+        <div id="director_student_regist_frame">
+            <div id="header">
+                <h1>학생 찾기</h1>
+            </div>
+            <div id="rect"/>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div id="name">
                     <label>학생 이름:</label>
                     <input
                         type="text"
@@ -87,7 +91,7 @@ function DirectorStudentRegist() {
                         onChange={(e) => setInputStudentName(e.target.value)}
                     />
                 </div>
-                <div>
+                <div id="num">
                     <label>학생 전화번호:</label>
                     <input
                         type="text"
@@ -97,22 +101,23 @@ function DirectorStudentRegist() {
                 </div>
                 <button type="submit">찾기</button>
             </form>
-            {error && <p>{error}</p>}
-            {isFind && student && (
-                <div>
-                    <h2>학생 정보</h2>
-                    <p>ID: {student.id}</p>
-                    <p>이름: {student.studentName}</p>
-                    <p>생년월일: {student.studentBirthDate}</p>
-                    <p>전화번호: {student.studentPhoneNumber}</p>
-                    <p>이메일: {student.studentEmail}</p>
-                    <p>프로필 사진 URL: {student.profilePictureUrl}</p>
-                    <p>학원 등록 여부: {studentAcademyId ? (
-                        <div>이미 등록된 학생입니다</div>
-                        ) : (<button onClick={handleRegist}>등록하기</button>)}</p>
-                </div>
-            )}
-
+            <div id="result">
+                {error && <p>{error}</p>}
+                {isFind && student && (
+                    <div id="info">
+                        <h2>학생 정보</h2>
+                        <p>ID: {student.id}</p>
+                        <p>이름: {student.studentName}</p>
+                        <p>생년월일: {student.studentBirthDate}</p>
+                        <p>전화번호: {student.studentPhoneNumber}</p>
+                        <p>이메일: {student.studentEmail}</p>
+                        <p>프로필 사진 URL: {student.profilePictureUrl}</p>
+                        <p>학원 등록 여부: {studentAcademyId ? (
+                            <div>이미 등록된 학생입니다</div>
+                            ) : (<button onClick={handleRegist}>등록하기</button>)}</p>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
