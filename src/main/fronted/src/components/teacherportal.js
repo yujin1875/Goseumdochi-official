@@ -14,6 +14,9 @@ function App26() {
     const showDivAssignment = () => {
         setVisibleDiv('Assignment');
     };
+    const showDivAssignmentadd = () => {
+        setVisibleDiv('Assignmentadd');
+    };
 
     const showDivLecturedata = () => {
         setVisibleDiv('Lecturedata');
@@ -68,6 +71,67 @@ return (
                 {visibleDiv === 'Assignment' && (
                   <>
                     <div id="Assignment_teacherportal">
+                        <h2>과제 조회/제출</h2>
+                        <div id="but">
+                            <button id="add_btn" onClick={showDivAssignmentadd}>
+                                추가
+                            </button>
+                        </div>
+                        <div id="Assignment">
+                            <div id="cate_Assignment">
+                                <div id="no">
+                                    번호
+                                </div>
+                                <div id="title">
+                                    제목
+                                </div>
+                                <div id="submission">
+                                    제출인원
+                                </div>
+                                <div id="score">
+                                    배점
+                                </div>
+                                <div id="estimation">
+                                    평가
+                                </div>
+                                <div id="opendate">
+                                    공개일
+                                </div>
+                                <div id="closedate">
+                                    마감일
+                                </div>
+                            </div>
+                            <div id="rect"/>
+                            <div id="body_Assignment">
+                                <div id="Ano">
+                                    번호
+                                </div>
+                                <div id="Atitle">
+                                    제목
+                                </div>
+                                <div id="Asubmission">
+                                    제출인원
+                                </div>
+                                <div id="Ascore">
+                                    배점
+                                </div>
+                                <div id="Aestimation">
+                                    평가
+                                </div>
+                                <div id="Aopendate">
+                                    공개일
+                                </div>
+                                <div id="Aclosedate">
+                                    마감일
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </>
+                )}
+                {visibleDiv === 'Assignmentadd' && (
+                  <>
+                    <div id="Assignmentadd_teacherportal">
 
                     </div>
                   </>

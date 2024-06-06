@@ -1,4 +1,5 @@
 import '../css/adminacademymanage.css';
+import React, { useEffect, useState } from 'react';
 import logo from './images/goseumdochi.png';
 
 function App22() {
