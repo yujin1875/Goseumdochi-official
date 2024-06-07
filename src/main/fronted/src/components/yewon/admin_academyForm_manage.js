@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './subcss/admin_academyForm_manage.css';
 
 function AdminAcademyFormManage() {
     const [academyFormList, setAcademyFormList] = useState([]);
@@ -19,7 +20,6 @@ function AdminAcademyFormManage() {
         fetchAcademyForms();
     }, []);
 
-    // 수락 버튼 클릭 시 처리 로직
     const handleAccept = async (id) => {
         try {
             const response = await axios.post('/api/admin/accept', null, {
@@ -28,13 +28,9 @@ function AdminAcademyFormManage() {
                 }
             });
 
-            // 서버에서 업데이트된 데이터를 받아서 업데이트
             if (response.status === 200) {
-                // 성공적으로 업데이트되었을 때, 폼 목록 상태를 업데이트합니다.
                 setAcademyFormList(academyFormList.map(form => {
-                    // 변경된 폼의 id와 일치하는 폼만 업데이트합니다.
                     if (form.id === id) {
-                        // ...form은 기존의 폼 데이터를 유지하고, authStatus만 새로운 값으로 업데이트합니다.
                         return { ...form, authStatus: 1 };
                     }
                     return form;
@@ -46,7 +42,6 @@ function AdminAcademyFormManage() {
         }
     };
 
-    // 거절 버튼 클릭 시 처리 로직
     const handleReject = async (id) => {
         try {
             const response = await axios.post('/api/admin/reject', null, {
@@ -72,12 +67,11 @@ function AdminAcademyFormManage() {
     return (
         <div id="adminAcademyFormManage_frame">
             <div id="adminAcademyFormManage_header">
-                <a href="/">홈</a>
+                <a href="/adminmain">&lt;</a>
                 <h2>학원신청서 관리</h2>
             </div>
             <div id="rect"></div>
             <div id="adminAcademyFormManage_body">
-
                 <div id="adminAcademyFormManage_contents">
                     <div className="admin-academy-form-manage">
                         {error && <p>{error}</p>}
@@ -126,3 +120,4 @@ function AdminAcademyFormManage() {
 }
 
 export default AdminAcademyFormManage;
+
