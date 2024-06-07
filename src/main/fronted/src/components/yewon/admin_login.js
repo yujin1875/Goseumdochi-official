@@ -55,7 +55,9 @@ function AdminLogin() {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                     </div>
-                    <button type="submit">로그인</button>
+                    <div id="but">
+                        <button type="submit">로그인</button>
+                    </div>
                 </form>
             </div>
             <div id="footer_adminLogin"/>
