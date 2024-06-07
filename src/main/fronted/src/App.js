@@ -49,6 +49,7 @@ import { Component } from 'react';
 
 import App40 from './components/community_admin';
 import DirectorNoticeWrite from './components/director_notice_write';
+import BadWordCheck from './components/community_badword_check';
 
 class App extends Component{
   constructor(props){
@@ -110,6 +111,7 @@ class App extends Component{
               <Route path='/student/recommend/univ' element={<StudentRecommendUniv/>}/>
               <Route path='/community_admin' element={<App40/>}/>
               <Route path='/director_notice_write' element={<DirectorNoticeWrite/>}/>
+              <Route path='/community_badword_check' element={<BadWordCheck/>}/>
             </Routes>
         </BrowserRouter> 
       </div>
