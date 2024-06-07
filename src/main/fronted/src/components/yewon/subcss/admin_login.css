@@ -63,14 +63,14 @@ form>#password_adminLogin>input{
     box-shadow: none;
 }
 
-form>button{
+form>#but>button{
     display:block;
     width: 380px;
     height: 56px;
     background-color: #363636;
-    margin:30px auto;
     border-color: #363636;
     border-radius: 15px;
+    margin:auto;
 
     font-size: 15px;
     color:#FFFFFF;

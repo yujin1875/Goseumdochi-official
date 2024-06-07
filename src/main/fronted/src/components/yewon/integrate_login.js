@@ -77,7 +77,9 @@ function IntegrateLogin() {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                     </div>
-                    <button type="submit">로그인</button>
+                    <div id="but_inte">
+                        <button type="submit">로그인</button>
+                    </div>
                     <div id="letter_Login">
                         <button id='findid' onClick={GoFindID}>학생 아이디 찾기</button>
                         <button id='findpw' onClick={GoFindPW}>학생 비밀번호 찾기</button>
