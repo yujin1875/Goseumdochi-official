@@ -92,7 +92,6 @@ function App24() {
         try {
             const myPostsResponse = await axios.get(`/api/mypage/posts/${newPost.writerId}`);
             setPosts(myPostsResponse.data);
-
             const likedPostsResponse = await axios.get(`/api/mypage/liked-posts/${newPost.writerId}`);
             setLikedPosts(likedPostsResponse.data);
             const commentedPostsResponse = await axios.get(`/api/mypage/commented-posts/${newPost.writerId}`);
@@ -154,23 +153,29 @@ function App24() {
     // 댓글을 작성하는 함수
     const submitComment = async () => {
         try {
-            // 새로운 댓글 생성 요청
+            const commentCheckResponse = await axios.get('/api/badword/check', {
+            params: { text: newComment },
+            });
+
+            console.log("comment: " + commentCheckResponse.data.label);
+
+            if (commentCheckResponse.data.label == 1) {
+                alert('댓글에 비속어가 포함되어 있습니다.');
+                return;
+            }
+
             const response = await axios.post('/api/comments/create', {
-                postId: selectedPostId, // 현재 선택된 게시물의 ID
+                postId: selectedPostId,
                 text: newComment,
-                writerId: newPost.writerId // 작성자 아이디
+                writerId: newPost.writerId
             });
             console.log('Comment created successfully', response.data);
-
-            // 댓글 작성 후 댓글 목록 다시 불러오기
             fetchCommentsByPostId(selectedPostId);
-
-            // 입력창 초기화
-            setNewComment("");
-        } catch (error) {
-            console.error('Error creating comment', error);
-        }
-    };
+            setNewComment('');
+            } catch (error) {
+                console.error('Error creating comment', error);
+            }
+        };
 
     const handleStarChange = (e) => {
         const selectedStar = parseInt(e.target.value);
@@ -226,6 +231,21 @@ function App24() {
                 return;
             }
 
+            const titleCheckResponse = await axios.get('/api/badword/check', {
+                params: { text: newPost.title },
+            });
+            const contentCheckResponse = await axios.get('/api/badword/check', {
+                params: { text: newPost.content },
+            });
+
+            console.log("title: " + titleCheckResponse.data.label);
+            console.log("content: " + contentCheckResponse.data.label);
+
+            if (titleCheckResponse.data.label == 1 || contentCheckResponse.data.label == 1) {
+                alert('제목이나 내용에 비속어가 포함되어 있습니다.');
+                return;
+            }
+
             if (newPost.categoryId === '4') {
                 // 학원리뷰 테이블에 저장하는 요청
                 if(!newPost.academyId) { alert("학원 선택"); return; }
@@ -246,7 +266,18 @@ function App24() {
                 console.log('Post created successfully', response.data);
             }
 
-            setVisibleDiv(newPost.categoryId);
+            alert('게시글 등록 완료');
+
+            setNewPost({
+                title: '',
+                content: '',
+                categoryId: '',
+                star: null,
+                academyId: ''
+            });
+
+            setVisibleDiv('자유');
+
         } catch (error) {
             console.error('Error creating post', error);
         }
@@ -346,7 +377,7 @@ function App24() {
                                             <h2>{post.title}</h2>
                                             <p>{post.content}</p>
                                             <p>작성자: 익명</p>
-                                            <p>작성일: {post.createDate.split('T')[0]}</p>
+                                            <p>작성일: {post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</p>
                                             <textarea value={newComment} onChange={handleCommentChange} placeholder="댓글을 입력하세요"></textarea>
                                             <button onClick={submitComment}>작성</button>
                                             <h3>댓글</h3>
@@ -375,7 +406,7 @@ function App24() {
                                             <div>{post.likeCount} 좋아요</div>
                                             <button onClick={() => handlePostClick(post.id)}>{post.title}</button> {/* 상세보기 클릭 이벤트 추가 */}
                                             <div>{post.views} 조회수</div>
-                                            <div>{post.createDate.split('T')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
+                                            <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div>
                                         </li>
                                     ))}
                             </ul>
@@ -393,7 +424,7 @@ function App24() {
                                             <div>{post.likeCount} 좋아요</div>
                                             <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
                                             <div>{post.views} 조회수</div>
-                                            <div>{post.createDate.split('T')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
+                                            <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
                                         </li>
                                     ))}
                             </ul>
@@ -410,7 +441,7 @@ function App24() {
                                             <div>{post.likeCount} 좋아요</div>
                                             <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
                                             <div>{post.views} 조회수</div>
-                                            <div>{post.createDate.split('T')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
+                                            <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
                                         </li>
                                     ))}
                             </ul>
