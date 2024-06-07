@@ -22,9 +22,11 @@ function App26() {
     const [file, setFile] = useState(null);
     const [existingFile, setExistingFile] = useState('');
     const [id, setId] = useState('');
+    const [lectureInfo, setLectureInfo] = useState({});
 
     useEffect(() => {
         if (lectureId) {
+            fetchLectureInfo();
             if (visibleDiv === 'Lecturedata' && visiblesubDiv === 'List') {
                 fetchMaterials();
             } else if (visibleDiv === 'Assignment') {
@@ -36,6 +38,15 @@ function App26() {
             console.error("lectureId is not defined");
         }
     }, [visibleDiv, visiblesubDiv, lectureId]);
+
+    const fetchLectureInfo = async () => {
+        try {
+            const response = await axios.get(`/api/teacher/lecture/${lectureId}`);
+            setLectureInfo(response.data);
+        } catch (error) {
+            console.error("There was an error fetching the lecture info!", error);
+        }
+    };
 
 
     const fetchMaterials = async () => {
@@ -176,6 +187,16 @@ function App26() {
             fetchAssignments();
         } catch (error) {
             console.error("There was an error deleting the assignment!", error);
+        }
+    };
+
+    const handleUpdateLectureInfo = async () => {
+        try {
+            await axios.put(`/api/teacher/lecture/update`, lectureInfo);
+            alert("강의 정보가 성공적으로 업데이트되었습니다.");
+            showDivHome();
+        } catch (error) {
+            console.error("There was an error updating the lecture info!", error);
         }
     };
 
@@ -399,32 +420,32 @@ function App26() {
                                 <div id="infobox">
                                     <div id="subjecttitle">
                                         <h2>과목명</h2>
-                                        <div id="infobox_subjecttitle">ㅁㅁㅁ</div>
+                                        <div id="infobox_subjecttitle">{lectureInfo.name}</div>
                                     </div>
                                     <div id="lecturetime">
                                         <h2>강의 시간</h2>
-                                        <div id="infobox_lecturetime">ㅁㅁㅁ</div>
+                                        <div id="infobox_lecturetime">{lectureInfo.lectureTime}</div>
                                     </div>
                                     <div id="lectureplace">
                                         <h2>강의 장소</h2>
-                                        <div id="infobox_lectureplace">ㅁㅁㅁ</div>
+                                        <div id="infobox_lectureplace">{lectureInfo.lectureLocation}</div>
                                     </div>
                                     <div id="teacher">
                                         <h2>담당 선생님</h2>
-                                        <div id="infobox_teacher">ㅁㅁㅁ</div>
+                                        <div id="infobox_teacher">{lectureInfo.teacher}</div>
                                     </div>
                                 </div>
                             </div>
                             <div id="subcontent">
                                 <h2>세부내용</h2>
                                 <div id="info_subcontent">
-                                    ㅁㅁㅁㅁㅁㅁㅁ
+                                    {lectureInfo.lectureDetails}
                                 </div>
                             </div>
                             <div id="weekplan">
                                 <h2>주별계획</h2>
                                 <div id="info_weekplan">
-                                    ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ
+                                    {lectureInfo.lectureWeeklyPlan}
                                 </div>
                             </div>
                         </div>
@@ -435,34 +456,38 @@ function App26() {
                         <div id="Homerevise_teacherportal">
                             <div id="info">
                                 <h2>기본정보</h2>
-                                <button id="save" onClick={showDivHome}>저장</button>
+                                <button id="save" onClick={handleUpdateLectureInfo}>저장</button>
                                 <hr/>
                                 <div id="infobox">
                                     <div id="subjecttitle">
                                         <h2>과목명</h2>
-                                        <input type="text" id="Homerevise_subjecttitle"/>
+                                        <input type="text" id="Homerevise_subjecttitle" value={lectureInfo.name || ''} onChange={(e) => setLectureInfo({ ...lectureInfo, name: e.target.value })} />
                                     </div>
                                     <div id="lecturetime">
                                         <h2>강의 시간</h2>
-                                        <input type="text" id="Homerevise_lecturetime"/>
+                                        <input type="text" id="Homerevise_lecturetime" value={lectureInfo.lectureTime || ''} onChange={(e) => setLectureInfo({ ...lectureInfo, lectureTime: e.target.value })} />
                                     </div>
                                     <div id="lectureplace">
                                         <h2>강의 장소</h2>
-                                        <input type="text" id="Homerevise_lectureplace"/>
+                                        <input type="text" id="Homerevise_lectureplace" value={lectureInfo.lectureLocation || ''} onChange={(e) => setLectureInfo({ ...lectureInfo, lectureLocation: e.target.value })} />
                                     </div>
                                     <div id="teacher">
                                         <h2>담당 선생님</h2>
-                                        <input type="text" id="Homerevise_teacher"/>
+                                        <input type="text" id="Homerevise_teacher" value={lectureInfo.teacher || ''}
+                                               onChange={(e) => setLectureInfo({
+                                                   ...lectureInfo,
+                                                   teacher: e.target.value
+                                               })}/>
                                     </div>
                                 </div>
                             </div>
                             <div id="subcontent">
                                 <h2>세부내용</h2>
-                                <input type="text" id="Homerevise_subcontent"/>
+                                <input type="text" id="Homerevise_subcontent" value={lectureInfo.lectureDetails || ''} onChange={(e) => setLectureInfo({ ...lectureInfo, lectureDetails: e.target.value })} />
                             </div>
                             <div id="weekplan">
                                 <h2>주별계획</h2>
-                                <input type="text" id="Homerevise_weekplan"/>
+                                <input type="text" id="Homerevise_weekplan" value={lectureInfo.lectureWeeklyPlan || ''} onChange={(e) => setLectureInfo({ ...lectureInfo, lectureWeeklyPlan: e.target.value })} />
                             </div>
                         </div>
                     </>
