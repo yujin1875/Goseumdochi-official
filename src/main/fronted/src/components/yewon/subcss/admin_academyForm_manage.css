@@ -1,0 +1,145 @@
+hr {
+    border: 0;
+}
+
+#adminAcademyFormManage_frame {
+    width: 1800px;
+    height: 1080px;
+    background-color: #FFFFFF;
+    margin: auto;
+    border-radius: 100px;
+    padding: 2px;
+    box-sizing: border-box;
+}
+
+#adminAcademyFormManage_header {
+    width: 100%;
+    height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 중앙 정렬 */
+    position: relative;
+}
+
+#adminAcademyFormManage_header a {
+    position: absolute;
+    left: 120px; /* 왼쪽 여백을 동일하게 적용 */
+    font-size: 48px;
+    color: #000000;
+    text-align: center;
+}
+
+#adminAcademyFormManage_header h2 {
+    font-size: 48px;
+    color: #000000;
+    text-align: center;
+    margin: 0;
+}
+
+#rect {
+    width: 1739px;
+    height: 7px;
+    background-color: #363636;
+    margin: 20px auto;
+    border-radius: 5px;
+}
+
+#adminAcademyFormManage_body {
+    width: 1745px;
+    height: auto;
+    margin: auto;
+}
+
+#adminAcademyFormManage_category {
+    width: 100%;
+    height: 50px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+#adminAcademyFormManage_category > div {
+    height: 50px;
+    font-size: 24px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#adminAcademyFormManage_category > #academyName,
+#adminAcademyFormManage_category > #directorName,
+#adminAcademyFormManage_category > #directorNum,
+#adminAcademyFormManage_category > #academyNum,
+#adminAcademyFormManage_category > #academyPostnum,
+#adminAcademyFormManage_category > #SendLetter {
+    width: 167px;
+}
+
+#adminAcademyFormManage_category > #directorEmail {
+    width: 333px;
+}
+
+#adminAcademyFormManage_category > #academyAddress {
+    width: 350px;
+}
+
+#adminAcademyFormManage_body > #adminAcademyFormManage_contents {
+    width: 100%;
+    height: auto;
+    margin: auto;
+}
+
+.admin-academy-form-manage table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.admin-academy-form-manage thead {
+    background-color: #f4f4f4;
+}
+
+.admin-academy-form-manage th,
+.admin-academy-form-manage td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.admin-academy-form-manage h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.admin-academy-form-manage button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.admin-academy-form-manage button:hover {
+    opacity: 0.8;
+}
+
+.admin-academy-form-manage button:focus {
+    outline: none;
+}
+
+.admin-academy-form-manage button:nth-child(1) {
+    background-color: #4CAF50;
+}
+
+.admin-academy-form-manage button:nth-child(2) {
+    background-color: #f44336;
+}
+
+.admin-academy-form-manage p {
+    color: red;
+    font-weight: bold;
+}
