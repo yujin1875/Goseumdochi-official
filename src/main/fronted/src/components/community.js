@@ -16,6 +16,8 @@ function App24() {
     const [comments, setComments] = useState([]); // 댓글 데이터 저장
     const [newComment, setNewComment] = useState(""); // 새로운 댓글을 저장할 상태
 
+    const [selectedMenuItem, setSelectedMenuItem] = useState('자유');
+
     const [newPost, setNewPost] = useState({
         title: '',
         content: '',
@@ -190,8 +192,8 @@ function App24() {
 
     const showDivByCategory = (category) => {
         setVisibleDiv(category);
+        setSelectedMenuItem(category); // Set the selected menu item
     };
-
     const showDivReviews = () => {
         setVisibleDiv('학원리뷰');
     };
@@ -264,14 +266,14 @@ function App24() {
             </div>
             <div id="menu_community">
                 <ul>
-                    <li onClick={() => showDivByCategory('자유')}><a>자유 게시판</a></li>
-                    <li onClick={() => showDivByCategory('대입')}><a>대입 게시판</a></li>
-                    <li onClick={() => showDivByCategory('질문')}><a>질문 게시판</a></li>
-                    <li><a>대학 입결 정보</a></li>
-                    <li onClick={showDivReviews}><a>학원 리뷰</a></li>
-                    <li onClick={showDivMypage}><a>마이페이지</a></li>
+                    <li onClick={() => showDivByCategory('자유')} style={{ backgroundColor: selectedMenuItem === '자유' ? '#BCBCBC' : '#D9D9D9' }}><a>자유 게시판</a></li>
+                    <li onClick={() => showDivByCategory('대입')} style={{ backgroundColor: selectedMenuItem === '대입' ? '#BCBCBC' : '#D9D9D9' }}><a>대입 게시판</a></li>
+                    <li onClick={() => showDivByCategory('질문')} style={{ backgroundColor: selectedMenuItem === '질문' ? '#BCBCBC' : '#D9D9D9' }}><a>질문 게시판</a></li>
+                    <li onClick={() => showDivByCategory('학원리뷰')} style={{ backgroundColor: selectedMenuItem === '학원리뷰' ? '#BCBCBC' : '#D9D9D9' }}><a>학원 리뷰</a></li>
+                    <li onClick={() => showDivByCategory('Mypage')} style={{ backgroundColor: selectedMenuItem === 'Mypage' ? '#BCBCBC' : '#D9D9D9' }}><a>마이페이지</a></li>
                 </ul>
             </div>
+
             <div id="contents_community">
                 {visibleDiv !== 'Mypage' && visibleDiv !== '글쓰기' && (
                     <div id="header_contents_community">
@@ -463,7 +465,7 @@ function App24() {
                     )}
                 </div>
                 {visibleDiv !== 'Mypage' && visibleDiv !== '글쓰기' && (
-                    <div id="footer_contents_community">
+                    <div id="footer_main">
                         <a>문의 | midas2024.ver01@gmail.com</a>
                     </div>
                 )}

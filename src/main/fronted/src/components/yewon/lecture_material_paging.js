@@ -9,8 +9,8 @@ function LectureMaterialPaging() {
 
     const { user, lecture } = location.state;
 
+    const [materialList, setMaterialList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [materials, setMaterials] = useState([]);
     const [pagingInfo, setPagingInfo] = useState({});
 
     // 처음 페이지 띄울때 및 currentPage 변수 데이터가 변경될 때마다 실행
@@ -21,7 +21,7 @@ function LectureMaterialPaging() {
     const fetchMaterials = async (page) => {
         try {
             const response = await axios.get(`/api/lecture/${lecture.id}/material/paging?page=${page}`);
-            setMaterials(response.data.material.content);
+            setMaterialList(response.data.material.content);
             setPagingInfo({
                 startPage: response.data.startPage,
                 endPage: response.data.endPage,
@@ -48,24 +48,25 @@ function LectureMaterialPaging() {
     return (
         <div>
             {/* 자료 목록 표시 */}
+            <h2>강의자료</h2>
             <table>
                 <thead>
                 <tr>
                     <th>No</th>
                     <th>제목</th>
-                    <th>작성자</th>
                     <th>내용</th>
+                    <th>작성자</th>
                     <th>작성일시</th>
                     <th>강의자료</th>
                     {/* 기타 헤더 정보 */}
                 </tr>
                 </thead>
                 <tbody>
-                {materials.map((material) => (
+                {materialList.map((material) => (
                     <tr key={material.id}>
                         <td>{material.id}</td>
-                        <td>{material.title}</td>
                         <td>{material.content}</td>
+                        <td>{material.title}</td>
                         <td>{material.author}</td>
                         <td>{formatDateTime(material.createdAt)}</td>
                         <td><a href={material.attachmentPath} download>첨부파일</a></td>
@@ -77,14 +78,20 @@ function LectureMaterialPaging() {
 
             {/* 페이징 컴포넌트 */}
             <div>
-                <button onClick={() => goToPage(1)}>처음</button>
-                <button onClick={() => currentPage > 1 && goToPage(currentPage - 1)}>이전</button>
+                <button onClick={() => goToPage(1)}>&lt;&lt;</button>
+                <button onClick={() => currentPage > 1 && goToPage(currentPage - 1)}>&lt;</button>
                 {/* 현재 페이지 기준으로 페이지 버튼 생성 */}
                 {Array.from({ length: pagingInfo.endPage - pagingInfo.startPage + 1 }, (_, i) => i + pagingInfo.startPage).map(page => (
-                    <button key={page} onClick={() => goToPage(page)}>{page}</button>
+                    <button
+                        key={page}
+                        onClick={() => goToPage(page)}
+                        style={{ backgroundColor: page === currentPage ? '#007BFF' : 'transparent', color: page === currentPage ? 'white' : 'black' }}
+                    >
+                        {page}
+                    </button>
                 ))}
-                <button onClick={() => currentPage < pagingInfo.totalPages && goToPage(currentPage + 1)}>다음</button>
-                <button onClick={() => goToPage(pagingInfo.totalPages)}>마지막</button>
+                <button onClick={() => currentPage < pagingInfo.totalPages && goToPage(currentPage + 1)}>&gt;</button>
+                <button onClick={() => goToPage(pagingInfo.totalPages)}>&gt;&gt;</button>
             </div>
         </div>
     );
