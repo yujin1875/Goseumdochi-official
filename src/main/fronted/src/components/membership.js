@@ -29,6 +29,7 @@ function App2() {
             const response = await axios.post('/api/student/signup', inputs);
             console.log('Form Submit success:', response.data);
             alert("회원가입 성공");
+            window.location.href='/login';
         } catch (error) {
             console.error('Form Submit error:', error);
             if (error.response) {
@@ -104,7 +105,7 @@ function App2() {
                         name="studentPhoneNumber"
                         value={inputs.studentPhoneNumber}
                         onChange={handleChange}
-                        placeholder="010-0000-0000"
+                        placeholder="010XXXXXXXX"
                         required
                     /><hr/>
                     <input type="submit" value="회원가입" id="submit_btn"/>

@@ -11,12 +11,28 @@ import java.time.LocalDateTime;
 @ToString
 public class AssignmentDTO {
     private Long id;
-    private String title;
-    private String content;
-    private String author;
-    private LocalDateTime createdAt;
-    private LocalDateTime deadline;
-    private Integer points;
-    private String examType;  // "Online" 또는 "Offline"
-    private String attachmentPath;
+    private String title;   // 제목
+    private String content; // 내용
+    private String author;  // 작성자
+    private LocalDateTime createdAt;    // 공개일
+    private LocalDateTime deadline;     // 마감일
+    private Integer points;   // 배점
+    private String examType;  // 제출방식 "Online" 또는 "Offline"
+    private String attachmentPath;  // 첨부파일
+
+    private Long lectureId; // fk
+
+    // lectureId 만 없는 생성자
+    public AssignmentDTO(Long id, String title, String content, String author, LocalDateTime createdAt,
+                         LocalDateTime deadline, Integer points, String examType, String attachmentPath) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.createdAt = createdAt;
+        this.deadline = deadline;
+        this.points = points;
+        this.examType = examType;
+        this.attachmentPath = attachmentPath;
+    }
 }

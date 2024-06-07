@@ -33,25 +33,23 @@ public class AcademyFormCont {
 
     @GetMapping("/academyForms")
     public ResponseEntity<List<AcademyFormEntity>> getAllAcademyForms() {
-        if (!isLoggedIn()) {
+        /*if (!isLoggedIn()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
+        }*/
 
         List<AcademyFormEntity> academyForms = academyFormRepository.findAll();
         return ResponseEntity.ok(academyForms);
     }
 
     @PostMapping("/accept") // 수락 버튼 눌렀을 때
-    public ResponseEntity<String> acceptAcademyForm(@RequestBody AcademyFormDTO academyFormDTO) {
-        Long academyFormId = academyFormDTO.getId();
-        academyFormServ.acceptAcademyForm(academyFormId);
+    public ResponseEntity<String> acceptAcademyForm(@RequestParam Long formId) {
+        academyFormServ.acceptAcademyForm(formId);
         return ResponseEntity.ok("수락되었습니다");
     }
 
     @PostMapping("/reject") // 거절 버튼 눌렀을 때
-    public ResponseEntity<String> rejectAcademyForm(@RequestBody AcademyFormDTO academyFormDTO) {
-        Long academyFormId = academyFormDTO.getId();
-        academyFormServ.rejectAcademyForm(academyFormId);
+    public ResponseEntity<String> rejectAcademyForm(@RequestParam Long formId) {
+        academyFormServ.rejectAcademyForm(formId);
         return ResponseEntity.ok("거절되었습니다");
     }
 }

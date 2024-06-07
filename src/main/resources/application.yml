@@ -11,21 +11,28 @@ spring:
       gcp:
         storage:
           credentials:
-            location: classpath:midas-424214-233054b9a007.json
-      project-id: midas-vm-instance
+            location: classpath:midas-424214-e642912c0adf.json
+      project-id: midas-424214
       bucket: sprofile
-  spring:
-    mail:
-      host: smtp.naver.com
-      port: 587
-      username: goseum24@naver.com
-      password: goseumdochi4
-      properties:
-        mail:
-          smtp:
-            auth: true
-            starttls:
-              enable: true
+
+  mail:
+    host: smtp.naver.com
+    port: 587
+    username: goseum24@naver.com
+    password: goseumdochi4
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
 
   jpa:
     database: mysql

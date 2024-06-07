@@ -1,5 +1,6 @@
 package com.midas.goseumdochi.director.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.midas.goseumdochi.academy.entity.AcademyEntity;
 import com.midas.goseumdochi.director.dto.DirectorDTO;
 import jakarta.persistence.*;
@@ -7,12 +8,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
-//@Setter
-//@DynamicInsert
-@NoArgsConstructor // 기본 생성자
+@NoArgsConstructor
 @Table(name = "director")
 public class DirectorEntity {
     @Id
@@ -20,13 +20,13 @@ public class DirectorEntity {
     @Column(name = "director_id")
     private Long id;
 
-    @Column(name = "director_name", length = 10) // VARCHAR(10)
+    @Column(name = "director_name", length = 10)
     private String name;
 
     @Column(name = "director_loginid", length = 8)
-    private String loginid; // 8자리 숫자 (자릿수마다 의마가 있어서 문자열로)
+    private String loginid;
 
-    @Column(name = "director_pwd", length = 20)
+    @Column(name = "director_pwd")
     private String password;
 
     @Column(name = "director_phoneno", length = 11)
@@ -40,11 +40,16 @@ public class DirectorEntity {
 
     // 학원과 1:1 양방향 매핑(주 엔터티)
     @OneToOne
-    @JoinColumn(name = "academy_id") // name: DB에 저장되는 이름, referencedColumnName 지정 안 하면 자동으로 pk와 매핑
+    @JoinColumn(name = "academy_id")
+    @JsonBackReference
     private AcademyEntity academyEntity;
 
+    // 원장 공사항과 1:N 연경
+    @OneToMany(mappedBy = "directorEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DirectorNoticeEntity> directorNoticeEntityList;
+
     @Builder
-    public DirectorEntity(Long id, String name, String loginid, String password, String phoneNumber, LocalDate birthdate, String email) {
+    public DirectorEntity(Long id, String name, String loginid, String password, String phoneNumber, LocalDate birthdate, String email, AcademyEntity academyEntity) {
         this.id = id;
         this.name = name;
         this.loginid = loginid;
@@ -52,11 +57,12 @@ public class DirectorEntity {
         this.phoneNumber = phoneNumber;
         this.birthdate = birthdate;
         this.email = email;
+        this.academyEntity = academyEntity;
     }
 
     // directorDTO -> directorEntity
     public static DirectorEntity toDirectorEntity(DirectorDTO directorDTO) {
-        DirectorEntity directorEntity = DirectorEntity.builder()
+        return DirectorEntity.builder()
                 .id(directorDTO.getId())
                 .name(directorDTO.getName())
                 .loginid(directorDTO.getLoginid())
@@ -65,7 +71,13 @@ public class DirectorEntity {
                 .birthdate(directorDTO.getBirthdate())
                 .email(directorDTO.getEmail())
                 .build();
+    }
 
-        return directorEntity;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAcademyEntity(AcademyEntity academy) {
+        this.academyEntity = academy;
     }
 }

@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.midas.goseumdochi.director.service.DirectorService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api/director")
@@ -19,7 +22,7 @@ import com.midas.goseumdochi.director.service.DirectorService;
 public class DirectorController {
     private final DirectorService directorService;
     private final StudentService studentService;
-    private final StudentAcademyService studentDirectorService;
+    private final StudentAcademyService studentAcademyService;
 
     // 로그인 폼 작성 후
     @PostMapping("/login")
@@ -36,30 +39,39 @@ public class DirectorController {
     }
 
     // 원장님이 학생 찾을 때 (이름, 전화번호 이용) *--> 학생 Controller에 보내도 됨
-    @PostMapping("/findStudent")
-    public ResponseEntity<?> findStudent(@RequestParam String studentName, @RequestParam String studentPhoneNumber) {
-        StudentDTO studentDTO = studentService.findStudentByNameAndPhoneNumber(studentName, studentPhoneNumber);
+    @GetMapping("/academy/{academyId}/findStudent")
+    public ResponseEntity<?> findStudent(@PathVariable Long academyId, @RequestParam String inputStudentName, @RequestParam String inputStudentPhoneNumber) {
+        StudentDTO studentDTO = studentService.findStudentByNameAndPhoneNumber(inputStudentName, inputStudentPhoneNumber);
 
         if(studentDTO == null) { // 찾기 실패
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
                     .body("해당 학생이 존재하지 않습니다.");
         }
-        // 학생 찾기 성공
-        return ResponseEntity.ok(studentDTO); // -> 리액트에서 찾기 성공했을 때 변수 설정 해줘야함
+        // 학생 찾기 성공 후 학원에 등록되어있는지 검사
+        StudentAcademyDTO registDTO = studentAcademyService.getStudentDto(studentDTO.getId(), academyId);
+        Map<String, Object> result = new HashMap<>();
+
+        if(registDTO == null) // 학생이 아직 학원에 등록되지 않음
+            result.put("studentAcademyId", null);
+        else // 학생이 이미 학원에 등록됨
+            result.put("studentAcademyId", registDTO.getId());
+        result.put("student", studentDTO);
+
+        return ResponseEntity.ok(result); // -> 리액트에서 찾기 성공했을 때 변수 설정 해줘야함
     }
 
     // 학생 등록
-    @PostMapping("/registStudent")
-    public ResponseEntity<?> registStudent(@RequestBody StudentAcademyDTO studentAcademyDTO) { // (학생id, 학원id) 입력받음
+    @PostMapping("/academy/{academyId}/registStudent")
+    public ResponseEntity<?> registStudent(@PathVariable Long academyId, @RequestParam Long studentId) { // (학생id, 학원id) 입력받음
         // 학생 등록 실패 로직
-        if(studentAcademyDTO.getStudentId() == null) {
+        if(studentId == null) {
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
-                    .body("학생 등록 실패. 학생을 선택해주세요!");
+                    .body("학생 등록 실패.");
         }
         // 학생 등록 성공
-        studentDirectorService.registStudentAcademy(studentAcademyDTO); // 등록
-        return ResponseEntity.ok("학생 등록 성공.");
+        StudentAcademyDTO studentAcademyDTO = studentAcademyService.registStudentAcademy(studentId, academyId);// 등록
+        return ResponseEntity.ok(studentAcademyDTO);
     }
 }

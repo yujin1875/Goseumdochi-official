@@ -1,9 +1,16 @@
 package com.midas.goseumdochi.student.Controller;
 import com.midas.goseumdochi.student.Dto.StudentDTO;
+import com.midas.goseumdochi.student.Repository.StudentRepository;
 import com.midas.goseumdochi.student.Service.FileStorageService;
 import com.midas.goseumdochi.student.Service.StudentService;
+import com.midas.goseumdochi.student.entity.StudentEntity;
+import com.midas.goseumdochi.teacher.dto.LectureDTO;
+import com.midas.goseumdochi.teacher.service.LectureService;
 import com.midas.goseumdochi.util.Dto.MailDTO;
 import com.midas.goseumdochi.util.Service.MailService;
+import com.midas.goseumdochi.util.ai.EncDecService;
+import com.midas.goseumdochi.util.ai.RecommendDTO;
+import com.midas.goseumdochi.util.ai.RecommentService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,7 +18,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 @RestController
 @RequestMapping("/api/student")
@@ -21,12 +33,17 @@ public class StudentController {
     private final StudentService studentService;
     private final FileStorageService fileStorageService;
     private final MailService mailService;
+    private final LectureService lectureService;
+    private final StudentRepository studentRepository;
+    private final EncDecService encDecService;
+    private final RecommentService recommentService;
 
     // 회원가입 페이지 폼 작성 데이터 받기
     @PostMapping("/signup")
     public ResponseEntity<?> join(@RequestBody StudentDTO studentDTO) {
         System.out.println("Received studentDTO: " + studentDTO);
-        if (!studentDTO.getStudentPhoneNumber().matches("^\\d{3}-\\d{4}-\\d{4}$")) {
+        // 전화번호 형식 - 있는 거에서 -> 없는 것으로 (숫자 11자)
+        if (!studentDTO.getStudentPhoneNumber().matches("^\\d{11}$")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("전화번호 형식이 올바르지 않습니다.");
         }
 
@@ -67,7 +84,7 @@ public class StudentController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 정보와 일치하는 사용자가 없습니다."));
     }
 
-    // 비밀번호 찾기 처리
+    // 비밀번호 찾기 - 임시 비밀번호 전송
     @PostMapping("/findStudentPassword")
     public ResponseEntity<?> findStudentPassword(@RequestBody StudentDTO studentDTO) {
         Optional<StudentDTO> studentOptional = studentService.findStudentByStudentIdAndStudentNameAndPhoneNumber(studentDTO.getStudentId(), studentDTO.getStudentName(), studentDTO.getStudentPhoneNumber());
@@ -77,6 +94,20 @@ public class StudentController {
         MailDTO dto = mailService.createMailAndChangePassword(studentOptional.get().getStudentEmail(), studentOptional.get().getId());
         mailService.mailSend(dto);
         return ResponseEntity.ok("임시 비밀번호가 이메일로 발송되었습니다.");
+    }
+
+    // 마이페이지 사용자 정보 조회
+    @GetMapping("/info")
+    public ResponseEntity<?> getStudentInfo(HttpSession session) {
+        Long studentId = (Long) session.getAttribute("loginId");
+        if (studentId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+        StudentDTO studentDTO = studentService.findStudentById(studentId);
+        if (studentDTO == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("학생 정보를 찾을 수 없습니다.");
+        }
+        return ResponseEntity.ok(studentDTO);
     }
 
     // 사용자 정보 수정
@@ -105,7 +136,7 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일이 선택되지 않았습니다.");
         }
         try {
-            String imageUrl = fileStorageService.uploadFile(file); // 파일 업로드 서비스 호출
+            String imageUrl = fileStorageService.uploadFile(file, "profile_pictures"); // 폴더 경로 지정
             StudentDTO studentDTO = studentService.findStudentById(studentId);
 
             if (studentDTO == null) {
@@ -129,7 +160,17 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
         }
 
-        if (!studentDTO.getStudentPassword().equals(studentDTO.getCurrentPassword())) {
+        if (studentDTO.getCurrentPassword() == null || studentDTO.getNewPassword() == null || studentDTO.getConfirmNewPassword() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("모든 필드를 입력해 주세요.");
+        }
+
+        // DB에서 사용자 정보 가져오기
+        StudentEntity studentEntity = studentRepository.findById(studentId)
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 사용자 ID입니다."));
+
+        // 현재 비밀번호가 일치하는지 확인 (복호화 후 비교)
+        String decryptedPassword = encDecService.decrypt(studentEntity.getStudentPassword());
+        if (!studentDTO.getCurrentPassword().equals(decryptedPassword)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("현재 비밀번호가 일치하지 않습니다.");
         }
 
@@ -142,6 +183,29 @@ public class StudentController {
         }
 
         studentService.updateStudentPassword(studentId, studentDTO.getNewPassword());
+        session.invalidate(); // 세션 무효화하여 로그아웃 처리
         return ResponseEntity.ok("비밀번호가 변경되었습니다.");
+    }
+
+    // 로그아웃 기능
+    @GetMapping("/logout")
+    public ResponseEntity<?> logout(HttpSession session) {
+        session.invalidate(); // 세션 무효화하여 로그아웃 처리
+        return ResponseEntity.ok("로그아웃 성공");
+    }
+
+
+    // 학생이 수강하는 강의 리스트 출력 (강의시간 포함)
+    @GetMapping("/{studentId}/lecture")
+    public ResponseEntity<?> showLectureAndTimeList(@PathVariable Long studentId) {
+        List<LectureDTO> lectureDTOList = lectureService.getLectureAndTimeListByStudent(studentId);
+        return ResponseEntity.ok(lectureDTOList);
+    }
+
+    // 학생 AI 대학-학과 추천
+    @GetMapping("/recommend/univ")
+    public ResponseEntity<?> recommendUniv(@RequestParam String major_subject, @RequestParam int n_recommendations) {
+        List<RecommendDTO> recommendList = recommentService.recommend(major_subject, n_recommendations);
+        return ResponseEntity.ok(recommendList);
     }
 }

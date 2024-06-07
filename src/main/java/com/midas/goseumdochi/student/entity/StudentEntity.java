@@ -1,6 +1,7 @@
 package com.midas.goseumdochi.student.entity;
 
 import com.midas.goseumdochi.academy.entity.StudentAcademyEntity;
+import com.midas.goseumdochi.community.entity.PostEntity;
 import com.midas.goseumdochi.student.Dto.StudentDTO;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -42,8 +43,13 @@ public class StudentEntity {
     @Column
     private String profilePictureUrl;
 
+    // 학원과 매핑
     @OneToMany(mappedBy = "studentEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StudentAcademyEntity> studentAcademyEntityList;
+
+    // 강의와 매핑
+    @OneToMany(mappedBy = "studentEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RegistLectureEntity> registLectureEntityList;
 
     public static StudentEntity toStudent(StudentDTO studentDTO) {
         return StudentEntity.builder()

@@ -29,6 +29,25 @@
     margin-left:984px;
 }
 
+#user_info_mypage > input {
+    width: 450px;
+    height: 70px;
+    margin: auto;
+    margin-bottom: 25px;
+    font-size: 32px;
+    color: #000000;
+    box-shadow: none;
+    border: 1px solid #ccc;
+    outline: none;
+    text-align: left;
+    padding-left: 10px;
+}
+
+#userphoto_mypage > input[type="file"] {
+    display: block;
+    margin: 10px auto;
+}
+
 #mypage-menu>#buttons_mypage{
     display: block;
     width: 1358px;
@@ -86,16 +105,16 @@ input>#notice_btn{
 #contents_mypage>#contents1_mypage{
     position:relative;
     display: block;
-    width: 1000px;
-    height: 400px;
+    width: 1100px;
+    height: 500px;
     margin: auto;
     margin-top: 130px;
 }
 
 #contents1_mypage>#info_mypage{
     float:left;
-    width: 740px;
-    height: 400px;
+    width: 840px;
+    height: 500px;
 }
 
 #info_mypage>#category_info_mypage{
@@ -106,7 +125,7 @@ input>#notice_btn{
 
 #category_info_mypage>div{
     float:left;
-    width: 200px;
+    width: 250px;
     height: 100px;
     margin:auto;
     
@@ -119,19 +138,19 @@ input>#notice_btn{
 }
 
 #info_mypage>#user_info_mypage{
-    float: left;
-    width: 540px;
-    height: 400px;
+    float: right;
+    width: 490px;
+    height: 500px;
 }
 
 #user_info_mypage>#blank{
     float: left;
-    width: 100px;
-    height: 400px;
+    width: 10px;
+    height: 500px;
 }
 
 #user_info_mypage>div{
-    width: 440px;
+    width: 490px;
     height: 100px;
     margin:auto;
     
@@ -146,7 +165,7 @@ input>#notice_btn{
 #contents1_mypage>#userphoto_mypage{
     float:left;
     width: 260px;
-    height: 400px;
+    height: 500px;
 }
 
 #userphoto_mypage>#photo{
@@ -154,6 +173,10 @@ input>#notice_btn{
     height: 350px;
     background-color:#EDEDED;
     margin:auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     font-size: 32px;
     color:#000000;
@@ -161,6 +184,12 @@ input>#notice_btn{
     border:none;
     outline: none;
     text-align: center;
+}
+
+.profile-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
 }
 #photo>#header_photo{
     width:260px;
@@ -175,9 +204,32 @@ input>#notice_btn{
     text-align: center;
 }
 
+#userphoto_mypage>button{
+    display:block;
+    margin:auto;
+    margin-top:5px;
+    font-size:20px;
+    border:none;
+}
+
+#mypage-menu>#b_mypage{
+    width:1358px;
+    height:30px;
+}
+
+#b_mypage>button{
+    float:left;
+    font-size:20px;
+    margin-left:10px;
+}
+
+#b_mypage>#change_btn{
+    margin-left:1100px;
+}
+
 #mypage-menu>#footer_mypage{
     width: 1358px;
-    height: 60px;
+    height: 30px;
     margin-top:90px;
 }
 
@@ -187,4 +239,43 @@ input>#notice_btn{
     color:#838383;
     text-align: center;
     margin:auto;
+}
+
+#info_mypage>#ChangePassWord_mypage{
+    width: 840px;
+    height: 500px;
+}
+
+#ChangePassWord_mypage>h2{
+    margin-left:120px;
+    margin-bottom:40px;
+}
+
+#ChangePassWord_mypage>input{
+    margin-left:120px;
+    width: 500px;
+    height: 50px;
+    margin-top: 30px;
+}
+
+#userphoto_mypage button {
+    display: block;
+    margin: auto;
+    margin-top: 5px;
+    font-size: 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding-bottom: 5px;
+}
+
+#userphoto_mypage button.selected {
+    border-bottom: 2px solid black;
+}
+
+#userphoto_mypage hr {
+    margin: 10px auto;
+    width: 80%;
+    border: 0;
+    border-top: 1px solid #ddd;
 }

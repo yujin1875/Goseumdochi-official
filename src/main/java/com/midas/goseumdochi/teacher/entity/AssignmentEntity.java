@@ -25,4 +25,9 @@ public class AssignmentEntity {
     private Integer points;
     private String examType;  // "Online" 또는 "Offline"
     private String attachmentPath;
+
+    // 강의와 N:1 매핑
+    @ManyToOne
+    @JoinColumn(name = "lecture_id")
+    private LectureEntity lectureEntity;
 }

@@ -14,7 +14,7 @@ public class DirectorNoticeEntity {
     @Id
     @Column(name = "nNum")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int num;
+    private Long num;
 
     @Column(name = "nTitle", length = 25)
     private String title;
@@ -25,15 +25,17 @@ public class DirectorNoticeEntity {
     @Column(name = "nRegdate")
     private Date regdate;
 
-    @Column(name = "nWriter")
-    private String writer;
+    // 원장과 N:1 연결
+    @ManyToOne
+    @JoinColumn(name = "director_id")
+    private DirectorEntity directorEntity;
 
     @Builder
-    public DirectorNoticeEntity(int num, String title, String content, Date regdate, String writer) {
+    public DirectorNoticeEntity(Long num, String title, String content, Date regdate, DirectorEntity directorEntity) {
         this.num = num;
         this.title = title;
         this.content = content;
         this.regdate = regdate;
-        this.writer = writer;
+        this.directorEntity = directorEntity;
     }
 }

@@ -22,4 +22,9 @@ public class LectureMaterialEntity {
     private String author;  // 글쓴이
     private LocalDateTime createdAt;    // 생성일시
     private String attachmentPath;  // 첨부파일 경로
+
+    // 강의와 N:1 매핑
+    @ManyToOne
+    @JoinColumn(name = "lecture_id")
+    private LectureEntity lectureEntity;
 }

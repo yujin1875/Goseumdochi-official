@@ -1,9 +1,15 @@
 package com.midas.goseumdochi.teacher.service;
 
 import com.midas.goseumdochi.teacher.dto.LectureMaterialDTO;
+import com.midas.goseumdochi.teacher.entity.LectureEntity;
 import com.midas.goseumdochi.teacher.entity.LectureMaterialEntity;
 import com.midas.goseumdochi.teacher.repository.LectureMaterialRepository;
+import com.midas.goseumdochi.teacher.repository.LectureRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,6 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class LectureMaterialService {
     private final LectureMaterialRepository lectureMaterialRepository;
+    private final LectureRepository lectureRepository;
 
     // 새로운 강의 자료를 저장
     public void saveLectureMaterial(LectureMaterialDTO lectureMaterialDTO) {
@@ -23,13 +30,14 @@ public class LectureMaterialService {
                 .author(lectureMaterialDTO.getAuthor())
                 .createdAt(LocalDateTime.now()) // 현재 시각을 설정
                 .attachmentPath(lectureMaterialDTO.getAttachmentPath())
+                .lectureEntity(lectureRepository.findById(lectureMaterialDTO.getLectureId()).get()) // fk
                 .build();
         lectureMaterialRepository.save(entity);
     }
 
-    // 모든 강의 자료를 조회
-    public List<LectureMaterialDTO> getAllLectureMaterials() {
-        return lectureMaterialRepository.findAll().stream().map(entity -> new LectureMaterialDTO(
+    // 특정 강의의 모든 자료를 조회
+    public List<LectureMaterialDTO> getLectureMaterialsByLectureId(Long lectureId) {
+        return lectureMaterialRepository.findAllByLectureId(lectureId).stream().map(entity -> new LectureMaterialDTO(
                 entity.getId(),
                 entity.getTitle(),
                 entity.getContent(),
@@ -52,6 +60,19 @@ public class LectureMaterialService {
         );
     }
 
+    // 특정 강의의 모든 강의 자료를 조회
+    public List<LectureMaterialDTO> getMaterialsByLectureId(Long lectureId) {
+        List<LectureMaterialEntity> entities = lectureMaterialRepository.findAllByLectureId(lectureId);
+        return entities.stream().map(entity -> new LectureMaterialDTO(
+                entity.getId(),
+                entity.getTitle(),
+                entity.getContent(),
+                entity.getAuthor(),
+                entity.getCreatedAt(),
+                entity.getAttachmentPath()
+        )).collect(Collectors.toList());
+    }
+
     // 특정 강의 자료를 업데이트
     public void updateLectureMaterial(Long id, LectureMaterialDTO lectureMaterialDTO) {
         LectureMaterialEntity entity = lectureMaterialRepository.findById(id).orElseThrow(() -> new RuntimeException("첨부파일이 존재하지 않습니다."));
@@ -69,4 +90,17 @@ public class LectureMaterialService {
         lectureMaterialRepository.deleteById(id);
     }
 
+    // 강의 자료 페이징
+    public Page<LectureMaterialDTO> pagingMaterial(Long lectureId, Pageable pageable) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = 3;
+        Page<LectureMaterialEntity> lectureEntityPage = lectureMaterialRepository.findAllByLectureId(lectureId,
+                PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+
+        Page<LectureMaterialDTO> lectureMaterialDTOPage = lectureEntityPage.map(entity -> new LectureMaterialDTO(
+                entity.getId(), entity.getTitle(), entity.getContent(), entity.getAuthor(), entity.getCreatedAt(),
+                entity.getAttachmentPath()));
+
+        return lectureMaterialDTOPage;
+    }
 }
