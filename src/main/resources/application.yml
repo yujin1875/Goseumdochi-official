@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://34.64.36.95:3306/db_midas?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://34.69.81.83:3306/db_midas?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
     username: midas
     password: midas
     hikari:
