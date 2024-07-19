@@ -14,7 +14,7 @@ import java.util.UUID;
 @Service
 public class FileStorageService {
 
-    private final String bucketName = "sprofile"; // GCS 버킷 이름
+    private final String bucketName = "goseumdochi_files"; // GCS 버킷 이름
     private final Storage storage = StorageOptions.getDefaultInstance().getService();
 
     // 파일 유형별로 폴더를 구분하여 파일을 업로드

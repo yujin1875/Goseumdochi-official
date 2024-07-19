@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -29,6 +28,9 @@ public class PostEntity {
     @Column(nullable = false)
     private LocalDateTime createDate;
 
+    @Column(nullable = false)
+    private LocalDateTime updateDate;
+
     @Column(nullable = false, columnDefinition = "integer default 0")
     private int views;
 
@@ -40,15 +42,22 @@ public class PostEntity {
     private StudentEntity writer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", nullable = false) // 디폴트값 1
+    @JoinColumn(name = "category_id", nullable = false)
     private CategoryEntity category;
 
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean isModified;
 
     @PrePersist
-    protected void onCreateDate() {
-        this.createDate = LocalDateTime.now();
+    protected void onCreate() {
+        LocalDateTime now = LocalDateTime.now();
+        this.createDate = now;
+        this.updateDate = now;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updateDate = LocalDateTime.now();
     }
 
     // 조회수 1 증가시키는 함수
@@ -59,6 +68,13 @@ public class PostEntity {
     // 좋아요 1 증가시키는 함수
     public void incrementLikes() {
         this.likeCount++;
+    }
+
+    // 좋아요 1 감소시키는 함수
+    public void decrementLikes() {
+        if (this.likeCount > 0) {
+            this.likeCount--;
+        }
     }
 
     // 게시글 수정 여부 설정 함수
