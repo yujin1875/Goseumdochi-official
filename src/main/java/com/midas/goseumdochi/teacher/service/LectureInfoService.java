@@ -17,7 +17,7 @@ public class LectureInfoService {
     public LectureDTO getLectureInfo(Long lectureId) {
         Optional<LectureEntity> lectureEntityOptional = lectureRepository.findById(lectureId);
         if (lectureEntityOptional.isPresent()) {
-            return LectureDTO.toLectureDTO(lectureEntityOptional.get());
+            return LectureDTO.toLectureAndTimeDTO(lectureEntityOptional.get());
         } else {
             throw new RuntimeException("강의를 찾을 수 없습니다.");
         }

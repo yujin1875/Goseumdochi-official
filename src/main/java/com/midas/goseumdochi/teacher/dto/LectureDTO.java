@@ -36,6 +36,7 @@ public class LectureDTO {
         lectureDTO.setLectureLocation(lectureEntity.getLectureLocation());
         lectureDTO.setLectureDetails(lectureEntity.getLectureDetails());
         lectureDTO.setLectureWeeklyPlan(lectureEntity.getLectureWeeklyPlan());
+        lectureDTO.setLectureTimeDTOListToEntity(lectureEntity.getLectureTimeEntityList());
         return lectureDTO;
     }
 
@@ -50,8 +51,9 @@ public class LectureDTO {
     // 강의시간 엔터티 list -> 강의시간 dto list (강의시간을 사용할 때만 set하기 위해)
     public void setLectureTimeDTOListToEntity(List<LectureTimeEntity> lectureTimeEntityList) {
         List<LectureTimeDTO> lectureTimeDTOList = new ArrayList<>();
-        for (LectureTimeEntity entity : lectureTimeEntityList)
+        for (LectureTimeEntity entity : lectureTimeEntityList) {
             lectureTimeDTOList.add(LectureTimeDTO.toLectureTimeDTO(entity));
+        }
         this.setLectureTimeDTOList(lectureTimeDTOList);
     }
 }

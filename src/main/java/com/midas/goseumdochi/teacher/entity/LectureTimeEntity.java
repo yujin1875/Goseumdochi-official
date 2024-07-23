@@ -41,14 +41,12 @@ public class LectureTimeEntity {
     }
 
     public static LectureTimeEntity toLectureTimeEntity(LectureTimeDTO lectureTimeDTO, LectureEntity lectureEntity) {
-        LectureTimeEntity lectureTimeEntity = LectureTimeEntity.builder()
+        return LectureTimeEntity.builder()
                 .id(lectureTimeDTO.getId())
                 .day(lectureTimeDTO.getDay())
                 .startTime(lectureTimeDTO.getStartTime())
                 .endTime(lectureTimeDTO.getEndTime())
                 .lectureEntity(lectureEntity)
                 .build();
-
-        return lectureTimeEntity;
     }
 }

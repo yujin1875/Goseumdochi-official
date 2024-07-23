@@ -424,7 +424,11 @@ function App26() {
                                     </div>
                                     <div id="lecturetime">
                                         <h2>강의 시간</h2>
-                                        <div id="infobox_lecturetime">{lectureInfo.lectureTime}</div>
+                                        <div id="infobox_lecturetime">
+                                            {lectureInfo.lectureTimeDTOList && lectureInfo.lectureTimeDTOList.map((time, index) => (
+                                                <div key={index}>{time.day}: {time.startTime} - {time.endTime}</div>
+                                            ))}
+                                        </div>
                                     </div>
                                     <div id="lectureplace">
                                         <h2>강의 장소</h2>
@@ -461,15 +465,51 @@ function App26() {
                                 <div id="infobox">
                                     <div id="subjecttitle">
                                         <h2>과목명</h2>
-                                        <input type="text" id="Homerevise_subjecttitle" value={lectureInfo.name || ''} onChange={(e) => setLectureInfo({ ...lectureInfo, name: e.target.value })} />
+                                        <input type="text" id="Homerevise_subjecttitle" value={lectureInfo.name || ''}
+                                               onChange={(e) => setLectureInfo({
+                                                   ...lectureInfo,
+                                                   name: e.target.value
+                                               })}/>
                                     </div>
                                     <div id="lecturetime">
                                         <h2>강의 시간</h2>
-                                        <input type="text" id="Homerevise_lecturetime" value={lectureInfo.lectureTime || ''} onChange={(e) => setLectureInfo({ ...lectureInfo, lectureTime: e.target.value })} />
+                                        {lectureInfo.lectureTimeDTOList && lectureInfo.lectureTimeDTOList.map((time, index) => (
+                                            <div key={index}>
+                                                <input type="text" value={time.day} onChange={(e) => {
+                                                    const newLectureTimeDTOList = [...lectureInfo.lectureTimeDTOList];
+                                                    newLectureTimeDTOList[index].day = e.target.value;
+                                                    setLectureInfo({
+                                                        ...lectureInfo,
+                                                        lectureTimeDTOList: newLectureTimeDTOList
+                                                    });
+                                                }}/>
+                                                <input type="text" value={time.startTime} onChange={(e) => {
+                                                    const newLectureTimeDTOList = [...lectureInfo.lectureTimeDTOList];
+                                                    newLectureTimeDTOList[index].startTime = e.target.value;
+                                                    setLectureInfo({
+                                                        ...lectureInfo,
+                                                        lectureTimeDTOList: newLectureTimeDTOList
+                                                    });
+                                                }}/>
+                                                <input type="text" value={time.endTime} onChange={(e) => {
+                                                    const newLectureTimeDTOList = [...lectureInfo.lectureTimeDTOList];
+                                                    newLectureTimeDTOList[index].endTime = e.target.value;
+                                                    setLectureInfo({
+                                                        ...lectureInfo,
+                                                        lectureTimeDTOList: newLectureTimeDTOList
+                                                    });
+                                                }}/>
+                                            </div>
+                                        ))}
                                     </div>
                                     <div id="lectureplace">
                                         <h2>강의 장소</h2>
-                                        <input type="text" id="Homerevise_lectureplace" value={lectureInfo.lectureLocation || ''} onChange={(e) => setLectureInfo({ ...lectureInfo, lectureLocation: e.target.value })} />
+                                        <input type="text" id="Homerevise_lectureplace"
+                                               value={lectureInfo.lectureLocation || ''}
+                                               onChange={(e) => setLectureInfo({
+                                                   ...lectureInfo,
+                                                   lectureLocation: e.target.value
+                                               })}/>
                                     </div>
                                     <div id="teacher">
                                         <h2>담당 선생님</h2>
@@ -483,11 +523,19 @@ function App26() {
                             </div>
                             <div id="subcontent">
                                 <h2>세부내용</h2>
-                                <input type="text" id="Homerevise_subcontent" value={lectureInfo.lectureDetails || ''} onChange={(e) => setLectureInfo({ ...lectureInfo, lectureDetails: e.target.value })} />
+                                <input type="text" id="Homerevise_subcontent" value={lectureInfo.lectureDetails || ''}
+                                       onChange={(e) => setLectureInfo({
+                                           ...lectureInfo,
+                                           lectureDetails: e.target.value
+                                       })}/>
                             </div>
                             <div id="weekplan">
                                 <h2>주별계획</h2>
-                                <input type="text" id="Homerevise_weekplan" value={lectureInfo.lectureWeeklyPlan || ''} onChange={(e) => setLectureInfo({ ...lectureInfo, lectureWeeklyPlan: e.target.value })} />
+                                <input type="text" id="Homerevise_weekplan" value={lectureInfo.lectureWeeklyPlan || ''}
+                                       onChange={(e) => setLectureInfo({
+                                           ...lectureInfo,
+                                           lectureWeeklyPlan: e.target.value
+                                       })}/>
                             </div>
                         </div>
                     </>
