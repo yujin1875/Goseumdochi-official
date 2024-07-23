@@ -240,14 +240,17 @@ public class TeacherController {
     @PutMapping("/assignment/{id}")
     public ResponseEntity<?> updateAssignment(@PathVariable Long id,
                                               @RequestPart("assignment") AssignmentDTO assignmentDTO,
-                                              @RequestPart("file") MultipartFile file) throws IOException {
-        String fileUrl = handleFileUpload(file, "assignments");
-        assignmentDTO.setAttachmentPath(fileUrl);
+                                              @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+        if (file != null && !file.isEmpty()) {
+            String fileUrl = handleFileUpload(file, "assignments");
+            assignmentDTO.setAttachmentPath(fileUrl);
+        }
 
         assignmentService.updateAssignment(id, assignmentDTO);
 
         return ResponseEntity.ok("과제가 성공적으로 업데이트되었습니다.");
     }
+
 
     // 과제 삭제
     @DeleteMapping("/assignment/{id}")

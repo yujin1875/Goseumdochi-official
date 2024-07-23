@@ -144,31 +144,40 @@ function App26() {
     };
 
     const handleUpdateAssignment = async () => {
+        const openDate = new Date(document.getElementById('Assignmentrevise_opendate').value).toISOString().slice(0, 19);
+        const closeDate = new Date(document.getElementById('Assignmentrevise_closedate').value).toISOString().slice(0, 19);
+
+        const assignmentDTO = {
+            id: currentAssignment?.id,
+            title,
+            content,
+            points,
+            createdAt: openDate,
+            deadline: closeDate,
+            lectureId // lectureId 추가
+        };
+
         const formData = new FormData();
-        formData.append('assignment', new Blob([JSON.stringify({ title, content, points })], { type: "application/json" }));
+        formData.append('assignment', new Blob([JSON.stringify(assignmentDTO)], { type: "application/json" }));
         if (file) {
             formData.append('file', file);
         }
+
         try {
-            if (currentAssignment) {
-                await axios.put(`/api/teacher/assignment/${currentAssignment.id}`, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-            } else {
-                await axios.post(`/api/teacher/lecture/${lectureId}/assignment/new`, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-            }
+            await axios.put(`/api/teacher/assignment/${currentAssignment.id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
             showDivAssignment();
             fetchAssignments();
         } catch (error) {
             console.error("There was an error updating the assignment!", error);
         }
     };
+
+
+
 
     const handleDeleteMaterial = async (id) => {
         try {
@@ -245,7 +254,16 @@ function App26() {
             return;
         }
 
-        const assignmentDTO = { title, content, points };
+        const openDate = new Date(document.getElementById('Assignmentadd_opendate').value).toISOString().slice(0, 19);
+        const closeDate = new Date(document.getElementById('Assignmentadd_closedate').value).toISOString().slice(0, 19);
+
+        const assignmentDTO = {
+            title,
+            content,
+            points,
+            createdAt: openDate,
+            deadline: closeDate
+        };
 
         const formData = new FormData();
         formData.append('assignment', new Blob([JSON.stringify(assignmentDTO)], { type: "application/json" }));
@@ -274,6 +292,8 @@ function App26() {
             alert("과제 생성에 실패했습니다. 다시 시도하세요.");
         }
     };
+
+
 
     const handleSaveNotice = async () => {
         const formData = new FormData();
@@ -705,9 +725,9 @@ function App26() {
                         </div>
                         <div id="date_Assignmentrevise">
                             <h2 id="open">공개일</h2>
-                            <input type="date" id="Assignmentrevise_opendate" />
+                            <input type="date" id="Assignmentrevise_opendate"/>
                             <h2 id="close">마감일</h2>
-                            <input type="date" id="Assignmentrevise_closedate" />
+                            <input type="date" id="Assignmentrevise_closedate"/>
                         </div>
                         <div id="score_Assignmentrevise">
                             <h2>배점</h2>

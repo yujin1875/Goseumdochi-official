@@ -1,5 +1,6 @@
 package com.midas.goseumdochi.teacher.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -14,8 +15,13 @@ public class AssignmentDTO {
     private String title;   // 제목
     private String content; // 내용
     private String author;  // 작성자
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;    // 공개일
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime deadline;     // 마감일
+
     private Integer points;   // 배점
     private String examType;  // 제출방식 "Online" 또는 "Offline"
     private String attachmentPath;  // 첨부파일
