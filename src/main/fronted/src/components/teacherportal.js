@@ -436,7 +436,7 @@ function App26() {
                                     </div>
                                     <div id="teacher">
                                         <h2>담당 선생님</h2>
-                                        <div id="infobox_teacher">{lectureInfo.teacher}</div>
+                                        <div id="infobox_teacher">{lectureInfo.teacherName}</div>
                                     </div>
                                 </div>
                             </div>
@@ -513,10 +513,10 @@ function App26() {
                                     </div>
                                     <div id="teacher">
                                         <h2>담당 선생님</h2>
-                                        <input type="text" id="Homerevise_teacher" value={lectureInfo.teacher || ''}
+                                        <input type="text" id="Homerevise_teacher" value={lectureInfo.teacherName || ''}
                                                onChange={(e) => setLectureInfo({
                                                    ...lectureInfo,
-                                                   teacher: e.target.value
+                                                   teacherName: e.target.value
                                                })}/>
                                     </div>
                                 </div>

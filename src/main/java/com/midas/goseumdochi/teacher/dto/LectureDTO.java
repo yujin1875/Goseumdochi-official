@@ -24,6 +24,7 @@ public class LectureDTO {
     private String lectureLocation; // 강의장소
     private String lectureDetails;  // 세부내용
     private String lectureWeeklyPlan;     // 주별계획
+    private String teacherName;
 
     public static LectureDTO toLectureDTO(LectureEntity lectureEntity) {
         LectureDTO lectureDTO = new LectureDTO();
@@ -37,6 +38,7 @@ public class LectureDTO {
         lectureDTO.setLectureDetails(lectureEntity.getLectureDetails());
         lectureDTO.setLectureWeeklyPlan(lectureEntity.getLectureWeeklyPlan());
         lectureDTO.setLectureTimeDTOListToEntity(lectureEntity.getLectureTimeEntityList());
+        lectureDTO.setTeacherName(lectureEntity.getTeacherEntity().getName());
         return lectureDTO;
     }
 
