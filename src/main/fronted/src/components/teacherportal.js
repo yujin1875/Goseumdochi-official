@@ -297,7 +297,7 @@ function App26() {
 
     const handleSaveNotice = async () => {
         const formData = new FormData();
-        formData.append('notice', new Blob([JSON.stringify({ title, content })], { type: "application/json" }));
+        formData.append('notice', new Blob([JSON.stringify({ title, content, author: user.name })], { type: "application/json" }));
         if (file) {
             formData.append('file', file);
         }
@@ -311,7 +311,7 @@ function App26() {
                     }
                 });
             } else {
-                await axios.post(`/api/teacher/subject-notice/new`, formData, {
+                await axios.post(`/api/teacher/lecture/${lectureId}/subject-notice/new`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -570,12 +570,14 @@ function App26() {
                             <div id="cate_Subject">
                                 <div id="no">번호</div>
                                 <div id="title">제목</div>
+                                <div id="author">작성자</div>
                                 <div id="opendate">공개일</div>
                             </div>
                             {notices.map(notice => (
                                 <div key={notice.id} id="body_Subject">
                                     <div id="Sno">{notice.id}</div>
                                     <div id="Stitle" onClick={() => handleNoticeClick(notice.id)}>{notice.title}</div>
+                                    <div id="Sauthor">{notice.author}</div>
                                     <div id="Sopendate">{notice.createdAt}</div>
                                 </div>
                             ))}

@@ -281,24 +281,27 @@ public class TeacherController {
                                              @RequestParam("id") Long id) throws IOException {
 
         String fileUrl = handleFileUpload(file, "subject_notice");
+        TeacherDTO currentTeacher = teacherService.findById(id);
+
         subjectNoticeDTO.setCreatedAt(LocalDateTime.now());
-        subjectNoticeDTO.setLectureId(lectureId); // lectureId 변수를 경로 변수로 받음
+        subjectNoticeDTO.setLectureId(lectureId);
         subjectNoticeDTO.setAttachmentPath(fileUrl);
+        subjectNoticeDTO.setAuthor(currentTeacher.getName()); // 작성자 이름 설정
         subjectNoticeService.saveNotice(subjectNoticeDTO);
 
         return ResponseEntity.ok("새로운 공지사항이 생성되었습니다.");
     }
 
-
-
     // 과목 공지사항 수정
     @PutMapping("/subject-notice/{id}")
     public ResponseEntity<?> updateNotice(@PathVariable Long id,
                                           @RequestPart("notice") SubjectNoticeDTO subjectNoticeDTO,
-                                          @RequestPart("file") MultipartFile file) throws IOException {
+                                          @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
 
-        String fileUrl = handleFileUpload(file, "subject_notice");
-        subjectNoticeDTO.setAttachmentPath(fileUrl);
+        if (file != null && !file.isEmpty()) {
+            String fileUrl = handleFileUpload(file, "subject_notice");
+            subjectNoticeDTO.setAttachmentPath(fileUrl);
+        }
         subjectNoticeService.updateNotice(id, subjectNoticeDTO);
         return ResponseEntity.ok("공지사항이 성공적으로 업데이트되었습니다.");
     }

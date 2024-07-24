@@ -18,6 +18,7 @@ public class SubjectNoticeEntity {
     private String content;
     private String attachmentPath;
     private LocalDateTime createdAt;
+    private String author;
 
     // 강의와 N:1 매핑
     @ManyToOne

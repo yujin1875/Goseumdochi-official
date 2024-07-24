@@ -147,7 +147,7 @@ hr{
 
 #body_List>#body_no{
     float:left;
-    width:100px;
+    width:80px;
     height:50px;
     text-align:center;
     font-size:24px;
@@ -157,7 +157,7 @@ hr{
 
 #body_List>#body_title{
     float:left;
-    width:900px;
+    width:920px;
     height:50px;
     text-align:center;
     font-size:24px;
@@ -1098,12 +1098,22 @@ hr{
 
 #cate_Subject>#title{
     float:left;
-    width:1100px;
+    width:920px;
     height:50px;
     text-align:center;
     font-size:24px;
     margin:auto;
     margin-top:5px;
+}
+
+#cate_Subject>#author {
+    float: left;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    font-size: 24px;
+    margin: auto;
+    margin-top: 5px;
 }
 
 #cate_Subject>#opendate{
@@ -1136,12 +1146,22 @@ hr{
 
 #body_Subject>#Stitle{
     float:left;
-    width:1100px;
+    width:920px;
     height:50px;
     text-align:center;
     font-size:24px;
     margin:auto;
     margin-top:5px;
+}
+
+#body_Subject>#Sauthor {
+    float: left;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    font-size: 24px;
+    margin: auto;
+    margin-top: 5px;
 }
 
 #body_Subject>#Sopendate{
