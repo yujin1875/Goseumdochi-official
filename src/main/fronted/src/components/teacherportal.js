@@ -419,11 +419,12 @@ function App26() {
                     <li><a>평가관리</a></li>
                     <li><a>시험관리</a></li>
                     <li onClick={showDivSubject}><a>과목공지</a></li>
-                    <li><a>강의실 나가기</a></li>
+                    <li onClick={() => navigate('/teachermain', {state: {user: user}})}><a>강의실 나가기</a></li>
+
                 </ul>
             </div>
             <div id="teacherportal_header">
-                <div id="menu_btn" />
+            <div id="menu_btn" />
                 <div id="home_btn" />
                 <div id="title">
 
