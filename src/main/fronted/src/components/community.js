@@ -496,7 +496,7 @@ function App24() {
                     )}
                 </div>
                 {visibleDiv !== 'Mypage' && visibleDiv !== '글쓰기' && (
-                    <div id="footer_main">
+                    <div id="footer_community">
                         <a>문의 | midas2024.ver01@gmail.com</a>
                     </div>
                 )}

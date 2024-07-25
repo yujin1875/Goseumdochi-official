@@ -1,7 +1,7 @@
 #main-menu{
     display: block;
     width: 1358px;
-    height: 1080px;
+    height: 1507px;
     margin: auto;
     background-color: #FFFFFF;
     border-radius: 100px;
@@ -15,18 +15,20 @@
 
 #header_main>img{
     display:block;
+    float:left;
     width: 162px;
     height: 162px;
-    margin:auto;
+    margin-left:600px;
     object-fit: cover;
 }
 
 #header_main>#user_info{
     display:block;
+    float:left;
     width: 238px;
     height: 34px;
-    background-color: #646464;
-    margin-left:984px;
+    margin-top: 80px;
+    margin-left: 200px;
 }
 
 #main-menu>#buttons_main{
@@ -76,13 +78,113 @@
 #main-menu>#contents_main{
     display: block;
     width: 1358px;
-    height: 700px;
+    height: 1120px;
+}
+
+#contents_main>#contents1_main{
+    display:block;
+    float:left;
+    width:679px;
+    height:1120px;
+}
+
+#contents1_main>#main_calendar{
+    float:right;
+    width: 630px;
+    height: 735px;
+    background-color:#363636;
+    border-radius:15px;
+    color:white;
+}
+
+#main_calendar>h2{
+    margin-top:15px;
+    margin-left:30px;
+}
+
+#main_calendar>#content_calendar{
+    width:604px;
+    height:530px;
+    background-color:#FFFFFF;
+    margin:auto;
+    margin-top:15px;
+    border-radius:15px;
+}
+
+#main_calendar>#more_calendar{
+    width:604px;
+    height:109px;
+    background-color:#FFFFFF;
+    margin:20px auto;
+    border-radius:15px;
+}
+
+#contents1_main>#main_subject{
+    float:right;
+    width: 630px;
+    height: 333px;
+    background-color:#363636;
+    border-radius:15px;
+    margin-top:20px;
+}
+
+#contents_main>#contents2_main{
+    display:block;
+    float:left;
+    width:679px;
+    height:1120px;
+}
+
+#contents2_main>#main_schedule{
+    width:545px;
+    height:600px;
+    background-color:#363636;
+    margin:auto;
+    border-radius:15px;
+}
+
+#main_schedule>h2{
+    margin-left:30px;
+    color:white;
+}
+
+#main_schedule>#content_schedule{
+    width:519px;
+    height:517px;
+    background-color:#FFFFFF;
+    margin:auto;
+    margin-top:20px;
+    border-radius:15px;
+}
+
+#contents2_main>#main_submission{
+    width:545px;
+    height:468px;
+    background-color:#363636;
+    margin:auto;
+    margin-top:20px;
+    border-radius:15px;
+}
+
+#main_submission>h2{
+    margin-top:15px;
+    margin-left:30px;
+    color:white;
+}
+
+#main_submission>#content_submission{
+    width:519px;
+    height:385px;
+    background-color:#FFFFFF;
+    margin:auto;
+    margin-top:20px;
+    border-radius:15px;
 }
 
 #main-menu>#footer_main{
     display: block;
     width: 1358px;
-    height: 80px;
+    height: 60px;
 }
 
 #footer_main>a{

@@ -245,13 +245,13 @@ hr {
     height: 100px;
 }
 
-#main-menu>#footer_main{
+#main-menu>#footer_community{
     display: block;
     width: 1358px;
     height: 80px;
 }
 
-#footer_main>a{
+#footer_community>a{
     display:block;
     font-size: 16px;
     color:#838383;
