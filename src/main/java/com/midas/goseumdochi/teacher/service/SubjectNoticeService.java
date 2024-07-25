@@ -17,13 +17,13 @@ public class SubjectNoticeService {
     private final SubjectNoticeRepository subjectNoticeRepository;
     private final LectureRepository lectureRepository;
 
-    // 새로운 공지사항을 저장
     public void saveNotice(SubjectNoticeDTO subjectNoticeDTO) {
         SubjectNoticeEntity entity = new SubjectNoticeEntity();
         entity.setTitle(subjectNoticeDTO.getTitle());
         entity.setContent(subjectNoticeDTO.getContent());
         entity.setCreatedAt(LocalDateTime.now());
         entity.setAttachmentPath(subjectNoticeDTO.getAttachmentPath());
+        entity.setAuthor(subjectNoticeDTO.getAuthor()); // 작성자 설정
         entity.setLectureEntity(lectureRepository.findById(subjectNoticeDTO.getLectureId())
                 .orElseThrow(() -> new RuntimeException("강의가 존재하지 않습니다.")));
         subjectNoticeRepository.save(entity);
@@ -38,6 +38,7 @@ public class SubjectNoticeService {
                 entity.getContent(),
                 entity.getCreatedAt(),
                 entity.getAttachmentPath(),
+                entity.getAuthor(), // 작성자 설정
                 entity.getLectureEntity().getId()
         )).collect(Collectors.toList());
     }
@@ -52,6 +53,7 @@ public class SubjectNoticeService {
                 entity.getContent(),
                 entity.getCreatedAt(),
                 entity.getAttachmentPath(),
+                entity.getAuthor(), // 작성자 설정
                 entity.getLectureEntity().getId()
         );
     }
