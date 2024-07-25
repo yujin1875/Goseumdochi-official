@@ -283,6 +283,29 @@ function App24() {
         }
     };
 
+    const handleLikePost = async (postId) => {
+        try {
+            const studentInfo = await fetchStudentInfo();
+            await axios.post(`/api/posts/${postId}/like`, null, {
+                params: { studentId: studentInfo.id }
+            });
+            setPosts(posts.map(post => post.id === postId ? { ...post, likeCount: post.likeCount + 1 } : post));
+        } catch (error) {
+            console.error("Error liking post", error);
+        }
+    };
+
+    const handleUnlikePost = async (postId) => {
+        try {
+            const studentInfo = await fetchStudentInfo();
+            await axios.post(`/api/posts/${postId}/unlike`, null, {
+                params: { studentId: studentInfo.id }
+            });
+            setPosts(posts.map(post => post.id === postId ? { ...post, likeCount: post.likeCount - 1 } : post));
+        } catch (error) {
+            console.error("Error unliking post", error);
+        }
+    };
 
 
     return (
@@ -372,18 +395,25 @@ function App24() {
                         <div id="detail">
                             {posts.map(post => {
                                 if (post.id === selectedPostId) {
+                                    const hasLiked = likedPosts.some(likedPost => likedPost.id === post.id);
                                     return (
                                         <div key={post.id}>
                                             <h2>{post.title}</h2>
                                             <p>{post.content}</p>
                                             <p>작성자: 익명</p>
                                             <p>작성일: {post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</p>
+                                            <div>
+                                                <button onClick={() => hasLiked ? handleUnlikePost(post.id) : handleLikePost(post.id)}>
+                                                    {hasLiked ? "좋아요 취소" : "좋아요"}
+                                                </button>
+                                                <span>{post.likeCount} 좋아요</span>
+                                            </div>
                                             <textarea value={newComment} onChange={handleCommentChange} placeholder="댓글을 입력하세요"></textarea>
                                             <button onClick={submitComment}>작성</button>
                                             <h3>댓글</h3>
                                             <ul>
                                                 {comments.map(comment => (
-                                                    <p key={comment.id}>익명{/*comment.writerId*/}: {comment.text}</p>
+                                                    <p key={comment.id}>익명: {comment.text}</p>
                                                 ))}
                                             </ul>
                                         </div>
@@ -393,6 +423,7 @@ function App24() {
                             <button onClick={() => setVisibleDiv(previousDiv)}>이전</button>
                         </div>
                     )}
+
 
 
                     {visibleDiv === '자유' && (
