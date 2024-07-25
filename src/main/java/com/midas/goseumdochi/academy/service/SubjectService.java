@@ -49,4 +49,39 @@ public class SubjectService {
 
         return subjectDTOList;
     }
+
+    // 과목 찾기
+    public SubjectDTO findById(Long subjectId) {
+        Optional<SubjectEntity> subjectEntity = subjectRepository.findById(subjectId);
+
+        if(subjectEntity.isEmpty())
+            return null;
+
+        return SubjectDTO.toSubjectDTO(subjectEntity.get());
+    }
+
+    // 과목 수정 (중복추가해야함)
+    public SubjectDTO update(Long subjectId, String inputName) {
+        SubjectEntity subjectEntity = subjectRepository.findById(subjectId).get();
+
+        // 이름 수정
+        SubjectDTO updateSubjectDTO = new SubjectDTO(subjectEntity.getId(), inputName, subjectEntity.getAcademyEntity().getId());
+        SubjectEntity updateSubjectEntity = SubjectEntity.toSubjectEntity(updateSubjectDTO, subjectEntity.getAcademyEntity());
+        subjectRepository.save(updateSubjectEntity); // 수정하여 저장
+
+        return updateSubjectDTO;
+    }
+
+    // 과목 삭제
+    public boolean delete(Long subjectId) {
+        Optional<SubjectEntity> subjectEntity = subjectRepository.findById(subjectId);
+
+        if(subjectEntity.isEmpty()) // 삭제 실패
+            return false;
+
+        // 삭제 성공
+        subjectRepository.deleteById(subjectId);
+        return true;
+    }
+
 }
