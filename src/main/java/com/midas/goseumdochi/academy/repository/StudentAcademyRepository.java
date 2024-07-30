@@ -17,4 +17,6 @@ public interface StudentAcademyRepository extends JpaRepository<StudentAcademyEn
 
     @Query("SELECT sa FROM StudentAcademyEntity sa WHERE sa.studentEntity.id = :studentId and sa.academyEntity.id = :academyId")
     Optional<StudentAcademyEntity> findByStudentIdAndAcademyId(@Param("studentId") Long studentId, @Param("academyId") Long academyId);
+
+    List<StudentAcademyEntity> findByStudentEntityId(Long studentId);
 }

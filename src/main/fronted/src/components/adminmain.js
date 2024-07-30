@@ -5,17 +5,30 @@ function App18() {
     const [adminInfo, setAdminInfo] = useState(null);
 
     useEffect(() => {
-        fetch('/api/admin/adminInfo')
+        fetch('/api/admin/adminInfo', {
+            credentials: 'include' // 세션 쿠키를 포함하여 요청
+        })
             .then(response => response.json())
             .then(data => setAdminInfo(data))
             .catch(error => console.error('Error fetching admin info:', error));
     }, []);
 
     const handleLogout = () => {
-        // Clear adminInfo from session on logout
-        sessionStorage.removeItem('adminInfo');
-        // Redirect to home page after logout
-        window.location.href = '/';
+        fetch('/api/admin/logout', {
+            method: 'POST',
+            credentials: 'include' // 세션 쿠키를 포함하여 요청
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Clear adminInfo from session on logout
+                    sessionStorage.removeItem('adminInfo');
+                    // Redirect to home page after logout
+                    window.location.href = '/';
+                } else {
+                    console.error('Failed to logout');
+                }
+            })
+            .catch(error => console.error('Error:', error));
     }
 
     const GoAdminNotice = () => {
