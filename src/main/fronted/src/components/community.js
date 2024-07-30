@@ -110,15 +110,14 @@ function App24() {
         }
     };
 
-    const fetchAcademies = async () => {
-        try {
-            const academiesResponse = await axios.get('/api/academies');
-            const academiesData = academiesResponse.data;
-            setAcademies(academiesData);
-        } catch (error) {
-            console.error("Error fetching academies", error);
-        }
-    };
+    const fetchAcademies = async (studentId) => {
+            try {
+                const response = await axios.get(`/api/student/${studentId}/academies`);
+                setAcademies(response.data);
+            } catch (error) {
+                console.error("Error fetching academies", error);
+            }
+        };
 
     // 게시글 상세보기
     const handlePostClick = (postId) => {
@@ -359,9 +358,10 @@ function App24() {
                                         <select id="academy" onChange={handleInputChange}>
                                             <option value="">학원을 선택하세요</option>
                                             {academies.map((academy, index) => (
-                                                <option key={index} value={academy.id}>{academy}</option>
+                                                <option key={index} value={academy.id}>{academy.name}</option>
                                             ))}
                                         </select>
+
                                         <label>별점: </label>
                                         <p className="rating">
                                             {[...Array(5)].map((_, index) => {

@@ -14,7 +14,9 @@ function App19() {
                 });
 
                 if (response.ok) {
-                    const data = await response.json();
+                    let data = await response.json();
+                    // num을 id로 매핑
+                    data = data.map(notice => ({ ...notice, id: notice.num }));
                     setNotices(data);
                 } else {
                     console.error('Failed to fetch notices');
@@ -28,8 +30,10 @@ function App19() {
     }, []);
 
     const deleteNotice = async (id) => {
+        console.log('삭제된 게시글 아이디:', id); // ID 값을 로그로 출력
+
         if (!id) {
-            console.error('No ID provided for delete');
+            console.error('아이디 undefined');
             return;
         }
 
