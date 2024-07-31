@@ -1,0 +1,32 @@
+#header_badwordcheck{
+    width:100%;
+    height:200px;
+}
+hr{
+    border:0 ;
+}
+
+#body_badwordcheck{
+    width: 100%;
+    height: 800px;
+}
+
+#body_badwordcheck>#badwordcheckForm{
+    width: 979px;
+    height: 666px;
+    background-color: #FFFFFF;
+    margin: auto;
+}
+
+#footer_badwordcheck{
+    width:100%;
+    height:80px;
+}
+
+#footer_badwordcheck>a{
+    display:block;
+    font-size: 16px;
+    color:#838383;
+    text-align:center;
+    margin: 180px auto auto;
+}
