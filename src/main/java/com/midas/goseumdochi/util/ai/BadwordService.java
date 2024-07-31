@@ -3,10 +3,10 @@ package com.midas.goseumdochi.util.ai;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-@Controller
+@Service
 public class BadwordService {
 
     // 텍스트 입력 후 비방 목적의 글인지 판별

@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://34.64.36.95:3306/db_midas?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://34.69.81.83:3306/db_midas?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
     username: midas
     password: midas
     hikari:
@@ -11,9 +11,9 @@ spring:
       gcp:
         storage:
           credentials:
-            location: classpath:midas-424214-e642912c0adf.json
-      project-id: midas-424214
-      bucket: sprofile
+            location: classpath:midas-429814-32b3e9bfbb93.json
+      project-id: midas-429814
+      bucket: midas-429814-32b3e9bfbb93.json
 
   mail:
     host: smtp.naver.com

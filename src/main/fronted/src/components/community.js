@@ -16,6 +16,8 @@ function App24() {
     const [comments, setComments] = useState([]); // 댓글 데이터 저장
     const [newComment, setNewComment] = useState(""); // 새로운 댓글을 저장할 상태
 
+    const [selectedMenuItem, setSelectedMenuItem] = useState('자유');
+
     const [newPost, setNewPost] = useState({
         title: '',
         content: '',
@@ -90,7 +92,6 @@ function App24() {
         try {
             const myPostsResponse = await axios.get(`/api/mypage/posts/${newPost.writerId}`);
             setPosts(myPostsResponse.data);
-
             const likedPostsResponse = await axios.get(`/api/mypage/liked-posts/${newPost.writerId}`);
             setLikedPosts(likedPostsResponse.data);
             const commentedPostsResponse = await axios.get(`/api/mypage/commented-posts/${newPost.writerId}`);
@@ -152,23 +153,29 @@ function App24() {
     // 댓글을 작성하는 함수
     const submitComment = async () => {
         try {
-            // 새로운 댓글 생성 요청
+            const commentCheckResponse = await axios.get('/api/badword/check', {
+            params: { text: newComment },
+            });
+
+            console.log("comment: " + commentCheckResponse.data.label);
+
+            if (commentCheckResponse.data.label == 1) {
+                alert('댓글에 비속어가 포함되어 있습니다.');
+                return;
+            }
+
             const response = await axios.post('/api/comments/create', {
-                postId: selectedPostId, // 현재 선택된 게시물의 ID
+                postId: selectedPostId,
                 text: newComment,
-                writerId: newPost.writerId // 작성자 아이디
+                writerId: newPost.writerId
             });
             console.log('Comment created successfully', response.data);
-
-            // 댓글 작성 후 댓글 목록 다시 불러오기
             fetchCommentsByPostId(selectedPostId);
-
-            // 입력창 초기화
-            setNewComment("");
-        } catch (error) {
-            console.error('Error creating comment', error);
-        }
-    };
+            setNewComment('');
+            } catch (error) {
+                console.error('Error creating comment', error);
+            }
+        };
 
     const handleStarChange = (e) => {
         const selectedStar = parseInt(e.target.value);
@@ -190,8 +197,8 @@ function App24() {
 
     const showDivByCategory = (category) => {
         setVisibleDiv(category);
+        setSelectedMenuItem(category); // Set the selected menu item
     };
-
     const showDivReviews = () => {
         setVisibleDiv('학원리뷰');
     };
@@ -224,6 +231,21 @@ function App24() {
                 return;
             }
 
+            const titleCheckResponse = await axios.get('/api/badword/check', {
+                params: { text: newPost.title },
+            });
+            const contentCheckResponse = await axios.get('/api/badword/check', {
+                params: { text: newPost.content },
+            });
+
+            console.log("title: " + titleCheckResponse.data.label);
+            console.log("content: " + contentCheckResponse.data.label);
+
+            if (titleCheckResponse.data.label == 1 || contentCheckResponse.data.label == 1) {
+                alert('제목이나 내용에 비속어가 포함되어 있습니다.');
+                return;
+            }
+
             if (newPost.categoryId === '4') {
                 // 학원리뷰 테이블에 저장하는 요청
                 if(!newPost.academyId) { alert("학원 선택"); return; }
@@ -244,12 +266,46 @@ function App24() {
                 console.log('Post created successfully', response.data);
             }
 
-            setVisibleDiv(newPost.categoryId);
+            alert('게시글 등록 완료');
+
+            setNewPost({
+                title: '',
+                content: '',
+                categoryId: '',
+                star: null,
+                academyId: ''
+            });
+
+            setVisibleDiv('자유');
+
         } catch (error) {
             console.error('Error creating post', error);
         }
     };
 
+    const handleLikePost = async (postId) => {
+        try {
+            const studentInfo = await fetchStudentInfo();
+            await axios.post(`/api/posts/${postId}/like`, null, {
+                params: { studentId: studentInfo.id }
+            });
+            setPosts(posts.map(post => post.id === postId ? { ...post, likeCount: post.likeCount + 1 } : post));
+        } catch (error) {
+            console.error("Error liking post", error);
+        }
+    };
+
+    const handleUnlikePost = async (postId) => {
+        try {
+            const studentInfo = await fetchStudentInfo();
+            await axios.post(`/api/posts/${postId}/unlike`, null, {
+                params: { studentId: studentInfo.id }
+            });
+            setPosts(posts.map(post => post.id === postId ? { ...post, likeCount: post.likeCount - 1 } : post));
+        } catch (error) {
+            console.error("Error unliking post", error);
+        }
+    };
 
 
     return (
@@ -264,14 +320,14 @@ function App24() {
             </div>
             <div id="menu_community">
                 <ul>
-                    <li onClick={() => showDivByCategory('자유')}><a>자유 게시판</a></li>
-                    <li onClick={() => showDivByCategory('대입')}><a>대입 게시판</a></li>
-                    <li onClick={() => showDivByCategory('질문')}><a>질문 게시판</a></li>
-                    <li><a>대학 입결 정보</a></li>
-                    <li onClick={showDivReviews}><a>학원 리뷰</a></li>
-                    <li onClick={showDivMypage}><a>마이페이지</a></li>
+                    <li onClick={() => showDivByCategory('자유')} style={{ backgroundColor: selectedMenuItem === '자유' ? '#BCBCBC' : '#D9D9D9' }}><a>자유 게시판</a></li>
+                    <li onClick={() => showDivByCategory('대입')} style={{ backgroundColor: selectedMenuItem === '대입' ? '#BCBCBC' : '#D9D9D9' }}><a>대입 게시판</a></li>
+                    <li onClick={() => showDivByCategory('질문')} style={{ backgroundColor: selectedMenuItem === '질문' ? '#BCBCBC' : '#D9D9D9' }}><a>질문 게시판</a></li>
+                    <li onClick={() => showDivByCategory('학원리뷰')} style={{ backgroundColor: selectedMenuItem === '학원리뷰' ? '#BCBCBC' : '#D9D9D9' }}><a>학원 리뷰</a></li>
+                    <li onClick={() => showDivByCategory('Mypage')} style={{ backgroundColor: selectedMenuItem === 'Mypage' ? '#BCBCBC' : '#D9D9D9' }}><a>마이페이지</a></li>
                 </ul>
             </div>
+
             <div id="contents_community">
                 {visibleDiv !== 'Mypage' && visibleDiv !== '글쓰기' && (
                     <div id="header_contents_community">
@@ -339,18 +395,25 @@ function App24() {
                         <div id="detail">
                             {posts.map(post => {
                                 if (post.id === selectedPostId) {
+                                    const hasLiked = likedPosts.some(likedPost => likedPost.id === post.id);
                                     return (
                                         <div key={post.id}>
                                             <h2>{post.title}</h2>
                                             <p>{post.content}</p>
                                             <p>작성자: 익명</p>
-                                            <p>작성일: {post.createDate.split('T')[0]}</p>
+                                            <p>작성일: {post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</p>
+                                            <div>
+                                                <button onClick={() => hasLiked ? handleUnlikePost(post.id) : handleLikePost(post.id)}>
+                                                    {hasLiked ? "좋아요 취소" : "좋아요"}
+                                                </button>
+                                                <span>{post.likeCount} 좋아요</span>
+                                            </div>
                                             <textarea value={newComment} onChange={handleCommentChange} placeholder="댓글을 입력하세요"></textarea>
                                             <button onClick={submitComment}>작성</button>
                                             <h3>댓글</h3>
                                             <ul>
                                                 {comments.map(comment => (
-                                                    <p key={comment.id}>익명{/*comment.writerId*/}: {comment.text}</p>
+                                                    <p key={comment.id}>익명: {comment.text}</p>
                                                 ))}
                                             </ul>
                                         </div>
@@ -360,6 +423,7 @@ function App24() {
                             <button onClick={() => setVisibleDiv(previousDiv)}>이전</button>
                         </div>
                     )}
+
 
 
                     {visibleDiv === '자유' && (
@@ -373,7 +437,7 @@ function App24() {
                                             <div>{post.likeCount} 좋아요</div>
                                             <button onClick={() => handlePostClick(post.id)}>{post.title}</button> {/* 상세보기 클릭 이벤트 추가 */}
                                             <div>{post.views} 조회수</div>
-                                            <div>{post.createDate.split('T')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
+                                            <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div>
                                         </li>
                                     ))}
                             </ul>
@@ -391,7 +455,7 @@ function App24() {
                                             <div>{post.likeCount} 좋아요</div>
                                             <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
                                             <div>{post.views} 조회수</div>
-                                            <div>{post.createDate.split('T')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
+                                            <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
                                         </li>
                                     ))}
                             </ul>
@@ -408,7 +472,7 @@ function App24() {
                                             <div>{post.likeCount} 좋아요</div>
                                             <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
                                             <div>{post.views} 조회수</div>
-                                            <div>{post.createDate.split('T')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
+                                            <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
                                         </li>
                                     ))}
                             </ul>
@@ -463,7 +527,7 @@ function App24() {
                     )}
                 </div>
                 {visibleDiv !== 'Mypage' && visibleDiv !== '글쓰기' && (
-                    <div id="footer_contents_community">
+                    <div id="footer_community">
                         <a>문의 | midas2024.ver01@gmail.com</a>
                     </div>
                 )}

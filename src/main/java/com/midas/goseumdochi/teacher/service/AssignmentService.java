@@ -3,6 +3,7 @@ package com.midas.goseumdochi.teacher.service;
 import com.midas.goseumdochi.teacher.dto.AssignmentDTO;
 import com.midas.goseumdochi.teacher.dto.LectureMaterialDTO;
 import com.midas.goseumdochi.teacher.entity.AssignmentEntity;
+import com.midas.goseumdochi.teacher.entity.LectureEntity;
 import com.midas.goseumdochi.teacher.entity.LectureMaterialEntity;
 import com.midas.goseumdochi.teacher.repository.AssignmentRepository;
 import com.midas.goseumdochi.teacher.repository.LectureRepository;
@@ -103,14 +104,26 @@ public class AssignmentService {
     public void updateAssignment(Long id, AssignmentDTO assignmentDTO) {
         AssignmentEntity entity = assignmentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("해당 과제를 찾을 수 없습니다: " + id));
+
+        // assignmentDTO.getLectureId()가 null인 경우 기본값 설정
+        Long lectureId = assignmentDTO.getLectureId();
+        if (lectureId == null) {
+            lectureId = entity.getLectureEntity().getId();
+        }
+
+        LectureEntity lectureEntity = lectureRepository.findById(lectureId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 강의를 찾을 수 없습니다: " ));
+
         entity.setTitle(assignmentDTO.getTitle());
         entity.setContent(assignmentDTO.getContent());
         entity.setDeadline(assignmentDTO.getDeadline());
         entity.setPoints(assignmentDTO.getPoints());
         entity.setExamType(assignmentDTO.getExamType());
         entity.setAttachmentPath(assignmentDTO.getAttachmentPath());
+        entity.setLectureEntity(lectureEntity);
         assignmentRepository.save(entity);
     }
+
 
     public void deleteAssignment(Long id) {
         if (!assignmentRepository.existsById(id)) {

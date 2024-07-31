@@ -60,15 +60,21 @@ public class TeacherService {
     }
 
     // 로그인된 선생님 DTO 찾기
+
+    public TeacherDTO findById(Long id) {
+        TeacherEntity teacherEntity = teacherRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID로 선생님을 찾을 수 없습니다: " + id));
+        return TeacherDTO.toTeacherDTO(teacherEntity);
+    }
+    // 로그인된 선생님 DTO 찾기
     public TeacherDTO findByLoginid(String loginid) {
         Optional<TeacherEntity> teacherEntityOptional = teacherRepository.findByLoginid(loginid);
         TeacherEntity teacherEntity = teacherEntityOptional.orElseThrow(() -> new IllegalArgumentException("해당 로그인 ID로 선생님을 찾을 수 없습니다: " + loginid));
         return TeacherDTO.toTeacherDTO(teacherEntity);
     }
 
-    public TeacherDTO findById(Long id) {
-        TeacherEntity teacherEntity = teacherRepository.findById(id)
+    public TeacherEntity findEntityById(Long id) { // 추가된 메서드
+        return teacherRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID로 선생님을 찾을 수 없습니다: " + id));
-        return TeacherDTO.toTeacherDTO(teacherEntity);
     }
 }
