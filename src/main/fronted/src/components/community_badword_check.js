@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
+import '../css/community_badword_check.css';
 
 function BadWordCheck() {
     const location = useLocation();
@@ -24,7 +25,6 @@ function BadWordCheck() {
                 },
             });
 
-            // 여기서 response.data를 사용하여 결과를 처리합니다.
             console.log(response.data);
             setBadWordResponse(response.data);
         } catch (error) {
@@ -33,23 +33,30 @@ function BadWordCheck() {
     };
 
     return (
-        <div>
-            <h1>비속어 체크</h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={inputText}
-                    onChange={handleInputChange}
-                    placeholder="텍스트를 입력하세요"
-                />
-                <button type="submit">체크</button>
-            </form>
-            {badWordResponse && (
-                <div>
-                    <h2>결과</h2>
-                    <pre>{JSON.stringify(badWordResponse, null, 2)}</pre>
-                </div>
-            )}
+        <div id="badwordcheck">
+            <div id="header_badwordcheck">
+            </div>
+            <div id="body_badwordcheck">
+                <form id="badwordcheckForm" onSubmit={handleSubmit}>
+                    <h1>비속어 체크</h1>
+                    <input
+                        type="text"
+                        value={inputText}
+                        onChange={handleInputChange}
+                        placeholder="텍스트를 입력하세요"
+                    />
+                    <button type="submit">체크</button>
+                    {badWordResponse && (
+                        <div id="badwordcheckResult">
+                            <h2>결과</h2>
+                            <pre>{JSON.stringify(badWordResponse, null, 2)}</pre>
+                        </div>
+                    )}
+                </form>
+            </div>
+            <div id="footer_badwordcheck">
+                <a>문의 | midas2024.ver01@gmail.com</a>
+            </div>
         </div>
     );
 }
