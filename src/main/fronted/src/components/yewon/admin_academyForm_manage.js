@@ -120,3 +120,4 @@ function AdminAcademyFormManage() {
 }
 
 export default AdminAcademyFormManage;
+
