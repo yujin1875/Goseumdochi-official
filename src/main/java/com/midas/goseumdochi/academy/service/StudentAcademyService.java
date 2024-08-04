@@ -1,5 +1,6 @@
 package com.midas.goseumdochi.academy.service;
 
+import com.midas.goseumdochi.academy.entity.AcademyEntity;
 import com.midas.goseumdochi.academy.repository.AcademyRepository;
 import com.midas.goseumdochi.academy.dto.StudentAcademyDTO;
 import com.midas.goseumdochi.academy.entity.StudentAcademyEntity;
@@ -46,5 +47,15 @@ public class StudentAcademyService {
             return null;
 
         return StudentAcademyDTO.toStudentAcademyDTO(studentAcademyEntity.get());
+    }
+
+    // 학생이 등록한 학원 목록을 반환
+    public List<AcademyEntity> getAcademiesByStudentId(Long studentId) {
+        List<StudentAcademyEntity> studentAcademyEntities = studentAcademyRepository.findByStudentEntityId(studentId);
+        List<AcademyEntity> academies = new ArrayList<>();
+        for (StudentAcademyEntity entity : studentAcademyEntities) {
+            academies.add(entity.getAcademyEntity());
+        }
+        return academies;
     }
 }

@@ -58,8 +58,25 @@ function App25() {
                 </div>
                 <div id="contents_teachermain">
                     <div id="contents1_teachermain">
+                        <div id="Scheduler_teachermain">
+                            <h2>일정</h2>
+                            <div id="content_Scheduler">
+                            </div>
+                        </div>
+                        <div id="notice_teachermain">
+                            <h2>공지사항</h2>
+                            <div id="content_notice">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="contents2_teachermain">
+                        <div id="Quickmenu_teachermain">
+                            <h2>Quick Menu</h2>
+                            <div id="content_Quickmenu">
+                            </div>
+                        </div>
                         <div id="lectureSchedule">
-                            <h3>강의 선택</h3>
+                            <h2>강의 선택</h2>
                             <select onChange={(e) => setSelectedLectureId(e.target.value)}>
                                 <option value="">강의를 선택해주세요</option>
                                 {lectures.map((lecture) => (
@@ -67,9 +84,6 @@ function App25() {
                                 ))}
                             </select>
                         </div>
-                    </div>
-                    <div id="contents2_teachermain">
-
                     </div>
                 </div>
                 <div id="footer_teachermain">
