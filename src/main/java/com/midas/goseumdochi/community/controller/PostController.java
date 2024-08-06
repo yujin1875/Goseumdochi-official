@@ -38,4 +38,9 @@ public class PostController {
     public List<PostDTO> getPostsByCategory(@PathVariable String category) {
         return postService.getPostsByCategory(category);
     }
+
+    @DeleteMapping("/{postId}")
+    public void deletePost(@PathVariable Long postId) {
+        postService.deletePost(postId);
+    }
 }
