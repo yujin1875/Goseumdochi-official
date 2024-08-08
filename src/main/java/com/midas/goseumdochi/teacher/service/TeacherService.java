@@ -11,6 +11,8 @@ import com.midas.goseumdochi.util.ai.EncDecService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -57,6 +59,36 @@ public class TeacherService {
                 , String.format("[고슴도치] %s 학원 신규 선생님 임시로그인 정보 전송,", directorEntity.getAcademyEntity().getName())
                 , String.format("선생님 이름: %s\n 아이디: %s\n임시비밀번호: %s", teacherDTO.getName(), teacherDTO.getLoginid(), teacherDTO.getPassword()));
         return mailDTO;
+    }
+
+    // 학원의 모든 선생 찾기
+    public List<TeacherDTO> getAllTeacherByAcademyId(Long academyId) {
+        List<TeacherEntity> teacherEntityList = teacherRepository.findAllByAcademyId(academyId);
+
+        // DTO로 변환
+        List<TeacherDTO> teacherDTOList = new ArrayList<>();
+        for (TeacherEntity teacherEntity : teacherEntityList)
+            teacherDTOList.add(TeacherDTO.toTeacherDTO(teacherEntity));
+        return teacherDTOList;
+    }
+
+    // 선생 정보 수정
+    public TeacherDTO update(TeacherDTO teacherDTO) {
+        TeacherEntity updateTeacherEntity = TeacherEntity.toTeacherEntity(teacherDTO,
+                academyRepository.findById(teacherDTO.getId()).get());
+        teacherRepository.save(updateTeacherEntity);
+
+        return teacherDTO;
+    }
+
+    // 선생 삭제
+    public boolean delete(Long teacherId) {
+        if(teacherRepository.findById(teacherId).isEmpty()) // 삭제 실패
+            return false;
+
+        // 삭제 성공
+        teacherRepository.deleteById(teacherId);
+        return true;
     }
 
     // 로그인된 선생님 DTO 찾기

@@ -8,11 +8,13 @@ import com.midas.goseumdochi.student.Service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import com.midas.goseumdochi.director.service.DirectorService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -73,5 +75,22 @@ public class DirectorController {
         // 학생 등록 성공
         StudentAcademyDTO studentAcademyDTO = studentAcademyService.registStudentAcademy(studentId, academyId);// 등록
         return ResponseEntity.ok(studentAcademyDTO);
+    }
+
+    // 학원에 등록된 학생 리스트 찾기
+    @GetMapping("/academy/{academyId}/students")
+    public ResponseEntity<?> getStudentsByAcademy(@PathVariable Long academyId) {
+        List<StudentDTO> studentDTOList = studentAcademyService.getStudentDTOList(academyId);
+
+        return ResponseEntity.ok(studentDTOList);
+    }
+
+    // 학원에 등록된 학생 삭제
+    @PutMapping("/academy/{academyId}/student/{studentId}/delete")
+    public ResponseEntity<?> deleteStudentAtAcademy(@PathVariable Long academyId, @PathVariable Long studentId) {
+        if(studentAcademyService.delete(academyId, studentId) == false)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("학생 삭제 실패.");
+
+        return ResponseEntity.ok("학생 삭제 성공");
     }
 }

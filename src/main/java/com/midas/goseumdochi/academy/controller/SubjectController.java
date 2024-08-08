@@ -47,7 +47,7 @@ public class SubjectController {
         if(subjectDTO != null) { // 과목 수정 실패
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED) // 에러 상태
-                    .body("과목 수정 실패.");
+                    .body("과목 수정 실패. 과목 이름 중복!");
         }
 
         // 과목 등록 성공
