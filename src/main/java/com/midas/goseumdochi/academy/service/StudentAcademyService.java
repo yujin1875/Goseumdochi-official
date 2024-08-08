@@ -58,4 +58,14 @@ public class StudentAcademyService {
         }
         return academies;
     }
+
+    // 학원에서 학생 삭제
+    public boolean delete(Long academyId, Long studentId) {
+        Optional<StudentAcademyEntity> studentAcademyEntity = studentAcademyRepository.findByStudentIdAndAcademyId(studentId, academyId);
+        if(studentAcademyEntity.isEmpty())
+            return false;
+
+        studentAcademyRepository.delete(studentAcademyEntity.get());
+        return true;
+    }
 }

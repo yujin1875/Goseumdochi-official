@@ -60,9 +60,16 @@ public class SubjectService {
         return SubjectDTO.toSubjectDTO(subjectEntity.get());
     }
 
-    // 과목 수정 (중복추가해야함)
+    // 과목 수정
     public SubjectDTO update(Long subjectId, String inputName) {
         SubjectEntity subjectEntity = subjectRepository.findById(subjectId).get();
+
+        // 중복 체크
+        List<SubjectEntity> subjectEntityList = subjectRepository.findAllByAcademyId(subjectEntity.getAcademyEntity().getId());// 학원의 모든 과목
+        for (SubjectEntity subject : subjectEntityList) {
+            if(inputName.equals(subject.getName())) // 과목 중복
+                return null;
+        }
 
         // 이름 수정
         SubjectDTO updateSubjectDTO = new SubjectDTO(subjectEntity.getId(), inputName, subjectEntity.getAcademyEntity().getId());

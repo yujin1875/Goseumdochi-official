@@ -59,6 +59,31 @@ public class TeacherController {
         return ResponseEntity.ok(registTeacherDTO); // 선생 dto 리턴
     }
 
+    // 학원에 등록된 모든 선생 리스트 조회
+    @GetMapping("/academy/{academyId}/all")
+    public ResponseEntity<?> findAllTeacherByAcademy(@PathVariable Long academyId) {
+        List<TeacherDTO> teacherDTOList = teacherService.getAllTeacherByAcademyId(academyId);
+
+        return ResponseEntity.ok(teacherDTOList);
+    }
+
+    // 선생 정보 수정
+    @PostMapping("/update")
+    public ResponseEntity<?> updateTeacher(@RequestBody TeacherDTO teacherDTO) {
+        teacherService.update(teacherDTO);
+
+        return ResponseEntity.ok(teacherDTO);
+    }
+
+    // 선생 삭제
+    @PutMapping("/{teacherId}/delete")
+    public ResponseEntity<?> deleteTeacher(@PathVariable Long teacherId) {
+        if(teacherService.delete(teacherId) == false)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("선생 삭제 실패");
+
+        return ResponseEntity.ok("선생 삭제 성공");
+    }
+
     // 강의 등록
     @PostMapping("/{teacherId}/lecture/regist")
     public ResponseEntity<?> registLecture(@PathVariable Long teacherId, @RequestBody LectureDTO lectureDTO) {
