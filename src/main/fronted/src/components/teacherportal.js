@@ -16,13 +16,28 @@ function App26() {
     const [currentAssignment, setCurrentAssignment] = useState(null);
     const [notices, setNotices] = useState([]);
     const [currentNotice, setCurrentNotice] = useState(null);
+    const [exams, setExams] = useState([]);
+    const [currentExam, setCurrentExam] = useState(null);
+
+
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [points, setPoints] = useState('');
-    const [file, setFile] = useState(null);
-    const [existingFile, setExistingFile] = useState('');
-    const [id, setId] = useState('');
+    const [examMethod, setExamMethod] = useState('');
+    const [openDate, setOpenDate] = useState('');
+    const [examPeriodStart, setExamPeriodStart] = useState('');
+    const [examPeriodEnd, setExamPeriodEnd] = useState('');
+    const [duration, setDuration] = useState('');
+    const [scorePublished, setScorePublished] = useState(false);
+    const [scorePublishDate, setScorePublishDate] = useState('');
+    const [isOngoing, setIsOngoing] = useState(false);
+    const [submissionCount, setSubmissionCount] = useState(0);
+    const [evaluationScore, setEvaluationScore] = useState(0.0);
     const [lectureInfo, setLectureInfo] = useState({});
+    const [file, setFile] = useState(null);
+    const [existingFile, setExistingFile] = useState(null);
+
+
 
     useEffect(() => {
         if (lectureId) {
@@ -33,6 +48,8 @@ function App26() {
                 fetchAssignments();
             } else if (visibleDiv === 'Subject') {
                 fetchNotices();
+            } else if (visibleDiv === 'Exam') {
+                fetchExams();
             }
         } else {
             console.error("lectureId is not defined");
@@ -76,6 +93,15 @@ function App26() {
         }
     };
 
+    const fetchExams = async () => {
+        try {
+            const response = await axios.get(`/api/teacher/lecture/${lectureId}/exams`);
+            setExams(response.data);
+        } catch (error) {
+            console.error("There was an error fetching the exams!", error);
+        }
+    };
+
     const handleMaterialClick = async (id) => {
         try {
             const response = await axios.get(`/api/teacher/lecture-material/${id}`);
@@ -115,6 +141,50 @@ function App26() {
             console.error("There was an error fetching the notice!", error);
         }
     };
+
+    const handleExamClick = async (id) => {
+        try {
+            const response = await axios.get(`/api/teacher/exam/${id}`);
+            const exam = response.data;
+            setCurrentExam(exam);
+            setTitle(exam.title);
+            setExamMethod(exam.examMethod);
+            setOpenDate(exam.openDate);
+            setExamPeriodStart(exam.examPeriodStart);
+            setExamPeriodEnd(exam.examPeriodEnd);
+            setDuration(exam.duration);
+            setPoints(exam.points);
+            setScorePublished(exam.scorePublished);
+            setScorePublishDate(exam.scorePublishDate);
+            setIsOngoing(exam.isOngoing);
+            setSubmissionCount(exam.submissionCount);
+            setEvaluationScore(exam.evaluationScore);
+            showDivExamRead(); // 시험 정보 조회 화면을 보여줌
+        } catch (error) {
+            console.error("There was an error fetching the exam!", error);
+        }
+    };
+
+
+    const handleEditExam = () => {
+        // 현재 시험 정보를 수정 폼에 로드
+        setTitle(currentExam.title);
+        setExamMethod(currentExam.examMethod);
+        setOpenDate(currentExam.openDate);
+        setExamPeriodStart(currentExam.examPeriodStart);
+        setExamPeriodEnd(currentExam.examPeriodEnd);
+        setDuration(currentExam.duration);
+        setPoints(currentExam.points);
+        setScorePublished(currentExam.scorePublished);
+        setScorePublishDate(currentExam.scorePublishDate);
+        setIsOngoing(currentExam.isOngoing);
+        setSubmissionCount(currentExam.submissionCount);
+        setEvaluationScore(currentExam.evaluationScore);
+
+        // 수정 화면 보여주기
+        showDivExamEdit();
+    };
+
 
     const handleUpdateMaterial = async () => {
         const formData = new FormData();
@@ -176,8 +246,34 @@ function App26() {
         }
     };
 
+    const handleUpdateExam = async () => {
+        const examDTO = {
+            id: currentExam?.id,
+            title,
+            examMethod,
+            openDate,
+            examPeriodStart,
+            examPeriodEnd,
+            duration,
+            points,
+            scorePublished,
+            scorePublishDate,
+            lectureId,
+            isOngoing,
+            submissionCount,
+            evaluationScore
+        };
 
-
+        try {
+            await axios.put(`/api/teacher/exam/${currentExam.id}`, examDTO, {
+                headers: { 'Content-Type': 'application/json' },
+            });
+            showDivExam();
+            fetchExams();
+        } catch (error) {
+            console.error("There was an error updating the exam!", error);
+        }
+    };
 
     const handleDeleteMaterial = async (id) => {
         try {
@@ -196,6 +292,16 @@ function App26() {
             fetchAssignments();
         } catch (error) {
             console.error("There was an error deleting the assignment!", error);
+        }
+    };
+
+    const handleDeleteExam = async (id) => {
+        try {
+            await axios.delete(`/api/teacher/exam/${id}`);
+            showDivExam();
+            fetchExams();
+        } catch (error) {
+            console.error("There was an error deleting the exam!", error);
         }
     };
 
@@ -293,7 +399,34 @@ function App26() {
         }
     };
 
+    const handleSaveExam = async () => {
+        const examDTO = {
+            title,
+            examMethod,
+            openDate,
+            examPeriodStart,
+            examPeriodEnd,
+            duration,
+            points,
+            scorePublished,
+            scorePublishDate,
+            lectureId
+        };
 
+        try {
+            const response = await axios.post(`/api/teacher/lecture/${lectureId}/exam/new`, examDTO, {
+                headers: { 'Content-Type': 'application/json' },
+            });
+            if (response.status === 200) {
+                alert("새로운 시험이 생성되었습니다.");
+                showDivExam();
+                fetchExams();
+            }
+        } catch (error) {
+            console.error("There was an error saving the exam!", error);
+            alert("시험 생성에 실패했습니다. 다시 시도하세요.");
+        }
+    };
 
     const handleSaveNotice = async () => {
         const formData = new FormData();
@@ -384,6 +517,33 @@ function App26() {
         setVisiblesubDiv('List');
     };
 
+    const showDivExam = () => {
+        setVisibleDiv('Exam');
+    };
+
+    const showDivExamAdd = () => {
+        setVisibleDiv('ExamAdd');
+        setTitle('');
+        setExamMethod('');
+        setOpenDate('');
+        setExamPeriodStart('');
+        setExamPeriodEnd('');
+        setDuration('');
+        setPoints('');
+        setScorePublished(false);
+        setScorePublishDate('');
+        setCurrentExam(null);
+    };
+
+
+    const showDivExamRead = () => {
+        setVisibleDiv('ExamRead');
+    };
+
+    const showDivExamEdit = () => {
+        setVisibleDiv('ExamEdit');
+    };
+
     const showsubDivList = () => {
         setVisiblesubDiv('List');
     };
@@ -417,7 +577,7 @@ function App26() {
                     <li onClick={showDivLecturedata}><a>수업자료</a></li>
                     <li onClick={showDivAssignment}><a>과제조회/제출</a></li>
                     <li><a>평가관리</a></li>
-                    <li><a>시험관리</a></li>
+                    <li onClick={showDivExam}><a>시험 관리</a></li>
                     <li onClick={showDivSubject}><a>과목공지</a></li>
                     <li onClick={() => navigate('/teachermain', {state: {user: user}})}><a>강의실 나가기</a></li>
 
@@ -895,6 +1055,220 @@ function App26() {
                         </div>
                     </>
                 )}
+                {visibleDiv === 'Exam' && (
+                    <>
+                        <div id="Exam_teacherportal">
+                            <div id="but">
+                                <h2>시험 관리</h2>
+                                <button id="add_btn" onClick={showDivExamAdd}>추가</button>
+                            </div>
+                            <div id="Exam">
+                                <div id="cate_Exam">
+                                    <div id="no">번호</div>
+                                    <div id="title">제목</div>
+                                    <div id="method">시험 방식</div>
+                                    <div id="opendate">공개일</div>
+                                    <div id="examperiod">응시 기간</div>
+                                    <div id="duration">시험 시간</div>
+                                    <div id="score">배점</div>
+                                    <div id="scorePublished">점수 공개 여부</div>
+                                    <div id="isOngoing">진행 상황</div>
+                                    <div id="submissionCount">제출 인원</div>
+                                    <div id="evaluationScore">평가 점수</div>
+                                </div>
+                                {exams.map(exam => (
+                                    <div key={exam.id} id="body_Exam">
+                                        <div id="Eno">{exam.id}</div>
+                                        <div id="Etitle" onClick={() => handleExamClick(exam.id)}>{exam.title}</div>
+                                        <div id="Emethod">{exam.examMethod}</div>
+                                        <div id="Eopendate">{exam.openDate}</div>
+                                        <div id="Eexamperiod">{exam.examPeriodStart} ~ {exam.examPeriodEnd}</div>
+                                        <div id="Eduration">{exam.duration}분</div>
+                                        <div id="Escore">{exam.points}</div>
+                                        <div id="EscorePublished">{exam.scorePublished ? '네' : '아니요'}</div>
+                                        <div id="EisOngoing">{exam.isOngoing ? '진행중' : '종료'}</div>
+                                        <div id="EsubmissionCount">{exam.submissionCount}</div>
+                                        <div id="EevaluationScore">{exam.evaluationScore}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </>
+                )}
+                {visibleDiv === 'ExamAdd' && (
+                    <>
+                        <div id="ExamAdd_teacherportal">
+                            <div id="but">
+                                <h2>시험 관리</h2>
+                            </div>
+                        </div>
+                        <div id="title_ExamAdd">
+                            <h2>제목</h2>
+                            <input type="text" id="ExamAdd_title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                        </div>
+                        <div id="method_ExamAdd">
+                            <h2>시험 방식</h2>
+                            <select id="ExamAdd_method" value={examMethod} onChange={(e) => setExamMethod(e.target.value)}>
+                                <option value="온라인">온라인</option>
+                                <option value="오프라인">오프라인</option>
+                            </select>
+                        </div>
+                        <div id="opendate_ExamAdd">
+                            <h2>공개일</h2>
+                            <input type="datetime-local" id="ExamAdd_opendate" value={openDate} onChange={(e) => setOpenDate(e.target.value)} />
+                        </div>
+                        <div id="examperiod_ExamAdd">
+                            <h2>응시 기간</h2>
+                            <input type="datetime-local" id="ExamAdd_examperiodstart" value={examPeriodStart} onChange={(e) => setExamPeriodStart(e.target.value)} />
+                            ~
+                            <input type="datetime-local" id="ExamAdd_examperiodend" value={examPeriodEnd} onChange={(e) => setExamPeriodEnd(e.target.value)} />
+                        </div>
+                        <div id="duration_ExamAdd">
+                            <h2>시험 시간</h2>
+                            <input type="number" id="ExamAdd_duration" value={duration} onChange={(e) => setDuration(e.target.value)} />
+                        </div>
+                        <div id="score_ExamAdd">
+                            <h2>배점</h2>
+                            <input type="number" id="ExamAdd_score" value={points} onChange={(e) => setPoints(e.target.value)} />
+                        </div>
+                        <div id="scorePublished_ExamAdd">
+                            <h2>점수 공개 여부</h2>
+                            <input type="checkbox" id="ExamAdd_scorePublished" checked={scorePublished} onChange={(e) => setScorePublished(e.target.checked)} />
+                            {scorePublished && (
+                                <input type="datetime-local" id="ExamAdd_scorepublishdate" value={scorePublishDate} onChange={(e) => setScorePublishDate(e.target.value)} />
+                            )}
+                        </div>
+                        <div id="buttons_ExamAdd">
+                            <button id="save" onClick={handleSaveExam}>
+                                저장
+                            </button>
+                            <button id="back" onClick={showDivExam}>
+                                취소
+                            </button>
+                        </div>
+                    </>
+                )}
+
+
+                {visibleDiv === 'ExamRead' && (
+                    <>
+                        <div id="ExamRead_teacherportal">
+                            <div id="but">
+                                <h2>시험 관리</h2>
+                            </div>
+                        </div>
+                        <div id="title_ExamRead">
+                            <h2>제목</h2>
+                            <div id="ExamRead_title">{currentExam?.title}</div>
+                        </div>
+                        <div id="method_ExamRead">
+                            <h2>시험 방식</h2>
+                            <div id="ExamRead_method">{currentExam?.examMethod}</div>
+                        </div>
+                        <div id="opendate_ExamRead">
+                            <h2>공개일</h2>
+                            <div id="ExamRead_opendate">{currentExam?.openDate}</div>
+                        </div>
+                        <div id="examperiod_ExamRead">
+                            <h2>응시 기간</h2>
+                            <div id="ExamRead_examperiod">{currentExam?.examPeriodStart} ~ {currentExam?.examPeriodEnd}</div>
+                        </div>
+                        <div id="duration_ExamRead">
+                            <h2>시험 시간</h2>
+                            <div id="ExamRead_duration">{currentExam?.duration}분</div>
+                        </div>
+                        <div id="score_ExamRead">
+                            <h2>배점</h2>
+                            <div id="ExamRead_score">{currentExam?.points}</div>
+                        </div>
+                        <div id="scorePublished_ExamRead">
+                            <h2>점수 공개 여부</h2>
+                            <div id="ExamRead_scorePublished">{currentExam?.scorePublished ? '네' : '아니요'}</div>
+                            {currentExam?.scorePublished && (
+                                <div id="ExamRead_scorepublishdate">{currentExam?.scorePublishDate}</div>
+                            )}
+                        </div>
+                        <div id="isOngoing_ExamRead">
+                            <h2>진행 상황</h2>
+                            <div id="ExamRead_isOngoing">{currentExam?.isOngoing ? '진행중' : '종료'}</div>
+                        </div>
+                        <div id="submissionCount_ExamRead">
+                            <h2>제출 인원</h2>
+                            <div id="ExamRead_submissionCount">{currentExam?.submissionCount}</div>
+                        </div>
+                        <div id="evaluationScore_ExamRead">
+                            <h2>평가 점수</h2>
+                            <div id="ExamRead_evaluationScore">{currentExam?.evaluationScore}</div>
+                        </div>
+                        <div id="buttons_ExamRead">
+                            <button id="revise" onClick={showDivExamEdit}>
+                                수정
+                            </button>
+                            <button id="delete" onClick={() => handleDeleteExam(currentExam.id)}>
+                                삭제
+                            </button>
+                            <button id="back" onClick={showDivExam}>
+                                목록
+                            </button>
+                        </div>
+                    </>
+                )}
+
+                {visibleDiv === 'ExamEdit' && (
+                    <>
+                        <div id="ExamEdit_teacherportal">
+                            <div id="but">
+                                <h2>시험 관리 - 수정</h2>
+                            </div>
+                        </div>
+                        <div id="title_ExamEdit">
+                            <h2>제목</h2>
+                            <input type="text" id="ExamEdit_title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                        </div>
+                        <div id="method_ExamEdit">
+                            <h2>시험 방식</h2>
+                            <select id="ExamEdit_method" value={examMethod} onChange={(e) => setExamMethod(e.target.value)}>
+                                <option value="온라인">온라인</option>
+                                <option value="오프라인">오프라인</option>
+                            </select>
+                        </div>
+                        <div id="opendate_ExamEdit">
+                            <h2>공개일</h2>
+                            <input type="datetime-local" id="ExamEdit_opendate" value={openDate} onChange={(e) => setOpenDate(e.target.value)} />
+                        </div>
+                        <div id="examperiod_ExamEdit">
+                            <h2>응시 기간</h2>
+                            <input type="datetime-local" id="ExamEdit_examperiodstart" value={examPeriodStart} onChange={(e) => setExamPeriodStart(e.target.value)} />
+                            ~
+                            <input type="datetime-local" id="ExamEdit_examperiodend" value={examPeriodEnd} onChange={(e) => setExamPeriodEnd(e.target.value)} />
+                        </div>
+                        <div id="duration_ExamEdit">
+                            <h2>시험 시간</h2>
+                            <input type="number" id="ExamEdit_duration" value={duration} onChange={(e) => setDuration(e.target.value)} />
+                        </div>
+                        <div id="score_ExamEdit">
+                            <h2>배점</h2>
+                            <input type="number" id="ExamEdit_score" value={points} onChange={(e) => setPoints(e.target.value)} />
+                        </div>
+                        <div id="scorePublished_ExamEdit">
+                            <h2>점수 공개 여부</h2>
+                            <input type="checkbox" id="ExamEdit_scorePublished" checked={scorePublished} onChange={(e) => setScorePublished(e.target.checked)} />
+                            {scorePublished && (
+                                <input type="datetime-local" id="ExamEdit_scorepublishdate" value={scorePublishDate} onChange={(e) => setScorePublishDate(e.target.value)} />
+                            )}
+                        </div>
+                        <div id="buttons_ExamEdit">
+                            <button id="save" onClick={handleUpdateExam}>
+                                저장
+                            </button>
+                            <button id="back" onClick={showDivExamRead}>
+                                취소
+                            </button>
+                        </div>
+                    </>
+                )}
+
+
             </div>
         </div>
     );
