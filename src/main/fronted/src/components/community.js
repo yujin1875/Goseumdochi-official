@@ -272,8 +272,10 @@ function App24() {
                 content: '',
                 categoryId: '',
                 star: null,
-                academyId: ''
+                academyId: '',
+                writerId: newPost.writerId
             });
+
 
             setVisibleDiv('자유');
 

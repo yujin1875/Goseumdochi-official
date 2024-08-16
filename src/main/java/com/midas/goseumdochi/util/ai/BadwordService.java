@@ -11,7 +11,7 @@ public class BadwordService {
 
     // 텍스트 입력 후 비방 목적의 글인지 판별
     public BadwordDTO classify(String text) {
-        String url = "http://34.64.213.105:5001/classify"; // Flask 서버 주소 + route 주소
+        String url = "http://34.64.237.19:5001/classify"; // Flask 서버 주소 + route 주소
 
         // Restful (Flask 서버)와 통신할 객체
         RestTemplate restTemplate = new RestTemplate();
