@@ -44,6 +44,7 @@ public class DirectorNoticeController {
         return httpSession.getAttribute("directorId") != null;
     }
 
+    /*
     @GetMapping("/noticeList")
     public ResponseEntity<List<DirectorNoticeEntity>> showNoticeList() {
         if (!isLoggedIn()) {
@@ -53,6 +54,20 @@ public class DirectorNoticeController {
         List<DirectorNoticeEntity> noticeEntities = noticeRepository.findAll();
         return ResponseEntity.ok(noticeEntities);
     }
+
+     */
+
+    @GetMapping("/noticeList")
+    public ResponseEntity<List<DirectorNoticeEntity>> showNoticeList(@RequestParam(value = "directorId") Long directorId) {
+        if (directorId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        List<DirectorNoticeEntity> noticeEntities = noticeRepository.findByDirectorEntityId(directorId);
+
+        return ResponseEntity.ok(noticeEntities);
+    }
+
 
     @PostMapping("/addNotice")
     public ResponseEntity<String> addNotice(@RequestBody DirectorNoticeDTO noticeDTO) {
@@ -93,5 +108,11 @@ public class DirectorNoticeController {
         response.put("endPage", endPage);
 
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/deleteNotice/{id}")
+    public ResponseEntity<String> deleteNotice(@PathVariable Long id) {
+        noticeRepository.deleteById(Math.toIntExact(id));
+        return ResponseEntity.ok("공지사항이 삭제되었습니다");
     }
 }

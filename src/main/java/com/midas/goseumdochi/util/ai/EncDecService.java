@@ -12,7 +12,7 @@ public class EncDecService {
     // AES 암호화
 //    @Transactional
     public String encrypt(String plaintext) {
-        String url = "http://34.64.213.105:5000/encrypt"; // Flask 서버 주소 + route 주소
+        String url = "http://34.64.237.19:5000/encrypt"; // Flask 서버 주소 + route 주소
         String password = "12345678"; // decrypt의 password와 꼭 같아야함!
 
         // Restful (Flask 서버)와 통신할 객체

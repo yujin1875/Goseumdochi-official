@@ -40,6 +40,7 @@ public class DirectorController {
         return ResponseEntity.ok(directorDTO.getId()); // 원장 id 리턴
     }
 
+
     // 원장님이 학생 찾을 때 (이름, 전화번호 이용) *--> 학생 Controller에 보내도 됨
     @GetMapping("/academy/{academyId}/findStudent")
     public ResponseEntity<?> findStudent(@PathVariable Long academyId, @RequestParam String inputStudentName, @RequestParam String inputStudentPhoneNumber) {

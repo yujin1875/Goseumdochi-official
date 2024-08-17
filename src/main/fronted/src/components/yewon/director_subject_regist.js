@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import './subcss/director_subject_regist.css';
 
 function DirectorSubjectRegist() {
     const location = useLocation();
@@ -54,27 +55,32 @@ function DirectorSubjectRegist() {
     };
 
     return (
-        <div>
-            <div>
-                <h1>과목 등록</h1>
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label>과목 이름:</label>
-                        <input
-                            type="text"
-                            value={inputSubjectName}
-                            onChange={(e) => setInputSubjectName(e.target.value)}
-                        />
+        <div id="App">
+            <div id="header_blank"/>
+            <div id="director_subject_regist_frame">
+                <div id="director_subject_regist_header">
+                    <h1>과목 등록</h1>
+                    <form id="director_subject_registForm" onSubmit={handleSubmit}>
+                        <div id="director_subjectWrite">
+                            <a>과목 이름:</a>
+                            <input
+                                type="text"
+                                value={inputSubjectName}
+                                onChange={(e) => setInputSubjectName(e.target.value)}
+                            />
+                        </div>
+                        <button type="submit">등록</button>
+                    </form>
+                </div>
+                <div id="director_subject_regist_footer">
+                    <h1>등록된 과목 리스트</h1>
+                    <div id="ListOfSubject">
+                        {(subjectList.length === 0)? (<div>등록된 과목이 없습니다.</div>)
+                            : (subjectList.map(subject => (
+                            <li key={subject.id}>{subject.name}</li>
+                        )))}
                     </div>
-                    <button type="submit">등록</button>
-                </form>
-            </div>
-            <div>
-                <h1>등록된 과목 리스트</h1>
-                {(subjectList.length === 0)? (<div>등록된 과목이 없습니다.</div>)
-                    : (subjectList.map(subject => (
-                    <li key={subject.id}>{subject.name}</li>
-                )))}
+                </div>
             </div>
         </div>
     );

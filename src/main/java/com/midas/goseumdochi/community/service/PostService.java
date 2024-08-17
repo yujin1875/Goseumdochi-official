@@ -5,8 +5,10 @@ import com.midas.goseumdochi.community.dto.PostDTO;
 import com.midas.goseumdochi.community.entity.CategoryEntity;
 import com.midas.goseumdochi.community.entity.CommentEntity;
 import com.midas.goseumdochi.community.entity.PostEntity;
+import com.midas.goseumdochi.community.entity.PostLikeEntity;
 import com.midas.goseumdochi.community.repository.CategoryRepository;
 import com.midas.goseumdochi.community.repository.CommentRepository;
+import com.midas.goseumdochi.community.repository.PostLikeRepository;
 import com.midas.goseumdochi.community.repository.PostRepository;
 import com.midas.goseumdochi.student.Repository.StudentRepository;
 import com.midas.goseumdochi.student.entity.StudentEntity;
@@ -28,6 +30,16 @@ public class PostService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    private final PostLikeRepository postLikeRepository;
+    private final CommentRepository commentRepository;
+
+    @Autowired
+    public PostService(PostRepository postRepository, PostLikeRepository postLikeRepository, CommentRepository commentRepository) {
+        this.postRepository = postRepository;
+        this.postLikeRepository = postLikeRepository;
+        this.commentRepository = commentRepository;
+    }
 
     public PostDTO createPost(PostDTO postDTO) {
         StudentEntity writer = studentRepository.findById(postDTO.getWriterId())
@@ -106,8 +118,6 @@ public class PostService {
 
     // 댓글 기능
 
-    @Autowired
-    private CommentRepository commentRepository;
 
     public PostDTO getPostByIdWithComments(Long id) {
         PostEntity postEntity = postRepository.findById(id)
@@ -147,5 +157,17 @@ public class PostService {
     }
 
 
+    // 게시글 삭제
+    public void deletePost(Long postId) {
+        // 포스트에 연결된 모든 좋아요를 먼저 삭제
+        List<PostLikeEntity> postLikes = postLikeRepository.findByPostId(postId);
+        postLikeRepository.deleteAll(postLikes);
 
+        // 포스트에 연결된 모든 댓글을 삭제
+        List<CommentEntity> comments = commentRepository.findByPostId(postId);
+        commentRepository.deleteAll(comments);
+
+        // 그 후에 포스트를 삭제
+        postRepository.deleteById(postId);
+    }
 }

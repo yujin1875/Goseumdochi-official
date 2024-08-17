@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import './subcss/director_teacher_regist.css';
 
 function DirectorTeacherRegist() {
     const location = useLocation();
@@ -42,7 +43,7 @@ function DirectorTeacherRegist() {
     };
 
     return (
-        <div>
+        <div id="director_teacher_regist_frame">
             <h2>선생님 등록</h2>
             <form onSubmit={handleSubmit}>
                 <div>
