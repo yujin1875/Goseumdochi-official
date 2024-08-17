@@ -1,5 +1,6 @@
 package com.midas.goseumdochi.director.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,6 +29,7 @@ public class DirectorNoticeEntity {
     // 원장과 N:1 연결
     @ManyToOne
     @JoinColumn(name = "director_id")
+    @JsonIgnore  // 이 참조를 무시하도록 설정
     private DirectorEntity directorEntity;
 
     @Builder
