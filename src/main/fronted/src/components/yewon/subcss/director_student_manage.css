@@ -1,0 +1,21 @@
+hr{
+    border:0 ;
+}
+
+#director_student_manage_header{
+    width:100%;
+    height:170px;
+}
+
+#director_student_manage_frame{
+    width: 979px;
+    height: 666px;
+    background-color: #FFFFFF;
+    margin: auto;
+    border-top: solid 3px #000000;
+}
+
+#director_student_manage_footer{
+    width:100%;
+    height:244px;
+}
