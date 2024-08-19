@@ -183,9 +183,7 @@ function App40() {
         setVisibleDiv('학원리뷰');
     };
 
-    const showWriteForm = () => {
-        setVisibleDiv('글쓰기');
-    };
+
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -203,65 +201,20 @@ function App40() {
         }
     };
 
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
+    const handleDeletePost = async (postId) => {
         try {
-            if (!newPost.categoryId) {
-                alert("카테고리를 선택해주세요.");
-                return;
+            await axios.delete(`/api/posts/${postId}`);
+            setPosts(posts.filter(post => post.id !== postId));
+            if (visibleDiv === '상세보기') {
+                setVisibleDiv(previousDiv);
+                setPreviousDiv(null);
             }
-
-            const titleCheckResponse = await axios.get('/api/badword/check', {
-                params: { text: newPost.title },
-            });
-            const contentCheckResponse = await axios.get('/api/badword/check', {
-                params: { text: newPost.content },
-            });
-
-            console.log("title: " + titleCheckResponse.data.label);
-            console.log("content: " + contentCheckResponse.data.label);
-
-            if (titleCheckResponse.data.label == 1 || contentCheckResponse.data.label == 1) {
-                alert('제목이나 내용에 비속어가 포함되어 있습니다.');
-                return;
-            }
-
-            if (newPost.categoryId === '4') {
-                // 학원리뷰 테이블에 저장하는 요청
-                if(!newPost.academyId) { alert("학원 선택"); return; }
-                else if (!newPost.star) {alert("별점 선택"); return; }
-
-                const reviewResponse = await axios.post('/api/academy-reviews', {
-                    ...newPost,
-                    writerId: newPost.writerId,
-                    academyId: newPost.academyId, // 학원 ID 추가
-                    star: newPost.star // 별점 추가
-                });
-                console.log('Academy review created successfully', reviewResponse.data);
-            } else {
-                const response = await axios.post('/api/posts/upload', {
-                    ...newPost,
-                    writerId: newPost.writerId
-                });
-                console.log('Post created successfully', response.data);
-            }
-
-            alert('게시글 등록 완료');
-
-            setNewPost({
-                title: '',
-                content: '',
-                categoryId: '',
-                star: null,
-                academyId: ''
-            });
-
-            setVisibleDiv('자유');
-
         } catch (error) {
-            console.error('Error creating post', error);
+            console.error("Error deleting post", error);
         }
     };
+
+
 
     const handleLikePost = async (postId) => {
         try {
@@ -312,63 +265,10 @@ function App40() {
                         <div id="findsomething">
                             <input type="text" placeholder="제목" id="find_title" />
                             <input type="submit" value="검색" id="find_btn" />
-                            <button id="write" onClick={showWriteForm}>
-                                <span>글쓰기</span>
-                            </button>
                         </div>
                     </div>
                 )}
                 <div id="contents_contents_community">
-                    {visibleDiv === '글쓰기' && (
-                        <div id="write_contents_community">
-                            <form onSubmit={handleFormSubmit}>
-                                <label>작성자 아이디: {newPost.writerId} </label>
-                                <label htmlFor="categoryId">카테고리: </label>
-                                <select id="categoryId" onChange={handleInputChange} value={newPost.categoryId}>
-                                    <option value="">카테고리를 선택하세요</option>
-                                    <option value="1">자유</option>
-                                    <option value="2">대입</option>
-                                    <option value="3">질문</option>
-                                    <option value="4">리뷰</option>
-                                </select>
-                                {newPost.categoryId === '4' && (
-                                    <span>
-                                        <label htmlFor="academy">학원 선택: </label>
-                                        <select id="academy" onChange={handleInputChange}>
-                                            <option value="">학원을 선택하세요</option>
-                                            {academies.map((academy, index) => (
-                                                <option key={index} value={academy.id}>{academy}</option>
-                                            ))}
-                                        </select>
-                                        <label>별점: </label>
-                                        <p className="rating">
-                                            {[...Array(5)].map((_, index) => {
-                                                const ratingValue = index + 1;
-                                                return (
-                                                    <label key={ratingValue}>
-                                                        <input
-                                                            type="radio"
-                                                            name="rating"
-                                                            value={ratingValue}
-                                                            onChange={handleStarChange}
-                                                            checked={newPost.star === ratingValue}
-                                                        />
-                                                        <span className="icon">{ratingValue}</span>
-                                                    </label>
-                                                );
-                                            })}
-                                        </p>
-                                    </span>
-                                )}
-                                <label htmlFor="title">제목: </label>
-                                <input type="text" id="title" onChange={handleInputChange} value={newPost.title} />
-                                <label htmlFor="content">내용: </label>
-                                <textarea id="content" onChange={handleInputChange} value={newPost.content}></textarea>
-                                <button type="submit">등록</button>
-                            </form>
-                        </div>
-                    )}
-
                     {visibleDiv === '상세보기' && selectedPostId && (
                         <div id="detail">
                             {posts.map(post => {
@@ -416,6 +316,7 @@ function App40() {
                                             <button onClick={() => handlePostClick(post.id)}>{post.title}</button> {/* 상세보기 클릭 이벤트 추가 */}
                                             <div>{post.views} 조회수</div>
                                             <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div>
+                                            <button onClick={() => handleDeletePost(post.id)}>삭제</button>
                                         </li>
                                     ))}
                             </ul>
@@ -434,6 +335,7 @@ function App40() {
                                             <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
                                             <div>{post.views} 조회수</div>
                                             <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
+                                            <button onClick={() => handleDeletePost(post.id)}>삭제</button>
                                         </li>
                                     ))}
                             </ul>
@@ -451,6 +353,7 @@ function App40() {
                                             <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
                                             <div>{post.views} 조회수</div>
                                             <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
+                                            <button onClick={() => handleDeletePost(post.id)}>삭제</button>
                                         </li>
                                     ))}
                             </ul>
@@ -468,7 +371,8 @@ function App40() {
                                             <div>{review.title}</div>
                                             <div>{review.views} 조회수</div>
                                             <div>{review.createDate.split('T')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
-                                            <div>{review.star} 별점</div> {/* 별점 추가 */}
+                                            <div>{review.star} 별점</div>
+                                            <button onClick={() => handleDeletePost(review.id)}>삭제</button>
                                         </li>
                                     ))}
                             </ul>

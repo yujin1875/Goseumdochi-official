@@ -12,4 +12,5 @@ public interface PostLikeRepository extends JpaRepository<PostLikeEntity, Long> 
     List<PostLikeEntity> findByStudentId(Long writerId);
     boolean existsByPostAndStudent(PostEntity post, StudentEntity student);
     Optional<PostLikeEntity> findByPostAndStudent(PostEntity post, StudentEntity student);
+    List<PostLikeEntity> findByPostId(Long postId);
 }

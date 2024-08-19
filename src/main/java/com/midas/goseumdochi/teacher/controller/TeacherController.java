@@ -30,6 +30,7 @@ public class TeacherController {
     private final RegistLectureService registLectureService;
     private final LectureInfoService lectureInfoService;
     private final SubjectNoticeService subjectNoticeService;
+    private final ExamService examService;
 
     @Autowired
     private FileStorageService fileStorageService;
@@ -342,5 +343,42 @@ public class TeacherController {
     public ResponseEntity<List<SubjectNoticeDTO>> getNoticesByLecture(@PathVariable Long lectureId) {
         List<SubjectNoticeDTO> notices = subjectNoticeService.getNoticesByLectureId(lectureId);
         return ResponseEntity.ok(notices);
+    }
+
+    // 시험 목록 조회
+    @GetMapping("/lecture/{lectureId}/exams")
+    public ResponseEntity<List<ExamDTO>> getExamsByLectureId(@PathVariable Long lectureId) {
+        return ResponseEntity.ok(examService.getExamsByLectureId(lectureId));
+    }
+
+    // 시험 생성
+    @PostMapping("/lecture/{lectureId}/exam/new")
+    public ResponseEntity<?> createNewExam(
+            @PathVariable Long lectureId,
+            @RequestBody ExamDTO examDTO
+    ) {
+        examDTO.setLectureId(lectureId);
+        examService.saveExam(examDTO);
+        return ResponseEntity.ok("새로운 시험이 생성되었습니다.");
+    }
+
+    // 특정 시험 조회
+    @GetMapping("/exam/{id}")
+    public ResponseEntity<ExamDTO> getExamById(@PathVariable Long id) {
+        return ResponseEntity.ok(examService.getExamById(id));
+    }
+
+    // 시험 업데이트
+    @PutMapping("/exam/{id}")
+    public ResponseEntity<?> updateExam(@PathVariable Long id, @RequestBody ExamDTO examDTO) {
+        examService.updateExam(id, examDTO);
+        return ResponseEntity.ok("시험이 성공적으로 업데이트되었습니다.");
+    }
+
+    // 시험 삭제
+    @DeleteMapping("/exam/{id}")
+    public ResponseEntity<?> deleteExam(@PathVariable Long id) {
+        examService.deleteExam(id);
+        return ResponseEntity.ok("시험이 성공적으로 삭제되었습니다.");
     }
 }

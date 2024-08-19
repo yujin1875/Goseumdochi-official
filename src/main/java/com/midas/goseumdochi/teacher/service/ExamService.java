@@ -1,0 +1,104 @@
+package com.midas.goseumdochi.teacher.service;
+
+import com.midas.goseumdochi.teacher.dto.ExamDTO;
+import com.midas.goseumdochi.teacher.entity.ExamEntity;
+import com.midas.goseumdochi.teacher.repository.ExamRepository;
+import com.midas.goseumdochi.teacher.repository.LectureRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class ExamService {
+    private final ExamRepository examRepository;
+    private final LectureRepository lectureRepository;
+
+    public void saveExam(ExamDTO examDTO) {
+        ExamEntity entity = new ExamEntity();
+        entity.setTitle(examDTO.getTitle());
+        entity.setExamMethod(examDTO.getExamMethod());
+        entity.setOpenDate(examDTO.getOpenDate());
+        entity.setExamPeriodStart(examDTO.getExamPeriodStart());
+        entity.setExamPeriodEnd(examDTO.getExamPeriodEnd());
+        entity.setDuration(examDTO.getDuration());
+        entity.setScorePublished(examDTO.isScorePublished());
+        entity.setScorePublishDate(examDTO.getScorePublishDate());
+        entity.setPoints(examDTO.getPoints());
+        entity.setOngoing(examDTO.isOngoing());
+        entity.setSubmissionCount(examDTO.getSubmissionCount());
+        entity.setEvaluationScore(examDTO.getEvaluationScore());
+        entity.setLectureEntity(lectureRepository.findById(examDTO.getLectureId())
+                .orElseThrow(() -> new RuntimeException("강의가 존재하지 않습니다.")));
+        examRepository.save(entity);
+    }
+
+    public List<ExamDTO> getExamsByLectureId(Long lectureId) {
+        return examRepository.findAllByLectureEntityId(lectureId).stream()
+                .map(entity -> new ExamDTO(
+                        entity.getId(),
+                        entity.getTitle(),
+                        entity.getExamMethod(),
+                        entity.getOpenDate(),
+                        entity.getExamPeriodStart(),
+                        entity.getExamPeriodEnd(),
+                        entity.getDuration(),
+                        entity.isScorePublished(),
+                        entity.getScorePublishDate(),
+                        entity.getPoints(),
+                        entity.isOngoing(),
+                        entity.getSubmissionCount(),
+                        entity.getEvaluationScore(),
+                        entity.getLectureEntity().getId()))
+                .collect(Collectors.toList());
+    }
+
+    public ExamDTO getExamById(Long id) {
+        ExamEntity entity = examRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("시험이 존재하지 않습니다."));
+        return new ExamDTO(
+                entity.getId(),
+                entity.getTitle(),
+                entity.getExamMethod(),
+                entity.getOpenDate(),
+                entity.getExamPeriodStart(),
+                entity.getExamPeriodEnd(),
+                entity.getDuration(),
+                entity.isScorePublished(),
+                entity.getScorePublishDate(),
+                entity.getPoints(),
+                entity.isOngoing(),
+                entity.getSubmissionCount(),
+                entity.getEvaluationScore(),
+                entity.getLectureEntity().getId()
+        );
+    }
+
+    public void updateExam(Long id, ExamDTO examDTO) {
+        ExamEntity entity = examRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("시험이 존재하지 않습니다."));
+        entity.setTitle(examDTO.getTitle());
+        entity.setExamMethod(examDTO.getExamMethod());
+        entity.setOpenDate(examDTO.getOpenDate());
+        entity.setExamPeriodStart(examDTO.getExamPeriodStart());
+        entity.setExamPeriodEnd(examDTO.getExamPeriodEnd());
+        entity.setDuration(examDTO.getDuration());
+        entity.setScorePublished(examDTO.isScorePublished());
+        entity.setScorePublishDate(examDTO.getScorePublishDate());
+        entity.setPoints(examDTO.getPoints());
+        entity.setOngoing(examDTO.isOngoing());
+        entity.setSubmissionCount(examDTO.getSubmissionCount());
+        entity.setEvaluationScore(examDTO.getEvaluationScore());
+        examRepository.save(entity);
+    }
+
+    public void deleteExam(Long id) {
+
+        if (!examRepository.existsById(id)) {
+            throw new IllegalArgumentException("해당 시험이 존재하지 않습니다. ID: " + id);
+        }
+        examRepository.deleteById(id);
+    }
+}
