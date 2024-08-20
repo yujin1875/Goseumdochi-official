@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "exams")
@@ -29,5 +30,7 @@ public class ExamEntity {
     @JoinColumn(name = "lecture_id")
     private LectureEntity lectureEntity;
 
+    @OneToMany(mappedBy = "examEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ExamQuestionEntity> questions;
 
 }

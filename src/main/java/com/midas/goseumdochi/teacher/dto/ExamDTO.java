@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -24,4 +25,5 @@ public class ExamDTO {
     private int submissionCount;
     private double evaluationScore;
     private Long lectureId;
+    private List<ExamQuestionDTO> questions;
 }
