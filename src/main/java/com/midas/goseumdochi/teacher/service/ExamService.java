@@ -1,6 +1,7 @@
 package com.midas.goseumdochi.teacher.service;
 
 import com.midas.goseumdochi.teacher.dto.ExamDTO;
+import com.midas.goseumdochi.teacher.dto.ExamQuestionDTO;
 import com.midas.goseumdochi.teacher.entity.ExamEntity;
 import com.midas.goseumdochi.teacher.repository.ExamRepository;
 import com.midas.goseumdochi.teacher.repository.LectureRepository;
@@ -51,7 +52,19 @@ public class ExamService {
                         entity.isOngoing(),
                         entity.getSubmissionCount(),
                         entity.getEvaluationScore(),
-                        entity.getLectureEntity().getId()))
+                        entity.getLectureEntity().getId(),
+                        entity.getQuestions() != null ? entity.getQuestions().stream()
+                                .map(q -> new ExamQuestionDTO(
+                                        q.getId(),
+                                        q.getType(),
+                                        q.getText(),
+                                        q.getPoints(),
+                                        q.getAnswers(),
+                                        q.getCorrectAnswer(),
+                                        q.getExamEntity().getId()
+                                ))
+                                .collect(Collectors.toList()) : null
+                ))
                 .collect(Collectors.toList());
     }
 
@@ -72,7 +85,18 @@ public class ExamService {
                 entity.isOngoing(),
                 entity.getSubmissionCount(),
                 entity.getEvaluationScore(),
-                entity.getLectureEntity().getId()
+                entity.getLectureEntity().getId(),
+                entity.getQuestions() != null ? entity.getQuestions().stream()
+                        .map(q -> new ExamQuestionDTO(
+                                q.getId(),
+                                q.getType(),
+                                q.getText(),
+                                q.getPoints(),
+                                q.getAnswers(),
+                                q.getCorrectAnswer(),
+                                q.getExamEntity().getId()
+                        ))
+                        .collect(Collectors.toList()) : null
         );
     }
 
