@@ -18,12 +18,27 @@ function DirectorSubjectManage() {
         <div id="App">
             <div id="director_subject_manage_header"/>
             <div id="director_subject_manage_frame">
-                <h2>과목 관리</h2>
-                <div id="director_subject_manage">
+                <h1>과목 관리</h1>
+                <div id="contents_director_subject_manage">
+                    <button onClick={GoSubjectAdd}>
+                        <span>+ 과목 등록</span>
+                    </button>
+                    <div id="director_showing_subject_manage">
+                        <div id="info_subject1">
+                            <div id="info_subject1_name">
+                                <span>국어</span>
+                            </div>
+                            <button id="EditSubject">
+                                <span>수정</span>
+                            </button>
+                            <button id="DeleteSubject">
+                                <span>삭제</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <button onClick={GoSubjectAdd}>과목 등록</button>
             </div>
-            <div id="director_teacher_manage_footer"/>
+            <div id="director_subject_manage_footer"/>
         </div>
     );
 }

@@ -18,10 +18,23 @@ function DirectorStudentManage() {
         <div id="App">
             <div id="director_student_manage_header"/>
             <div id="director_student_manage_frame">
-                <h2>학생 관리</h2>
-                <div id="director_student_manage">
+                <h1>학생 관리</h1>
+                <div id="contents_director_student_manage">
+                    <button id="AddStudent" onClick={GoStudentAdd}>
+                        <span>+ 학생 등록</span>
+                    </button>
+                    <div id="director_showing_student_manage">
+                        <div id="info_student1">
+                            <div id="info_student1_name">
+                                <span>하하</span>
+                            </div>
+                            <a href="">상세정보</a>
+                            <button id="DeleteStudent">
+                                <span>삭제</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <button onClick={GoStudentAdd}>학생 등록</button>
             </div>
             <div id="director_student_manage_footer"/>
         </div>
