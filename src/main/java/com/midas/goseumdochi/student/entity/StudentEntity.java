@@ -1,5 +1,6 @@
 package com.midas.goseumdochi.student.entity;
 
+import com.midas.goseumdochi.academy.entity.MessageEntity;
 import com.midas.goseumdochi.academy.entity.StudentAcademyEntity;
 import com.midas.goseumdochi.community.entity.PostEntity;
 import com.midas.goseumdochi.student.Dto.StudentDTO;
@@ -50,6 +51,10 @@ public class StudentEntity {
     // 강의와 매핑
     @OneToMany(mappedBy = "studentEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RegistLectureEntity> registLectureEntityList;
+
+    // 쪽지와 매핑
+    @OneToMany(mappedBy = "studentEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MessageEntity> messageEntityList;
 
     public static StudentEntity toStudent(StudentDTO studentDTO) {
         return StudentEntity.builder()

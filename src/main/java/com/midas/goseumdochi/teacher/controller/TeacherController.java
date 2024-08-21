@@ -108,6 +108,13 @@ public class TeacherController {
         return ResponseEntity.ok(lectureDTOList);
     }
 
+    // 선생의 모든 강의 "이름" 리스트 조회
+    @GetMapping("/{teacherId}/lecture/name/list")
+    public ResponseEntity<?> getLectureNameList(@PathVariable Long teacherId) {
+        List<LectureNameDTO> lectureNameDTOList = lectureService.getLectureNameListByTeacher(teacherId);
+        return ResponseEntity.ok(lectureNameDTOList);
+    }
+
     // 강의를 수강하는 학생 리스트 출력
     @GetMapping("lecture/{lectureId}/student/exist")
     public ResponseEntity<?> showStudentExist(@PathVariable Long lectureId) {

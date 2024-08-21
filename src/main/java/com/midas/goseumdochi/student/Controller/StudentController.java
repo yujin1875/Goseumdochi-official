@@ -5,6 +5,8 @@ import com.midas.goseumdochi.student.Service.FileStorageService;
 import com.midas.goseumdochi.student.Service.StudentService;
 import com.midas.goseumdochi.student.entity.StudentEntity;
 import com.midas.goseumdochi.teacher.dto.LectureDTO;
+import com.midas.goseumdochi.teacher.dto.LectureNameDTO;
+import com.midas.goseumdochi.teacher.dto.TeacherDTO;
 import com.midas.goseumdochi.teacher.service.LectureService;
 import com.midas.goseumdochi.util.Dto.MailDTO;
 import com.midas.goseumdochi.util.Service.MailService;
@@ -200,6 +202,20 @@ public class StudentController {
     public ResponseEntity<?> showLectureAndTimeList(@PathVariable Long studentId) {
         List<LectureDTO> lectureDTOList = lectureService.getLectureAndTimeListByStudent(studentId);
         return ResponseEntity.ok(lectureDTOList);
+    }
+
+    // 학생이 수강하는 강의 "이름" 리스트 조회
+    @GetMapping("/{studentId}/lecture/name/list")
+    public ResponseEntity<?> getLectureNameList(@PathVariable Long studentId) {
+        List<LectureNameDTO> lectureNameDTOList = lectureService.getLectureNameListByStudent(studentId);
+        return ResponseEntity.ok(lectureNameDTOList);
+    }
+
+    // 강의 선생님 조회
+    @GetMapping("/lecture/{lectureId}/teacher/name")
+    public ResponseEntity<?> getTeacherNameofLecture(@PathVariable Long lectureId) {
+        TeacherDTO teacherDTO = lectureService.getTeacherOfLecture(lectureId);
+        return ResponseEntity.ok(teacherDTO);
     }
 
     // 학생 AI 대학-학과 추천

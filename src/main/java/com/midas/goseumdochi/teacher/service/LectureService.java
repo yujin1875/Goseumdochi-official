@@ -4,7 +4,9 @@ import com.midas.goseumdochi.academy.repository.SubjectRepository;
 import com.midas.goseumdochi.student.Repository.RegistLectureRepository;
 import com.midas.goseumdochi.student.Repository.StudentRepository;
 import com.midas.goseumdochi.teacher.dto.LectureDTO;
+import com.midas.goseumdochi.teacher.dto.LectureNameDTO;
 import com.midas.goseumdochi.teacher.dto.LectureTimeDTO;
+import com.midas.goseumdochi.teacher.dto.TeacherDTO;
 import com.midas.goseumdochi.teacher.entity.LectureEntity;
 import com.midas.goseumdochi.teacher.entity.LectureTimeEntity;
 import com.midas.goseumdochi.teacher.repository.LectureRepository;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +40,13 @@ public class LectureService {
             lectureTimeRepository.save(LectureTimeEntity.toLectureTimeEntity(dto, lectureEntity));
     }
 
+    // 강의 선생 조회
+    public TeacherDTO getTeacherOfLecture(Long lectureId) {
+        Optional<LectureEntity> lectureEntity = lectureRepository.findById(lectureId);
+        TeacherDTO teacherDTO = TeacherDTO.toTeacherDTO(lectureEntity.get().getTeacherEntity());
+        return teacherDTO;
+    }
+
     // [선생] 모든 강의+시간 조회
     public List<LectureDTO> getLectureAndTimeListByTeacher(Long teacherId) {
         List<LectureEntity> lectureEntityList = lectureRepository.findAllByTeacherId(teacherId);
@@ -57,6 +67,15 @@ public class LectureService {
         return lectureDTOList;
     }
 
+    // [선생] 모든 강의 "이름" 리스트 조회
+    public List<LectureNameDTO> getLectureNameListByTeacher(Long teacherId) {
+        List<LectureEntity> lectureEntityList = lectureRepository.findAllByTeacherId(teacherId);
+        List<LectureNameDTO> lectureNameDTOList = new ArrayList<>();
+        for (LectureEntity entity : lectureEntityList)
+            lectureNameDTOList.add(LectureNameDTO.toLectureNameDTO(entity));
+        return lectureNameDTOList;
+    }
+
     // [학생] 모든 강의+시간 조회
     public List<LectureDTO> getLectureAndTimeListByStudent(Long studentId) {
         List<LectureEntity> lectureEntityList = registLectureRepository.findAllLectureByStudentId(studentId);
@@ -64,5 +83,14 @@ public class LectureService {
         for (LectureEntity entity : lectureEntityList)
             lectureDTOList.add(LectureDTO.toLectureAndTimeDTO(entity));
         return lectureDTOList;
+    }
+
+    // [학생] 모든 강의 "이름" 리스트 조회
+    public List<LectureNameDTO> getLectureNameListByStudent(Long studentId) {
+        List<LectureEntity> lectureEntityList = registLectureRepository.findAllLectureByStudentId(studentId);
+        List<LectureNameDTO> lectureNameDTOList = new ArrayList<>();
+        for (LectureEntity entity : lectureEntityList)
+            lectureNameDTOList.add(LectureNameDTO.toLectureNameDTO(entity));
+        return lectureNameDTOList;
     }
 }
