@@ -37,6 +37,9 @@ public class PostEntity {
     @Column(nullable = false, columnDefinition = "integer default 0")
     private int likeCount;
 
+    @Column(nullable = false)
+    private int star;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id", nullable = false)
     private StudentEntity writer;

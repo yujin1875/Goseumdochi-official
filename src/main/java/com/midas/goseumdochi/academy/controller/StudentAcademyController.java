@@ -1,5 +1,6 @@
 package com.midas.goseumdochi.academy.controller;
 
+import com.midas.goseumdochi.academy.dto.AcademyDTO;
 import com.midas.goseumdochi.academy.entity.AcademyEntity;
 import com.midas.goseumdochi.academy.service.StudentAcademyService;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,7 @@ public class StudentAcademyController {
     private final StudentAcademyService studentAcademyService;
 
     @GetMapping("/api/student/{studentId}/academies")
-    public List<AcademyEntity> getAcademiesByStudent(@PathVariable Long studentId) {
+    public List<AcademyDTO> getAcademiesByStudent(@PathVariable Long studentId) {
         return studentAcademyService.getAcademiesByStudentId(studentId);
     }
-
 }

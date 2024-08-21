@@ -9,11 +9,14 @@ import com.midas.goseumdochi.student.Dto.StudentDTO;
 import com.midas.goseumdochi.student.Repository.StudentRepository;
 import com.midas.goseumdochi.student.entity.StudentEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import com.midas.goseumdochi.academy.dto.AcademyDTO;
 
 @Service
 @RequiredArgsConstructor
@@ -49,15 +52,21 @@ public class StudentAcademyService {
         return StudentAcademyDTO.toStudentAcademyDTO(studentAcademyEntity.get());
     }
 
-    // 학생이 등록한 학원 목록을 반환
-    public List<AcademyEntity> getAcademiesByStudentId(Long studentId) {
+    // 특정 학생이 등록된 학원 목록을 반환
+    public List<AcademyDTO> getAcademiesByStudentId(Long studentId) {
         List<StudentAcademyEntity> studentAcademyEntities = studentAcademyRepository.findByStudentEntityId(studentId);
-        List<AcademyEntity> academies = new ArrayList<>();
-        for (StudentAcademyEntity entity : studentAcademyEntities) {
-            academies.add(entity.getAcademyEntity());
+
+        if (studentAcademyEntities == null || studentAcademyEntities.isEmpty()) {
+            return new ArrayList<>();
         }
-        return academies;
+
+        return studentAcademyEntities.stream()
+                .map(StudentAcademyEntity::getAcademyEntity)
+                .map(AcademyDTO::fromAcademyEntity)
+                .collect(Collectors.toList());
     }
+
+
 
     // 학원에서 학생 삭제
     public boolean delete(Long academyId, Long studentId) {

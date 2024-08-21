@@ -19,4 +19,5 @@ public class PostDTO {
     private Long categoryId;
     private boolean isModified;
     private List<CommentDTO> comments;
+    private Integer star; // 별점
 }
