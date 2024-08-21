@@ -56,14 +56,15 @@ public class PostService {
                 .likeCount(postDTO.getLikeCount())
                 .writer(writer)
                 .category(category)
-                .isModified(postDTO.isModified()) // Set the modified status
-                .star(postDTO.getStar()) // 별점 정보 추가
+                .isModified(postDTO.isModified())
+                .star(postDTO.getStar() != null ? postDTO.getStar() : 0) // Null 체크 및 기본값 설정
                 .build();
 
         postRepository.save(postEntity);
 
         return convertToDTO(postEntity);
     }
+
 
 
     public List<PostDTO> getAllPosts() {

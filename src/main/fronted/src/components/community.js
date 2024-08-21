@@ -581,10 +581,7 @@ function App24() {
                                                                 })
                                                                 .map(post => (
                                                                     <li key={post.id}>
-                                                                        {post.likeCount >= 3 && <span className="hot-badge">🔥 핫리뷰</span>}
-                                                                        <div>{post.likeCount} 좋아요</div>
                                                                         <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
-                                                                        <div>{post.views} 조회수</div>
                                                                         <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div>
                                                                         <div>별점: {post.star} / 5</div>
                                                                     </li>
