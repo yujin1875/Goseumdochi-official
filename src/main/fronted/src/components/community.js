@@ -19,12 +19,13 @@ function App24() {
     const [selectedMenuItem, setSelectedMenuItem] = useState('자유');
 
     const [newPost, setNewPost] = useState({
-        title: '',
-        content: '',
-        categoryId: '',
-        writerId: '', // 초기 값으로 빈 문자열 설정
-        star: null // 별점 초기 값으로 null 설정
-    });
+            title: '',
+            content: '',
+            categoryId: '',
+            writerId: '',
+            star: '',
+            academyId: ''
+        });
 
     // 사용자 정보를 가져오는 API 요청 함수
     const fetchStudentInfo = async () => {
@@ -36,6 +37,17 @@ function App24() {
             throw error;
         }
     };
+
+    useEffect(() => {
+        if (visibleDiv === '글쓰기') {
+            const fetchStudentIdAndAcademies = async () => {
+                const studentInfo = await fetchStudentInfo();
+                fetchAcademies(studentInfo.id); // studentId를 전달
+            };
+            fetchStudentIdAndAcademies();
+        }
+    }, [visibleDiv]);
+
 
     useEffect(() => {
             const fetchStudentId = async () => {
@@ -64,11 +76,21 @@ function App24() {
         } else if (visibleDiv === 'Mypage') {
             fetchMypageData();
         } else if (visibleDiv === '학원리뷰') {
-            fetchAcademyReviews();
-        } else if (visibleDiv === '글쓰기') { // '글쓰기' 화면일 때 학원 목록을 불러옴
-            fetchAcademies();
+            fetchPostsByCategory('학원리뷰');
+        } else if (visibleDiv === '글쓰기') {
+            // 글쓰기 화면이 활성화될 때 학원 목록을 가져오는 함수 호출
+            const fetchStudentIdAndAcademies = async () => {
+                try {
+                    const studentInfo = await fetchStudentInfo();
+                    fetchAcademies(studentInfo.id); // studentId를 전달
+                } catch (error) {
+                    console.error("Error fetching student info", error);
+                }
+            };
+            fetchStudentIdAndAcademies();
         }
     }, [visibleDiv]);
+
 
     const fetchCategories = async () => {
         try {
@@ -111,13 +133,22 @@ function App24() {
     };
 
     const fetchAcademies = async (studentId) => {
-            try {
-                const response = await axios.get(`/api/student/${studentId}/academies`);
+        try {
+            console.log("student ID: " + studentId);
+            const response = await axios.get(`/api/student/${studentId}/academies`);
+            console.log("Fetched academies: ", response.data); // Log fetched academies
+            if (Array.isArray(response.data)) {
                 setAcademies(response.data);
-            } catch (error) {
-                console.error("Error fetching academies", error);
+            } else {
+                console.error("Fetched academies data is not an array", response.data);
+                setAcademies([]); // Handle non-array response
             }
-        };
+        } catch (error) {
+            console.error("Error fetching academies", error);
+            setAcademies([]); // Handle error
+        }
+    };
+
 
     // 게시글 상세보기
     const handlePostClick = (postId) => {
@@ -221,7 +252,7 @@ function App24() {
             }));
         }
     };
-
+    // form submission function
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -247,10 +278,10 @@ function App24() {
 
             if (newPost.categoryId === '4') {
                 // 학원리뷰 테이블에 저장하는 요청
-                if(!newPost.academyId) { alert("학원 선택"); return; }
-                else if (!newPost.star) {alert("별점 선택"); return; }
+                if (!newPost.academyId) { alert("학원 선택"); return; }
+                else if (!newPost.star) { alert("별점 선택"); return; }
 
-                const reviewResponse = await axios.post('/api/academy-reviews', {
+                const reviewResponse = await axios.post('/api/posts/upload', {
                     ...newPost,
                     writerId: newPost.writerId,
                     academyId: newPost.academyId, // 학원 ID 추가
@@ -266,7 +297,6 @@ function App24() {
             }
 
             alert('게시글 등록 완료');
-
             setNewPost({
                 title: '',
                 content: '',
@@ -276,13 +306,12 @@ function App24() {
                 writerId: newPost.writerId
             });
 
-
             setVisibleDiv('자유');
-
         } catch (error) {
             console.error('Error creating post', error);
         }
     };
+
 
     const handleLikePost = async (postId) => {
         try {
@@ -395,6 +424,7 @@ function App24() {
 
                     {visibleDiv === '상세보기' && selectedPostId && (
                         <div id="detail">
+                            {/* 학원 리뷰 제외 게시물 상세보기 */}
                             {posts.map(post => {
                                 if (post.id === selectedPostId) {
                                     const hasLiked = likedPosts.some(likedPost => likedPost.id === post.id);
@@ -422,6 +452,36 @@ function App24() {
                                     );
                                 }
                             })}
+
+                            {/* 학원리뷰 상세보기 */}
+                                    {reviews.map(review => {
+                                        if (review.id === selectedPostId) {
+                                            return (
+                                                <div key={review.id}>
+                                                    <h2>{review.title}</h2>
+                                                    <p>학원: {review.academyName}</p>
+                                                    <p>별점: {review.star} / 5</p>
+                                                    <p>{review.content}</p>
+                                                    <p>작성자: 익명</p>
+                                                    <p>작성일: {review.createDate.split('T')[0]} {review.createDate.split('T')[1].split('.')[0]}</p>
+                                                    <div>
+                                                        <button onClick={() => handleLikePost(review.id)}>
+                                                            좋아요
+                                                        </button>
+                                                        <span>{review.likeCount} 좋아요</span>
+                                                    </div>
+                                                    <textarea value={newComment} onChange={handleCommentChange} placeholder="댓글을 입력하세요"></textarea>
+                                                    <button onClick={submitComment}>작성</button>
+                                                    <h3>댓글</h3>
+                                                    <ul>
+                                                        {comments.map(comment => (
+                                                            <p key={comment.id}>익명: {comment.text}</p>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            );
+                                        }
+                                    })}
                             <button onClick={() => setVisibleDiv(previousDiv)}>이전</button>
                         </div>
                     )}
@@ -431,73 +491,108 @@ function App24() {
                     {visibleDiv === '자유' && (
                         <div id="letter_contents_community">
                             <ul>
+                                {/* 핫게시글 우선 정렬 */}
                                 {posts
                                     .slice()
-                                    .sort((a, b) => new Date(b.createDate) - new Date(a.createDate)) // 날짜 기준으로 최신 순 정렬
+                                    .sort((a, b) => {
+                                    // 좋아요 3개 이상인 게시글을 상단으로
+                                        if (b.likeCount >= 3 && a.likeCount < 3) return 1;
+                                        if (a.likeCount >= 3 && b.likeCount < 3) return -1;
+                                        // 같은 조건 내에서는 최신 순으로 정렬
+                                        return new Date(b.createDate) - new Date(a.createDate);
+                                    })
                                     .map(post => (
                                         <li key={post.id}>
+                                            {/* 핫게시글 표시 */}
+                                            {post.likeCount >= 3 && <span className="hot-badge">🔥 핫게시글</span>}
                                             <div>{post.likeCount} 좋아요</div>
-                                            <button onClick={() => handlePostClick(post.id)}>{post.title}</button> {/* 상세보기 클릭 이벤트 추가 */}
+                                            <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
                                             <div>{post.views} 조회수</div>
                                             <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div>
                                         </li>
-                                    ))}
+                                ))}
                             </ul>
                         </div>
                     )}
 
                     {visibleDiv === '대입' && (
                         <div id="letter_contents_community">
-                            <ul>
-                                {posts
-                                    .slice()
-                                    .sort((a, b) => new Date(b.createDate) - new Date(a.createDate)) // 날짜 기준으로 최신 순 정렬
-                                    .map(post => (
-                                        <li key={post.id}>
-                                            <div>{post.likeCount} 좋아요</div>
-                                            <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
-                                            <div>{post.views} 조회수</div>
-                                            <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
-                                        </li>
-                                    ))}
-                            </ul>
-                        </div>
+                                                    <ul>
+                                                        {/* 핫게시글 우선 정렬 */}
+                                                        {posts
+                                                            .slice()
+                                                            .sort((a, b) => {
+                                                            // 좋아요 3개 이상인 게시글을 상단으로
+                                                                if (b.likeCount >= 3 && a.likeCount < 3) return 1;
+                                                                if (a.likeCount >= 3 && b.likeCount < 3) return -1;
+                                                                // 같은 조건 내에서는 최신 순으로 정렬
+                                                                return new Date(b.createDate) - new Date(a.createDate);
+                                                            })
+                                                            .map(post => (
+                                                                <li key={post.id}>
+                                                                    {/* 핫게시글 표시 */}
+                                                                    {post.likeCount >= 3 && <span className="hot-badge">🔥 핫게시글</span>}
+                                                                    <div>{post.likeCount} 좋아요</div>
+                                                                    <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
+                                                                    <div>{post.views} 조회수</div>
+                                                                    <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div>
+                                                                </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
                     )}
                     {visibleDiv === '질문' && (
                         <div id="letter_contents_community">
-                            <ul>
-                                {posts
-                                    .slice()
-                                    .sort((a, b) => new Date(b.createDate) - new Date(a.createDate)) // 날짜 기준으로 최신 순 정렬
-                                    .map(post => (
-                                        <li key={post.id}>
-                                            <div>{post.likeCount} 좋아요</div>
-                                            <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
-                                            <div>{post.views} 조회수</div>
-                                            <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
-                                        </li>
-                                    ))}
-                            </ul>
-                        </div>
+                                                    <ul>
+                                                        {/* 핫게시글 우선 정렬 */}
+                                                        {posts
+                                                            .slice()
+                                                            .sort((a, b) => {
+                                                            // 좋아요 3개 이상인 게시글을 상단으로
+                                                                if (b.likeCount >= 3 && a.likeCount < 3) return 1;
+                                                                if (a.likeCount >= 3 && b.likeCount < 3) return -1;
+                                                                // 같은 조건 내에서는 최신 순으로 정렬
+                                                                return new Date(b.createDate) - new Date(a.createDate);
+                                                            })
+                                                            .map(post => (
+                                                                <li key={post.id}>
+                                                                    {/* 핫게시글 표시 */}
+                                                                    {post.likeCount >= 3 && <span className="hot-badge">🔥 핫게시글</span>}
+                                                                    <div>{post.likeCount} 좋아요</div>
+                                                                    <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
+                                                                    <div>{post.views} 조회수</div>
+                                                                    <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div>
+                                                                </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
                     )}
                     {visibleDiv === '학원리뷰' && (
                         <div id="letter_contents_community">
-                            <ul>
-                                {reviews
-                                    .slice()
-                                    .sort((a, b) => new Date(b.createDate) - new Date(a.createDate)) // 날짜 기준으로 최신 순 정렬
-                                    .map(review => (
-                                        <li key={review.id}>
-                                            <div>{review.likeCount} 좋아요</div>
-                                            <div>{review.title}</div>
-                                            <div>{review.views} 조회수</div>
-                                            <div>{review.createDate.split('T')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
-                                            <div>{review.star} 별점</div> {/* 별점 추가 */}
-                                        </li>
-                                    ))}
-                            </ul>
+                                <ul>
+                                                            {posts
+                                                                .slice()
+                                                                .sort((a, b) => {
+                                                                    // 좋아요 3개 이상인 리뷰를 상단으로
+                                                                    if (b.likeCount >= 3 && a.likeCount < 3) return 1;
+                                                                    if (a.likeCount >= 3 && b.likeCount < 3) return -1;
+                                                                    // 같은 조건 내에서는 최신 순으로 정렬
+                                                                    return new Date(b.createDate) - new Date(a.createDate);
+                                                                })
+                                                                .map(post => (
+                                                                    <li key={post.id}>
+                                                                        {post.likeCount >= 3 && <span className="hot-badge">🔥 핫리뷰</span>}
+                                                                        <div>{post.likeCount} 좋아요</div>
+                                                                        <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
+                                                                        <div>{post.views} 조회수</div>
+                                                                        <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div>
+                                                                        <div>별점: {post.star} / 5</div>
+                                                                    </li>
+                                                                ))}
+                                                        </ul>
                         </div>
                     )}
+
 
                     {visibleDiv === 'Mypage' && (
                         <div id="mypage_contents_community">

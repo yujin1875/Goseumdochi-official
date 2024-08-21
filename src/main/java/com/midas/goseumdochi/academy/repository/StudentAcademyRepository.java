@@ -19,4 +19,7 @@ public interface StudentAcademyRepository extends JpaRepository<StudentAcademyEn
     Optional<StudentAcademyEntity> findByStudentIdAndAcademyId(@Param("studentId") Long studentId, @Param("academyId") Long academyId);
 
     List<StudentAcademyEntity> findByStudentEntityId(Long studentId);
+
+    @Query("SELECT a.name FROM StudentAcademyEntity sa JOIN sa.academyEntity a WHERE sa.studentEntity.id = :studentId")
+    List<String> findAcademyNamesByStudentId(@Param("studentId") Long studentId);
 }

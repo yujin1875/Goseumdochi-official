@@ -57,12 +57,14 @@ public class PostService {
                 .writer(writer)
                 .category(category)
                 .isModified(postDTO.isModified()) // Set the modified status
+                .star(postDTO.getStar()) // 별점 정보 추가
                 .build();
 
         postRepository.save(postEntity);
 
         return convertToDTO(postEntity);
     }
+
 
     public List<PostDTO> getAllPosts() {
         return postRepository.findAll().stream()
@@ -87,8 +89,10 @@ public class PostService {
                 .writerId(postEntity.getWriter().getId())
                 .categoryId(postEntity.getCategory().getId()) // CategoryEntity가 아닌 ID만 추출
                 .isModified(postEntity.isModified())
+                .star(postEntity.getStar()) // 별점 정보 추가
                 .build();
     }
+
 
 
     public PostDTO updatePost(Long id, PostDTO postDTO) {
@@ -103,11 +107,13 @@ public class PostService {
         postEntity.setCategory(category);
         postEntity.setModified(true);
         postEntity.setCreateDate(LocalDateTime.now());
+        postEntity.setStar(postDTO.getStar()); // 별점 정보 추가
 
         postRepository.save(postEntity);
 
         return convertToDTO(postEntity);
     }
+
 
     // Hot게시물 찾기 위함
     public List<PostDTO> getPostsByMinimumLikes(int minimumLikes) {
