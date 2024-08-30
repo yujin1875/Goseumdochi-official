@@ -105,24 +105,20 @@ public class AssignmentService {
         AssignmentEntity entity = assignmentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("해당 과제를 찾을 수 없습니다: " + id));
 
-        // assignmentDTO.getLectureId()가 null인 경우 기본값 설정
-        Long lectureId = assignmentDTO.getLectureId();
-        if (lectureId == null) {
-            lectureId = entity.getLectureEntity().getId();
-        }
-
-        LectureEntity lectureEntity = lectureRepository.findById(lectureId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 강의를 찾을 수 없습니다: " ));
-
         entity.setTitle(assignmentDTO.getTitle());
         entity.setContent(assignmentDTO.getContent());
         entity.setDeadline(assignmentDTO.getDeadline());
         entity.setPoints(assignmentDTO.getPoints());
         entity.setExamType(assignmentDTO.getExamType());
-        entity.setAttachmentPath(assignmentDTO.getAttachmentPath());
-        entity.setLectureEntity(lectureEntity);
+
+        // 첨부파일이 존재할 경우에만 업데이트
+        if (assignmentDTO.getAttachmentPath() != null) {
+            entity.setAttachmentPath(assignmentDTO.getAttachmentPath());
+        }
+
         assignmentRepository.save(entity);
     }
+
 
 
     public void deleteAssignment(Long id) {

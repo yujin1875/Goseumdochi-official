@@ -30,11 +30,11 @@ public class LectureInfoService {
         Optional<LectureEntity> lectureEntityOptional = lectureRepository.findById(lectureDTO.getId());
         if (lectureEntityOptional.isPresent()) {
             LectureEntity lectureEntity = lectureEntityOptional.get();
-            TeacherEntity teacherEntity = teacherService.findEntityById(lectureDTO.getTeacherId()); // 추가된 부분
+            TeacherEntity teacherEntity = teacherService.findEntityById(lectureDTO.getTeacherId());
             lectureEntity.setLectureLocation(lectureDTO.getLectureLocation());
             lectureEntity.setLectureDetails(lectureDTO.getLectureDetails());
             lectureEntity.setLectureWeeklyPlan(lectureDTO.getLectureWeeklyPlan());
-            lectureEntity.setTeacherEntity(teacherEntity); // 추가된 부분
+            lectureEntity.setTeacherEntity(teacherEntity);
             lectureRepository.save(lectureEntity);
         } else {
             throw new RuntimeException("강의를 찾을 수 없습니다.");

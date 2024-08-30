@@ -224,6 +224,7 @@ function App26() {
     const handleUpdateAssignment = async () => {
         const openDate = new Date(document.getElementById('Assignmentrevise_opendate').value).toISOString().slice(0, 19);
         const closeDate = new Date(document.getElementById('Assignmentrevise_closedate').value).toISOString().slice(0, 19);
+        const examType = document.getElementById('numbers').value === "1" ? "온라인" : "오프라인";
 
         const assignmentDTO = {
             id: currentAssignment?.id,
@@ -232,7 +233,8 @@ function App26() {
             points,
             createdAt: openDate,
             deadline: closeDate,
-            lectureId // lectureId 추가
+            examType,
+            lectureId
         };
 
         const formData = new FormData();
@@ -370,13 +372,15 @@ function App26() {
 
         const openDate = new Date(document.getElementById('Assignmentadd_opendate').value).toISOString().slice(0, 19);
         const closeDate = new Date(document.getElementById('Assignmentadd_closedate').value).toISOString().slice(0, 19);
+        const examType = document.getElementById('numbers').value === "1" ? "온라인" : "오프라인";
 
         const assignmentDTO = {
             title,
             content,
             points,
             createdAt: openDate,
-            deadline: closeDate
+            deadline: closeDate,
+            examType
         };
 
         const formData = new FormData();
@@ -472,6 +476,34 @@ function App26() {
             fetchNotices();
         } catch (error) {
             console.error("There was an error deleting the notice!", error);
+        }
+    };
+
+    const showDivSubjectEdit = () => {
+        setVisibleDiv('Subjectedit');
+        setTitle(currentNotice?.title || '');
+        setContent(currentNotice?.content || '');
+        setFile(null);
+        setExistingFile(currentNotice?.attachmentPath || null);
+    };
+
+    const handleUpdateNotice = async () => {
+        const formData = new FormData();
+        formData.append('notice', new Blob([JSON.stringify({ title, content, author: user.name })], { type: "application/json" }));
+        if (file) {
+            formData.append('file', file);
+        }
+
+        try {
+            await axios.put(`/api/teacher/subject-notice/${currentNotice.id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            showDivSubject();
+            fetchNotices();
+        } catch (error) {
+            console.error("There was an error updating the notice!", error);
         }
     };
 
@@ -663,7 +695,7 @@ function App26() {
                 </ul>
             </div>
             <div id="teacherportal_header">
-            <div id="menu_btn" />
+                <div id="menu_btn" />
                 <div id="home_btn" />
                 <div id="title">
 
@@ -818,7 +850,7 @@ function App26() {
                                     <div id="Sno">{notice.id}</div>
                                     <div id="Stitle" onClick={() => handleNoticeClick(notice.id)}>{notice.title}</div>
                                     <div id="Sauthor">{notice.author}</div>
-                                    <div id="Sopendate">{notice.createdAt}</div>
+                                    <div id="Sopendate">{new Date(notice.createdAt).toISOString().slice(0, 19)}</div>
                                 </div>
                             ))}
                         </div>
@@ -863,9 +895,31 @@ function App26() {
                             </div>
                         </div>
                         <div id="buttons_Subjectread">
-                            <button id="revise" onClick={showDivSubjectAdd}>수정</button>
+                            <button id="revise" onClick={showDivSubjectEdit}>수정</button>
                             <button id="delete" onClick={() => handleDeleteNotice(currentNotice.id)}>삭제</button>
                             <button id="back" onClick={showDivSubject}>목록</button>
+                        </div>
+                    </div>
+                )}
+                {visibleDiv === 'Subjectedit' && (
+                    <div id="Subjectedit_teacherportal">
+                        <div id="but">
+                            <h2>과목 공지 수정</h2>
+                        </div>
+                        <div id="title_Subjectedit">
+                            <h2>제목</h2>
+                            <input type="text" id="Subjectedit_title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                        </div>
+                        <div id="content_Subjectedit">
+                            <input type="text" id="Subjectedit_content" value={content} onChange={(e) => setContent(e.target.value)} />
+                        </div>
+                        <div id="file_Subjectedit">
+                            <input type="file" id="Subjectedit_file" onChange={(e) => setFile(e.target.files[0])} />
+                            {existingFile && <div><a href={existingFile} download>기존 첨부파일</a></div>}
+                        </div>
+                        <div id="buttons_Subjectedit">
+                            <button id="save" onClick={handleUpdateNotice}>저장</button>
+                            <button id="back" onClick={showDivSubject}>취소</button>
                         </div>
                     </div>
                 )}
