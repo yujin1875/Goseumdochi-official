@@ -72,7 +72,12 @@ public class MessageEntity {
     }
 
     // 학생과 선생 모두 삭제했으면 메시지를 DB에서 삭제하기 위해
-    public Boolean isDelete() {
+    public Boolean isAllDeleted() {
         return this.deleteByStudent.equals('Y') && this.deleteByTeacher.equals('Y');
     }
+
+    // setter 추가
+    public void setDeleteByStudent(String deleteByStudent) { this.deleteByStudent = deleteByStudent; }
+
+    public void setDeleteByTeacher(String deleteByTeacher) { this.deleteByTeacher = deleteByTeacher; }
 }

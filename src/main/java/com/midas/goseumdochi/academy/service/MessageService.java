@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import static com.midas.goseumdochi.util.Constants.MESSAGE_LIST_PAGE_LIMIT;
 
 @Service
@@ -64,5 +66,75 @@ public class MessageService {
                 entity.getTeacherEntity().getName(), null));
 
         return messageDTOPage;
+    }
+
+    // 보낸쪽지 목록 페이징 [선생]
+    public Page<MessageDTO> pagingSendOfTeacher(Long teacherId, Pageable pageable) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = MESSAGE_LIST_PAGE_LIMIT;
+        Page<MessageEntity> messageEntityPage = messageRepository.findAllSendByTeacherId(teacherId,
+                PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+
+        // 보낸사람은 null, 받은사람(학생) 이름 저장
+        Page<MessageDTO> messageDTOPage = messageEntityPage.map(entity -> new MessageDTO(
+                entity.getId(), entity.getTitle(), entity.getContent(), entity.getSendDate(), entity.getSender(),
+                entity.getViewState(), entity.getStudentEntity().getId(), entity.getTeacherEntity().getId(),
+                null, entity.getStudentEntity().getStudentName()));
+
+        return messageDTOPage;
+    }
+
+    // 보낸쪽지 목록 페이징 [학생]
+    public Page<MessageDTO> pagingSendOfStudent(Long studentId, Pageable pageable) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = MESSAGE_LIST_PAGE_LIMIT;
+        Page<MessageEntity> messageEntityPage = messageRepository.findAllSendByStudentId(studentId,
+                PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+
+        // 보낸사람은 null, 받은사람(선생) 이름 저장
+        Page<MessageDTO> messageDTOPage = messageEntityPage.map(entity -> new MessageDTO(
+                entity.getId(), entity.getTitle(), entity.getContent(), entity.getSendDate(), entity.getSender(),
+                entity.getViewState(), entity.getStudentEntity().getId(), entity.getTeacherEntity().getId(),
+                null, entity.getTeacherEntity().getName()));
+
+        return messageDTOPage;
+    }
+
+    // 쪽지 삭제 [선생]
+    public boolean deleteMessageByTeacher(Long messageId) {
+        Optional<MessageEntity> findMessage = messageRepository.findById(messageId);
+        if(findMessage.isEmpty())
+            return false;
+
+        MessageEntity messageEntity = findMessage.get();
+        messageEntity.setDeleteByTeacher("Y");
+        messageRepository.save(messageEntity); // DB 저장
+        if(messageEntity.isAllDeleted()) // 학생&선생 모두 삭제시 DB에서 삭제
+            messageRepository.delete(messageEntity);
+        return true;
+    }
+
+    // 쪽지 삭제 [학생]
+    public boolean deleteMessageByStudent(Long messageId) {
+        Optional<MessageEntity> findMessage = messageRepository.findById(messageId);
+        if(findMessage.isEmpty())
+            return false;
+
+        MessageEntity messageEntity = findMessage.get();
+        messageEntity.setDeleteByStudent("Y");
+        messageRepository.save(messageEntity); // DB 저장
+        if(messageEntity.isAllDeleted()) // 학생&선생 모두 삭제시 DB에서 삭제
+            messageRepository.delete(messageEntity);
+        return true;
+    }
+
+    // 쪽지 전송 취소 [통합] -> DB 삭제
+    public boolean cancelMessage(Long messageId) {
+        Optional<MessageEntity> findMessage = messageRepository.findById(messageId);
+        if(findMessage.isEmpty())
+            return false;
+
+        messageRepository.delete(findMessage.get());
+        return true;
     }
 }
