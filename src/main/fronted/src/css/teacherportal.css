@@ -1864,3 +1864,671 @@ hr{
     margin-top:10px;
     background-color:#FFFFFF;
 }
+
+/* 시험 관리 */
+
+#Exam_teacherportal{
+    float:left;
+    width:1625px;
+    height:900px;
+}
+
+#Exam_teacherportal>#but{
+    width:1625px;
+    height:80px;
+}
+
+#Exam_teacherportal>#Exam{
+    width:1625px;
+    height:800px;
+    background-color:#FFFFFF;
+}
+
+#Exam>#cate_Exam{
+    width:1625px;
+    height:50px;
+}
+
+#cate_Exam>#no{
+    float:left;
+    width:60px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#cate_Exam>#title{
+    float:left;
+    width:330px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#cate_Exam>#method{
+    float:left;
+    width:120px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#cate_Exam>#opendate{
+    float:left;
+    width:260px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#cate_Exam>#examperiod{
+    float:left;
+    width:120px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#cate_Exam>#duration{
+    float:left;
+    width:120px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#cate_Exam>#score{
+    float:left;
+    width:100px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#cate_Exam>#scorePublished{
+    float:left;
+    width:140px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#cate_Exam>#isOngoing{
+    float:left;
+    width:120px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#cate_Exam>#submissionCount{
+    float:left;
+    width:120px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#cate_Exam>#evaluationScore{
+    float:left;
+    width:120px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+
+#body_Exam>#Eno{
+    float:left;
+    width:60px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#body_Exam>#Etitle{
+    float:left;
+    width:330px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#body_Exam>#Emethod{
+    float:left;
+    width:120px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#body_Exam>#Eopendate{
+    float:left;
+    width:260px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#body_Exam>#Eexamperiod{
+    float:left;
+    width:120px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#body_Exam>#Eduration{
+    float:left;
+    width:120px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#body_Exam>#Escore{
+    float:left;
+    width:100px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#body_Exam>#EscorePublished{
+    float:left;
+    width:140px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#body_Exam>#EisOngoing{
+    float:left;
+    width:120px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#body_Exam>#EsubmissionCount{
+    float:left;
+    width:120px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+#body_Exam>#EevaluationScore{
+    float:left;
+    width:120px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+
+/* 시험 추가 */
+
+#ExamAdd_teacherportal{
+    float:left;
+    width:1625px;
+    height:80px;
+}
+
+#ExamAdd_teacherportal>#but{
+    width:1625px;
+    height:80px;
+}
+
+#title_ExamAdd{
+    float:left;
+    width:1625px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#title_ExamAdd>h2{
+    float:left;
+    width:100px;
+    height:30px;
+    margin-top:5px;
+    margin-left:110px;
+}
+
+#title_ExamAdd>input{
+    float:left;
+    width:1200px;
+    height:30px;
+    margin-top:7px;
+    margin-left:40px;
+}
+
+#method_ExamAdd{
+    float:left;
+    width:1625px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#method_ExamAdd>h2{
+    float:left;
+    width:140px;
+    height:30px;
+    margin-top:5px;
+    margin-left:110px;
+}
+
+#method_ExamAdd>#ExamAdd_method{
+    float:left;
+    width:150px;
+    height:30px;
+    margin-top:7px;
+}
+
+#opendate_ExamAdd{
+    float:left;
+    width:700px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#opendate_ExamAdd>h2{
+    float:left;
+    width:140px;
+    height:30px;
+    margin-top:5px;
+    margin-left:110px;
+}
+
+#opendate_ExamAdd>input{
+    float:left;
+    width:200px;
+    height:30px;
+    margin-top:7px;
+}
+
+#examperiod_ExamAdd{
+    float:left;
+    width:925px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#examperiod_ExamAdd>h2{
+    float:left;
+    width:140px;
+    height:30px;
+    margin-top:5px;
+}
+
+#examperiod_ExamAdd>input{
+    float:left;
+    width:200px;
+    height:30px;
+    margin-top:7px;
+}
+
+#examperiod_ExamAdd>#betweenLetter{
+    float:left;
+    width:23px;
+    height:30px;
+    margin-top:5px;
+    margin-left:5px;
+}
+
+#duration_ExamAdd{
+    float:left;
+    width:700px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#duration_ExamAdd>h2{
+    float:left;
+    width:140px;
+    height:30px;
+    margin-top:5px;
+    margin-left:110px;
+}
+
+#duration_ExamAdd>input{
+    float:left;
+    width:100px;
+    height:30px;
+    margin-top:7px;
+}
+
+#score_ExamAdd{
+    float:left;
+    width:925px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#score_ExamAdd>h2{
+    float:left;
+    width:140px;
+    height:30px;
+    margin-top:5px;
+}
+
+#score_ExamAdd>input{
+    float:left;
+    width:100px;
+    height:30px;
+    margin-top:7px;
+}
+
+#scorePublished_ExamAdd{
+    float:left;
+    width:1625px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#scorePublished_ExamAdd>h2{
+    float:left;
+    width:160px;
+    height:30px;
+    margin-top:5px;
+    margin-left:110px;
+}
+
+#scorePublished_ExamAdd>input{
+    float:left;
+    width:20px;
+    height:20px;
+    margin-top:12px;
+    margin-left:30px;
+}
+
+#scorePublished_ExamAdd>#ExamAdd_scorepublishdate{
+    float:left;
+    width:200px;
+    height:30px;
+    margin-top:7px;
+}
+
+#buttons_Assignmentadd{
+    float:left;
+    width:1625px;
+    height:100px;
+}
+
+#buttons_ExamAdd>button{
+    float:left;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin-top:15px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#content_ExamAdd{
+    float:left;
+    width:1625px;
+    height:500px;
+    background-color:#FFFFFF;
+}
+
+#content_ExamAdd>input{
+    width:1400px;
+    height:450px;
+    margin:auto;
+    margin-top:30px;
+    margin-left:110px;
+}
+
+#buttons_ExamAdd>#save{
+    margin-left:1350px;
+}
+
+#buttons_ExamAdd>#back{
+    margin-left:20px;
+}
+
+/* 시험 수정 */
+
+#ExamEdit_teacherportal{
+    float:left;
+    width:1625px;
+    height:80px;
+}
+
+#ExamEdit_teacherportal>#but{
+    width:1625px;
+    height:80px;
+}
+
+#title_ExamEdit{
+    float:left;
+    width:1625px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#title_ExamEdit>h2{
+    float:left;
+    width:100px;
+    height:30px;
+    margin-top:5px;
+    margin-left:110px;
+}
+
+#title_ExamEdit>input{
+    float:left;
+    width:1200px;
+    height:30px;
+    margin-top:7px;
+    margin-left:40px;
+}
+
+#method_ExamEdit{
+    float:left;
+    width:1625px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#method_ExamEdit>h2{
+    float:left;
+    width:140px;
+    height:30px;
+    margin-top:5px;
+    margin-left:110px;
+}
+
+#method_ExamEdit>#ExamEdit_method{
+    float:left;
+    width:150px;
+    height:30px;
+    margin-top:7px;
+}
+
+#opendate_ExamEdit{
+    float:left;
+    width:700px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#opendate_ExamEdit>h2{
+    float:left;
+    width:140px;
+    height:30px;
+    margin-top:5px;
+    margin-left:110px;
+}
+
+#opendate_ExamEdit>input{
+    float:left;
+    width:200px;
+    height:30px;
+    margin-top:7px;
+}
+
+#examperiod_ExamEdit{
+    float:left;
+    width:925px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#examperiod_ExamEdit>h2{
+    float:left;
+    width:140px;
+    height:30px;
+    margin-top:5px;
+}
+
+#examperiod_ExamEdit>input{
+    float:left;
+    width:200px;
+    height:30px;
+    margin-top:7px;
+}
+
+#examperiod_ExamEdit>#betweenLetter{
+    float:left;
+    width:23px;
+    height:30px;
+    margin-top:5px;
+    margin-left:5px;
+}
+
+#duration_ExamEdit{
+    float:left;
+    width:700px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#duration_ExamEdit>h2{
+    float:left;
+    width:140px;
+    height:30px;
+    margin-top:5px;
+    margin-left:110px;
+}
+
+#duration_ExamEdit>input{
+    float:left;
+    width:100px;
+    height:30px;
+    margin-top:7px;
+}
+
+#score_ExamEdit{
+    float:left;
+    width:925px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#score_ExamEdit>h2{
+    float:left;
+    width:140px;
+    height:30px;
+    margin-top:5px;
+}
+
+#score_ExamEdit>input{
+    float:left;
+    width:100px;
+    height:30px;
+    margin-top:7px;
+}
+
+#scorePublished_ExamEdit{
+    float:left;
+    width:1625px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#scorePublished_ExamEdit>h2{
+    float:left;
+    width:160px;
+    height:30px;
+    margin-top:5px;
+    margin-left:110px;
+}
+
+#scorePublished_ExamEdit>input{
+    float:left;
+    width:20px;
+    height:20px;
+    margin-top:12px;
+    margin-left:30px;
+}
+
+#scorePublished_ExamEdit>#ExamEdit_scorepublishdate{
+    float:left;
+    width:200px;
+    height:30px;
+    margin-top:7px;
+}
+
+#buttons_ExamEdit{
+    float:left;
+    width:1625px;
+    height:100px;
+}
+
+#buttons_ExamEdit>button{
+    float:left;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin-top:15px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#content_ExamEdit{
+    float:left;
+    width:1625px;
+    height:500px;
+    background-color:#FFFFFF;
+}
+
+#content_ExamEdit>input{
+    width:1400px;
+    height:450px;
+    margin:auto;
+    margin-top:30px;
+    margin-left:110px;
+}
+
+#buttons_ExamEdit>#save{
+    margin-left:1350px;
+}
+
+#buttons_ExamEdit>#back{
+    margin-left:20px;
+}
