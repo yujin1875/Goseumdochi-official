@@ -1,9 +1,11 @@
 package com.midas.goseumdochi.student.Controller;
+import com.midas.goseumdochi.student.Dto.AssignmentSubmissionDTO;
 import com.midas.goseumdochi.student.Dto.StudentDTO;
 import com.midas.goseumdochi.student.Repository.StudentRepository;
 import com.midas.goseumdochi.student.Service.FileStorageService;
 import com.midas.goseumdochi.student.Service.StudentService;
 import com.midas.goseumdochi.student.entity.StudentEntity;
+import com.midas.goseumdochi.teacher.dto.AssignmentDTO;
 import com.midas.goseumdochi.teacher.dto.LectureDTO;
 import com.midas.goseumdochi.teacher.dto.LectureNameDTO;
 import com.midas.goseumdochi.teacher.dto.TeacherDTO;
@@ -19,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import com.midas.goseumdochi.teacher.service.AssignmentService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,6 +42,7 @@ public class StudentController {
     private final StudentRepository studentRepository;
     private final EncDecService encDecService;
     private final RecommentService recommentService;
+    private final AssignmentService assignmentService;
 
     // 회원가입 페이지 폼 작성 데이터 받기
     @PostMapping("/signup")
@@ -224,4 +228,132 @@ public class StudentController {
         List<RecommendDTO> recommendList = recommentService.recommend(major_subject, n_recommendations);
         return ResponseEntity.ok(recommendList);
     }
+
+    // 과제 제출
+    @PostMapping("/submitAssignmentFile")
+    public ResponseEntity<?> submitAssignmentFile(
+            @RequestParam("assignmentFile") MultipartFile file,  // 첨부 파일
+            @RequestParam("assignmentId") Long assignmentId,      // 과제 ID
+            @RequestParam("title") String title,                 // 과제 제목
+            @RequestParam("content") String content,             // 과제 내용
+            HttpSession session) {
+
+        Long studentId = (Long) session.getAttribute("loginId");  // 세션에서 로그인된 학생 ID를 가져옴
+        if (studentId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+        if (file.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("파일이 선택되지 않았습니다.");
+        }
+        try {
+            // 파일을 "stu_assignments" 폴더에 저장
+            String fileUrl = fileStorageService.uploadFile(file, "stu_assignments");
+
+            // 과제 제출 정보 저장 (학생 ID, 과제 ID, 제목, 내용, 파일 경로를 전달)
+            studentService.saveAssignmentSubmission(studentId, assignmentId, title, content, fileUrl);
+
+            return ResponseEntity.ok("과제가 성공적으로 제출되었습니다.");
+
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("파일 업로드 중 오류가 발생했습니다.");
+        }
+    }
+
+    // 과제 제출
+    @PostMapping("/submitAssignment")
+    public ResponseEntity<?> submitAssignment(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("assignmentId") Long assignmentId,
+            @RequestParam("title") String title,
+            @RequestParam("content") String content,
+            HttpSession session) {
+
+        Long studentId = (Long) session.getAttribute("loginId");
+        if (studentId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+
+        try {
+            // 파일 GCP 버킷에 업로드 (폴더: "stu_assignments/")
+            String fileUrl = fileStorageService.uploadFile(file, "stu_assignments");
+
+            // 과제 제출 데이터 저장
+            studentService.saveAssignmentSubmission(studentId, assignmentId, title, content, fileUrl);
+
+            return ResponseEntity.ok("과제 제출 성공");
+
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("파일 업로드 실패");
+        }
+    }
+
+    // 과제 수정
+    @PostMapping("/updateAssignment")
+    public ResponseEntity<?> updateAssignment(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("assignmentId") Long assignmentId,
+            @RequestParam("title") String title,
+            @RequestParam("content") String content,
+            HttpSession session) {
+
+        Long studentId = (Long) session.getAttribute("loginId");
+        if (studentId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+
+        try {
+            // 파일 GCP 버킷에 업로드 (폴더: "stu_assignments/")
+            String fileUrl = fileStorageService.uploadFile(file, "stu_assignments");
+
+            // 과제 수정 정보 업데이트
+            studentService.updateAssignmentSubmission(studentId, assignmentId, title, content, fileUrl);
+
+            return ResponseEntity.ok("과제 수정 성공");
+
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("파일 업로드 실패");
+        }
+    }
+
+    // 과제 삭제
+    @DeleteMapping("/deleteAssignment/{assignmentId}")
+    public ResponseEntity<?> deleteAssignment(@PathVariable Long assignmentId, HttpSession session) {
+        Long studentId = (Long) session.getAttribute("loginId");
+        if (studentId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+
+        studentService.deleteAssignmentSubmission(studentId, assignmentId);
+        return ResponseEntity.ok("과제 삭제 성공");
+    }
+
+    // 학생이 이미 제출한 과제 조회
+    @GetMapping("/submittedAssignments")
+    public ResponseEntity<?> getSubmittedAssignments(HttpSession session) {
+        Long studentId = (Long) session.getAttribute("loginId");
+        if (studentId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+
+        List<AssignmentSubmissionDTO> submittedAssignments = studentService.getSubmittedAssignments(studentId);
+        return ResponseEntity.ok(submittedAssignments);
+    }
+
+    // 특정 과제에 대해 학생이 제출한 내역 확인
+    @GetMapping("/submittedAssignment/{assignmentId}")
+    public ResponseEntity<?> getSubmittedAssignment(@PathVariable Long assignmentId, HttpSession session) {
+        Long studentId = (Long) session.getAttribute("loginId");
+        if (studentId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+
+        Optional<AssignmentSubmissionDTO> assignmentSubmission = studentService.getAssignmentSubmission(studentId, assignmentId);
+
+        if (assignmentSubmission.isPresent()) {
+            return ResponseEntity.ok(assignmentSubmission.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("제출한 과제 정보를 찾을 수 없습니다.");
+        }
+    }
+
 }

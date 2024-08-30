@@ -74,7 +74,7 @@ public class MessageController {
     }
 
     // 보낸쪽지 목록 페이징 [학생]
-    @GetMapping("/student/{studentId}/receive/paging")
+    @GetMapping("/student/{studentId}/send/paging")
     public ResponseEntity<?> pagingSendOfStudent(@PathVariable Long studentId, @PageableDefault(page = 1)Pageable pageable) {
         Page<MessageDTO> messageDTOPage = messageService.pagingSendOfStudent(studentId, pageable);
         int blockLimit = MESSAGE_LIST_BLOCK_LIMIT;

@@ -1,7 +1,10 @@
 package com.midas.goseumdochi.student.Service;
 
+import com.midas.goseumdochi.student.Dto.AssignmentSubmissionDTO;
 import com.midas.goseumdochi.student.Dto.StudentDTO;
+import com.midas.goseumdochi.student.Repository.AssignmentSubmissionRepository;
 import com.midas.goseumdochi.student.Repository.StudentRepository;
+import com.midas.goseumdochi.student.entity.AssignmentSubmissionEntity;
 import com.midas.goseumdochi.student.entity.StudentEntity;
 import com.midas.goseumdochi.util.ai.EncDecService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,7 @@ import java.util.stream.Collectors;
 public class StudentService {
     private final StudentRepository studentRepository;
     private final EncDecService encDecService;
+    private final AssignmentSubmissionRepository assignmentSubmissionRepository;
 
     //회원가입 로직
     public int join(StudentDTO studentDTO, String passwordCheck) {
@@ -116,5 +120,51 @@ public class StudentService {
                 .map(StudentDTO::toStudentDTO)
                 .collect(Collectors.toList());
     }
+
+    public void saveAssignmentSubmission(Long studentId, Long assignmentId, String title, String content, String fileUrl) {
+        AssignmentSubmissionEntity submission = AssignmentSubmissionEntity.builder()
+                .studentId(studentId)
+                .assignmentId(assignmentId)
+                .title(title)
+                .content(content)
+                .attachmentPath(fileUrl)
+                .build();
+        assignmentSubmissionRepository.save(submission);
+    }
+
+    public void updateAssignmentSubmission(Long studentId, Long assignmentId, String title, String content, String fileUrl) {
+        AssignmentSubmissionEntity submission = assignmentSubmissionRepository.findByStudentIdAndAssignmentId(studentId, assignmentId)
+                .orElseThrow(() -> new RuntimeException("과제 제출 정보를 찾을 수 없습니다."));
+
+        submission.setTitle(title);
+        submission.setContent(content);
+        submission.setAttachmentPath(fileUrl);
+
+        assignmentSubmissionRepository.save(submission);
+    }
+
+    public void deleteAssignmentSubmission(Long studentId, Long assignmentId) {
+        AssignmentSubmissionEntity submission = assignmentSubmissionRepository.findByStudentIdAndAssignmentId(studentId, assignmentId)
+                .orElseThrow(() -> new RuntimeException("과제 제출 정보를 찾을 수 없습니다."));
+
+        assignmentSubmissionRepository.delete(submission);
+    }
+
+    public List<AssignmentSubmissionDTO> getSubmittedAssignments(Long studentId) {
+        List<AssignmentSubmissionEntity> submissions = assignmentSubmissionRepository.findByStudentId(studentId);
+        return submissions.stream()
+                .map(submission -> new AssignmentSubmissionDTO(submission.getId(), submission.getStudentId(),
+                        submission.getAssignmentId(), submission.getTitle(), submission.getContent(), submission.getAttachmentPath()))
+                .collect(Collectors.toList());
+    }
+
+    public Optional<AssignmentSubmissionDTO> getAssignmentSubmission(Long studentId, Long assignmentId) {
+        Optional<AssignmentSubmissionEntity> submission = assignmentSubmissionRepository.findByStudentIdAndAssignmentId(studentId, assignmentId);
+        return submission.map(sub -> new AssignmentSubmissionDTO(sub.getId(), sub.getStudentId(), sub.getAssignmentId(),
+                sub.getTitle(), sub.getContent(), sub.getAttachmentPath()));
+    }
+
+
+
 }
 
