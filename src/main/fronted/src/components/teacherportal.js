@@ -479,6 +479,34 @@ function App26() {
         }
     };
 
+    const showDivSubjectEdit = () => {
+        setVisibleDiv('Subjectedit');
+        setTitle(currentNotice?.title || '');
+        setContent(currentNotice?.content || '');
+        setFile(null);
+        setExistingFile(currentNotice?.attachmentPath || null);
+    };
+
+    const handleUpdateNotice = async () => {
+        const formData = new FormData();
+        formData.append('notice', new Blob([JSON.stringify({ title, content, author: user.name })], { type: "application/json" }));
+        if (file) {
+            formData.append('file', file);
+        }
+
+        try {
+            await axios.put(`/api/teacher/subject-notice/${currentNotice.id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            showDivSubject();
+            fetchNotices();
+        } catch (error) {
+            console.error("There was an error updating the notice!", error);
+        }
+    };
+
 
     const showDivHome = () => {
         setVisibleDiv('Home');
@@ -867,9 +895,31 @@ function App26() {
                             </div>
                         </div>
                         <div id="buttons_Subjectread">
-                            <button id="revise" onClick={showDivSubjectAdd}>수정</button>
+                            <button id="revise" onClick={showDivSubjectEdit}>수정</button>
                             <button id="delete" onClick={() => handleDeleteNotice(currentNotice.id)}>삭제</button>
                             <button id="back" onClick={showDivSubject}>목록</button>
+                        </div>
+                    </div>
+                )}
+                {visibleDiv === 'Subjectedit' && (
+                    <div id="Subjectedit_teacherportal">
+                        <div id="but">
+                            <h2>과목 공지 수정</h2>
+                        </div>
+                        <div id="title_Subjectedit">
+                            <h2>제목</h2>
+                            <input type="text" id="Subjectedit_title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                        </div>
+                        <div id="content_Subjectedit">
+                            <input type="text" id="Subjectedit_content" value={content} onChange={(e) => setContent(e.target.value)} />
+                        </div>
+                        <div id="file_Subjectedit">
+                            <input type="file" id="Subjectedit_file" onChange={(e) => setFile(e.target.files[0])} />
+                            {existingFile && <div><a href={existingFile} download>기존 첨부파일</a></div>}
+                        </div>
+                        <div id="buttons_Subjectedit">
+                            <button id="save" onClick={handleUpdateNotice}>저장</button>
+                            <button id="back" onClick={showDivSubject}>취소</button>
                         </div>
                     </div>
                 )}
