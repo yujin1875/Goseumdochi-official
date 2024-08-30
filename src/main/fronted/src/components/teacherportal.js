@@ -822,7 +822,7 @@ function App26() {
                                     <div id="Sno">{notice.id}</div>
                                     <div id="Stitle" onClick={() => handleNoticeClick(notice.id)}>{notice.title}</div>
                                     <div id="Sauthor">{notice.author}</div>
-                                    <div id="Sopendate">{notice.createdAt}</div>
+                                    <div id="Sopendate">{new Date(notice.createdAt).toISOString().slice(0, 19)}</div>
                                 </div>
                             ))}
                         </div>
