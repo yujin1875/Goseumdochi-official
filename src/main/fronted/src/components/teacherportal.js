@@ -1197,7 +1197,7 @@ function App26() {
                             </div>
                             <div id="Exam">
                                 <div id="cate_Exam">
-                                    <div id="no">번호</div>
+                                    <div id="no"><span>번호</span></div>
                                     <div id="title">제목</div>
                                     <div id="method">시험 방식</div>
                                     <div id="opendate">공개일</div>
@@ -1253,7 +1253,7 @@ function App26() {
                         <div id="examperiod_ExamAdd">
                             <h2>응시 기간</h2>
                             <input type="datetime-local" id="ExamAdd_examperiodstart" value={examPeriodStart} onChange={(e) => setExamPeriodStart(e.target.value)} />
-                            ~
+                            <h2 id="betweenLetter">~</h2>
                             <input type="datetime-local" id="ExamAdd_examperiodend" value={examPeriodEnd} onChange={(e) => setExamPeriodEnd(e.target.value)} />
                         </div>
                         <div id="duration_ExamAdd">
@@ -1270,6 +1270,9 @@ function App26() {
                             {scorePublished && (
                                 <input type="datetime-local" id="ExamAdd_scorepublishdate" value={scorePublishDate} onChange={(e) => setScorePublishDate(e.target.value)} />
                             )}
+                        </div>
+                        <div id="content_ExamAdd">
+                            <input type="text" id="ExamAdd_content"/>
                         </div>
                         <div id="buttons_ExamAdd">
                             <button id="save" onClick={handleSaveExam}>
@@ -1422,7 +1425,7 @@ function App26() {
                         <div id="examperiod_ExamEdit">
                             <h2>응시 기간</h2>
                             <input type="datetime-local" id="ExamEdit_examperiodstart" value={examPeriodStart} onChange={(e) => setExamPeriodStart(e.target.value)} />
-                            ~
+                            <h2 id="betweenLetter">~</h2>
                             <input type="datetime-local" id="ExamEdit_examperiodend" value={examPeriodEnd} onChange={(e) => setExamPeriodEnd(e.target.value)} />
                         </div>
                         <div id="duration_ExamEdit">
@@ -1439,6 +1442,9 @@ function App26() {
                             {scorePublished && (
                                 <input type="datetime-local" id="ExamEdit_scorepublishdate" value={scorePublishDate} onChange={(e) => setScorePublishDate(e.target.value)} />
                             )}
+                        </div>
+                        <div id="content_ExamEdit">
+                            <input type="text" id="ExamAdd_content"/>
                         </div>
                         <div id="buttons_ExamEdit">
                             <button id="save" onClick={handleUpdateExam}>
