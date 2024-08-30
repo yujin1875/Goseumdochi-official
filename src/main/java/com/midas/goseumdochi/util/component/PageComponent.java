@@ -5,8 +5,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 @Component
 public class PageComponent {

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,5 +60,54 @@ public class MessageController {
         Map<String, Object> response = pageComponent.getHashMapPage(blockLimit, pageable, messageDTOPage, MESSAGE);
 
         return ResponseEntity.ok(response);
+    }
+
+    // 보낸쪽지 목록 페이징 [선생]
+    @GetMapping("/teacher/{teacherId}/send/paging")
+    public ResponseEntity<?> pagingSendOfTeacher(@PathVariable Long teacherId, @PageableDefault(page = 1)Pageable pageable) {
+        Page<MessageDTO> messageDTOPage = messageService.pagingSendOfTeacher(teacherId, pageable);
+        int blockLimit = MESSAGE_LIST_BLOCK_LIMIT;
+        // 프론트 보낼 Map 얻기!
+        Map<String, Object> response = pageComponent.getHashMapPage(blockLimit, pageable, messageDTOPage, MESSAGE);
+
+        return ResponseEntity.ok(response);
+    }
+
+    // 보낸쪽지 목록 페이징 [학생]
+    @GetMapping("/student/{studentId}/receive/paging")
+    public ResponseEntity<?> pagingSendOfStudent(@PathVariable Long studentId, @PageableDefault(page = 1)Pageable pageable) {
+        Page<MessageDTO> messageDTOPage = messageService.pagingSendOfStudent(studentId, pageable);
+        int blockLimit = MESSAGE_LIST_BLOCK_LIMIT;
+        // 프론트 보낼 Map 얻기!
+        Map<String, Object> response = pageComponent.getHashMapPage(blockLimit, pageable, messageDTOPage, MESSAGE);
+
+        return ResponseEntity.ok(response);
+    }
+
+    // 쪽지 삭제 [선생]
+    @PostMapping("/{messageId}/teacher/delete")
+    public ResponseEntity<?> deleteMessageByTeacher(@PathVariable Long messageId) {
+        if(messageService.deleteMessageByTeacher(messageId) == false)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("쪽지 삭제 실패");
+
+        return ResponseEntity.ok("쪽지 삭제 성공");
+    }
+
+    // 쪽지 삭제 [학생]
+    @PostMapping("/{messageId}/student/delete")
+    public ResponseEntity<?> deleteMessageByStudent(@PathVariable Long messageId) {
+        if(messageService.deleteMessageByStudent(messageId) == false)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("쪽지 삭제 실패");
+
+        return ResponseEntity.ok("쪽지 삭제 성공");
+    }
+
+    // 쪽지 전송 취소 [통합] -> DB 삭제
+    @PostMapping("/{messageId}/cancel")
+    public ResponseEntity<?> cancelMessage(@PathVariable Long messageId) {
+        if(messageService.cancelMessage(messageId) == false)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("쪽지 전송취소 실패");
+
+        return ResponseEntity.ok("쪽지 전송취소 성공");
     }
 }
