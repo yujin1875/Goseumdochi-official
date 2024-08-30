@@ -224,6 +224,7 @@ function App26() {
     const handleUpdateAssignment = async () => {
         const openDate = new Date(document.getElementById('Assignmentrevise_opendate').value).toISOString().slice(0, 19);
         const closeDate = new Date(document.getElementById('Assignmentrevise_closedate').value).toISOString().slice(0, 19);
+        const examType = document.getElementById('numbers').value === "1" ? "온라인" : "오프라인";
 
         const assignmentDTO = {
             id: currentAssignment?.id,
@@ -232,7 +233,8 @@ function App26() {
             points,
             createdAt: openDate,
             deadline: closeDate,
-            lectureId // lectureId 추가
+            examType,
+            lectureId
         };
 
         const formData = new FormData();
@@ -370,13 +372,15 @@ function App26() {
 
         const openDate = new Date(document.getElementById('Assignmentadd_opendate').value).toISOString().slice(0, 19);
         const closeDate = new Date(document.getElementById('Assignmentadd_closedate').value).toISOString().slice(0, 19);
+        const examType = document.getElementById('numbers').value === "1" ? "온라인" : "오프라인";
 
         const assignmentDTO = {
             title,
             content,
             points,
             createdAt: openDate,
-            deadline: closeDate
+            deadline: closeDate,
+            examType
         };
 
         const formData = new FormData();
@@ -663,7 +667,7 @@ function App26() {
                 </ul>
             </div>
             <div id="teacherportal_header">
-            <div id="menu_btn" />
+                <div id="menu_btn" />
                 <div id="home_btn" />
                 <div id="title">
 
