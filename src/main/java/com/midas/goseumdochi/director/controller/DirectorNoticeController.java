@@ -115,4 +115,21 @@ public class DirectorNoticeController {
         noticeRepository.deleteById(Math.toIntExact(id));
         return ResponseEntity.ok("공지사항이 삭제되었습니다");
     }
+
+    @PutMapping("/updateNotice/{id}")
+    public ResponseEntity<String> updateNotice(@PathVariable Long id, @RequestBody DirectorNoticeDTO noticeDTO) {
+        // ID로 공지사항 조회
+        DirectorNoticeEntity notice = noticeRepository.findById(Math.toIntExact(id)).orElse(null);
+        if (notice == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("공지사항을 찾을 수 없습니다");
+        }
+
+        // 공지사항 수정
+        notice.setTitle(noticeDTO.getTitle());
+        notice.setContent(noticeDTO.getContent());
+        notice.setRegdate(new Date(System.currentTimeMillis())); // 수정일자 업데이트
+
+        noticeRepository.save(notice);
+        return ResponseEntity.ok("공지사항이 수정되었습니다");
+    }
 }

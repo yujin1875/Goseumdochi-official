@@ -1,5 +1,6 @@
 package com.midas.goseumdochi.community.entity;
 
+import com.midas.goseumdochi.academy.entity.AcademyEntity;
 import com.midas.goseumdochi.student.entity.StudentEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -39,6 +40,10 @@ public class PostEntity {
 
     @Column(nullable = false)
     private int star;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "academy_id")
+    private AcademyEntity academy;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id", nullable = false)

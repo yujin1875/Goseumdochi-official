@@ -17,6 +17,7 @@ public class PostDTO {
     private int likeCount;
     private Long writerId;
     private Long categoryId;
+    private Long academyId;
     private boolean isModified;
     private List<CommentDTO> comments;
     private Integer star; // 별점
