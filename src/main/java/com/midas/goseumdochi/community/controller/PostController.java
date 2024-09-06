@@ -43,4 +43,10 @@ public class PostController {
     public void deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
     }
+
+    @GetMapping("/search")
+    public List<PostDTO> searchPosts(@RequestParam(value = "keyword", defaultValue = "") String keyword) {
+        System.out.println("Search Keyword: " + keyword); // 확인용
+        return postService.searchPosts(keyword);
+    }
 }

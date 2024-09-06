@@ -1,5 +1,7 @@
 package com.midas.goseumdochi.community.service;
 
+import com.midas.goseumdochi.academy.entity.AcademyEntity;
+import com.midas.goseumdochi.academy.repository.AcademyRepository;
 import com.midas.goseumdochi.community.dto.CommentDTO;
 import com.midas.goseumdochi.community.dto.PostDTO;
 import com.midas.goseumdochi.community.entity.CategoryEntity;
@@ -31,6 +33,9 @@ public class PostService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private AcademyRepository academyRepository;
+
     private final PostLikeRepository postLikeRepository;
     private final CommentRepository commentRepository;
 
@@ -48,6 +53,9 @@ public class PostService {
         CategoryEntity category = categoryRepository.findById(postDTO.getCategoryId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid category ID"));
 
+        AcademyEntity academy = academyRepository.findById(postDTO.getAcademyId())
+                .orElse(null); // academy가 null일 경우를 허용
+
         PostEntity postEntity = PostEntity.builder()
                 .title(postDTO.getTitle())
                 .content(postDTO.getContent())
@@ -56,6 +64,7 @@ public class PostService {
                 .likeCount(postDTO.getLikeCount())
                 .writer(writer)
                 .category(category)
+                .academy(academy) // academy가 null일 수 있음
                 .isModified(postDTO.isModified())
                 .star(postDTO.getStar() != null ? postDTO.getStar() : 0) // Null 체크 및 기본값 설정
                 .build();
@@ -65,7 +74,21 @@ public class PostService {
         return convertToDTO(postEntity);
     }
 
-
+    private PostDTO convertToDTO(PostEntity postEntity) {
+        return PostDTO.builder()
+                .id(postEntity.getId())
+                .title(postEntity.getTitle())
+                .content(postEntity.getContent())
+                .createDate(postEntity.getCreateDate())
+                .views(postEntity.getViews())
+                .likeCount(postEntity.getLikeCount())
+                .writerId(postEntity.getWriter().getId())
+                .categoryId(postEntity.getCategory().getId())
+                .academyId(postEntity.getAcademy() != null ? postEntity.getAcademy().getId() : 0L) // academy가 null일 경우 0으로 설정
+                .isModified(postEntity.isModified())
+                .star(postEntity.getStar()) // 별점 정보 추가
+                .build();
+    }
 
     public List<PostDTO> getAllPosts() {
         return postRepository.findAll().stream()
@@ -79,23 +102,6 @@ public class PostService {
         return convertToDTO(postEntity);
     }
 
-    private PostDTO convertToDTO(PostEntity postEntity) {
-        return PostDTO.builder()
-                .id(postEntity.getId())
-                .title(postEntity.getTitle())
-                .content(postEntity.getContent())
-                .createDate(postEntity.getCreateDate())
-                .views(postEntity.getViews())
-                .likeCount(postEntity.getLikeCount())
-                .writerId(postEntity.getWriter().getId())
-                .categoryId(postEntity.getCategory().getId()) // CategoryEntity가 아닌 ID만 추출
-                .isModified(postEntity.isModified())
-                .star(postEntity.getStar()) // 별점 정보 추가
-                .build();
-    }
-
-
-
     public PostDTO updatePost(Long id, PostDTO postDTO) {
         PostEntity postEntity = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Post not found"));
@@ -103,9 +109,13 @@ public class PostService {
         CategoryEntity category = categoryRepository.findById(postDTO.getCategoryId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid category ID"));
 
+        AcademyEntity academy = academyRepository.findById(postDTO.getAcademyId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid academy ID"));
+
         postEntity.setTitle(postDTO.getTitle());
         postEntity.setContent(postDTO.getContent());
         postEntity.setCategory(category);
+        postEntity.setAcademy(academy);
         postEntity.setModified(true);
         postEntity.setCreateDate(LocalDateTime.now());
         postEntity.setStar(postDTO.getStar()); // 별점 정보 추가
@@ -115,7 +125,6 @@ public class PostService {
         return convertToDTO(postEntity);
     }
 
-
     // Hot게시물 찾기 위함
     public List<PostDTO> getPostsByMinimumLikes(int minimumLikes) {
         return postRepository.findByLikeCountGreaterThanEqual(minimumLikes).stream()
@@ -124,7 +133,6 @@ public class PostService {
     }
 
     // 댓글 기능
-
 
     public PostDTO getPostByIdWithComments(Long id) {
         PostEntity postEntity = postRepository.findById(id)
@@ -163,7 +171,6 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
-
     // 게시글 삭제
     public void deletePost(Long postId) {
         // 포스트에 연결된 모든 좋아요를 먼저 삭제
@@ -176,5 +183,12 @@ public class PostService {
 
         // 그 후에 포스트를 삭제
         postRepository.deleteById(postId);
+    }
+
+    // 검색 기능
+    public List<PostDTO> searchPosts(String keyword) {
+        return postRepository.findByTitleContainingOrContentContaining(keyword, keyword).stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 }

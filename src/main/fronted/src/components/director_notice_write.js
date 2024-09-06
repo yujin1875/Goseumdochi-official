@@ -9,6 +9,7 @@ function DirectorNoticeWrite() {
     const [notices, setNotices] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [editingNotice, setEditingNotice] = useState(null);
 
     const { user } = location.state || {};
 
@@ -60,23 +61,35 @@ function DirectorNoticeWrite() {
         };
 
         try {
-            const response = await axios.post('/api/director/addNotice', notice, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}` // 토큰을 헤더에 추가
-                }
-            });
+            if (editingNotice) {
+                // 수정
+                await axios.put(`/api/director/updateNotice/${editingNotice.num}`, notice, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}` // 토큰을 헤더에 추가
+                    }
+                });
+                alert('공지사항이 수정되었습니다.');
+            } else {
+                // 추가
+                await axios.post('/api/director/addNotice', notice, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}` // 토큰을 헤더에 추가
+                    }
+                });
+                alert('공지사항이 추가되었습니다.');
+            }
 
-            // 공지사항 추가 후 공지사항 목록을 새로 고침
+            // 공지사항 목록을 새로 고침
             window.location.reload();
         } catch (error) {
             console.error('Error:', error);
-            alert('공지사항 추가 중 오류가 발생했습니다');
+            alert('공지사항 처리 중 오류가 발생했습니다');
         }
     }
 
     const handleDelete = async (id) => {
         try {
-            const response = await axios.delete(`/api/director/deleteNotice/${id}`, {
+            await axios.delete(`/api/director/deleteNotice/${id}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}` // 토큰을 헤더에 추가
                 }
@@ -90,8 +103,11 @@ function DirectorNoticeWrite() {
         }
     };
 
-
-
+    const handleEdit = (notice) => {
+        setTitle(notice.title);
+        setContent(notice.content);
+        setEditingNotice(notice);
+    }
 
     const goBackToAdminNotice = () => {
         window.location.href = '/director/main';
@@ -102,9 +118,9 @@ function DirectorNoticeWrite() {
             <div id="director_noticewrite_frame">
                 <div id="director_noticewrite_header">
                     <a onClick={goBackToAdminNotice}> &lt; </a>
-                    <h2>공지사항 등록</h2>
+                    <h2>{editingNotice ? '공지사항 수정' : '공지사항 등록'}</h2>
                     <div id="write_btn">
-                        <div id="write" onClick={handleSubmit}>등록</div>
+                        <div id="write" onClick={handleSubmit}>{editingNotice ? '수정' : '등록'}</div>
                     </div>
                 </div>
                 <div id="rect" />
@@ -138,17 +154,17 @@ function DirectorNoticeWrite() {
                     ) : (
                         <ul>
                             {notices.map((notice) => (
-                                <li key={notice.num}> {/* 'id' 대신 'num'을 사용하여 고유 키로 설정 */}
+                                <li key={notice.num}>
                                     <h4>{notice.title}</h4>
                                     <p>{notice.content}</p>
                                     <p><small>{new Date(notice.regdate).toLocaleDateString()}</small></p>
-                                    <button onClick={() => handleDelete(notice.num)}>삭제</button> {/* 'id' 대신 'num'을 사용 */}
+                                    <button onClick={() => handleEdit(notice)}>수정</button>
+                                    <button onClick={() => handleDelete(notice.num)}>삭제</button>
                                 </li>
                             ))}
                         </ul>
                     )}
                 </div>
-
             </div>
         </div>
     );
