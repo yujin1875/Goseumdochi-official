@@ -1029,10 +1029,14 @@ hr{
 }
 
 #buttons_Assignmentread>#save{
-    margin-left:1200px;
+    margin-left:1050px;
 }
 
 #buttons_Assignmentread>#delete{
+    margin-left:20px;
+}
+
+#buttons_Assignmentread>#estimation{
     margin-left:20px;
 }
 
@@ -2531,4 +2535,217 @@ hr{
 
 #buttons_ExamEdit>#back{
     margin-left:20px;
+}
+
+/* 과제 조회/제출 평가 1103 */
+
+#AssignmentEstimation_teacherportal{
+    float:left;
+    width:1625px;
+    height:80px;
+}
+
+#AssignmentEstimation_teacherportal>#but{
+    width:1625px;
+    height:80px;
+}
+
+#AssignmentEstimation_teacherportal>#AssignmentEstimation{
+    width:1625px;
+    height:800px;
+    background-color:#FFFFFF;
+}
+
+#AssignmentEstimation>#cate_AssignmentEstimation{
+    width:1625px;
+    height:50px;
+}
+
+#cate_AssignmentEstimation>#name{
+    float:left;
+    width:250px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+    margin-left:170px;
+    border-top: 1px solid #CED4DA;
+    border-bottom: 1px solid #CED4DA;
+    border-right: 1px solid #CED4DA;
+}
+#cate_AssignmentEstimation>#StudentID{
+    float:left;
+    width:250px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+    border-top: 1px solid #CED4DA;
+    border-bottom: 1px solid #CED4DA;
+    border-right: 1px solid #CED4DA;
+}
+#cate_AssignmentEstimation>#submit{
+    float:left;
+    width:250px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+    border-top: 1px solid #CED4DA;
+    border-bottom: 1px solid #CED4DA;
+    border-right: 1px solid #CED4DA;
+}
+#cate_AssignmentEstimation>#score{
+    float:left;
+    width:250px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+    border-top: 1px solid #CED4DA;
+    border-bottom: 1px solid #CED4DA;
+    border-right: 1px solid #CED4DA;
+}
+#cate_AssignmentEstimation>#opinion{
+    float:left;
+    width:250px;
+    height:40px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+    border-top: 1px solid #CED4DA;
+    border-bottom: 1px solid #CED4DA;
+}
+
+#AssignmentEstimation>#info_AssignmentEstimation{
+    width:1625px;
+    height:700px;
+}
+
+#info_AssignmentEstimation>#Aname{
+    float:left;
+    width:250px;
+    height:680px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+    margin-left:170px;
+    border-right: 1px solid #CED4DA;
+}
+#info_AssignmentEstimation>#AStudentID{
+    float:left;
+    width:250px;
+    height:680px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+    border-right: 1px solid #CED4DA;
+}
+#info_AssignmentEstimation>#Asubmit{
+    float:left;
+    width:250px;
+    height:680px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+    border-right: 1px solid #CED4DA;
+}
+#info_AssignmentEstimation>#Ascore{
+    float:left;
+    width:250px;
+    height:680px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+    border-right: 1px solid #CED4DA;
+}
+#info_AssignmentEstimation>#Aopinion{
+    float:left;
+    width:250px;
+    height:680px;
+    text-align:center;
+    font-size:20px;
+    margin:auto;
+    margin-top:5px;
+}
+
+/* 과제 조회/제출 평가에서 학생이름 클릭 1125*/
+#AssignmentEstimationStudent_teacherportal{
+    float:left;
+    width:1625px;
+    height:80px;
+}
+
+#AssignmentEstimationStudent_teacherportal>#but{
+    width:1625px;
+    height:80px;
+}
+
+#AssignmentEstimationStudent_teacherportal>#AssignmentEstimationStudent{
+    width:1625px;
+    height:800px;
+    background-color:#FFFFFF;
+}
+
+#AssignmentEstimationStudent>#title_AssignmentEstimationStudent{
+    width:1625px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#title_AssignmentEstimationStudent>h2{
+    width:150px;
+    height:30px;
+    margin-top:15px;
+    margin-left:110px;
+}
+
+#title_AssignmentEstimationStudent>#StudentWrite{
+    width:700px;
+    height:100px;
+    margin-top:7px;
+    margin-left:110px;
+    border: 1px solid #CED4DA;
+}
+
+#AssignmentEstimationStudent>button{
+    float:left;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin-top:15px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+
+#AssignmentEstimationStudent>#file_AssignmentEstimationStudent{
+    width:1625px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#file_AssignmentEstimationStudent>h2{
+    width:150px;
+    height:30px;
+    margin-top:120px;
+    margin-left:110px;
+}
+
+#file_AssignmentEstimationStudent>#StudentFile{
+    width:700px;
+    height:100px;
+    margin-top:10px;
+    margin-left:110px;
+    border: 1px solid #CED4DA;
 }
