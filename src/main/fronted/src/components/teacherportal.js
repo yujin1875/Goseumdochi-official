@@ -545,11 +545,19 @@ function App26() {
         setCurrentAssignment(null);
     };
 
+    const showDivAssignmentEstimation = () => {
+        setVisibleDiv('AssignmentEstimation');
+    }
+
     const showDivAssignmentRead = () => {
         setVisibleDiv('Assignmentread');
     };
     const showDivAssignmentread = () => {
         setVisibleDiv('Assignmentread');
+    };
+
+    const showDivExamRead = () => {
+        setVisibleDiv('ExamRead');
     };
 
     const showDivLecturedata = () => {
@@ -575,11 +583,6 @@ function App26() {
         setCurrentExam(null);
     };
 
-
-    const showDivExamRead = () => {
-        setVisibleDiv('ExamRead');
-    };
-
     const showDivExamEdit = () => {
         setVisibleDiv('ExamEdit');
     };
@@ -590,6 +593,10 @@ function App26() {
 
     const showsubDivView = () => {
         setVisiblesubDiv('View');
+    };
+
+    const showDivAssignmentEstimationStudent = () => {
+        setVisibleDiv('AssignmentEstimationStudent');
     };
 
     const showsubDivWrite = () => {
@@ -679,7 +686,7 @@ function App26() {
         <div id="App">
             <div id="menu_teacherportal">
                 <div id="teacher_info">
-                    <img src={logo} />
+                    <img src={logo} onClick={showDivAssignmentEstimationStudent}/>
                     <h2>고슴도치</h2>
                 </div>
                 <ul>
@@ -1084,12 +1091,77 @@ function App26() {
                             <button id="delete" onClick={() => handleDeleteAssignment(currentAssignment.id)}>
                                 삭제
                             </button>
+                            <button id="estimation" onClick={showDivAssignmentEstimation}>
+                                평가
+                            </button>
                             <button id="back" onClick={showDivAssignment}>
                                 목록
                             </button>
                         </div>
                     </>
                 )}
+                {visibleDiv === 'AssignmentEstimation' && (
+                    <>
+                        <div id="AssignmentEstimation_teacherportal">
+                            <div id="but">
+                                <h2>과제 조회/제출</h2>
+                            </div>
+                            <div id="AssignmentEstimation">
+                                <div id="cate_AssignmentEstimation">
+                                    <div id="name">이름</div>
+                                    <div id="StudentID">ID</div>
+                                    <div id="submit">제출</div>
+                                    <div id="score">점수</div>
+                                    <div id="opinion">평가의견</div>
+                                </div>
+                                <div id="info_AssignmentEstimation">
+                                    <div id="Aname">이름</div>
+                                    <div id="AStudentID">ID</div>
+                                    <div id="Asubmit">제출</div>
+                                    <div id="Ascore">점수</div>
+                                    <div id="Aopinion">평가의견</div>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )}
+                {visibleDiv === 'AssignmentEstimationStudent' && (
+                    <>
+                        <div id="AssignmentEstimationStudent_teacherportal">
+                            <div id="but">
+                                <h2>과제 조회/제출</h2>
+                            </div>
+                            <div id="AssignmentEstimationStudent">
+                                <div id="title_AssignmentEstimationStudent">
+                                    <h2>제출 정보</h2>
+                                    <div id="StudentWrite">
+                                        ㅇㅇㅇ
+                                    </div>
+                                </div>
+                                <div id="file_AssignmentEstimationStudent">
+                                    <h2>첨부 파일</h2>
+                                    <div id="StudentFile">
+
+                                    </div>
+                                </div>
+                                <div id="Estimation_AssignmentEstimationStudent">
+                                    <h2>평가</h2>
+                                    <div id="ScoreOfAssignment">
+
+                                    </div>
+                                </div>
+                                <div id="Opinion_AssignmentEstimationStudent">
+                                    <h2>평가 의견</h2>
+                                    <div id="OpinionOfAssignment">
+
+                                    </div>
+                                </div>
+                                <button>저장</button>
+                            </div>
+                        </div>
+                    </>
+                )}
+
                 {visibleDiv === 'Lecturedata' && (
                     <>
                         <div id="Lecturedata_teacherportal">
