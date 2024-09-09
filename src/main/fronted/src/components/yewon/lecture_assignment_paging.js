@@ -43,6 +43,18 @@ function LectureAssignmentPaging() {
         return formattedDate;
     }
 
+    // 과제 제출 버튼 클릭 시 과제 제출 페이지로 이동하는 함수 수정
+    const submitAssignment = (assignmentId) => {
+        // 학생의 ID와 이름을 상태에서 가져옴
+        const studentId = user.id;
+        const studentName = user.name;
+
+        // 과제 제출 페이지로 이동 (과제 ID도 함께 전달)
+        navigate('/submit-assignment', {
+            state: { studentId, studentName, assignmentId },
+        });
+    };
+
     return (
         <div>
             {/* 과제 목록 출력 */}
@@ -73,7 +85,10 @@ function LectureAssignmentPaging() {
                         <td>{assignment.points}</td>
                         <td>{assignment.examType}</td>
                         <td><a href={assignment.attachmentPath} download>첨부파일</a></td>
-                        {/* 기타 정보를 표시하는 셀 */}
+                        {/* 과제 제출 버튼 추가 (assignment.id를 전달) */}
+                        <td>
+                            <button onClick={() => submitAssignment(assignment.id)}>과제 제출</button>
+                        </td>
                     </tr>
                 ))}
                 </tbody>
