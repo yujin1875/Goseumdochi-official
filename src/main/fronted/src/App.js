@@ -55,6 +55,9 @@ import App40 from './components/community_admin';
 import DirectorNoticeWrite from './components/director_notice_write';
 import BadWordCheck from './components/community_badword_check';
 
+import Message from './components/message';
+import MessageWrite from './components/messageWrite';
+
 class App extends Component{
   constructor(props){
     super(props)
@@ -120,6 +123,8 @@ class App extends Component{
               <Route path='/message/write' element={<MessageWrite/>}/>
               <Route path="/lecture-assignment-paging" element={<LectureAssignmentPaging />} />
               <Route path="/submit-assignment" element={<SubmitAssignment />} />
+              <Route path='/message' element={<Message/>}/>
+              <Route path='/messageWrite' element={<MessageWrite/>}/>
             </Routes>
         </BrowserRouter> 
       </div>

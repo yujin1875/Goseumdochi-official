@@ -45,25 +45,10 @@ hr{
     margin:18px auto;
 }
 
-#btn_academy>#submit_btn{
-    float:left;
-    display:block;
-    width: 154px;
-    height: 56px;
-    background-color: #363636;
-    border-radius: 15px;
-
-    font-size: 20px;
-    color:aliceblue;
-    box-shadow: none;
-    border:none;
-    outline: none;
-}
-
 #btn_academy>#check_btn{
     float:left;
     display:block;
-    width: 215px;
+    width: 350px;
     height: 56px;
     background-color: #363636;
     margin-left:10px;
