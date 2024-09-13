@@ -1,7 +1,7 @@
 import '../css/teachermain.css';
 import logo from './images/goseumdochi_moving.gif';
 import {useLocation, useNavigate} from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function App25() {
@@ -43,11 +43,20 @@ function App25() {
         navigate('/teacher/lecture/find', { state: { user: user } })
     }
 
+    const GoMessageList = () => {
+        navigate('/message/list', { state: { user: user } });
+    };
+
     return (
         <div id="App">
             <div id="teachermain-menu">
                 <div id="header_teachermain">
                     <img src={logo}/>
+                </div>
+                <div id="user_info">
+                    <button onClick={GoMessageList}>
+                        <span>쪽지</span>
+                    </button>
                 </div>
                 <div id="buttons_teachermain">
                     <input type="submit" value="강의관리" id="lecture_btn" onClick={GoLectureManage}/>

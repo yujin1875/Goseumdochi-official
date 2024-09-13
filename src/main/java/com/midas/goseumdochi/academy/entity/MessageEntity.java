@@ -8,14 +8,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.annotations.DynamicInsert;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @Table(name = "message")
+@DynamicInsert //Column default를 처음에 DB에 저장할 때, 실제로 디폴트값이 저장되지 않는데, 이는 엔터티 자체가 null이 아니기 때문이다. 애노테이션은 엔티티를 save할 때 null 값은 배제하고 insert 쿼리를 날리도록 한다.
 public class MessageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +29,10 @@ public class MessageEntity {
     @Column(name = "message_content", length = 300)
     private String content;
 
-//    @CreationTimestamp // 현재시간 저장됨
-    @CreatedDate // 최초 생성된 날짜 저장
+    @CreationTimestamp // 현재시간 저장됨
+    //@CreatedDate // 최초 생성된 날짜 저장
     @Column(name = "message_send_date")
-    private LocalDate sendDate;
+    private LocalDateTime sendDate;
 
     @Column(name = "message_sender", length = 1)
     private String sender; // T(선생), S(학생)
@@ -57,7 +58,7 @@ public class MessageEntity {
     private TeacherEntity teacherEntity;
 
     @Builder
-    public MessageEntity(Long id, String title, String content, LocalDate sendDate, String sender, String viewState,
+    public MessageEntity(Long id, String title, String content, LocalDateTime sendDate, String sender, String viewState,
                          String deleteByStudent, String deleteByTeacher, StudentEntity studentEntity, TeacherEntity teacherEntity) {
         this.id = id;
         this.title = title;

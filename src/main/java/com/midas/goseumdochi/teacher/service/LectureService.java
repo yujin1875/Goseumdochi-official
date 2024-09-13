@@ -2,7 +2,6 @@ package com.midas.goseumdochi.teacher.service;
 
 import com.midas.goseumdochi.academy.repository.SubjectRepository;
 import com.midas.goseumdochi.student.Repository.RegistLectureRepository;
-import com.midas.goseumdochi.student.Repository.StudentRepository;
 import com.midas.goseumdochi.teacher.dto.LectureDTO;
 import com.midas.goseumdochi.teacher.dto.LectureNameDTO;
 import com.midas.goseumdochi.teacher.dto.LectureTimeDTO;
@@ -12,6 +11,7 @@ import com.midas.goseumdochi.teacher.entity.LectureTimeEntity;
 import com.midas.goseumdochi.teacher.repository.LectureRepository;
 import com.midas.goseumdochi.teacher.repository.LectureTimeRepository;
 import com.midas.goseumdochi.teacher.repository.TeacherRepository;
+import com.midas.goseumdochi.util.Dto.NameDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +38,13 @@ public class LectureService {
         lectureEntity = lectureRepository.save(lectureEntity);// 강의 저장 (id값 생김 아마)
         for (LectureTimeDTO dto : lectureDTO.getLectureTimeDTOList()) // 강의시간 저장
             lectureTimeRepository.save(LectureTimeEntity.toLectureTimeEntity(dto, lectureEntity));
+    }
+
+    // 강의 선생 '이름' 조회
+    public NameDTO getTeacherNameOfLecture(Long lectureId) {
+        Optional<LectureEntity> lectureEntity = lectureRepository.findById(lectureId);
+        NameDTO teacherNameDTO = new NameDTO(lectureEntity.get().getTeacherEntity().getId(), lectureEntity.get().getTeacherEntity().getName());
+        return teacherNameDTO;
     }
 
     // 강의 선생 조회

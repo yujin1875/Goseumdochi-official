@@ -11,6 +11,7 @@ import com.midas.goseumdochi.teacher.dto.LectureNameDTO;
 import com.midas.goseumdochi.teacher.dto.TeacherDTO;
 import com.midas.goseumdochi.teacher.service.LectureService;
 import com.midas.goseumdochi.util.Dto.MailDTO;
+import com.midas.goseumdochi.util.Dto.NameDTO;
 import com.midas.goseumdochi.util.Service.MailService;
 import com.midas.goseumdochi.util.ai.EncDecService;
 import com.midas.goseumdochi.util.ai.RecommendDTO;
@@ -216,8 +217,8 @@ public class StudentController {
     }
 
     // 강의 선생님 조회
-    @GetMapping("/lecture/{lectureId}/teacher/name")
-    public ResponseEntity<?> getTeacherNameofLecture(@PathVariable Long lectureId) {
+    @GetMapping("/lecture/{lectureId}/teacher")
+    public ResponseEntity<?> getTeacherofLecture(@PathVariable Long lectureId) {
         TeacherDTO teacherDTO = lectureService.getTeacherOfLecture(lectureId);
         return ResponseEntity.ok(teacherDTO);
     }

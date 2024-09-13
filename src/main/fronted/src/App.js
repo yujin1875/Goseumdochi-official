@@ -45,6 +45,8 @@ import TeacherLectureStudentManage from './components/yewon/teacher_lecture_stud
 import LectureMaterialPaging from './components/yewon/lecture_material_paging'
 import LectureAssignmentPaging from './components/yewon/lecture_assignment_paging'
 import StudentRecommendUniv from './components/yewon/student_recommend_univ'
+import MessageList from "./components/yewon/message_list";
+import MessageWrite from "./components/yewon/message_write";
 import { Component } from 'react';
 import React from 'react';
 import SubmitAssignment from './components/SubmitAssignment';  // 과제 제출 페이지
@@ -114,6 +116,8 @@ class App extends Component{
               <Route path='/community_admin' element={<App40/>}/>
               <Route path='/director_notice_write' element={<DirectorNoticeWrite/>}/>
               <Route path='/community_badword_check' element={<BadWordCheck/>}/>
+              <Route path='/message/list' element={<MessageList/>}/>
+              <Route path='/message/write' element={<MessageWrite/>}/>
               <Route path="/lecture-assignment-paging" element={<LectureAssignmentPaging />} />
               <Route path="/submit-assignment" element={<SubmitAssignment />} />
             </Routes>

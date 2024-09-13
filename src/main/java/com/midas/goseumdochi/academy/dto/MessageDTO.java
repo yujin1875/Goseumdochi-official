@@ -3,7 +3,7 @@ package com.midas.goseumdochi.academy.dto;
 import com.midas.goseumdochi.academy.entity.MessageEntity;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -15,7 +15,7 @@ public class MessageDTO {
     private Long id;
     private String title;
     private String content;
-    private LocalDate sendDate;
+    private LocalDateTime sendDate;
     private String sender; // T(선생), S(학생)
     private String viewState; // N(열람x), Y(열람o)
     private Long studentId;
