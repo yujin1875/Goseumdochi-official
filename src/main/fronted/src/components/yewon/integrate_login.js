@@ -46,6 +46,7 @@ function IntegrateLogin() {
             else if (role === 'student') {
                 console.log(response.data)
                 alert("환영합니다 학생");
+                localStorage.setItem('userId', loginid);
                 navigate('/main', { state: { user: response.data } })
             }
         } catch (error) {
