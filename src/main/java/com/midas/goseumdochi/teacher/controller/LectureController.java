@@ -1,9 +1,12 @@
 package com.midas.goseumdochi.teacher.controller;
 
+import com.midas.goseumdochi.student.Service.RegistLectureService;
 import com.midas.goseumdochi.teacher.dto.AssignmentDTO;
 import com.midas.goseumdochi.teacher.dto.LectureMaterialDTO;
 import com.midas.goseumdochi.teacher.service.AssignmentService;
 import com.midas.goseumdochi.teacher.service.LectureMaterialService;
+import com.midas.goseumdochi.teacher.service.LectureService;
+import com.midas.goseumdochi.util.Dto.NameDTO;
 import com.midas.goseumdochi.util.component.PageComponent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,16 +18,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/lecture")
 @RequiredArgsConstructor
 public class LectureController {
+    private final LectureService lectureService;
     private final PageComponent pageComponent;
     private final LectureMaterialService lectureMaterialService;
     private final AssignmentService assignmentService;
+    private final RegistLectureService registLectureService;
 
     // 강의 자료 페이징
     @GetMapping("/{lectureId}/material/paging")
@@ -56,5 +63,21 @@ public class LectureController {
         response.put("endPage", endPage);
 
         return ResponseEntity.ok(response);
+    }
+
+    // 강의 선생님 '이름' 리스트 조회 (원래 리스트는 필요 없지만 학생과 맞추려고)
+    @GetMapping("/{lectureId}/teacher/name")
+    public ResponseEntity<?> getTeacherNameListofLecture(@PathVariable Long lectureId) {
+        List<NameDTO> teacherNameList = new ArrayList<>();
+        // 배열로 반환
+        teacherNameList.add(lectureService.getTeacherNameOfLecture(lectureId));
+        return ResponseEntity.ok(teacherNameList);
+    }
+
+    // 강의 학생 '이름' 리스트 조회
+    @GetMapping("/{lectureId}/student/name")
+    public ResponseEntity<?> getStudentNameListofLecture(@PathVariable Long lectureId) {
+        List<NameDTO> studentNameList = registLectureService.getExistStudentNameList(lectureId);
+        return ResponseEntity.ok(studentNameList);
     }
 }

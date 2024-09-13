@@ -9,6 +9,7 @@ import com.midas.goseumdochi.student.entity.StudentEntity;
 import com.midas.goseumdochi.teacher.dto.LectureDTO;
 import com.midas.goseumdochi.teacher.entity.LectureEntity;
 import com.midas.goseumdochi.teacher.repository.LectureRepository;
+import com.midas.goseumdochi.util.Dto.NameDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -82,5 +83,14 @@ public class RegistLectureService {
             }
         }
         return studentDTOList;
+    }
+
+    // 강의를 수강하는 학생 '이름' 리스트 반환
+    public List<NameDTO> getExistStudentNameList(Long lectureId) {
+        List<StudentEntity> studentEntityList = registLectureRepository.findAllStudentByLectureId(lectureId);
+        List<NameDTO> studentNameList = new ArrayList<>();
+        for (StudentEntity entity : studentEntityList)
+            studentNameList.add(new NameDTO(entity.getId(), entity.getStudentName()));
+        return studentNameList;
     }
 }
