@@ -2,7 +2,6 @@ package com.midas.goseumdochi.admin.controller;
 
 import com.midas.goseumdochi.admin.dto.AdminDTO;
 import com.midas.goseumdochi.admin.repository.AdminRepository;
-import com.midas.goseumdochi.util.ai.BadwordService;
 import com.midas.goseumdochi.util.ai.EncDecService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +17,7 @@ public class LoginController {
     private final AdminRepository adminRepository;
     private final EncDecService encDecService;
 
-    // HttpSession을 사용하여 세션에 아이디 저장
+    // 로그인 처리
     @PostMapping("/login")
     public ResponseEntity<?> login(HttpSession session, @RequestParam String loginid, @RequestParam String password) {
         if ("admin".equals(loginid) && "admin".equals(password)) {
@@ -31,6 +30,7 @@ public class LoginController {
         }
     }
 
+    // 현재 로그인한 관리자 정보 가져오기
     @GetMapping("/adminInfo")
     public ResponseEntity<?> getAdminInfo(HttpSession session) {
         String loginId = (String) session.getAttribute("loginId");
@@ -41,4 +41,10 @@ public class LoginController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
     }
 
+    // 로그아웃 처리
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpSession session) {
+        session.invalidate(); // 세션 무효화
+        return ResponseEntity.ok("로그아웃 성공");
+    }
 }

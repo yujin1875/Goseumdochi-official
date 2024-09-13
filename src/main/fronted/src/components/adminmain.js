@@ -47,6 +47,10 @@ function App18() {
         window.location.href = '/adminstudentmanage'; // Redirect to admin student management page
     }
 
+    const GoAdminCommunity = () => {
+            window.location.href = '/community_admin';
+        }
+
     return (
         <div id="App">
             <div id="header_adminmain">
@@ -66,7 +70,7 @@ function App18() {
                     <li><button onClick={GoAdminAcademyFormManage}>학원 신청서</button></li>
                     <li><button onClick={GoAdminAcademy}>학원 관리</button></li>
                     <li><button onClick={GoAdminStudent}>학생 관리</button></li>
-                    <li><a>커뮤니티</a></li>
+                    <li><button onClick={GoAdminCommunity}>커뮤니티</button></li>
                 </ul>
             </div>
         </div>

@@ -10,24 +10,31 @@ function AdminLogin() {
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
-        e.preventDefault(); // 폼 제출 시 페이지 새로고침 방지
-        try {
-            const response = await axios.post('/api/admin/login', null, {
-                params: {
-                    loginid: loginid,
-                    password: password,
-                },
-            });
-            console.log(response.data);
-            // 로그인 성공
-            alert("관리자 로그인 성공")
-            navigate('/adminmain')
-        } catch (error) {
-            console.error('로그인 실패:', error.response || error);
-            // 실패 처리 로직 (예: 에러 메시지 표시)
-            alert(`${error.response.data}`)
-        }
-    };
+            e.preventDefault(); // 폼 제출 시 페이지 새로고침 방지
+            try {
+                const response = await axios.post('/api/admin/login', null, {
+                    params: {
+                        loginid: loginid,
+                        password: password,
+                    },
+                });
+                console.log(response.data);
+
+                // 로그인 성공 시, 어드민 정보를 sessionStorage에 저장
+                const adminInfo = {
+                    id: loginid
+                };
+                sessionStorage.setItem('adminInfo', JSON.stringify(adminInfo));
+
+                // 로그인 성공 후 알림과 페이지 이동
+                alert("관리자 로그인 성공");
+                navigate('/adminmain');
+            } catch (error) {
+                console.error('로그인 실패:', error.response || error);
+                // 실패 처리 로직 (예: 에러 메시지 표시)
+                alert(`${error.response.data}`);
+            }
+        };
 
     return (
         <div id="App">
