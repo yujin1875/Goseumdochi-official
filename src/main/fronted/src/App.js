@@ -46,10 +46,12 @@ import LectureMaterialPaging from './components/yewon/lecture_material_paging'
 import LectureAssignmentPaging from './components/yewon/lecture_assignment_paging'
 import StudentRecommendUniv from './components/yewon/student_recommend_univ'
 import { Component } from 'react';
-
 import App40 from './components/community_admin';
 import DirectorNoticeWrite from './components/director_notice_write';
 import BadWordCheck from './components/community_badword_check';
+
+import Message from './components/message';
+import MessageWrite from './components/messageWrite';
 
 class App extends Component{
   constructor(props){
@@ -112,6 +114,8 @@ class App extends Component{
               <Route path='/community_admin' element={<App40/>}/>
               <Route path='/director_notice_write' element={<DirectorNoticeWrite/>}/>
               <Route path='/community_badword_check' element={<BadWordCheck/>}/>
+              <Route path='/message' element={<Message/>}/>
+              <Route path='/messageWrite' element={<MessageWrite/>}/>
             </Routes>
         </BrowserRouter> 
       </div>
