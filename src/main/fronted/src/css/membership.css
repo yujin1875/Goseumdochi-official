@@ -36,12 +36,12 @@ hr{
     margin:auto;
 }
 
-#membership_write_buttons>input{
-    display:block;
+#membership_write_buttons>#membership_buttons{
     width: 380px;
     height: 48px;
     background-color: #FFFFFF;
     margin:10px auto;
+    margin-left:85px;
     border-color: #6A6A6A;
     border-radius: 15px;
 
@@ -57,6 +57,7 @@ hr{
     height: 48px;
     background-color: #363636;
     margin:10px auto;
+    margin-left:85px;
     border-color: #6A6A6A;
     border-radius: 15px;
 

@@ -25,7 +25,7 @@ public class MessageController {
     private final PageComponent pageComponent;
 
     // 쪽지쓰기 [선생]
-    @GetMapping("/teacher/send")
+    @PostMapping("/teacher/send")
     public ResponseEntity<?> sendMessageByTeacher(@RequestBody MessageDTO messageDTO) { // (title, content, studentId, teacherId)
         messageDTO.setSender("T");
         messageService.registMessage(messageDTO);
@@ -33,7 +33,7 @@ public class MessageController {
     }
 
     // 쪽지쓰기 [학생]
-    @GetMapping("/student/send")
+    @PostMapping("/student/send")
     public ResponseEntity<?> sendMessageByStudent(@RequestBody MessageDTO messageDTO) { // (title, content, studentId, teacherId)
         messageDTO.setSender("S");
         messageService.registMessage(messageDTO);

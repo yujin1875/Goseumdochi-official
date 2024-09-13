@@ -6,7 +6,6 @@ import axios from 'axios';
 function App40() {
     const [visibleDiv, setVisibleDiv] = useState('자유');
     const [posts, setPosts] = useState([]);
-    const [likedPosts, setLikedPosts] = useState([]);
     const [commentedPosts, setCommentedPosts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [reviews, setReviews] = useState([]);
@@ -26,31 +25,7 @@ function App40() {
         star: null // 별점 초기 값으로 null 설정
     });
 
-    // 사용자 정보를 가져오는 API 요청 함수
-    const fetchStudentInfo = async () => {
-        try {
-            const response = await axios.get('/api/student/info');
-            return response.data;
-        } catch (error) {
-            console.error("Error fetching student info", error);
-            throw error;
-        }
-    };
-
     useEffect(() => {
-            const fetchStudentId = async () => {
-                try {
-                    const studentInfo = await fetchStudentInfo();
-                    setNewPost((prevPost) => ({
-                        ...prevPost,
-                        writerId: studentInfo.id
-                    }));
-                } catch (error) {
-                    console.error('Error fetching student ID:', error);
-                }
-            };
-
-            fetchStudentId();
             fetchCategories();
         }, []);
 
@@ -214,38 +189,18 @@ function App40() {
         }
     };
 
-
-
-    const handleLikePost = async (postId) => {
-        try {
-            const studentInfo = await fetchStudentInfo();
-            await axios.post(`/api/posts/${postId}/like`, null, {
-                params: { studentId: studentInfo.id }
-            });
-            setPosts(posts.map(post => post.id === postId ? { ...post, likeCount: post.likeCount + 1 } : post));
-        } catch (error) {
-            console.error("Error liking post", error);
-        }
-    };
-
-    const handleUnlikePost = async (postId) => {
-        try {
-            const studentInfo = await fetchStudentInfo();
-            await axios.post(`/api/posts/${postId}/unlike`, null, {
-                params: { studentId: studentInfo.id }
-            });
-            setPosts(posts.map(post => post.id === postId ? { ...post, likeCount: post.likeCount - 1 } : post));
-        } catch (error) {
-            console.error("Error unliking post", error);
-        }
-    };
-
+    const showMain = async () => {
+            try {
+                window.location.href = 'adminmain';
+            } catch (error) {
+                console.error('Error fetching user info for navigation:', error);
+            }
+        };
 
     return (
         <div id="App">
             <div id="community_header">
-                <div id="menu_btn" />
-                <div id="home_btn" />
+                <div id="home_btn" onClick={showMain} />
                 <div id="title">
                     <img src={logo} alt="고슴도치 로고" />
                     <h2>고슴도치 커뮤니티</h2>
@@ -273,19 +228,12 @@ function App40() {
                         <div id="detail">
                             {posts.map(post => {
                                 if (post.id === selectedPostId) {
-                                    const hasLiked = likedPosts.some(likedPost => likedPost.id === post.id);
                                     return (
                                         <div key={post.id}>
                                             <h2>{post.title}</h2>
                                             <p>{post.content}</p>
                                             <p>작성자: 익명</p>
                                             <p>작성일: {post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</p>
-                                            <div>
-                                                <button onClick={() => hasLiked ? handleUnlikePost(post.id) : handleLikePost(post.id)}>
-                                                    {hasLiked ? "좋아요 취소" : "좋아요"}
-                                                </button>
-                                                <span>{post.likeCount} 좋아요</span>
-                                            </div>
                                             <textarea value={newComment} onChange={handleCommentChange} placeholder="댓글을 입력하세요"></textarea>
                                             <button onClick={submitComment}>작성</button>
                                             <h3>댓글</h3>
@@ -312,7 +260,6 @@ function App40() {
                                     .sort((a, b) => new Date(b.createDate) - new Date(a.createDate)) // 날짜 기준으로 최신 순 정렬
                                     .map(post => (
                                         <li key={post.id}>
-                                            <div>{post.likeCount} 좋아요</div>
                                             <button onClick={() => handlePostClick(post.id)}>{post.title}</button> {/* 상세보기 클릭 이벤트 추가 */}
                                             <div>{post.views} 조회수</div>
                                             <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div>
@@ -331,7 +278,6 @@ function App40() {
                                     .sort((a, b) => new Date(b.createDate) - new Date(a.createDate)) // 날짜 기준으로 최신 순 정렬
                                     .map(post => (
                                         <li key={post.id}>
-                                            <div>{post.likeCount} 좋아요</div>
                                             <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
                                             <div>{post.views} 조회수</div>
                                             <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
@@ -349,7 +295,6 @@ function App40() {
                                     .sort((a, b) => new Date(b.createDate) - new Date(a.createDate)) // 날짜 기준으로 최신 순 정렬
                                     .map(post => (
                                         <li key={post.id}>
-                                            <div>{post.likeCount} 좋아요</div>
                                             <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
                                             <div>{post.views} 조회수</div>
                                             <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div> {/* 날짜만 표시될 수 있도록 */}
@@ -367,7 +312,6 @@ function App40() {
                                     .sort((a, b) => new Date(b.createDate) - new Date(a.createDate)) // 날짜 기준으로 최신 순 정렬
                                     .map(review => (
                                         <li key={review.id}>
-                                            <div>{review.likeCount} 좋아요</div>
                                             <div>{review.title}</div>
                                             <div>{review.views} 조회수</div>
                                             <div>{review.createDate.split('T')[0]}</div> {/* 날짜만 표시될 수 있도록 */}

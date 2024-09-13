@@ -55,6 +55,7 @@ function App2() {
                         type="text"
                         name="studentId"
                         value={inputs.studentId}
+                        id="membership_buttons"
                         onChange={handleChange}
                         placeholder="아이디"
                         required
@@ -63,6 +64,7 @@ function App2() {
                         type="password"
                         name="studentPassword"
                         value={inputs.studentPassword}
+                        id="membership_buttons"
                         onChange={handleChange}
                         onChange={handleChange}
                         placeholder="비밀번호"
@@ -72,6 +74,7 @@ function App2() {
                         type="password"
                         name="confirmPassword"
                         value={inputs.confirmPassword}
+                        id="membership_buttons"
                         onChange={handleChange}
                         placeholder="비밀번호 확인"
                         required
@@ -80,6 +83,7 @@ function App2() {
                         type="text"
                         name="studentName"
                         value={inputs.studentName}
+                        id="membership_buttons"
                         onChange={handleChange}
                         placeholder="이름"
                         required
@@ -88,6 +92,7 @@ function App2() {
                         type="date"
                         name="studentBirthDate"
                         value={inputs.studentBirthDate}
+                        id="membership_buttons"
                         onChange={handleChange}
                         placeholder="출생연도"
                         required
@@ -96,6 +101,7 @@ function App2() {
                         type="text"
                         name="studentEmail"
                         value={inputs.studentEmail}
+                        id="membership_buttons"
                         onChange={handleChange}
                         placeholder="email"
                         required
@@ -104,6 +110,7 @@ function App2() {
                         type="text"
                         name="studentPhoneNumber"
                         value={inputs.studentPhoneNumber}
+                        id="membership_buttons"
                         onChange={handleChange}
                         placeholder="010XXXXXXXX"
                         required

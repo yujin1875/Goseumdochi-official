@@ -35,6 +35,10 @@ function App6() {
         navigate('/student/recommend/univ', { state: { user: user } });
     };
 
+    const GoMessageList = () => {
+        navigate('/message/list', { state: { user: user } });
+    };
+
     const [userName, setUserName] = useState('');
 
     useEffect(() => {
@@ -65,6 +69,9 @@ function App6() {
                         <img src={logo} onClick={Gomain}/>
                         <div id="user_info">
                             {userName && `${userName}님`}
+                            <button onClick={GoMessageList}>
+                                <span>쪽지</span>
+                            </button>
                             <button>
                                 <span>로그아웃</span>
                             </button>
