@@ -47,6 +47,7 @@ import LectureAssignmentPaging from './components/yewon/lecture_assignment_pagin
 import StudentRecommendUniv from './components/yewon/student_recommend_univ'
 import MessageList from "./components/yewon/message_list";
 import MessageWrite from "./components/yewon/message_write";
+import MessageViewReceive from "./components/yewon/message_view_receive";
 import { Component } from 'react';
 import React from 'react';
 import SubmitAssignment from './components/SubmitAssignment';  // 과제 제출 페이지
@@ -121,6 +122,7 @@ class App extends Component{
               <Route path='/community_badword_check' element={<BadWordCheck/>}/>
               <Route path='/message/list' element={<MessageList/>}/>
               <Route path='/message/write' element={<MessageWrite/>}/>
+              <Route path='/message/view/receive' element={<MessageViewReceive/>}/>
               <Route path="/lecture-assignment-paging" element={<LectureAssignmentPaging />} />
               <Route path="/submit-assignment" element={<SubmitAssignment />} />
               <Route path='/message' element={<Message/>}/>

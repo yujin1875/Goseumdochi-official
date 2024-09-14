@@ -81,4 +81,6 @@ public class MessageEntity {
     public void setDeleteByStudent(String deleteByStudent) { this.deleteByStudent = deleteByStudent; }
 
     public void setDeleteByTeacher(String deleteByTeacher) { this.deleteByTeacher = deleteByTeacher; }
+
+    public void setViewState(String viewState) { this.viewState = viewState; }
 }
