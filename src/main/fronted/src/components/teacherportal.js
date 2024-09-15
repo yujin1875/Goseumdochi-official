@@ -952,8 +952,9 @@ function App26() {
                                 {assignments.map(assignment => (
                                     <div key={assignment.id} id="body_Assignment">
                                         <div id="Ano">{assignment.id}</div>
-                                        <div id="Atitle" onClick={() => handleAssignmentClick(assignment.id)}>{assignment.title}</div>
-                                        <div id="Asubmission">제출인원</div>
+                                        <div id="Atitle"
+                                             onClick={() => handleAssignmentClick(assignment.id)}>{assignment.title}</div>
+                                        <div id="Asubmission">{assignment.submissionCount}명</div>
                                         <div id="Ascore">{assignment.points}</div>
                                         <div id="Aestimation">평가</div>
                                         <div id="Aopendate">{assignment.createdAt}</div>

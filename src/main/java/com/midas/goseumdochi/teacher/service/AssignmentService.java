@@ -1,5 +1,6 @@
 package com.midas.goseumdochi.teacher.service;
 
+import com.midas.goseumdochi.student.entity.AssignmentSubmissionEntity;
 import com.midas.goseumdochi.teacher.dto.AssignmentDTO;
 import com.midas.goseumdochi.teacher.dto.LectureMaterialDTO;
 import com.midas.goseumdochi.teacher.entity.AssignmentEntity;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import com.midas.goseumdochi.student.Repository.AssignmentSubmissionRepository;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,6 +30,7 @@ import java.util.stream.Collectors;
 public class AssignmentService {
     private final AssignmentRepository assignmentRepository;
     private final LectureRepository lectureRepository;
+    private final AssignmentSubmissionRepository assignmentSubmissionRepository;
 
     public void saveAssignment(AssignmentDTO assignmentDTO) {
         AssignmentEntity entity = AssignmentEntity.builder()
@@ -55,7 +58,8 @@ public class AssignmentService {
                         entity.getDeadline(),
                         entity.getPoints(),
                         entity.getExamType(),
-                        entity.getAttachmentPath()))
+                        entity.getAttachmentPath(),
+                        entity.getSubmissionCount()))
                 .collect(Collectors.toList());
     }
 
@@ -70,7 +74,8 @@ public class AssignmentService {
                         entity.getDeadline(),
                         entity.getPoints(),
                         entity.getExamType(),
-                        entity.getAttachmentPath()))
+                        entity.getAttachmentPath(),
+                        entity.getSubmissionCount()))
                 .collect(Collectors.toList());
     }
 
@@ -86,7 +91,8 @@ public class AssignmentService {
                 entity.getDeadline(),
                 entity.getPoints(),
                 entity.getExamType(),
-                entity.getAttachmentPath());
+                entity.getAttachmentPath(),
+                entity.getSubmissionCount());
     }
 
     public String saveFile(MultipartFile file) throws IOException {
@@ -119,13 +125,29 @@ public class AssignmentService {
         assignmentRepository.save(entity);
     }
 
-
-
     public void deleteAssignment(Long id) {
         if (!assignmentRepository.existsById(id)) {
             throw new IllegalArgumentException("해당 과제가 존재하지 않습니다. ID: " + id);
         }
         assignmentRepository.deleteById(id);
+    }
+
+    public void saveAssignmentSubmission(Long studentId, Long assignmentId, String title, String content, String fileUrl) {
+        AssignmentSubmissionEntity submission = AssignmentSubmissionEntity.builder()
+                .studentId(studentId)
+                .assignmentId(assignmentId)
+                .title(title)
+                .content(content)
+                .attachmentPath(fileUrl)
+                .build();
+
+        assignmentSubmissionRepository.save(submission);
+
+        // 제출 인원 수 증가
+        AssignmentEntity assignment = assignmentRepository.findById(assignmentId)
+                .orElseThrow(() -> new RuntimeException("과제를 찾을 수 없습니다."));
+        assignment.setSubmissionCount(assignment.getSubmissionCount() + 1); // 제출 인원 수 1 증가
+        assignmentRepository.save(assignment);
     }
 
     // 과제 페이징
@@ -137,7 +159,7 @@ public class AssignmentService {
 
         Page<AssignmentDTO> assignmentDTOPage = assignmentEntityPage.map(entity -> new AssignmentDTO(entity.getId(),
                 entity.getTitle(), entity.getContent(), entity.getAuthor(), entity.getCreatedAt(), entity.getDeadline(), 
-                entity.getPoints(), entity.getExamType(), entity.getAttachmentPath()));
+                entity.getPoints(), entity.getExamType(), entity.getAttachmentPath(), entity.getSubmissionCount()));
 
         return assignmentDTOPage;
     }

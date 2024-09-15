@@ -248,8 +248,8 @@ public class StudentController {
             // 파일을 GCP 버킷에 저장
             String fileUrl = fileStorageService.uploadFile(file, "stu_assignments");
 
-            // 과제 제출 정보 저장
-            studentService.saveAssignmentSubmission(studentId, assignmentId, title, content, fileUrl);
+            // 과제 제출 후 제출 인원 1 증가
+            assignmentService.saveAssignmentSubmission(studentId, assignmentId, title, content, fileUrl);
 
             return ResponseEntity.ok("과제가 성공적으로 제출되었습니다.");
         } catch (IOException e) {

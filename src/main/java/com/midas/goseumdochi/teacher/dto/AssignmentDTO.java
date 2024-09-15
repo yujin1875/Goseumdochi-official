@@ -25,12 +25,13 @@ public class AssignmentDTO {
     private Integer points;   // 배점
     private String examType;  // 제출방식 "Online" 또는 "Offline"
     private String attachmentPath;  // 첨부파일
+    private int submissionCount; // 제출 인원
 
     private Long lectureId; // fk
 
     // lectureId 만 없는 생성자
     public AssignmentDTO(Long id, String title, String content, String author, LocalDateTime createdAt,
-                         LocalDateTime deadline, Integer points, String examType, String attachmentPath) {
+                         LocalDateTime deadline, Integer points, String examType, String attachmentPath, int submissionCount) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -40,5 +41,6 @@ public class AssignmentDTO {
         this.points = points;
         this.examType = examType;
         this.attachmentPath = attachmentPath;
+        this.submissionCount = submissionCount;
     }
 }

@@ -6,9 +6,11 @@ import com.midas.goseumdochi.student.Repository.AssignmentSubmissionRepository;
 import com.midas.goseumdochi.student.Repository.StudentRepository;
 import com.midas.goseumdochi.student.entity.AssignmentSubmissionEntity;
 import com.midas.goseumdochi.student.entity.StudentEntity;
+import com.midas.goseumdochi.teacher.entity.AssignmentEntity;
 import com.midas.goseumdochi.util.ai.EncDecService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.midas.goseumdochi.teacher.repository.AssignmentRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +22,7 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final EncDecService encDecService;
     private final AssignmentSubmissionRepository assignmentSubmissionRepository;
+    private final AssignmentRepository assignmentRepository;
 
     //회원가입 로직
     public int join(StudentDTO studentDTO, String passwordCheck) {
@@ -147,8 +150,15 @@ public class StudentService {
         AssignmentSubmissionEntity submission = assignmentSubmissionRepository.findByStudentIdAndAssignmentId(studentId, assignmentId)
                 .orElseThrow(() -> new RuntimeException("과제 제출 정보를 찾을 수 없습니다."));
 
+        // 제출 인원 수 감소
+        AssignmentEntity assignment = assignmentRepository.findById(assignmentId)
+                .orElseThrow(() -> new RuntimeException("과제를 찾을 수 없습니다."));
+        assignment.setSubmissionCount(assignment.getSubmissionCount() - 1); // 제출 인원 수 1 감소
+        assignmentRepository.save(assignment);
+
         assignmentSubmissionRepository.delete(submission);
     }
+
 
     public List<AssignmentSubmissionDTO> getSubmittedAssignments(Long studentId) {
         List<AssignmentSubmissionEntity> submissions = assignmentSubmissionRepository.findByStudentId(studentId);

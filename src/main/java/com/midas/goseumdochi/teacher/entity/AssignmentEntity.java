@@ -25,6 +25,8 @@ public class AssignmentEntity {
     private Integer points;
     private String examType;  // "Online" 또는 "Offline"
     private String attachmentPath;
+    @Column(nullable = false)
+    private int submissionCount = 0; // 제출인원
 
     // 강의와 N:1 매핑
     @ManyToOne
