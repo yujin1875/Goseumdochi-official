@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../css/messageWrite.css';
 
-function MessageWrite() {
+function MessageWrite2() {
 
     return (
         <div id="App">
@@ -50,4 +50,4 @@ function MessageWrite() {
     );
 }
 
-export default MessageWrite;
+export default MessageWrite2;
