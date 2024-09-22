@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -22,4 +24,7 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
 
     @Query("SELECT s FROM StudentEntity s WHERE s.studentName = :studentName And s.studentPhoneNumber = :studentPhoneNumber")
     Optional<StudentEntity> findByNameAndPhoneNumber(@Param("studentName") String studentName, @Param("studentPhoneNumber") String studentPhoneNumber);
+
+    @Query("SELECT s FROM StudentEntity s JOIN RegistLectureEntity r ON s.id = r.studentEntity.id WHERE r.lectureEntity.id = :lectureId")
+    List<StudentEntity> findStudentsByLectureId(@Param("lectureId") Long lectureId);
 }

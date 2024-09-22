@@ -125,16 +125,33 @@ public class StudentService {
     }
 
     public void saveAssignmentSubmission(Long studentId, Long assignmentId, String title, String content, String fileUrl) {
-        AssignmentSubmissionEntity submission = AssignmentSubmissionEntity.builder()
-                .studentId(studentId)
-                .assignmentId(assignmentId)
-                .title(title)
-                .content(content)
-                .attachmentPath(fileUrl)
-                .build();
+        // 기존 제출 기록이 있는지 확인
+        Optional<AssignmentSubmissionEntity> existingSubmission = assignmentSubmissionRepository.findByStudentIdAndAssignmentId(studentId, assignmentId);
+
+        AssignmentSubmissionEntity submission;
+
+        if (existingSubmission.isPresent()) {
+            // 기존 제출이 있으면 업데이트
+            submission = existingSubmission.get();
+            submission.setTitle(title);
+            submission.setContent(content);
+            submission.setAttachmentPath(fileUrl);
+            submission.setSubmissionStatus("정상제출");  // 제출 상태를 정상제출로 설정
+        } else {
+            // 없으면 새로 생성
+            submission = AssignmentSubmissionEntity.builder()
+                    .studentId(studentId)
+                    .assignmentId(assignmentId)
+                    .title(title)
+                    .content(content)
+                    .attachmentPath(fileUrl)
+                    .submissionStatus("정상제출")  // 새로 생성 시에도 정상제출로 설정
+                    .build();
+        }
+
+        // 제출 정보 저장
         assignmentSubmissionRepository.save(submission);
     }
-
     public void updateAssignmentSubmission(Long studentId, Long assignmentId, String title, String content, String fileUrl) {
         AssignmentSubmissionEntity submission = assignmentSubmissionRepository.findByStudentIdAndAssignmentId(studentId, assignmentId)
                 .orElseThrow(() -> new RuntimeException("과제 제출 정보를 찾을 수 없습니다."));
@@ -142,6 +159,7 @@ public class StudentService {
         submission.setTitle(title);
         submission.setContent(content);
         submission.setAttachmentPath(fileUrl);
+        submission.setSubmissionStatus("정상제출");  // 과제 수정 시에도 제출 상태를 "정상제출"로 변경
 
         assignmentSubmissionRepository.save(submission);
     }
@@ -164,16 +182,46 @@ public class StudentService {
         List<AssignmentSubmissionEntity> submissions = assignmentSubmissionRepository.findByStudentId(studentId);
         return submissions.stream()
                 .map(submission -> new AssignmentSubmissionDTO(submission.getId(), submission.getStudentId(),
-                        submission.getAssignmentId(), submission.getTitle(), submission.getContent(), submission.getAttachmentPath()))
+                        submission.getAssignmentId(), submission.getTitle(), submission.getContent(), submission.getAttachmentPath(), submission.getSubmissionStatus()))
                 .collect(Collectors.toList());
     }
 
     public Optional<AssignmentSubmissionDTO> getAssignmentSubmission(Long studentId, Long assignmentId) {
         Optional<AssignmentSubmissionEntity> submission = assignmentSubmissionRepository.findByStudentIdAndAssignmentId(studentId, assignmentId);
         return submission.map(sub -> new AssignmentSubmissionDTO(sub.getId(), sub.getStudentId(), sub.getAssignmentId(),
-                sub.getTitle(), sub.getContent(), sub.getAttachmentPath()));
+                sub.getTitle(), sub.getContent(), sub.getAttachmentPath(), sub.getSubmissionStatus()));
     }
 
+    // 과제 제출 상태 확인
+    public List<StudentDTO> getStudentsByLectureIdWithSubmissionStatus(Long lectureId, Long assignmentId) {
+        List<StudentEntity> students = studentRepository.findStudentsByLectureId(lectureId);
+        return students.stream().map(student -> {
+            StudentDTO studentDTO = StudentDTO.toStudentDTO(student);
+
+            // 과제 제출 상태 확인
+            Optional<AssignmentSubmissionEntity> submission = assignmentSubmissionRepository.findByStudentIdAndAssignmentId(student.getId(), assignmentId);
+            if (submission.isPresent()) {
+                AssignmentSubmissionDTO submissionDTO = new AssignmentSubmissionDTO();
+                submissionDTO.setSubmissionStatus(submission.get().getSubmissionStatus());
+                // 필요에 따라 다른 필드도 설정
+                studentDTO.setAssignmentSubmission(submissionDTO);
+            } else {
+                AssignmentSubmissionDTO submissionDTO = new AssignmentSubmissionDTO();
+                submissionDTO.setSubmissionStatus("미제출");
+                studentDTO.setAssignmentSubmission(submissionDTO);
+            }
+
+            return studentDTO;
+        }).collect(Collectors.toList());
+    }
+
+    // 강의별 학생 목록 조회
+    public List<StudentDTO> getStudentsByLectureId(Long lectureId) {
+        List<StudentEntity> students = studentRepository.findStudentsByLectureId(lectureId);
+        return students.stream()
+                .map(StudentDTO::toStudentDTO)
+                .collect(Collectors.toList());
+    }
 
 
 }

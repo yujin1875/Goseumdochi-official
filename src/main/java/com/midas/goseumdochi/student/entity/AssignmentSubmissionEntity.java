@@ -28,4 +28,8 @@ public class AssignmentSubmissionEntity {
     private String content;
 
     private String attachmentPath; // 첨부 파일 경로
+
+    @Builder.Default
+    @Column(nullable = false)
+    private String submissionStatus = "미제출"; // 기본값 설정
 }

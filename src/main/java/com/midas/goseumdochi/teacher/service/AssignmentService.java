@@ -158,7 +158,7 @@ public class AssignmentService {
                 PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
 
         Page<AssignmentDTO> assignmentDTOPage = assignmentEntityPage.map(entity -> new AssignmentDTO(entity.getId(),
-                entity.getTitle(), entity.getContent(), entity.getAuthor(), entity.getCreatedAt(), entity.getDeadline(), 
+                entity.getTitle(), entity.getContent(), entity.getAuthor(), entity.getCreatedAt(), entity.getDeadline(),
                 entity.getPoints(), entity.getExamType(), entity.getAttachmentPath(), entity.getSubmissionCount()));
 
         return assignmentDTOPage;
