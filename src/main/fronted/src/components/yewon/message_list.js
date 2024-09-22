@@ -50,6 +50,11 @@ function MessageList() {
         navigate('/message/view/receive', { state: { user: user, message: message } });
     };
 
+    // 보낸쪽지 열람
+    const handleViewSendMessage = (message) => {
+        navigate('/message/view/send', { state: { user: user, message: message } });
+    };
+
     // LocalDateTime 형 변환
     const formatLocalDateTime = (localDateTime) => {
         const date = new Date(localDateTime); // LocalDateTime 문자열을 Date 객체로 변환
@@ -115,7 +120,7 @@ function MessageList() {
                         </thead>
                         <tbody>
                         {messageList.map((message) => (
-                            <tr key={message.id}>
+                            <tr key={message.id} onClick={() => handleViewSendMessage(message)}>
                                 <td>{message.receiverName}</td>
                                 <td>{message.title}</td>
                                 <td>{formatLocalDateTime(message.sendDate)}</td>

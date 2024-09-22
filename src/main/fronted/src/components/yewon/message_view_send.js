@@ -3,31 +3,11 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-function MessageViewReceive() {
+function MessageViewSend() {
     const location = useLocation();
     const navigate = useNavigate();
 
     const { user, message } = location.state;
-
-    // 받은쪽지 열람 (최초 열람시 기록하기 위해)
-    const fetchMessageOpen = async () => {
-        try {
-            const response = await
-                axios.post(`/api/message/${message.id}/view/receive`, null, {
-                    params: {
-                        viewState: message.viewState,
-                    },
-                });
-            console.log(response.data);
-        } catch (error) {
-            console.error("받은쪽지 열람 실패", error);
-        }
-    };
-
-    // 컴포넌트가 마운트될 때 받은쪽지 열람 최초 한번 실행
-    useEffect(() => {
-        fetchMessageOpen();
-    }, []); // 빈 배열로 의존성 설정하여 컴포넌트가 처음 마운트될 때만 실행
 
     // 쪽지 삭제
     const deleteMessage = async () => {
@@ -38,7 +18,6 @@ function MessageViewReceive() {
             return true; // 삭제 성공
         } catch (err) {
             console.error("쪽지 삭제 실패", err);
-            alert(err.response.data)
             return false; // 삭제 실패
         }
     };
@@ -51,17 +30,34 @@ function MessageViewReceive() {
         }
     };
 
+    // 쪽지 전송취소
+    const cancelMessage = async () => {
+        try {
+            const response = await
+                axios.post(`/api/message/${message.id}/cancel`); // API 호출
+            alert(response.data);
+            return true; // 삭제 성공
+        } catch (err) {
+            console.error("쪽지 삭제 실패", err);
+            alert(err.response.data);
+            return false; // 삭제 실패
+        }
+    };
+
+    // 쪽지 전송취소
+    const handleMessageCancel = async () => {
+        const isCanceled = await cancelMessage(); // 삭제 시도
+        if (isCanceled) { // 삭제가 되고 나서 페이지를 이동해야 리스트가 갱신되어있음!!!
+            navigate('/message/list', { state: { user: user } }); // 리스트 페이지로 이동
+        }
+    };
+
     const GoMessageWrite=() => {
         navigate('/message/write', { state: { user: user } });
     };
 
     const GoMessageList = () => {
         navigate('/message/list', { state: { user: user } });
-    };
-
-    // 메시지 답장
-    const GoMessageReply = () => {
-        navigate('/message/reply', { state: { user: user, message: message } });
     };
 
     // LocalDateTime 형 변환
@@ -84,7 +80,7 @@ function MessageViewReceive() {
         <div id="App">
             <div id="header_message"/>
             <div id="message">
-                <h1>받은쪽지</h1>
+                <h1>보낸쪽지</h1>
                 <button id="letSendMessage" onClick={GoMessageWrite}>
                     쪽지 쓰기
                 </button>
@@ -96,8 +92,11 @@ function MessageViewReceive() {
                     </div>
                     <div>
                         <div id="">{message.title}</div>
-                        <div id="">{message.senderName}</div>
-                        <div id="">{formatLocalDateTime(message.sendDate)}</div>
+                        <div id="">{message.receiverName}</div>
+                        <div id="">
+                            <span>{formatLocalDateTime(message.sendDate)}</span>
+                            <span>{message.viewState === "Y" ? "읽음" : "안읽음"}</span>
+                        </div>
                     </div>
                     <div>
                         <span>
@@ -108,8 +107,8 @@ function MessageViewReceive() {
                 <button id="GotoMessageList" onClick={GoMessageList}>
                     목록
                 </button>
-                <button id="" onClick={GoMessageReply}>
-                    답장
+                <button id="" onClick={handleMessageCancel}>
+                    전송취소
                 </button>
                 <button id="" onClick={handleMessageDelete}>
                     삭제
@@ -120,4 +119,4 @@ function MessageViewReceive() {
     );
 }
 
-export default MessageViewReceive;
+export default MessageViewSend;

@@ -15,7 +15,7 @@ function MessageWrite() {
     const [lectureList, setLectureList] = useState([]);
     const [receiverList, setReceiverList] = useState([]);
     const [selectedLectureId, setSelectedLectureId] = useState('');
-    const [selectedLectureName, setSelectedLectureName] = useState('');
+    //const [selectedLectureName, setSelectedLectureName] = useState('');
     const [selectedReceiverId, setSelectedReceiverId] = useState('');
 
     // 강의 리스트를 가져오는 함수
@@ -56,7 +56,7 @@ function MessageWrite() {
         const lectureId = event.target.value;
         setSelectedLectureId(lectureId); // 선택된 강의 ID 상태 업데이트
         const lecture = lectureList.find((lec) => lec.id === parseInt(lectureId)); // 선택된 강의
-        setSelectedLectureName((lecture.name)); // 선택된 강의 이름 업데이트
+        //setSelectedLectureName((lecture.name)); // 선택된 강의 이름 업데이트
         setTitle('[' + lecture.name + '] ' + inputTitle)
 
         fetchReceiverList(lectureId); // 받는사람 리스트 업데이트
@@ -74,7 +74,7 @@ function MessageWrite() {
         setContent('');
         setReceiverList([]);
         setSelectedLectureId('');
-        setSelectedLectureName('');
+        //setSelectedLectureName('');
         setSelectedReceiverId('');
     }
 
