@@ -19,4 +19,8 @@ public interface AssignmentRepository extends JpaRepository<AssignmentEntity, Lo
     // 과제 페이징 조회
     @Query("SELECT m FROM AssignmentEntity m WHERE m.lectureEntity.id = :lectureId")
     Page<AssignmentEntity> findAllByLectureId(@Param("lectureId") Long lectureId, Pageable pageable);
+
+    @Query("SELECT a FROM AssignmentEntity a WHERE a.lectureEntity.id IN :lectureIds")
+    List<AssignmentEntity> findByLectureIds(@Param("lectureIds") List<Long> lectureIds);
+
 }

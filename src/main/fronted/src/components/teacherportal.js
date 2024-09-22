@@ -719,13 +719,15 @@ function App26() {
         }
     };
 
-
+    const showDivExamEstimation = () => {
+        setVisibleDiv('ExamEstimation');
+    };
 
     return (
         <div id="App">
             <div id="menu_teacherportal">
                 <div id="teacher_info">
-                    <img src={logo} onClick={showDivAssignmentEstimationStudent}/>
+                    <img src={logo} onClick={showDivExamEstimation}/>
                     <h2>고슴도치</h2>
                 </div>
                 <ul>
@@ -1198,17 +1200,13 @@ function App26() {
                                 </div>
                                 <div id="Estimation_AssignmentEstimationStudent">
                                     <h2>평가</h2>
-                                    <div id="ScoreOfAssignment">
-
-                                    </div>
+                                    <input type="text" id="ScoreOfAssignment"/>
                                 </div>
                                 <div id="Opinion_AssignmentEstimationStudent">
                                     <h2>평가 의견</h2>
-                                    <div id="OpinionOfAssignment">
-
-                                    </div>
+                                    <input type="text" id="OpinionOfAssignment"/>
                                 </div>
-                                <button>저장</button>
+                                <button id="AssignmentEstimationStudent_button">저장</button>
                             </div>
                         </div>
                     </>
@@ -1408,7 +1406,6 @@ function App26() {
                         </div>
                     </>
                 )}
-
 
                 {visibleDiv === 'ExamRead' && (
                     <>
@@ -1718,6 +1715,49 @@ function App26() {
                     </>
                 )}
 
+                {visibleDiv === 'ExamEstimation' && (
+                    <>
+                        <div id="ExamEstimation_teacherportal">
+                            <div id="but">
+                                <h2>시험 관리</h2>
+                            </div>
+                        </div>
+                        <div id="ExamEstimationStudent">
+                            <div id="table_score">
+                                <div id="blank_table_score"/>
+                                <div id="howmanystudent">
+                                    대상인원 : 00명 | 참여인원 : 00명
+                                </div>
+                                <div id="tableOfStudentScore">
+                                    <div id="tableOfStudentScore_category">
+                                        <div id="totalscore">
+                                             <span>배점</span>
+                                        </div>
+                                        <div id="aver_exam">
+                                            평균
+                                        </div>
+                                        <div id="min_exam">
+                                            최소
+                                        </div>
+                                        <div id="max_exam">
+                                            최대
+                                        </div>
+                                        <div id="mid_exam">
+                                            중앙
+                                        </div>
+                                        <div id="abs_exam">
+                                            표준편차
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="graph_score">
+                            </div>
+                            <div id="NameOfStudent_ExamEstimation">
+                            </div>
+                        </div>
+                    </>
+                )}
 
             </div>
         </div>
