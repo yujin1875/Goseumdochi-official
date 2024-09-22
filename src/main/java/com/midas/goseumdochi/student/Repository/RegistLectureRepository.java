@@ -21,4 +21,8 @@ public interface RegistLectureRepository extends JpaRepository<RegistLectureEnti
 
     @Query("SELECT r FROM RegistLectureEntity r WHERE r.lectureEntity.id = :lectureId And r.studentEntity.id = :studentId")
     Optional<RegistLectureEntity> findByLectureIdAndStudentId(@Param("lectureId") Long lectureId, @Param("studentId") Long studentId);
+
+    @Query("SELECT r.lectureEntity.id FROM RegistLectureEntity r WHERE r.studentEntity.id = :studentId")
+    List<Long> findLectureIdsByStudentId(@Param("studentId") Long studentId);
+
 }

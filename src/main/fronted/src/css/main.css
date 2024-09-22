@@ -1,3 +1,13 @@
+.event {
+    background-color: #f9c74f; /* 밝은 노란색 배경 */
+    color: #000; /* 검정색 텍스트 */
+    border-radius: 4px; /* 모서리 둥글게 */
+    padding: 2px 4px; /* 패딩 */
+    margin: 2px 0; /* 마진 */
+    font-size: 0.8em; /* 폰트 크기 */
+}
+
+
 #main-menu{
     display: block;
     width: 1358px;
