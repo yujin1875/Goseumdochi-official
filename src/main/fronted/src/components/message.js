@@ -5,6 +5,10 @@ import '../css/message.css';
 
 function Message() {
 
+    const GomessageWrite=()=>{
+        window.location.href='/messageWrite';
+    }
+
     return (
         <div id="App">
             <div id="header_message"/>
@@ -14,7 +18,7 @@ function Message() {
                     <option value="get">받은 쪽지함</option>
                     <option value="send">보낸 쪽지함</option>
                 </select>
-                <button id="letSendMessage">
+                <button id="letSendMessage" onClick={GomessageWrite}>
                     쪽지 쓰기
                 </button>
                 <div id="getMessageBox">
