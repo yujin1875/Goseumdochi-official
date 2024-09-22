@@ -35,6 +35,8 @@ public class StudentDTO {
 
     private String confirmNewPassword;
 
+    private AssignmentSubmissionDTO assignmentSubmission;
+
 
     public static StudentDTO toStudentDTO(StudentEntity studentEntity){
         StudentDTO studentDTO = new StudentDTO();

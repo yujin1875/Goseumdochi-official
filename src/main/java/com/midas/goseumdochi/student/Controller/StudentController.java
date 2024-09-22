@@ -230,6 +230,12 @@ public class StudentController {
         return ResponseEntity.ok(recommendList);
     }
 
+    @GetMapping("/lecture/{lectureId}/students/submission-status")
+    public ResponseEntity<?> getStudentsWithSubmissionStatus(@PathVariable Long lectureId, @RequestParam Long assignmentId) {
+        List<StudentDTO> students = studentService.getStudentsByLectureIdWithSubmissionStatus(lectureId, assignmentId);
+        return ResponseEntity.ok(students);
+    }
+
     // 과제 제출
     @PostMapping("/submitAssignment")
     public ResponseEntity<?> submitAssignment(
@@ -250,6 +256,7 @@ public class StudentController {
 
             // 과제 제출 후 제출 인원 1 증가
             assignmentService.saveAssignmentSubmission(studentId, assignmentId, title, content, fileUrl);
+            studentService.saveAssignmentSubmission(studentId, assignmentId, title, content, fileUrl);
 
             return ResponseEntity.ok("과제가 성공적으로 제출되었습니다.");
         } catch (IOException e) {
@@ -312,5 +319,13 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("제출한 과제를 찾을 수 없습니다.");
         }
     }
+
+    @GetMapping("/lecture/{lectureId}/students")
+    public ResponseEntity<?> getStudentsByLectureId(@PathVariable Long lectureId) {
+        List<StudentDTO> studentDTOList = studentService.getStudentsByLectureId(lectureId);
+        return ResponseEntity.ok(studentDTOList);
+    }
+
+
 
 }

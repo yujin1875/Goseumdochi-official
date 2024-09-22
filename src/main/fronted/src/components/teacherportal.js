@@ -44,6 +44,7 @@ function App26() {
     const [essayAnswers, setEssayAnswers] = useState(['']); // 서술형 답변 상태
     const [totalPoints, setTotalPoints] = useState(0); // 총 배점을 위한 상태
     const [editingQuestion, setEditingQuestion] = useState(null);
+    const [students, setStudents] = useState([]);
 
 
 
@@ -72,6 +73,50 @@ function App26() {
             console.error("There was an error fetching the lecture info!", error);
         }
     };
+
+    // 학생 목록을 가져오는 함수
+    const fetchStudents = async () => {
+        try {
+            const response = await axios.get(`/api/student/lecture/${lectureId}/students`); // API 호출
+            setStudents(response.data); // API로 받은 학생 데이터를 상태에 저장
+        } catch (error) {
+            console.error("Error fetching students:", error);
+        }
+    };
+
+// useEffect를 통해 화면이 'AssignmentEstimation'일 때만 API 호출
+    useEffect(() => {
+        if (visibleDiv === 'AssignmentEstimation') {
+            fetchStudents(); // 학생 목록을 가져옴
+        }
+    }, [visibleDiv]);
+
+// 학생 목록 출력 부분
+    {students.map(student => (
+        <div key={student.id} className="student-info">
+            <div>{student.studentName}</div>
+            <div>{student.studentId}</div>
+        </div>
+    ))}
+
+    // 학생 목록을 가져오면서 과제 제출 상태를 포함하도록 수정
+    const fetchStudentsWithSubmissionStatus = async () => {
+        try {
+            const response = await axios.get(`/api/student/lecture/${lectureId}/students/submission-status`, {
+                params: { assignmentId: currentAssignment.id } // 과제 ID를 포함하여 API 요청
+            });
+            setStudents(response.data); // 학생 목록에 제출 상태 추가
+        } catch (error) {
+            console.error("Error fetching students with submission status:", error);
+        }
+    };
+
+// AssignmentEstimation 페이지 로드 시 학생과 제출 상태를 가져옴
+    useEffect(() => {
+        if (visibleDiv === 'AssignmentEstimation') {
+            fetchStudentsWithSubmissionStatus(); // 제출 상태 포함 학생 목록 가져옴
+        }
+    }, [visibleDiv]);
 
 
     const fetchMaterials = async () => {
@@ -389,25 +434,19 @@ function App26() {
         formData.append('id', user.id);
 
         try {
-            const response = await axios.post(`/api/teacher/lecture/${lectureId}/assignment/new`, formData, {
+            const response = await axios.post(`/api/student/submitAssignment`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
             if (response.status === 200) {
-                alert("새로운 과제가 생성되었습니다.");
+                alert("과제가 성공적으로 제출되었습니다.");
                 showDivAssignment();
                 fetchAssignments();
             }
         } catch (error) {
-            if (error.response) {
-                console.error('응답 에러:', error.response.data);
-            } else if (error.request) {
-                console.error('요청 에러:', error.request);
-            } else {
-                console.error('에러:', error.message);
-            }
-            alert("과제 생성에 실패했습니다. 다시 시도하세요.");
+            console.error('응답 에러:', error.response?.data);
+            alert("과제 제출에 실패했습니다.");
         }
     };
 
@@ -1115,17 +1154,29 @@ function App26() {
                                     <div id="score">점수</div>
                                     <div id="opinion">평가의견</div>
                                 </div>
-                                <div id="info_AssignmentEstimation">
-                                    <div id="Aname">이름</div>
-                                    <div id="AStudentID">ID</div>
-                                    <div id="Asubmit">제출</div>
-                                    <div id="Ascore">점수</div>
-                                    <div id="Aopinion">평가의견</div>
-                                </div>
+
+                                {students.length > 0 ? (
+                                    students.map((student) => (
+                                        <div id="info_AssignmentEstimation" key={student.studentId}>
+                                            <div id="Aname">{student.studentName}</div>
+                                            <div id="AStudentID">{student.studentId}</div>
+                                            <div id="Asubmit">
+                                                {student.assignmentSubmission && student.assignmentSubmission.submissionStatus === '정상제출'
+                                                    ? "정상제출"
+                                                    : "미제출"}
+                                            </div>
+                                            <div id="Ascore">점수 입력</div>
+                                            <div id="Aopinion">평가 의견 입력</div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div>학생 목록을 불러오는 중입니다...</div>
+                                )}
                             </div>
                         </div>
                     </>
                 )}
+
                 {visibleDiv === 'AssignmentEstimationStudent' && (
                     <>
                         <div id="AssignmentEstimationStudent_teacherportal">
@@ -1133,7 +1184,7 @@ function App26() {
                                 <h2>과제 조회/제출</h2>
                             </div>
                             <div id="AssignmentEstimationStudent">
-                                <div id="title_AssignmentEstimationStudent">
+                            <div id="title_AssignmentEstimationStudent">
                                     <h2>제출 정보</h2>
                                     <div id="StudentWrite">
                                         ㅇㅇㅇ
