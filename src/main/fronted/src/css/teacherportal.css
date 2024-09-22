@@ -2093,7 +2093,7 @@ hr{
     margin-top:5px;
 }
 
-/* 시험 추가 */
+/* 시험 추가 1300 */
 
 #ExamAdd_teacherportal{
     float:left;
@@ -2678,7 +2678,7 @@ hr{
     margin-top:5px;
 }
 
-/* 과제 조회/제출 평가에서 학생이름 클릭 1125*/
+/* 과제 조회/제출 평가에서 학생이름 클릭 1128*/
 #AssignmentEstimationStudent_teacherportal{
     float:left;
     width:1625px;
@@ -2692,28 +2692,27 @@ hr{
 
 #AssignmentEstimationStudent_teacherportal>#AssignmentEstimationStudent{
     width:1625px;
-    height:800px;
+    height:850px;
     background-color:#FFFFFF;
 }
 
 #AssignmentEstimationStudent>#title_AssignmentEstimationStudent{
     width:1625px;
-    height:50px;
+    height:180px;
     background-color:#FFFFFF;
 }
 
 #title_AssignmentEstimationStudent>h2{
     width:150px;
     height:30px;
-    margin-top:15px;
-    margin-left:110px;
+    margin-left:210px;
 }
 
 #title_AssignmentEstimationStudent>#StudentWrite{
     width:700px;
     height:100px;
     margin-top:7px;
-    margin-left:110px;
+    margin-left:210px;
     border: 1px solid #CED4DA;
 }
 
@@ -2724,6 +2723,7 @@ hr{
     background-color:#6F7C86;
     border-color:#6F7C86;
     margin-top:15px;
+    margin-left:900px;
     font-size:15px;
     color:#FFFFFF;
 }
@@ -2731,21 +2731,140 @@ hr{
 
 #AssignmentEstimationStudent>#file_AssignmentEstimationStudent{
     width:1625px;
-    height:50px;
+    height:250px;
     background-color:#FFFFFF;
 }
 
 #file_AssignmentEstimationStudent>h2{
     width:150px;
     height:30px;
-    margin-top:120px;
-    margin-left:110px;
+    margin-left:210px;
 }
 
 #file_AssignmentEstimationStudent>#StudentFile{
     width:700px;
     height:100px;
     margin-top:10px;
-    margin-left:110px;
+    margin-left:210px;
     border: 1px solid #CED4DA;
 }
+
+#AssignmentEstimationStudent>#Estimation_AssignmentEstimationStudent{
+    width:1625px;
+    height:60px;
+    background-color:#FFFFFF;
+}
+
+#Estimation_AssignmentEstimationStudent>h2{
+    float:left;
+    width:50px;
+    height:30px;
+    margin-left:210px;
+}
+
+#Estimation_AssignmentEstimationStudent>#ScoreOfAssignment{
+    float:left;
+    width:100px;
+    height:30px;
+    margin-top:2px;
+    margin-left:20px;
+    border: 1px solid #CED4DA;
+}
+
+#AssignmentEstimationStudent>#Opinion_AssignmentEstimationStudent{
+    width:1625px;
+    height:250px;
+    background-color:#FFFFFF;
+}
+
+#Opinion_AssignmentEstimationStudent>h2{
+    width:150px;
+    height:30px;
+    margin-left:210px;
+}
+
+#Opinion_AssignmentEstimationStudent>#OpinionOfAssignment{
+    width:800px;
+    height:200px;
+    margin-top:10px;
+    margin-left:210px;
+    border: 1px solid #CED4DA;
+}
+
+/* 시험관리 평가버튼 누르고 1664*/
+#ExamEstimation_teacherportal{
+    float:left;
+    width:1625px;
+    height:80px;
+}
+
+#ExamEstimation_teacherportal>#but{
+    width:1625px;
+    height:80px;
+}
+
+#ExamEstimationStudent{
+    float:left;
+    width:1625px;
+    height:900px;
+    background-color:#FFFFFF;
+}
+
+#ExamEstimationStudent>#table_score{
+    width:1200px;
+    height:300px;
+    margin:0 auto;
+}
+
+#table_score>#blank_table_score{
+    width:1200px;
+    height:20px;
+    background-color:white;
+    margin:0 auto;
+    font-size:20px;
+}
+
+#table_score>#howmanystudent{
+    width:300px;
+    height:30px;
+    background-color:white;
+    margin:0 auto;
+    font-size:20px;
+}
+
+#table_score>#tableOfStudentScore{
+    width:1020px;
+    height:200px;
+    background-color:white;
+    margin:0 auto;
+    margin-top:20px;
+    font-size:20px;
+    border:1px solid black;
+}
+
+#tableOfStudentScore>#tableOfStudentScore_category{
+    height:89px;
+    border-bottom:1px solid black;
+}
+
+#tableOfStudentScore_category>#totalscore{
+    width:169px;
+    height:89px;
+    border-right:1px solid black;
+    text-align:center;
+    font-size:28px;
+}
+
+#ExamEstimationStudent>#graph_score{
+    width:1200px;
+    height:300px;
+    margin:0 auto;
+}
+
+#ExamEstimationStudent>#NameOfStudent_ExamEstimation{
+    width:1200px;
+    height:300px;
+    margin:0 auto;
+}
+
+
