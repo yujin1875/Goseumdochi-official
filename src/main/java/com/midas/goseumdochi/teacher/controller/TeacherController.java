@@ -1,8 +1,10 @@
 package com.midas.goseumdochi.teacher.controller;
 
+import com.midas.goseumdochi.student.Dto.AssignmentSubmissionDTO;
 import com.midas.goseumdochi.student.Dto.StudentDTO;
 import com.midas.goseumdochi.student.Service.FileStorageService;
 import com.midas.goseumdochi.student.Service.RegistLectureService;
+import com.midas.goseumdochi.student.Service.StudentService;
 import com.midas.goseumdochi.teacher.dto.*;
 import com.midas.goseumdochi.teacher.service.*;
 import com.midas.goseumdochi.util.Service.MailService;
@@ -17,6 +19,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/teacher")
@@ -31,6 +34,7 @@ public class TeacherController {
     private final LectureInfoService lectureInfoService;
     private final SubjectNoticeService subjectNoticeService;
     private final ExamService examService;
+    private final StudentService studentService;
 
     @Autowired
     private FileStorageService fileStorageService;
@@ -388,4 +392,15 @@ public class TeacherController {
         examService.deleteExam(id);
         return ResponseEntity.ok("시험이 성공적으로 삭제되었습니다.");
     }
+
+    // 특정 과제에 제출된 과제 목록을 가져오기
+    @GetMapping("/assignment/{assignmentId}/student/{studentId}/submissions")
+    public ResponseEntity<List<AssignmentSubmissionDTO>> getSubmissionsByAssignmentId(
+            @PathVariable Long assignmentId,
+            @PathVariable Long studentId) {
+
+        List<AssignmentSubmissionDTO> submissions = studentService.getSubmissionsByAssignmentId(assignmentId, studentId);
+        return new ResponseEntity<>(submissions, HttpStatus.OK);
+    }
+
 }
