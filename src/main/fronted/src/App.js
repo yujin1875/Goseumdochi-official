@@ -58,6 +58,8 @@ import BadWordCheck from './components/community_badword_check';
 import Message from './components/message';
 import Messagewrite from './components/messageWrite';
 
+import VideoUploadTest from './components/videoUploadTest';
+
 class App extends Component{
   constructor(props){
     super(props)
@@ -125,6 +127,8 @@ class App extends Component{
               <Route path="/submit-assignment" element={<SubmitAssignment />} />
               <Route path='/message' element={<Message/>}/>
               <Route path='/messageWrite' element={<Messagewrite/>}/>
+
+              <Route path='/videoUploadTest' element={<VideoUploadTest/>}/>
             </Routes>
         </BrowserRouter> 
       </div>
