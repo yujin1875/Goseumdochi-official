@@ -59,7 +59,8 @@ import DirectorNoticeWrite from './components/director_notice_write';
 import BadWordCheck from './components/community_badword_check';
 
 import Message from './components/message';
-import MessageWrite2 from './components/messageWrite';
+import Messagewrite from './components/messageWrite';
+import Messagereply from './components/messageReply';
 
 class App extends Component{
   constructor(props){
@@ -127,7 +128,8 @@ class App extends Component{
               <Route path="/lecture-assignment-paging" element={<LectureAssignmentPaging />} />
               <Route path="/submit-assignment" element={<SubmitAssignment />} />
               <Route path='/message' element={<Message/>}/>
-              <Route path='/messageWrite' element={<MessageWrite2/>}/>
+              <Route path='/messageWrite' element={<Messagewrite/>}/>
+              <Route path='/messagereply' element={<Messagereply/>}/>
             </Routes>
         </BrowserRouter> 
       </div>
