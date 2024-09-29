@@ -727,7 +727,7 @@ function App26() {
         <div id="App">
             <div id="menu_teacherportal">
                 <div id="teacher_info">
-                    <img src={logo} onClick={showDivExamEstimation}/>
+                    <img src={logo} onClick={showDivAssignmentEstimation}/>
                     <h2>고슴도치</h2>
                 </div>
                 <ul>
