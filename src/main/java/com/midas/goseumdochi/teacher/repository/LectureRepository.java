@@ -14,4 +14,9 @@ public interface LectureRepository extends JpaRepository<LectureEntity, Long> {
     //fk로 찾기
     @Query("SELECT l FROM LectureEntity l WHERE l.teacherEntity.id = :teacherId")
     List<LectureEntity> findAllByTeacherId(@Param("teacherId") Long teacherId);
+
+    @Query("SELECT l.id FROM LectureEntity l WHERE l.teacherEntity.id = :teacherId")
+    List<Long> findAllLectureIdsByTeacherId(@Param("teacherId") Long teacherId);
+
+
 }

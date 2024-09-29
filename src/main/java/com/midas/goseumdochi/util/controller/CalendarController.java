@@ -20,6 +20,7 @@ public class CalendarController {
         this.calendarService = calendarService;
     }
 
+    // 학생
     @GetMapping("/assignments/{id}")
     public List<AssignmentEntity> getAssignments(@PathVariable Long id) { return calendarService.getAssignmentsByStudentId(id); }
 
@@ -27,5 +28,12 @@ public class CalendarController {
     public List<ExamEntity> getExams(@PathVariable Long id) {
         return calendarService.getExamsByStudentId(id);
     }
+
+    // 선생
+    @GetMapping("/assignments/teacher/{id}")
+    public List<AssignmentEntity> getAssignmentsTeacher(@PathVariable Long id) { return calendarService.getAssignmentByTeacherId(id); }
+
+    @GetMapping("/exams/teacher/{id}")
+    public List<ExamEntity> getExamsTeacher(@PathVariable Long id) { return calendarService.getExamsByTeacherId(id); }
 }
 
