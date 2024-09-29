@@ -1731,7 +1731,7 @@ function App26() {
                                 <div id="tableOfStudentScore">
                                     <div id="tableOfStudentScore_category">
                                         <div id="totalscore">
-                                             <span>배점</span>
+                                             배점
                                         </div>
                                         <div id="aver_exam">
                                             평균
@@ -1747,6 +1747,26 @@ function App26() {
                                         </div>
                                         <div id="abs_exam">
                                             표준편차
+                                        </div>
+                                    </div>
+                                    <div id="tableOfStudentScore_score">
+                                        <div id="totalscore">
+
+                                        </div>
+                                        <div id="aver_exam">
+
+                                        </div>
+                                        <div id="min_exam">
+
+                                        </div>
+                                        <div id="max_exam">
+
+                                        </div>
+                                        <div id="mid_exam">
+
+                                        </div>
+                                        <div id="abs_exam">
+
                                         </div>
                                     </div>
                                 </div>

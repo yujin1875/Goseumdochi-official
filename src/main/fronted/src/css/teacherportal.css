@@ -2848,11 +2848,149 @@ hr{
 }
 
 #tableOfStudentScore_category>#totalscore{
+    float: left;
     width:169px;
     height:89px;
     border-right:1px solid black;
     text-align:center;
     font-size:28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tableOfStudentScore_category>#aver_exam{
+    float: left;
+    width:169px;
+    height:89px;
+    border-right:1px solid black;
+    text-align:center;
+    font-size:28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tableOfStudentScore_category>#min_exam{
+    float: left;
+    width:169px;
+    height:89px;
+    border-right:1px solid black;
+    text-align:center;
+    font-size:28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tableOfStudentScore_category>#max_exam{
+    float: left;
+    width:169px;
+    height:89px;
+    border-right:1px solid black;
+    text-align:center;
+    font-size:28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tableOfStudentScore_category>#mid_exam{
+    float: left;
+    width:169px;
+    height:89px;
+    border-right:1px solid black;
+    text-align:center;
+    font-size:28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tableOfStudentScore_category>#abs_exam{
+    float: left;
+    width:169px;
+    height:89px;
+    text-align:center;
+    font-size:28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tableOfStudentScore>#tableOfStudentScore_score{
+    height:110px;
+}
+
+#tableOfStudentScore_score>#totalscore{
+    float: left;
+    width:169px;
+    height:110px;
+    border-right:1px solid black;
+    text-align:center;
+    font-size:28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tableOfStudentScore_score>#aver_exam{
+    float: left;
+    width:169px;
+    height:110px;
+    border-right:1px solid black;
+    text-align:center;
+    font-size:28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tableOfStudentScore_score>#min_exam{
+    float: left;
+    width:169px;
+    height:110px;
+    border-right:1px solid black;
+    text-align:center;
+    font-size:28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tableOfStudentScore_score>#max_exam{
+    float: left;
+    width:169px;
+    height:110px;
+    border-right:1px solid black;
+    text-align:center;
+    font-size:28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tableOfStudentScore_score>#mid_exam{
+    float: left;
+    width:169px;
+    height:110px;
+    border-right:1px solid black;
+    text-align:center;
+    font-size:28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tableOfStudentScore_score>#abs_exam{
+    float: left;
+    width:169px;
+    height:110px;
+    text-align:center;
+    font-size:28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #ExamEstimationStudent>#graph_score{
