@@ -29,7 +29,7 @@ function VideoUploadTest() {
 
     return (
         <div>
-            <h1>동영상 업로드 테스트o</h1>
+            <h1>동영상 업로드 테스트</h1>
             <input type="file" onChange={handleFileChange} />
             <button onClick={uploadFile}>Upload</button>
         </div>
