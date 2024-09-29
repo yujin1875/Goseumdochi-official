@@ -125,6 +125,9 @@ class App extends Component{
               <Route path='/community_badword_check' element={<BadWordCheck/>}/>
               <Route path='/message/list' element={<MessageList/>}/>
               <Route path='/message/write' element={<MessageWrite/>}/>
+              <Route path='/message/reply' element={<MessageReply/>}/>
+              <Route path='/message/view/receive' element={<MessageViewReceive/>}/>
+              <Route path='/message/view/send' element={<MessageViewSend/>}/>
               <Route path="/lecture-assignment-paging" element={<LectureAssignmentPaging />} />
               <Route path="/submit-assignment" element={<SubmitAssignment />} />
               <Route path='/message' element={<Message/>}/>
