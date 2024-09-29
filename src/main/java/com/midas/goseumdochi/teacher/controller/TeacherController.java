@@ -1,8 +1,10 @@
 package com.midas.goseumdochi.teacher.controller;
 
+import com.midas.goseumdochi.student.Dto.AssignmentSubmissionDTO;
 import com.midas.goseumdochi.student.Dto.StudentDTO;
 import com.midas.goseumdochi.student.Service.FileStorageService;
 import com.midas.goseumdochi.student.Service.RegistLectureService;
+import com.midas.goseumdochi.student.Service.StudentService;
 import com.midas.goseumdochi.teacher.dto.*;
 import com.midas.goseumdochi.teacher.service.*;
 import com.midas.goseumdochi.util.Service.MailService;
@@ -17,6 +19,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/teacher")
@@ -31,6 +34,7 @@ public class TeacherController {
     private final LectureInfoService lectureInfoService;
     private final SubjectNoticeService subjectNoticeService;
     private final ExamService examService;
+    private final StudentService studentService;
 
     @Autowired
     private FileStorageService fileStorageService;
@@ -388,4 +392,52 @@ public class TeacherController {
         examService.deleteExam(id);
         return ResponseEntity.ok("시험이 성공적으로 삭제되었습니다.");
     }
+
+    // 특정 과제에 제출된 과제 목록을 가져오기
+    @GetMapping("/assignment/{assignmentId}/student/{studentId}/submissions")
+    public ResponseEntity<List<AssignmentSubmissionDTO>> getSubmissionsByAssignmentId(
+            @PathVariable Long assignmentId,
+            @PathVariable Long studentId) {
+
+        List<AssignmentSubmissionDTO> submissions = studentService.getSubmissionsByAssignmentId(assignmentId, studentId);
+        return new ResponseEntity<>(submissions, HttpStatus.OK);
+    }
+    // 과제 점수와 평가 의견을 업데이트하는 엔드포인트
+    @PostMapping("/gradeAssignment")
+    public ResponseEntity<?> gradeAssignment(@RequestParam Long submissionId, @RequestParam Integer score, @RequestParam String evaluationComment) {
+        try {
+            teacherService.gradeAssignmentSubmission(submissionId, score, evaluationComment);
+            return ResponseEntity.ok("과제 점수와 평가 의견이 성공적으로 업데이트되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("점수와 평가 업데이트에 실패했습니다.");
+        }
+    }
+
+    // 과제 점수와 평가 의견을 수정하는 엔드포인트
+    @PostMapping("/updateGradeAndEvaluation")
+    public ResponseEntity<?> updateGradeAndEvaluation(
+            @RequestParam Long submissionId,
+            @RequestParam Integer newScore,
+            @RequestParam String newEvaluationComment) {
+        try {
+            // 점수 및 평가 의견 업데이트 서비스 호출
+            teacherService.updateGradeAndEvaluation(submissionId, newScore, newEvaluationComment);
+            return ResponseEntity.ok("점수와 평가 의견이 성공적으로 업데이트되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("점수 및 평가 의견 업데이트에 실패했습니다.");
+        }
+    }
+
+    // 점수와 평가 의견을 삭제하는 엔드포인트
+    @PostMapping("/removeGradeAndEvaluation")
+    public ResponseEntity<?> removeGradeAndEvaluation(@RequestParam Long submissionId) {
+        try {
+            // 점수와 평가 의견 삭제 서비스 호출
+            teacherService.removeGradeAndEvaluation(submissionId);
+            return ResponseEntity.ok("점수와 평가 의견이 성공적으로 삭제되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("점수와 평가 의견 삭제에 실패했습니다.");
+        }
+    }
+
 }

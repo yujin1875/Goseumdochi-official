@@ -182,14 +182,15 @@ public class StudentService {
         List<AssignmentSubmissionEntity> submissions = assignmentSubmissionRepository.findByStudentId(studentId);
         return submissions.stream()
                 .map(submission -> new AssignmentSubmissionDTO(submission.getId(), submission.getStudentId(),
-                        submission.getAssignmentId(), submission.getTitle(), submission.getContent(), submission.getAttachmentPath(), submission.getSubmissionStatus()))
+                        submission.getAssignmentId(), submission.getTitle(), submission.getContent(),
+                        submission.getAttachmentPath(), submission.getSubmissionStatus(),submission.getScore(), submission.getEvaluationComment()))
                 .collect(Collectors.toList());
     }
 
     public Optional<AssignmentSubmissionDTO> getAssignmentSubmission(Long studentId, Long assignmentId) {
         Optional<AssignmentSubmissionEntity> submission = assignmentSubmissionRepository.findByStudentIdAndAssignmentId(studentId, assignmentId);
         return submission.map(sub -> new AssignmentSubmissionDTO(sub.getId(), sub.getStudentId(), sub.getAssignmentId(),
-                sub.getTitle(), sub.getContent(), sub.getAttachmentPath(), sub.getSubmissionStatus()));
+                sub.getTitle(), sub.getContent(), sub.getAttachmentPath(), sub.getSubmissionStatus(),sub.getScore(),sub.getEvaluationComment()));
     }
 
     // 과제 제출 상태 확인
@@ -220,6 +221,23 @@ public class StudentService {
         List<StudentEntity> students = studentRepository.findStudentsByLectureId(lectureId);
         return students.stream()
                 .map(StudentDTO::toStudentDTO)
+                .collect(Collectors.toList());
+    }
+
+    //특정 과제에 제출된 학생들의 과제 목록
+    public List<AssignmentSubmissionDTO> getSubmissionsByAssignmentId(Long assignmentId, Long studentId) {
+        List<AssignmentSubmissionEntity> submissions = assignmentSubmissionRepository.findByAssignmentIdAndStudentId(assignmentId, studentId);
+        return submissions.stream()
+                .map(submission -> new AssignmentSubmissionDTO(
+                        submission.getId(),
+                        submission.getStudentId(),
+                        submission.getAssignmentId(),
+                        submission.getTitle(),
+                        submission.getContent(),
+                        submission.getAttachmentPath(),
+                        submission.getSubmissionStatus(),
+                        submission.getScore(),
+                        submission.getEvaluationComment()))
                 .collect(Collectors.toList());
     }
 

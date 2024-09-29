@@ -15,4 +15,6 @@ public class AssignmentSubmissionDTO {
     private String content;       // 과제 내용
     private String attachmentPath;// 첨부 파일 경로
     private String submissionStatus; // "정상제출" 또는 "미제출"
+    private Integer score; // 과제점수
+    private String evaluationComment;   // 평가의견
 }
