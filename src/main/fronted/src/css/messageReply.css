@@ -1,0 +1,191 @@
+#header_messageReply{
+    width:100%;
+    height:150px;
+}
+
+#messageReply{
+    width: 1200px;
+    height: 700px;
+    background-color: #FFFFFF;
+    margin: auto;
+    border-radius:5px;
+    border: 1px solid #4f4f4f;
+}
+
+#messageReply>h1{
+    margin-top: 15px;
+    margin-left:30px;
+}
+
+#messageReply>select{
+    float: left;
+    width:150px;
+    height:40px;
+    background-color:#FFFFFF;
+    border: 1px solid #000000;
+    margin-top: 20px;
+    margin-left:50px;
+    font-size:18px;
+    border-radius:5px;
+}
+
+#messageReply>button{
+    float:left;
+    width:80px;
+    height:40px;
+    background-color:#CED4DA;
+    margin-top: 20px;
+    font-size:16px;
+    border-radius:5px;
+}
+
+#messageReply>#GotoMessageList{
+    margin-left:50px;
+}
+
+#messageReply>#SendingMessage{
+    margin-left:940px;
+}
+
+#messageReply>#ReplyMessageBox{
+    width:1100px;
+    height:450px;
+    background-color: #F1F3F5;
+    margin:auto;
+    margin-top:90px;
+}
+
+#ReplyMessageBox>#Title{
+    width:1100px;
+    height:60px;
+    border-bottom:1px solid black;
+}
+
+#Title>#title{
+    float:left;
+    width:150px;
+    height:60px;
+    border-right:1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:28px;
+}
+
+#Title>#write_title{
+    float:left;
+    width:949px;
+    height:60px;
+}
+
+#write_title>input{
+    float: left;
+    width:929px;
+    height:40px;
+    background-color:#FFFFFF;
+    border: 1px solid #000000;
+    font-size:18px;
+    border-radius:5px;
+    margin-top:10px;
+    margin-left:10px;
+}
+
+#ReplyMessageBox>#Lecture{
+    width:1100px;
+    height:60px;
+    border-bottom:1px solid black;
+}
+
+#Lecture>#lecture{
+    float:left;
+    width:150px;
+    height:60px;
+    border-right:1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:28px;
+}
+
+#Lecture>#write_lecture{
+    float:left;
+    width:949px;
+    height:60px;
+}
+
+#write_lecture>select{
+    float: left;
+    width:150px;
+    height:40px;
+    background-color:#FFFFFF;
+    border: 1px solid #000000;
+    font-size:18px;
+    border-radius:5px;
+    margin-top:10px;
+    margin-left:10px;
+}
+
+#ReplyMessageBox>#Receiver{
+    width:1100px;
+    height:60px;
+    border-bottom:1px solid black;
+}
+
+#Receiver>#receiver{
+    float:left;
+    width:150px;
+    height:60px;
+    border-right:1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:28px;
+}
+
+#Receiver>#write_receiver{
+    float:left;
+    width:949px;
+    height:60px;
+}
+
+#write_receiver>select{
+    float: left;
+    width:150px;
+    height:40px;
+    background-color:#FFFFFF;
+    border: 1px solid #000000;
+    font-size:18px;
+    border-radius:5px;
+    margin-top:10px;
+    margin-left:10px;
+}
+
+#ReplyMessageBox>#Contents{
+    width:1100px;
+    height:267px;
+}
+
+#Contents>#contents{
+    float:left;
+    width:150px;
+    height:267px;
+    border-right:1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:28px;
+}
+
+#Contents>textarea{
+    float:left;
+    width:929px;
+    height:247px;
+    resize: none;
+    margin-top:10px;
+    margin-left:10px;
+    font-size:18px;
+}
+#footer_messageReply{
+    width:100%;
+    height: 230px;
+}
