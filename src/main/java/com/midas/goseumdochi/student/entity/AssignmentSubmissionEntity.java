@@ -32,4 +32,7 @@ public class AssignmentSubmissionEntity {
     @Builder.Default
     @Column(nullable = false)
     private String submissionStatus = "미제출"; // 기본값 설정
+
+    private Integer score; // 점수
+    private String evaluationComment; // 평가 의견
 }

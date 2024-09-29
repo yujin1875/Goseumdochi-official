@@ -402,5 +402,42 @@ public class TeacherController {
         List<AssignmentSubmissionDTO> submissions = studentService.getSubmissionsByAssignmentId(assignmentId, studentId);
         return new ResponseEntity<>(submissions, HttpStatus.OK);
     }
+    // 과제 점수와 평가 의견을 업데이트하는 엔드포인트
+    @PostMapping("/gradeAssignment")
+    public ResponseEntity<?> gradeAssignment(@RequestParam Long submissionId, @RequestParam Integer score, @RequestParam String evaluationComment) {
+        try {
+            teacherService.gradeAssignmentSubmission(submissionId, score, evaluationComment);
+            return ResponseEntity.ok("과제 점수와 평가 의견이 성공적으로 업데이트되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("점수와 평가 업데이트에 실패했습니다.");
+        }
+    }
+
+    // 과제 점수와 평가 의견을 수정하는 엔드포인트
+    @PostMapping("/updateGradeAndEvaluation")
+    public ResponseEntity<?> updateGradeAndEvaluation(
+            @RequestParam Long submissionId,
+            @RequestParam Integer newScore,
+            @RequestParam String newEvaluationComment) {
+        try {
+            // 점수 및 평가 의견 업데이트 서비스 호출
+            teacherService.updateGradeAndEvaluation(submissionId, newScore, newEvaluationComment);
+            return ResponseEntity.ok("점수와 평가 의견이 성공적으로 업데이트되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("점수 및 평가 의견 업데이트에 실패했습니다.");
+        }
+    }
+
+    // 점수와 평가 의견을 삭제하는 엔드포인트
+    @PostMapping("/removeGradeAndEvaluation")
+    public ResponseEntity<?> removeGradeAndEvaluation(@RequestParam Long submissionId) {
+        try {
+            // 점수와 평가 의견 삭제 서비스 호출
+            teacherService.removeGradeAndEvaluation(submissionId);
+            return ResponseEntity.ok("점수와 평가 의견이 성공적으로 삭제되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("점수와 평가 의견 삭제에 실패했습니다.");
+        }
+    }
 
 }

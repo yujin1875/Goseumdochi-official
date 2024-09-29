@@ -3,6 +3,8 @@ package com.midas.goseumdochi.teacher.service;
 import com.midas.goseumdochi.academy.repository.AcademyRepository;
 import com.midas.goseumdochi.director.entity.DirectorEntity;
 import com.midas.goseumdochi.director.repository.DirectorRepository;
+import com.midas.goseumdochi.student.Repository.AssignmentSubmissionRepository;
+import com.midas.goseumdochi.student.entity.AssignmentSubmissionEntity;
 import com.midas.goseumdochi.teacher.dto.TeacherDTO;
 import com.midas.goseumdochi.teacher.entity.TeacherEntity;
 import com.midas.goseumdochi.teacher.repository.TeacherRepository;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 @RequiredArgsConstructor
 public class TeacherService {
@@ -22,6 +25,7 @@ public class TeacherService {
     final private DirectorRepository directorRepository;
     final private AcademyRepository academyRepository;
     final private EncDecService encDecService;
+    final private AssignmentSubmissionRepository assignmentSubmissionRepository;
 
     // 선생의 loginid와 password를 설정해야함
     public TeacherDTO setLoginidAndPassword(TeacherDTO teacherDTO) {
@@ -108,5 +112,44 @@ public class TeacherService {
     public TeacherEntity findEntityById(Long id) { // 추가된 메서드
         return teacherRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID로 선생님을 찾을 수 없습니다: " + id));
+    }
+
+    // 과제 점수와 평가 의견을 업데이트하는 메서드
+    public void gradeAssignmentSubmission(Long submissionId, Integer score, String evaluationComment) {
+        AssignmentSubmissionEntity submission = assignmentSubmissionRepository.findById(submissionId)
+                .orElseThrow(() -> new RuntimeException("과제 제출 정보를 찾을 수 없습니다."));
+
+        submission.setScore(score);
+        submission.setEvaluationComment(evaluationComment);
+
+        assignmentSubmissionRepository.save(submission);
+    }
+
+    // 과제 점수와 평가 의견을 수정하는 메서드
+    public void updateGradeAndEvaluation(Long submissionId, Integer newScore, String newEvaluationComment) {
+        // 제출물 찾기
+        AssignmentSubmissionEntity submission = assignmentSubmissionRepository.findById(submissionId)
+                .orElseThrow(() -> new RuntimeException("과제 제출 정보를 찾을 수 없습니다."));
+
+        // 점수 및 평가 의견 업데이트
+        submission.setScore(newScore);
+        submission.setEvaluationComment(newEvaluationComment);
+
+        // 업데이트된 제출물 저장
+        assignmentSubmissionRepository.save(submission);
+    }
+
+    // 점수와 평가 의견을 삭제하는 메서드 (null로 초기화)
+    public void removeGradeAndEvaluation(Long submissionId) {
+        // 제출물 존재 여부 확인
+        AssignmentSubmissionEntity submission = assignmentSubmissionRepository.findById(submissionId)
+                .orElseThrow(() -> new RuntimeException("과제 제출 정보를 찾을 수 없습니다."));
+
+        // 점수와 평가 의견을 null로 설정하여 초기화
+        submission.setScore(null);
+        submission.setEvaluationComment(null);
+
+        // 업데이트된 제출물 저장
+        assignmentSubmissionRepository.save(submission);
     }
 }
