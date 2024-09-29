@@ -28,8 +28,8 @@ function MessageList() {
         }
     };
 
+    // 컴포넌트가 처음 마운트될 때와 messageType이 변경될 때 호출
     useEffect(() => {
-        // 컴포넌트가 처음 마운트될 때와 messageType이 변경될 때 호출
         fetchMessageList(messageType, currentPage);
     }, [messageType, currentPage]);
 
@@ -44,6 +44,16 @@ function MessageList() {
     const GoMessageWrite=() => {
         navigate('/message/write', { state: { user: user } });
     }
+
+    // 받은쪽지 열람
+    const handleViewReceiveMessage = (message) => {
+        navigate('/message/view/receive', { state: { user: user, message: message } });
+    };
+
+    // 보낸쪽지 열람
+    const handleViewSendMessage = (message) => {
+        navigate('/message/view/send', { state: { user: user, message: message } });
+    };
 
     // LocalDateTime 형 변환
     const formatLocalDateTime = (localDateTime) => {
@@ -87,7 +97,8 @@ function MessageList() {
                         </thead>
                         <tbody>
                         {messageList.map((message) => (
-                            <tr key={message.id}>
+                            // onClick을 이렇게 사용해야 클릭 이벤트가 실행됐을 때 함수 실행됨
+                            <tr key={message.id} onClick={() => handleViewReceiveMessage(message)}>
                                 <td>{message.viewState}</td>
                                 <td>{message.senderName}</td>
                                 <td>{message.title}</td>
@@ -109,7 +120,7 @@ function MessageList() {
                         </thead>
                         <tbody>
                         {messageList.map((message) => (
-                            <tr key={message.id}>
+                            <tr key={message.id} onClick={() => handleViewSendMessage(message)}>
                                 <td>{message.receiverName}</td>
                                 <td>{message.title}</td>
                                 <td>{formatLocalDateTime(message.sendDate)}</td>

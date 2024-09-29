@@ -100,6 +100,13 @@ public class MessageService {
         return messageDTOPage;
     }
 
+    // 받은쪽지 열람
+    public void viewReceiveMessage(Long messageId) {
+        MessageEntity messageEntity = messageRepository.findById(messageId).get();
+        messageEntity.setViewState("Y"); // 열람상태 Y로 변경
+        messageRepository.save(messageEntity);
+    }
+
     // 쪽지 삭제 [선생]
     public boolean deleteMessageByTeacher(Long messageId) {
         Optional<MessageEntity> findMessage = messageRepository.findById(messageId);

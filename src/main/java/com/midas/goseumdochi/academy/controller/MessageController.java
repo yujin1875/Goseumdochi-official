@@ -84,6 +84,15 @@ public class MessageController {
         return ResponseEntity.ok(response);
     }
 
+    // 받은쪽지 열람 (처음 열람시 열람상태 변경하기 위해)
+    @PostMapping("/{messageId}/view/receive")
+    public ResponseEntity<?> viewReceiveMessage(@PathVariable Long messageId, @RequestParam String viewState) {
+        if(!viewState.equals("Y"))
+            messageService.viewReceiveMessage(messageId);
+
+        return ResponseEntity.ok("받은쪽지 열람 성공");
+    }
+
     // 쪽지 삭제 [선생]
     @PostMapping("/{messageId}/teacher/delete")
     public ResponseEntity<?> deleteMessageByTeacher(@PathVariable Long messageId) {

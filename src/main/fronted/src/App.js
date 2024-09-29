@@ -47,6 +47,9 @@ import LectureAssignmentPaging from './components/yewon/lecture_assignment_pagin
 import StudentRecommendUniv from './components/yewon/student_recommend_univ'
 import MessageList from "./components/yewon/message_list";
 import MessageWrite from "./components/yewon/message_write";
+import MessageReply from "./components/yewon/message_reply";
+import MessageViewReceive from "./components/yewon/message_view_receive";
+import MessageViewSend from "./components/yewon/message_view_send";
 import { Component } from 'react';
 import React from 'react';
 import SubmitAssignment from './components/SubmitAssignment';  // 과제 제출 페이지
@@ -56,7 +59,7 @@ import DirectorNoticeWrite from './components/director_notice_write';
 import BadWordCheck from './components/community_badword_check';
 
 import Message from './components/message';
-import Messagewrite from './components/messageWrite';
+import MessageWrite2 from './components/messageWrite';
 
 class App extends Component{
   constructor(props){
@@ -124,7 +127,7 @@ class App extends Component{
               <Route path="/lecture-assignment-paging" element={<LectureAssignmentPaging />} />
               <Route path="/submit-assignment" element={<SubmitAssignment />} />
               <Route path='/message' element={<Message/>}/>
-              <Route path='/messageWrite' element={<Messagewrite/>}/>
+              <Route path='/messageWrite' element={<MessageWrite2/>}/>
             </Routes>
         </BrowserRouter> 
       </div>
