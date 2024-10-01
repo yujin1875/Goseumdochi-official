@@ -719,6 +719,21 @@ function App26() {
         }
     };
 
+    const handleStudentClick = (studentId) => {
+        setVisibleDiv('AssignmentEstimationStudent');
+        fetchStudentSubmission(studentId);
+    };
+
+    const fetchStudentSubmission = async (studentId) => {
+        try {
+            const response = await axios.get(`/api/assignment/${currentAssignment.id}/student/${studentId}/submissions`);
+            // response 데이터를 사용하여 제출 정보와 파일, 평가 정보를 업데이트
+        } catch (error) {
+            console.error("Error fetching student submission:", error);
+        }
+    };
+
+
     const showDivExamEstimation = () => {
         setVisibleDiv('ExamEstimation');
     };
@@ -1160,7 +1175,17 @@ function App26() {
                                 {students.length > 0 ? (
                                     students.map((student) => (
                                         <div id="info_AssignmentEstimation" key={student.studentId}>
-                                            <div id="Aname">{student.studentName}</div>
+                                            <div
+                                                id="Aname"
+                                                onClick={() => {
+                                                    if (student.assignmentSubmission && student.assignmentSubmission.submissionStatus === '정상제출') {
+                                                        handleStudentClick(student.studentId);
+                                                    }
+                                                }}
+                                                style={{cursor: student.assignmentSubmission && student.assignmentSubmission.submissionStatus === '정상제출' ? 'pointer' : 'default'}}  // 마우스 포인터 변경
+                                            >
+                                                {student.studentName}
+                                            </div>
                                             <div id="AStudentID">{student.studentId}</div>
                                             <div id="Asubmit">
                                                 {student.assignmentSubmission && student.assignmentSubmission.submissionStatus === '정상제출'
@@ -1183,7 +1208,7 @@ function App26() {
                     <>
                         <div id="AssignmentEstimationStudent_teacherportal">
                             <div id="but">
-                                <h2>과제 조회/제출</h2>
+                            <h2>과제 조회/제출</h2>
                             </div>
                             <div id="AssignmentEstimationStudent">
                             <div id="title_AssignmentEstimationStudent">
