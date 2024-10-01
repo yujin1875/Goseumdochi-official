@@ -3,6 +3,7 @@ package com.midas.goseumdochi.teacher.service;
 import com.midas.goseumdochi.academy.repository.AcademyRepository;
 import com.midas.goseumdochi.director.entity.DirectorEntity;
 import com.midas.goseumdochi.director.repository.DirectorRepository;
+import com.midas.goseumdochi.student.Dto.AssignmentSubmissionDTO;
 import com.midas.goseumdochi.student.Repository.AssignmentSubmissionRepository;
 import com.midas.goseumdochi.student.entity.AssignmentSubmissionEntity;
 import com.midas.goseumdochi.teacher.dto.TeacherDTO;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -112,6 +114,23 @@ public class TeacherService {
     public TeacherEntity findEntityById(Long id) { // 추가된 메서드
         return teacherRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID로 선생님을 찾을 수 없습니다: " + id));
+    }
+
+    //특정 과제에 제출된 학생들의 과제 목록
+    public List<AssignmentSubmissionDTO> getSubmissionsByAssignmentId(Long assignmentId, Long studentId) {
+        List<AssignmentSubmissionEntity> submissions = assignmentSubmissionRepository.findByAssignmentIdAndStudentId(assignmentId, studentId);
+        return submissions.stream()
+                .map(submission -> new AssignmentSubmissionDTO(
+                        submission.getId(),
+                        submission.getStudentId(),
+                        submission.getAssignmentId(),
+                        submission.getTitle(),
+                        submission.getContent(),
+                        submission.getAttachmentPath(),
+                        submission.getSubmissionStatus(),
+                        submission.getScore(),
+                        submission.getEvaluationComment()))
+                .collect(Collectors.toList());
     }
 
     // 과제 점수와 평가 의견을 업데이트하는 메서드

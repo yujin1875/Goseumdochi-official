@@ -45,6 +45,31 @@ function App26() {
     const [totalPoints, setTotalPoints] = useState(0); // 총 배점을 위한 상태
     const [editingQuestion, setEditingQuestion] = useState(null);
     const [students, setStudents] = useState([]);
+    const [submissionDetails, setSubmissionDetails] = useState({
+        title: '',
+        content: '',
+        attachmentPath: ''
+    });
+    const fetchStudentSubmission = async (studentId) => {
+        try {
+            // currentAssignment.id와 studentId 값을 로그로 출력해 확인
+            console.log("Current Assignment ID:", currentAssignment?.id);
+            console.log("Student ID:", studentId);
+
+            const response = await axios.get(`/api/assignment/${currentAssignment.id}/student/${studentId}/submissions`);
+            console.log('Response data:', response.data); // 응답 데이터 로그 출력
+
+            const submission = response.data[0]; // 제출된 과제가 1개라고 가정
+            setSubmissionDetails({
+                title: submission.title,
+                content: submission.content,
+                attachmentPath: submission.attachmentPath
+            });
+        } catch (error) {
+            console.error("Error fetching student submission:", error);
+        }
+    };
+
 
 
 
@@ -91,13 +116,6 @@ function App26() {
         }
     }, [visibleDiv]);
 
-// 학생 목록 출력 부분
-    {students.map(student => (
-        <div key={student.id} className="student-info">
-            <div>{student.studentName}</div>
-            <div>{student.studentId}</div>
-        </div>
-    ))}
 
     // 학생 목록을 가져오면서 과제 제출 상태를 포함하도록 수정
     const fetchStudentsWithSubmissionStatus = async () => {
@@ -724,14 +742,6 @@ function App26() {
         fetchStudentSubmission(studentId);
     };
 
-    const fetchStudentSubmission = async (studentId) => {
-        try {
-            const response = await axios.get(`/api/assignment/${currentAssignment.id}/student/${studentId}/submissions`);
-            // response 데이터를 사용하여 제출 정보와 파일, 평가 정보를 업데이트
-        } catch (error) {
-            console.error("Error fetching student submission:", error);
-        }
-    };
 
 
     const showDivExamEstimation = () => {
@@ -1208,19 +1218,25 @@ function App26() {
                     <>
                         <div id="AssignmentEstimationStudent_teacherportal">
                             <div id="but">
-                            <h2>과제 조회/제출</h2>
+                                <h2>과제 조회/제출</h2>
                             </div>
                             <div id="AssignmentEstimationStudent">
-                            <div id="title_AssignmentEstimationStudent">
-                                    <h2>제출 정보</h2>
+                                <div id="title_AssignmentEstimationStudent">
+                                    <h2>제출 제목</h2>
                                     <div id="StudentWrite">
-                                        ㅇㅇㅇ
+                                        {submissionDetails.title}
+                                    </div>
+                                </div>
+                                <div id="content_AssignmentEstimationStudent">
+                                    <h2>제출 내용</h2>
+                                    <div id="StudentContent">
+                                        {submissionDetails.content}
                                     </div>
                                 </div>
                                 <div id="file_AssignmentEstimationStudent">
                                     <h2>첨부 파일</h2>
                                     <div id="StudentFile">
-
+                                        <a href={submissionDetails.attachmentPath} download>첨부파일 다운로드</a>
                                     </div>
                                 </div>
                                 <div id="Estimation_AssignmentEstimationStudent">

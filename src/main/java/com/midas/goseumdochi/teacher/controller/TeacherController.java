@@ -399,9 +399,10 @@ public class TeacherController {
             @PathVariable Long assignmentId,
             @PathVariable Long studentId) {
 
-        List<AssignmentSubmissionDTO> submissions = studentService.getSubmissionsByAssignmentId(assignmentId, studentId);
+        List<AssignmentSubmissionDTO> submissions = teacherService.getSubmissionsByAssignmentId(assignmentId, studentId);
         return new ResponseEntity<>(submissions, HttpStatus.OK);
     }
+
     // 과제 점수와 평가 의견을 업데이트하는 엔드포인트
     @PostMapping("/gradeAssignment")
     public ResponseEntity<?> gradeAssignment(@RequestParam Long submissionId, @RequestParam Integer score, @RequestParam String evaluationComment) {
