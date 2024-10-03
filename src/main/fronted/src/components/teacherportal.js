@@ -723,6 +723,88 @@ function App26() {
         setVisibleDiv('ExamEstimation');
     };
 
+    // 영상 업로드
+    const [videoList, setVideoList] = useState([]);
+    const [lectureTitle, setLectureTitle] = useState(''); // 강의 제목 상태 추가
+    const [videoFile, setVideoFile] = useState(null);
+    const [videoUrl, setVideoUrl] = useState('');
+
+    // 파일 변경 처리
+    const handleFileChange = (event) => {
+        const selectedFile = event.target.files[0];
+        if (selectedFile && selectedFile.type !== 'video/mp4') {
+            alert('MP4 파일만 업로드 가능합니다.');
+            setVideoFile(null);
+            return;
+        }
+        setVideoFile(selectedFile);
+    };
+
+    // 강의 제목 변경 처리
+    const handleTitleChange = (event) => {
+        setLectureTitle(event.target.value);
+    };
+
+    const uploadFile = async () => {
+        if (!videoFile) {
+            alert('파일을 선택하시오');
+            return;
+        }
+
+        if (!user || !user.id) {
+            alert('선생님의 ID가 없습니다.');
+            return;
+        }
+
+        if (!lectureId) {
+            alert('강의 ID가 없습니다.');
+            return;
+        }
+
+        if (!lectureTitle) {
+            alert('강의 제목을 입력하시오.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', videoFile);
+        formData.append('title', lectureTitle); // 제목도 추가
+
+        // API 요청 URL 수정
+        try {
+            const response = await axios.post(`/api/video/videoUpload/${user.id}/${lectureId}`, formData);
+            setVideoUrl(response.data);
+            alert('업로드 성공');
+            fetchVideoList(user.id); // 업로드 후 강의 목록 갱신
+        } catch (error) {
+            console.error('Error:', error);
+            alert('업로드 실패');
+        }
+    };
+
+    const showVideoLecture = () => {
+        setVisibleDiv('VideoManagement');
+    };
+
+    const fetchVideoList = async (teacherId) => {
+        try {
+            const response = await axios.get(`/api/video/videoList/${teacherId}`);
+            setVideoList(response.data);
+        } catch (error) {
+            console.error('Error fetching video list:', error);
+        }
+    };
+
+    useEffect(() => {
+            if (lectureId && user && user.id) {
+                fetchVideoList(user.id); // Fetch videos for the new lecture
+                setVideoUrl(''); // Clear videoUrl when changing lectures
+            }
+        }, [lectureId, user]);
+
+    // 여기까지 영상 업로드
+
+
     return (
         <div id="App">
             <div id="menu_teacherportal">
@@ -732,7 +814,7 @@ function App26() {
                 </div>
                 <ul>
                     <li onClick={showDivHome}><a>교과정보</a></li>
-                    <li><a>강의관리</a></li>
+                    <li onClick={showVideoLecture}><a>강의관리</a></li>
                     <li onClick={showDivLecturedata}><a>수업자료</a></li>
                     <li onClick={showDivAssignment}><a>과제조회/제출</a></li>
                     <li><a>평가관리</a></li>
@@ -792,6 +874,50 @@ function App26() {
                                     {lectureInfo.lectureWeeklyPlan}
                                 </div>
                             </div>
+                        </div>
+                    </>
+                )}
+                {visibleDiv === 'VideoManagement' && (
+                    <>
+                        <div>
+                            <h1>동영상 업로드 테스트</h1>
+                            <input
+                                type="text"
+                                placeholder="강의 제목을 입력하세요"
+                                value={lectureTitle}
+                                onChange={handleTitleChange}
+                            />
+                            <input type="file" accept="video/mp4" onChange={handleFileChange} />
+                            <button onClick={uploadFile}>업로드</button>
+
+                            {videoUrl && (
+                                <div>
+                                    <h2>비디오 강의</h2>
+                                    <video width="600" controls key={videoUrl}>
+                                        <source src={videoUrl} type="video/mp4" />
+                                        해당 브라우저에서 비디오 재생이 지원되지 않습니다.
+                                    </video>
+                                </div>
+                            )}
+
+                            <h2>업로드된 영상 목록</h2>
+                            <ul>
+                                {videoList
+                                    .filter(video => video.lectureId === lectureId)
+                                    .map(video => (
+                                        <li key={video.id}>
+                                            <h3
+                                                style={{ cursor: 'pointer', color: 'blue' }}
+                                                onClick={() => {
+                                                    setVideoUrl(video.videoUrl);
+                                                }}
+                                            >
+                                                {video.title}
+                                            </h3>
+                                            파일 이름: {video.fileName}
+                                        </li>
+                                    ))}
+                            </ul>
                         </div>
                     </>
                 )}
