@@ -5,7 +5,13 @@ function VideoUploadTest() {
     const [file, setFile] = useState(null);
 
     const handleFileChange = (event) => {
-        setFile(event.target.files[0]);
+        const selectedFile = event.target.files[0];
+        if (selectedFile && selectedFile.type !== 'video/mp4') {
+            alert('MP4 파일만 업로드 가능합니다.');
+            setFile(null);
+            return;
+        }
+        setFile(selectedFile);
     };
 
     const uploadFile = () => {
@@ -30,8 +36,8 @@ function VideoUploadTest() {
     return (
         <div>
             <h1>동영상 업로드 테스트</h1>
-            <input type="file" onChange={handleFileChange} />
-            <button onClick={uploadFile}>Upload</button>
+            <input type="file" accept="video/mp4" onChange={handleFileChange} />
+            <button onClick={uploadFile}>업로드</button>
         </div>
     );
 }
