@@ -108,7 +108,7 @@ function App26() {
     };
 
 
-    
+
 
     useEffect(() => {
         if (lectureId) {
@@ -153,6 +153,13 @@ function App26() {
         }
     }, [visibleDiv]);
 
+// 학생 목록 출력 부분
+    {students.map(student => (
+        <div key={student.id} className="student-info">
+            <div>{student.studentName}</div>
+            <div>{student.studentId}</div>
+        </div>
+    ))}
 
     // 학생 목록을 가져오면서 과제 제출 상태를 포함하도록 수정
     const fetchStudentsWithSubmissionStatus = async () => {
@@ -774,10 +781,7 @@ function App26() {
         }
     };
 
-    const handleStudentClick = (student) => {
-        console.log("Selected student:", student);  // student 객체 전체 로그 확인
-        console.log("Student ID (Long):", student.id);  // student 객체의 id 로그 확인
-        setStudentId(student.id);  // student.id를 상태로 설정
+    const handleStudentClick = (studentId) => {
         setVisibleDiv('AssignmentEstimationStudent');
     };
     useEffect(() => {
@@ -1225,12 +1229,12 @@ function App26() {
 
                                 {students.length > 0 ? (
                                     students.map((student) => (
-                                        <div id="info_AssignmentEstimation" key={student.id}>
+                                        <div id="info_AssignmentEstimation" key={student.studentId}>
                                             <div
                                                 id="Aname"
                                                 onClick={() => {
                                                     if (student.assignmentSubmission && student.assignmentSubmission.submissionStatus === '정상제출') {
-                                                        handleStudentClick(student);
+                                                        handleStudentClick(student.studentId);
                                                     }
                                                 }}
                                                 style={{cursor: student.assignmentSubmission && student.assignmentSubmission.submissionStatus === '정상제출' ? 'pointer' : 'default'}}  // 마우스 포인터 변경
