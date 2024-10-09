@@ -395,12 +395,16 @@ public class TeacherController {
 
     // 특정 과제에 제출된 과제 목록을 가져오기
     @GetMapping("/assignment/{assignmentId}/student/{studentId}/submissions")
-    public ResponseEntity<List<AssignmentSubmissionDTO>> getSubmissionsByAssignmentId(
+    public ResponseEntity<?> getSubmissionByAssignmentId(
             @PathVariable Long assignmentId,
             @PathVariable Long studentId) {
 
-        List<AssignmentSubmissionDTO> submissions = teacherService.getSubmissionsByAssignmentId(assignmentId, studentId);
-        return new ResponseEntity<>(submissions, HttpStatus.OK);
+        Optional<AssignmentSubmissionDTO> submission = teacherService.getSubmissionsByAssignmentId(assignmentId, studentId);
+        if (submission.isPresent()) {
+            return ResponseEntity.ok(submission.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("제출된 과제를 찾을 수 없습니다.");
+        }
     }
 
     // 과제 점수와 평가 의견을 업데이트하는 엔드포인트

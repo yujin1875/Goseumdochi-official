@@ -117,9 +117,8 @@ public class TeacherService {
     }
 
     //특정 과제에 제출된 학생들의 과제 목록
-    public List<AssignmentSubmissionDTO> getSubmissionsByAssignmentId(Long assignmentId, Long studentId) {
-        List<AssignmentSubmissionEntity> submissions = assignmentSubmissionRepository.findByAssignmentIdAndStudentId(assignmentId, studentId);
-        return submissions.stream()
+    public Optional<AssignmentSubmissionDTO> getSubmissionsByAssignmentId(Long assignmentId, Long studentId) {
+        return assignmentSubmissionRepository.findByStudentIdAndAssignmentId(assignmentId, studentId)
                 .map(submission -> new AssignmentSubmissionDTO(
                         submission.getId(),
                         submission.getStudentId(),
@@ -129,8 +128,8 @@ public class TeacherService {
                         submission.getAttachmentPath(),
                         submission.getSubmissionStatus(),
                         submission.getScore(),
-                        submission.getEvaluationComment()))
-                .collect(Collectors.toList());
+                        submission.getEvaluationComment()
+                ));
     }
 
     // 과제 점수와 평가 의견을 업데이트하는 메서드

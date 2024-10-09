@@ -52,15 +52,8 @@ function App26() {
         attachmentPath: ''
     });
 
-    // submissionDetails가 업데이트될 때마다 로그 출력
-    useEffect(() => {
-        console.log("Updated submissionDetails:", submissionDetails);
-    }, [submissionDetails]);
-
     // currentAssignment와 studentId가 변경될 때 fetchStudentSubmission 호출
     useEffect(() => {
-        console.log("Current Assignment:", currentAssignment);
-        console.log("Student ID:", studentId);
         if (currentAssignment && currentAssignment.id && studentId) {
             fetchStudentSubmission(studentId);
         }
@@ -68,29 +61,16 @@ function App26() {
 
     const fetchStudentSubmission = async (studentId) => {
         try {
-            console.log("Current Assignment ID:", currentAssignment?.id);  // 과제 ID 로그 확인
-            console.log("Student ID (Long):", studentId);  // 학생 ID 로그 확인
-
             const response = await axios.get(`/api/assignment/${currentAssignment.id}/student/${studentId}/submissions`);
-            console.log('Response data:', response.data);  // 응답 데이터 로그 확인
 
-            if (response.data.length > 0) {
-                const submission = response.data[0];
-                console.log('Submission Entity ID:', submission.id);  // 여기서 제출 과제 ID 출력
-                console.log('Submission details:', submission);  // 제출물 정보 로그 확인
-
-                // 제목, 내용, 첨부파일을 콘솔에 출력
-                console.log('Title:', submission.title);
-                console.log('Content:', submission.content);
-                console.log('Attachment Path:', submission.attachmentPath);
-
+            if (response.data) {
+                const submission = response.data;
                 setSubmissionDetails({
                     title: submission.title,
                     content: submission.content,
                     attachmentPath: submission.attachmentPath
                 });
             } else {
-                console.log("No submission found for this student");
                 setSubmissionDetails({
                     title: '제출된 과제가 없습니다.',
                     content: '',
@@ -98,7 +78,6 @@ function App26() {
                 });
             }
         } catch (error) {
-            console.error("Error fetching student submission:", error);
             setSubmissionDetails({
                 title: '오류 발생',
                 content: '과제 제출 정보를 불러오는 중 오류가 발생했습니다.',
@@ -106,7 +85,6 @@ function App26() {
             });
         }
     };
-
 
 
 
@@ -781,12 +759,10 @@ function App26() {
         }
     };
 
-    const handleStudentClick = (studentId) => {
+    const handleStudentClick = (student) => {
+        setStudentId(student.id);  // student.id를 상태로 설정
         setVisibleDiv('AssignmentEstimationStudent');
     };
-    useEffect(() => {
-        console.log("Student ID has been updated:", studentId);
-    }, [studentId]);
 
 
     const showDivExamEstimation = () => {
