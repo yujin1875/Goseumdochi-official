@@ -61,14 +61,14 @@ function App26() {
 
     const fetchStudentSubmission = async (studentId) => {
         try {
-            const response = await axios.get(`/api/assignment/${currentAssignment.id}/student/${studentId}/submissions`);
+            const response = await axios.get(`/api/teacher/assignment/${currentAssignment.id}/student/${studentId}/submissions`);
 
-            if (response.data) {
+            if (response.status === 200) { // HTTP 200 응답 확인
                 const submission = response.data;
                 setSubmissionDetails({
-                    title: submission.title,
-                    content: submission.content,
-                    attachmentPath: submission.attachmentPath
+                    title: submission.title || '제출된 과제가 없습니다.',
+                    content: submission.content || '',
+                    attachmentPath: submission.attachmentPath || ''
                 });
             } else {
                 setSubmissionDetails({
@@ -760,7 +760,7 @@ function App26() {
     };
 
     const handleStudentClick = (student) => {
-        setStudentId(student.id);  // student.id를 상태로 설정
+        setStudentId(student.id);
         setVisibleDiv('AssignmentEstimationStudent');
     };
 
@@ -1210,7 +1210,7 @@ function App26() {
                                                 id="Aname"
                                                 onClick={() => {
                                                     if (student.assignmentSubmission && student.assignmentSubmission.submissionStatus === '정상제출') {
-                                                        handleStudentClick(student.studentId);
+                                                        handleStudentClick(student);
                                                     }
                                                 }}
                                                 style={{cursor: student.assignmentSubmission && student.assignmentSubmission.submissionStatus === '정상제출' ? 'pointer' : 'default'}}  // 마우스 포인터 변경
