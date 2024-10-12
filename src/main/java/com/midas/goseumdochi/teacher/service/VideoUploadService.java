@@ -20,7 +20,6 @@ public class VideoUploadService {
         this.videoLectureRepository = videoLectureRepository;
     }
 
-    // lectureId를 추가 인자로 받습니다.
     public String uploadFile(Path filePath, String bucketName, String blobName, String teacherId, String lectureId) throws Exception {
         String fullPath = "video/" + teacherId + "/" + lectureId + "/" + blobName; // 경로 수정
         BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fullPath).build();
