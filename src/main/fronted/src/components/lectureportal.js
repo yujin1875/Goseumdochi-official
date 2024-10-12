@@ -1,6 +1,8 @@
+import React, { useState, useEffect } from 'react';
 import '../css/lectureportal.css';
 import logo from './images/goseumdochi.png';
-import {useLocation, useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 function App10() {
     const location = useLocation();
@@ -8,16 +10,16 @@ function App10() {
 
     const { user, lecture } = location.state;
 
-    const Gomain=()=>{
-        window.location.href='/main'
+    const Gomain = () => {
+        window.location.href = '/main';
     }
 
-    const Gonotice=()=>{
-        window.location.href='/notice'
+    const Gonotice = () => {
+        window.location.href = '/notice';
     }
 
-    const Gomypage=()=>{
-        window.location.href='/mypage'
+    const Gomypage = () => {
+        window.location.href = '/mypage';
     }
 
     const GoLectureMaterial = () => {
@@ -28,18 +30,50 @@ function App10() {
         navigate('/lecture/assignment/paging', { state: { user: user, lecture: lecture } });
     };
 
+    // 인강 시작
+    const [videoList, setVideoList] = useState([]);
+    const [selectedVideo, setSelectedVideo] = useState(null); // 선택된 강의 영상 상태
+    const [showOnlineLectures, setShowOnlineLectures] = useState(false); // 온라인 강의 클릭 여부 상태
+
+    const fetchVideoList = async (lectureId) => {
+        try {
+            const response = await axios.get(`/api/video/student/videoList/${lectureId}`);
+            setVideoList(response.data);
+        } catch (error) {
+            console.error('Error fetching video list:', error);
+        }
+    };
+
+    useEffect(() => {
+        if (lecture && user && user.id && showOnlineLectures) { // 클릭되었을 때만 강의 목록 가져오기
+            fetchVideoList(lecture.id);
+        }
+    }, [lecture, user, showOnlineLectures]);
+
+    // 온라인 강의 버튼 클릭 시 강의 목록 표시
+    const GoOnlineLecture = () => {
+        setShowOnlineLectures(true);
+        setSelectedVideo(null); // 클릭 시 선택된 강의 초기화
+    };
+
+    // 강의 제목 클릭 시 선택된 영상 설정
+    const handleVideoSelect = (video) => {
+        setSelectedVideo(video);
+    };
+    // 인강 끝
+
     return (
         <div id="App">
             <div id="lectureportal-menu">
                 <div id="header_lectureportal">
-                    <img src={logo} onClick={Gomain}/>
+                    <img src={logo} onClick={Gomain} alt="logo" />
                     <div id="user_info"></div>
                 </div>
                 <div id="buttons_lectureportal">
-                    <input type="submit" value="공지사항" id="notice_btn" onClick={Gonotice}/>
-                    <input type="submit" value="커뮤니티" id="community_btn"/>
-                    <input type="submit" value="마이페이지" id="mypage_btn" onClick={Gomypage}/>
-                    <div id="rect"/>
+                    <input type="submit" value="공지사항" id="notice_btn" onClick={Gonotice} />
+                    <input type="submit" value="커뮤니티" id="community_btn" />
+                    <input type="submit" value="마이페이지" id="mypage_btn" onClick={Gomypage} />
+                    <div id="rect" />
                 </div>
                 <div id="contents_lectureportal">
                     <div id="aboutNotice_lectureportal">
@@ -47,7 +81,7 @@ function App10() {
                             <ul>
                                 <li><a>공지사항</a></li>
                                 <li><a onClick={GoLectureMaterial}>강의자료</a></li>
-                                <li><a>온라인강의</a></li>
+                                <li><a onClick={GoOnlineLecture}>온라인강의</a></li>
                                 <li><a onClick={GoLectureAssignment}>과제</a></li>
                                 <li><a>시험</a></li>
                             </ul>
@@ -71,7 +105,37 @@ function App10() {
                                 </div>
                             </div>
                             <div id="body_contents_lectureportal">
-
+                                {showOnlineLectures && !selectedVideo && ( // 온라인 강의 클릭 시에만 목록 표시, 선택된 강의 없을 때
+                                    <>
+                                        <h2>온라인 강의 목록</h2>
+                                        {videoList.length === 0 ? (
+                                            <p>강의가 없습니다.</p>
+                                        ) : (
+                                            <ul>
+                                                {videoList.map((video, index) => (
+                                                    <li key={index}>
+                                                        <p
+                                                          style={{ cursor: 'pointer', color: 'blue' }}
+                                                          onClick={() => handleVideoSelect(video)}
+                                                        >
+                                                            {video.title}
+                                                        </p>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
+                                    </>
+                                )}
+                                {selectedVideo && ( // 선택된 강의가 있을 때 해당 영상만 표시
+                                    <>
+                                        <h2>{selectedVideo.title}</h2>
+                                        <video width="640" height="360" controls>
+                                            <source src={selectedVideo.videoUrl} type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
+                                        <button onClick={() => setSelectedVideo(null)}>뒤로 가기</button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
