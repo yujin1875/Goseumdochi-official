@@ -5,6 +5,7 @@ import com.midas.goseumdochi.student.Dto.StudentDTO;
 import com.midas.goseumdochi.student.Service.FileStorageService;
 import com.midas.goseumdochi.student.Service.RegistLectureService;
 import com.midas.goseumdochi.student.Service.StudentService;
+import com.midas.goseumdochi.student.entity.AssignmentSubmissionEntity;
 import com.midas.goseumdochi.teacher.dto.*;
 import com.midas.goseumdochi.teacher.service.*;
 import com.midas.goseumdochi.util.Service.MailService;
@@ -407,41 +408,27 @@ public class TeacherController {
         }
     }
 
-    // 과제 점수와 평가 의견을 업데이트하는 엔드포인트
-    @PostMapping("/gradeAssignment")
-    public ResponseEntity<?> gradeAssignment(@RequestParam Long submissionId, @RequestParam Integer score, @RequestParam String evaluationComment) {
-        try {
-            teacherService.gradeAssignmentSubmission(submissionId, score, evaluationComment);
-            return ResponseEntity.ok("과제 점수와 평가 의견이 성공적으로 업데이트되었습니다.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("점수와 평가 업데이트에 실패했습니다.");
-        }
-    }
+    @PostMapping("/assignment/{assignmentId}/student/{studentId}/evaluation")
+    public ResponseEntity<?> saveEvaluation(
+            @PathVariable Long assignmentId,
+            @PathVariable Long studentId,
+            @RequestBody AssignmentSubmissionDTO submissionDTO) {
 
-    // 과제 점수와 평가 의견을 수정하는 엔드포인트
-    @PostMapping("/updateGradeAndEvaluation")
-    public ResponseEntity<?> updateGradeAndEvaluation(
-            @RequestParam Long submissionId,
-            @RequestParam Integer newScore,
-            @RequestParam String newEvaluationComment) {
         try {
-            // 점수 및 평가 의견 업데이트 서비스 호출
-            teacherService.updateGradeAndEvaluation(submissionId, newScore, newEvaluationComment);
-            return ResponseEntity.ok("점수와 평가 의견이 성공적으로 업데이트되었습니다.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("점수 및 평가 의견 업데이트에 실패했습니다.");
-        }
-    }
+            // 제출된 과제를 조회
+            AssignmentSubmissionEntity submissionEntity = teacherService.getSubmissionEntity(assignmentId, studentId);
 
-    // 점수와 평가 의견을 삭제하는 엔드포인트
-    @PostMapping("/removeGradeAndEvaluation")
-    public ResponseEntity<?> removeGradeAndEvaluation(@RequestParam Long submissionId) {
-        try {
-            // 점수와 평가 의견 삭제 서비스 호출
-            teacherService.removeGradeAndEvaluation(submissionId);
-            return ResponseEntity.ok("점수와 평가 의견이 성공적으로 삭제되었습니다.");
+            // 점수와 평가 의견을 업데이트
+            teacherService.updateEvaluation(submissionEntity, submissionDTO.getScore(), submissionDTO.getEvaluationComment());
+
+            // 성공적으로 저장된 경우, 성공 메시지 반환
+            return ResponseEntity.ok("평가가 성공적으로 저장되었습니다.");
+        } catch (IllegalArgumentException e) {
+            // 오류 발생 시, 에러 메시지 반환
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("점수와 평가 의견 삭제에 실패했습니다.");
+            // 예기치 않은 오류 발생 시, 내부 서버 에러 처리
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("평가 저장 중 오류가 발생했습니다.");
         }
     }
 
