@@ -432,4 +432,29 @@ public class TeacherController {
         }
     }
 
+
+    // 특정 과제에 대한 평가 조회 및 반환
+    @GetMapping("/assignment/{assignmentId}/student/{studentId}/evaluation")
+    public ResponseEntity<?> getEvaluation(
+            @PathVariable Long assignmentId,
+            @PathVariable Long studentId) {
+
+        try {
+            // 제출된 과제를 조회
+            AssignmentSubmissionEntity submissionEntity = teacherService.getSubmissionEntity(assignmentId, studentId);
+
+            // 저장된 평가 데이터를 DTO로 변환
+            AssignmentSubmissionDTO submissionDTO = new AssignmentSubmissionDTO();
+            submissionDTO.setScore(submissionEntity.getScore());
+            submissionDTO.setEvaluationComment(submissionEntity.getEvaluationComment());
+
+            return ResponseEntity.ok(submissionDTO);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("평가 데이터를 불러오는 중 오류가 발생했습니다.");
+        }
+    }
+
+
 }
