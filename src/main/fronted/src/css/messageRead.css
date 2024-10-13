@@ -1,0 +1,150 @@
+#header_messageRead{
+    width:100%;
+    height:150px;
+}
+
+#messageRead{
+    width: 1200px;
+    height: 700px;
+    background-color: #FFFFFF;
+    margin: auto;
+    border-radius:5px;
+    border: 1px solid #4f4f4f;
+}
+
+#messageRead>button{
+    float:left;
+    width:100px;
+    height:40px;
+    background-color:#CED4DA;
+    margin-top: 30px;
+    margin-left:1040px;
+    font-size:16px;
+    border-radius:5px;
+}
+
+#messageRead>#readMessageBox{
+    width:1100px;
+    height:500px;
+    background-color: #F1F3F5;
+    margin:auto;
+    margin-top:90px;
+    border: 1px solid #CED4DA;
+}
+
+#footer_messageRead{
+    width:100%;
+    height: 230px;
+}
+
+
+
+#readMessageBox>#Title{
+    width:1100px;
+    height:60px;
+    border-bottom:1px solid black;
+}
+
+#Title>#title{
+    float:left;
+    width:150px;
+    height:60px;
+    border-right:1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:28px;
+}
+
+#Title>#read_title{
+    float:left;
+    width:949px;
+    height:60px;
+}
+
+#readMessageBox>#Sender{
+    width:1100px;
+    height:60px;
+    border-bottom:1px solid black;
+}
+
+#Sender>#sender{
+    float:left;
+    width:150px;
+    height:60px;
+    border-right:1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:28px;
+}
+
+#Sender>#read_sender{
+    float:left;
+    width:949px;
+    height:60px;
+}
+
+#readMessageBox>#SendDate{
+    width:1100px;
+    height:60px;
+    border-bottom:1px solid black;
+}
+
+#SendDate>#senddate{
+    float:left;
+    width:150px;
+    height:60px;
+    border-right:1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:28px;
+}
+
+#SendDate>#read_senddate{
+    float:left;
+    width:949px;
+    height:60px;
+}
+
+#readMessageBox>#Contents{
+    width:1100px;
+    height:267px;
+}
+
+#messageRead>#GotoMessageList_messageRead{
+    float:left;
+    width:80px;
+    height:40px;
+    background-color:#CED4DA;
+    margin:0;
+    margin-top: 20px;
+    margin-left:50px;
+    font-size:16px;
+    border-radius:5px;
+}
+
+#messageRead>#SendingMessage_messageRead{
+    float:left;
+    width:80px;
+    height:40px;
+    background-color:#CED4DA;
+    margin:0;
+    margin-top: 20px;
+    margin-left:830px;
+    font-size:16px;
+    border-radius:5px;
+}
+
+#messageRead>#DeleteMessage_messageRead{
+    float:left;
+    width:80px;
+    height:40px;
+    background-color:#CED4DA;
+    margin:0;
+    margin-top: 20px;
+    margin-left:20px;
+    font-size:16px;
+    border-radius:5px;
+}
