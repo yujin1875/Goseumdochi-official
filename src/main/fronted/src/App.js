@@ -61,6 +61,8 @@ import BadWordCheck from './components/community_badword_check';
 import Message from './components/message';
 import Messagewrite from './components/messageWrite';
 import Messagereply from './components/messageReply';
+import Messageread from './components/messageRead';
+import Messagecheck from './components/messageCheck';
 
 import VideoUploadTest from './components/videoUploadTest';
 
@@ -135,6 +137,8 @@ class App extends Component{
               <Route path='/message' element={<Message/>}/>
               <Route path='/messageWrite' element={<Messagewrite/>}/>
               <Route path='/messagereply' element={<Messagereply/>}/>
+              <Route path='/messageread' element={<Messageread/>}/>
+              <Route path='/messagecheck' element={<Messagecheck/>}/>
 
               <Route path='/videoUploadTest' element={<VideoUploadTest/>}/>
             </Routes>

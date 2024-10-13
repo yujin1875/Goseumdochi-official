@@ -5,6 +5,10 @@ import '../css/messageReply.css';
 
 function Messagereply() {
 
+    const Gomessage=()=>{
+        window.location.href='/message'
+    }
+
     return (
         <div id="App">
             <div id="header_messageReply"/>
@@ -50,7 +54,7 @@ function Messagereply() {
                         <textarea placeholder="내용을 입력해 주세요."/>
                     </div>
                 </div>
-                <button id="GotoMessageList">
+                <button id="GotoMessageList" onClick={Gomessage}>
                     목록
                 </button>
                 <button id="SendingMessage">
