@@ -44,7 +44,48 @@ function App26() {
     const [essayAnswers, setEssayAnswers] = useState(['']); // 서술형 답변 상태
     const [totalPoints, setTotalPoints] = useState(0); // 총 배점을 위한 상태
     const [editingQuestion, setEditingQuestion] = useState(null);
+    const [studentId, setStudentId] = useState(null);
     const [students, setStudents] = useState([]);
+    const [currentStudent, setCurrentStudent] = useState(null);
+    const [submissionDetails, setSubmissionDetails] = useState({
+        title: '',
+        content: '',
+        attachmentPath: ''
+    });
+
+    // currentAssignment와 studentId가 변경될 때 fetchStudentSubmission 호출
+    useEffect(() => {
+        if (currentAssignment && currentAssignment.id && studentId) {
+            fetchStudentSubmission(studentId);
+        }
+    }, [currentAssignment, studentId]);
+
+    const fetchStudentSubmission = async (studentId) => {
+        try {
+            const response = await axios.get(`/api/teacher/assignment/${currentAssignment.id}/student/${studentId}/submissions`);
+
+            if (response.status === 200) { // HTTP 200 응답 확인
+                const submission = response.data;
+                setSubmissionDetails({
+                    title: submission.title || '제출된 과제가 없습니다.',
+                    content: submission.content || '',
+                    attachmentPath: submission.attachmentPath || ''
+                });
+            } else {
+                setSubmissionDetails({
+                    title: '제출된 과제가 없습니다.',
+                    content: '',
+                    attachmentPath: ''
+                });
+            }
+        } catch (error) {
+            setSubmissionDetails({
+                title: '오류 발생',
+                content: '과제 제출 정보를 불러오는 중 오류가 발생했습니다.',
+                attachmentPath: ''
+            });
+        }
+    };
 
 
 
@@ -103,11 +144,14 @@ function App26() {
     const fetchStudentsWithSubmissionStatus = async () => {
         try {
             const response = await axios.get(`/api/student/lecture/${lectureId}/students/submission-status`, {
-                params: { assignmentId: currentAssignment.id } // 과제 ID를 포함하여 API 요청
+                params: { assignmentId: currentAssignment.id } // 과제 ID를 요청에 포함
             });
-            setStudents(response.data); // 학생 목록에 제출 상태 추가
+            setStudents(response.data.map(student => ({
+                ...student,
+                submissionStatus: student.assignmentSubmission ? student.assignmentSubmission.submissionStatus : '미제출'
+            }))); // 학생 객체에 제출 상태 정보를 저장
         } catch (error) {
-            console.error("Error fetching students with submission status:", error);
+            console.error("학생들의 제출 상태를 가져오는 중 에러가 발생했습니다:", error);
         }
     };
 
@@ -719,9 +763,57 @@ function App26() {
         }
     };
 
+    const handleStudentClick = (student) => {
+        setCurrentStudent(student);
+        setStudentId(student.id);
+        setVisibleDiv('AssignmentEstimationStudent');
+    };
+
+
     const showDivExamEstimation = () => {
         setVisibleDiv('ExamEstimation');
     };
+
+    const handleSaveEvaluation = async () => {
+        const score = document.getElementById("ScoreOfAssignment").value;
+        const evaluationComment = document.getElementById("OpinionOfAssignment").value;
+
+        if (!score || !evaluationComment) {
+            alert("점수와 평가 의견을 모두 입력해주세요.");
+            return;
+        }
+
+        const evaluationData = {
+            score: parseInt(score),
+            evaluationComment: evaluationComment,
+        };
+
+        // 데이터를 콘솔에 로깅
+        console.log("Sending evaluation data to the backend:", evaluationData);
+
+        try {
+            const response = await axios.post(
+                `/api/teacher/assignment/${currentAssignment.id}/student/${currentStudent.id}/evaluation`,
+                evaluationData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+
+            if (response.status === 200) {
+                alert("평가가 성공적으로 저장되었습니다.");
+                console.log("Response from the backend:", response.data);
+            } else {
+                console.error("Unexpected response status:", response.status);
+            }
+        } catch (error) {
+            console.error("Error during evaluation submission:", error);
+            alert("평가 저장에 실패했습니다.");
+        }
+    };
+
 
     // 영상 업로드
     const [videoList, setVideoList] = useState([]);
@@ -809,7 +901,7 @@ function App26() {
         <div id="App">
             <div id="menu_teacherportal">
                 <div id="teacher_info">
-                    <img src={logo} onClick={showDivExamEstimation}/>
+                    <img src={logo} onClick={showDivAssignmentEstimation}/>
                     <h2>고슴도치</h2>
                 </div>
                 <ul>
@@ -1286,12 +1378,20 @@ function App26() {
                                 {students.length > 0 ? (
                                     students.map((student) => (
                                         <div id="info_AssignmentEstimation" key={student.studentId}>
-                                            <div id="Aname">{student.studentName}</div>
+                                            <div
+                                                id="Aname"
+                                                onClick={() => {
+                                                    if (student.assignmentSubmission && (student.assignmentSubmission.submissionStatus === '정상제출' || student.assignmentSubmission.submissionStatus === '평가 완료')) {
+                                                        handleStudentClick(student);
+                                                    }
+                                                }}
+                                                style={{cursor: student.assignmentSubmission && (student.assignmentSubmission.submissionStatus === '정상제출' || student.assignmentSubmission.submissionStatus === '평가 완료') ? 'pointer' : 'default'}}  // 마우스 포인터 변경
+                                            >
+                                                {student.studentName}
+                                            </div>
                                             <div id="AStudentID">{student.studentId}</div>
                                             <div id="Asubmit">
-                                                {student.assignmentSubmission && student.assignmentSubmission.submissionStatus === '정상제출'
-                                                    ? "정상제출"
-                                                    : "미제출"}
+                                                {student.submissionStatus} {/* 직접 제출 상태를 표시 */}
                                             </div>
                                             <div id="Ascore">점수 입력</div>
                                             <div id="Aopinion">평가 의견 입력</div>
@@ -1306,36 +1406,42 @@ function App26() {
                 )}
 
                 {visibleDiv === 'AssignmentEstimationStudent' && (
-                    <>
-                        <div id="AssignmentEstimationStudent_teacherportal">
-                            <div id="but">
-                                <h2>과제 조회/제출</h2>
-                            </div>
-                            <div id="AssignmentEstimationStudent">
-                            <div id="title_AssignmentEstimationStudent">
-                                    <h2>제출 정보</h2>
-                                    <div id="StudentWrite">
-                                        ㅇㅇㅇ
-                                    </div>
-                                </div>
-                                <div id="file_AssignmentEstimationStudent">
-                                    <h2>첨부 파일</h2>
-                                    <div id="StudentFile">
-
-                                    </div>
-                                </div>
-                                <div id="Estimation_AssignmentEstimationStudent">
-                                    <h2>평가</h2>
-                                    <input type="text" id="ScoreOfAssignment"/>
-                                </div>
-                                <div id="Opinion_AssignmentEstimationStudent">
-                                    <h2>평가 의견</h2>
-                                    <input type="text" id="OpinionOfAssignment"/>
-                                </div>
-                                <button id="AssignmentEstimationStudent_button">저장</button>
-                            </div>
+                    <div id="AssignmentEstimationStudent_teacherportal">
+                        <div id="but">
+                            <h2>과제 조회/제출</h2>
                         </div>
-                    </>
+                        <div id="AssignmentEstimationStudent">
+                        <div id="title_AssignmentEstimationStudent">
+                                <h2>제출 제목</h2>
+                                <div id="StudentWrite">
+                                    {submissionDetails.title || '제출된 과제가 없습니다.'}
+                                </div>
+                            </div>
+                            <div id="content_AssignmentEstimationStudent">
+                                <h2>제출 내용</h2>
+                                <div id="StudentContent">
+                                    {submissionDetails.content || '내용이 없습니다.'}
+                                </div>
+                            </div>
+                            <div id="file_AssignmentEstimationStudent">
+                                <h2>첨부 파일</h2>
+                                {submissionDetails.attachmentPath ? (
+                                    <a href={submissionDetails.attachmentPath} download>첨부파일 다운로드</a>
+                                ) : (
+                                    <p>첨부 파일이 없습니다.</p>
+                                )}
+                            </div>
+                            <div id="Estimation_AssignmentEstimationStudent">
+                                <h2>평가</h2>
+                                <input type="text" id="ScoreOfAssignment" placeholder="점수를 입력하세요" />
+                            </div>
+                            <div id="Opinion_AssignmentEstimationStudent">
+                                <h2>평가 의견</h2>
+                                <input type="text" id="OpinionOfAssignment" placeholder="평가 의견을 입력하세요" />
+                            </div>
+                            <button id="AssignmentEstimationStudent_button" onClick={handleSaveEvaluation}>저장</button>
+                        </div>
+                    </div>
                 )}
 
                 {visibleDiv === 'Lecturedata' && (
