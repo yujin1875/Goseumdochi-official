@@ -224,23 +224,5 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
 
-    //특정 과제에 제출된 학생들의 과제 목록
-    public List<AssignmentSubmissionDTO> getSubmissionsByAssignmentId(Long assignmentId, Long studentId) {
-        List<AssignmentSubmissionEntity> submissions = assignmentSubmissionRepository.findByAssignmentIdAndStudentId(assignmentId, studentId);
-        return submissions.stream()
-                .map(submission -> new AssignmentSubmissionDTO(
-                        submission.getId(),
-                        submission.getStudentId(),
-                        submission.getAssignmentId(),
-                        submission.getTitle(),
-                        submission.getContent(),
-                        submission.getAttachmentPath(),
-                        submission.getSubmissionStatus(),
-                        submission.getScore(),
-                        submission.getEvaluationComment()))
-                .collect(Collectors.toList());
-    }
-
-
 }
 
