@@ -891,11 +891,11 @@ function App26() {
     };
 
     useEffect(() => {
-            if (lectureId && user && user.id) {
-                fetchVideoList(user.id); // Fetch videos for the new lecture
-                setVideoUrl(''); // Clear videoUrl when changing lectures
-            }
-        }, [lectureId, user]);
+        if (lectureId && user && user.id) {
+            fetchVideoList(user.id); // Fetch videos for the new lecture
+            setVideoUrl(''); // Clear videoUrl when changing lectures
+        }
+    }, [lectureId, user]);
 
     // 여기까지 영상 업로드
 
@@ -1414,7 +1414,7 @@ function App26() {
                             <h2>과제 조회/제출</h2>
                         </div>
                         <div id="AssignmentEstimationStudent">
-                        <div id="title_AssignmentEstimationStudent">
+                            <div id="title_AssignmentEstimationStudent">
                                 <h2>제출 제목</h2>
                                 <div id="StudentWrite">
                                     {submissionDetails.title || '제출된 과제가 없습니다.'}
@@ -1984,7 +1984,7 @@ function App26() {
                                 <div id="tableOfStudentScore">
                                     <div id="tableOfStudentScore_category">
                                         <div id="totalscore">
-                                             배점
+                                            배점
                                         </div>
                                         <div id="aver_exam">
                                             평균
