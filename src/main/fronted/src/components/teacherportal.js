@@ -64,28 +64,35 @@ function App26() {
         try {
             const response = await axios.get(`/api/teacher/assignment/${currentAssignment.id}/student/${studentId}/submissions`);
 
-            if (response.status === 200) { // HTTP 200 응답 확인
+            if (response.status === 200) {
                 const submission = response.data;
                 setSubmissionDetails({
                     title: submission.title || '제출된 과제가 없습니다.',
                     content: submission.content || '',
-                    attachmentPath: submission.attachmentPath || ''
+                    attachmentPath: submission.attachmentPath || '',
+                    score: submission.score || 0,  // 추가: 평가 점수
+                    evaluationComment: submission.evaluationComment || ''  // 추가: 평가 의견
                 });
             } else {
                 setSubmissionDetails({
                     title: '제출된 과제가 없습니다.',
                     content: '',
-                    attachmentPath: ''
+                    attachmentPath: '',
+                    score: 0,  // 기본 값 설정
+                    evaluationComment: ''  // 기본 값 설정
                 });
             }
         } catch (error) {
             setSubmissionDetails({
                 title: '오류 발생',
                 content: '과제 제출 정보를 불러오는 중 오류가 발생했습니다.',
-                attachmentPath: ''
+                attachmentPath: '',
+                score: 0,  // 기본 값 설정
+                evaluationComment: ''  // 기본 값 설정
             });
         }
     };
+
 
 
 
@@ -775,8 +782,7 @@ function App26() {
     };
 
     const handleSaveEvaluation = async () => {
-        const score = document.getElementById("ScoreOfAssignment").value;
-        const evaluationComment = document.getElementById("OpinionOfAssignment").value;
+        const { score, evaluationComment } = submissionDetails;
 
         if (!score || !evaluationComment) {
             alert("점수와 평가 의견을 모두 입력해주세요.");
@@ -784,12 +790,9 @@ function App26() {
         }
 
         const evaluationData = {
-            score: parseInt(score),
-            evaluationComment: evaluationComment,
+            score: parseInt(score),  // 점수를 정수로 변환
+            evaluationComment: evaluationComment
         };
-
-        // 데이터를 콘솔에 로깅
-        console.log("Sending evaluation data to the backend:", evaluationData);
 
         try {
             const response = await axios.post(
@@ -804,7 +807,6 @@ function App26() {
 
             if (response.status === 200) {
                 alert("평가가 성공적으로 저장되었습니다.");
-                console.log("Response from the backend:", response.data);
             } else {
                 console.error("Unexpected response status:", response.status);
             }
@@ -813,6 +815,7 @@ function App26() {
             alert("평가 저장에 실패했습니다.");
         }
     };
+
 
 
     // 영상 업로드
@@ -1433,11 +1436,29 @@ function App26() {
                             </div>
                             <div id="Estimation_AssignmentEstimationStudent">
                                 <h2>평가</h2>
-                                <input type="text" id="ScoreOfAssignment" placeholder="점수를 입력하세요" />
+                                <input
+                                    type="text"
+                                    id="ScoreOfAssignment"
+                                    placeholder="점수를 입력하세요"
+                                    value={submissionDetails.score || ''}  // 기존 점수를 입력 폼에 표시
+                                    onChange={(e) => setSubmissionDetails({
+                                        ...submissionDetails,
+                                        score: e.target.value
+                                    })}  // 값이 변경되면 상태 업데이트
+                                />
                             </div>
                             <div id="Opinion_AssignmentEstimationStudent">
                                 <h2>평가 의견</h2>
-                                <input type="text" id="OpinionOfAssignment" placeholder="평가 의견을 입력하세요" />
+                                <input
+                                    type="text"
+                                    id="OpinionOfAssignment"
+                                    placeholder="평가 의견을 입력하세요"
+                                    value={submissionDetails.evaluationComment || ''} // 기존 평가 의견을 입력 폼에 표시
+                                    onChange={(e) => setSubmissionDetails({
+                                        ...submissionDetails,
+                                        evaluationComment: e.target.value
+                                    })}  // 값이 변경되면 상태 업데이트
+                                />
                             </div>
                             <button id="AssignmentEstimationStudent_button" onClick={handleSaveEvaluation}>저장</button>
                         </div>
