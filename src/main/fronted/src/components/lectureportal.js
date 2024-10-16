@@ -33,6 +33,8 @@ function App10() {
     // 인강 시작
     const [videoList, setVideoList] = useState([]);
     const [selectedVideo, setSelectedVideo] = useState(null); // 선택된 강의 영상 상태
+    const [captions, setCaptions] = useState([]); // 자막 상태를 배열로 변경
+    const [isLoading, setIsLoading] = useState(false); // 로딩 상태
     const [showOnlineLectures, setShowOnlineLectures] = useState(false); // 온라인 강의 클릭 여부 상태
 
     const fetchVideoList = async (lectureId) => {
@@ -59,8 +61,22 @@ function App10() {
     // 강의 제목 클릭 시 선택된 영상 설정
     const handleVideoSelect = (video) => {
         setSelectedVideo(video);
+        generateCaption(video.videoUrl); // 동영상 URL로 자막 생성 요청
     };
-    // 인강 끝
+
+    // 자막 생성 요청
+    const generateCaption = async (videoUrl) => {
+        setIsLoading(true); // 로딩 시작
+        console.log(videoUrl);
+        try {
+            const response = await axios.post('/api/video/generateCaption', { video_url: videoUrl });
+            setCaptions(prevCaptions => [...prevCaptions, response.data.caption]); // 응답에서 자막 추가
+        } catch (error) {
+            console.error('Error generating caption:', error);
+        } finally {
+            setIsLoading(false); // 로딩 종료
+        }
+    };
 
     return (
         <div id="App">
@@ -134,6 +150,21 @@ function App10() {
                                             Your browser does not support the video tag.
                                         </video>
                                         <button onClick={() => setSelectedVideo(null)}>뒤로 가기</button>
+
+                                        {isLoading ? ( // 로딩 중이면 로딩 메시지 표시
+                                            <p>자막을 생성 중입니다...</p>
+                                        ) : (
+                                            <>
+                                                <h3>자막:</h3>
+                                                {captions.length > 0 ? ( // 생성된 모든 자막을 표시
+                                                    captions.map((caption, index) => (
+                                                        <p key={index}>{caption}</p>
+                                                    ))
+                                                ) : (
+                                                    <p>자막이 없습니다.</p>
+                                                )}
+                                            </>
+                                        )}
                                     </>
                                 )}
                             </div>
