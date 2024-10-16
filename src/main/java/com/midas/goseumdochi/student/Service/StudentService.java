@@ -199,19 +199,20 @@ public class StudentService {
         return students.stream().map(student -> {
             StudentDTO studentDTO = StudentDTO.toStudentDTO(student);
 
-            // 과제 제출 상태 확인
-            Optional<AssignmentSubmissionEntity> submission = assignmentSubmissionRepository.findByStudentIdAndAssignmentId(student.getId(), assignmentId);
+            Optional<AssignmentSubmissionEntity> submission =
+                    assignmentSubmissionRepository.findByStudentIdAndAssignmentId(student.getId(), assignmentId);
+
             if (submission.isPresent()) {
                 AssignmentSubmissionDTO submissionDTO = new AssignmentSubmissionDTO();
                 submissionDTO.setSubmissionStatus(submission.get().getSubmissionStatus());
-                // 필요에 따라 다른 필드도 설정
+                submissionDTO.setScore(submission.get().getScore()); // 점수 설정
+                submissionDTO.setEvaluationComment(submission.get().getEvaluationComment()); // 평가 의견 설정
                 studentDTO.setAssignmentSubmission(submissionDTO);
             } else {
                 AssignmentSubmissionDTO submissionDTO = new AssignmentSubmissionDTO();
                 submissionDTO.setSubmissionStatus("미제출");
                 studentDTO.setAssignmentSubmission(submissionDTO);
             }
-
             return studentDTO;
         }).collect(Collectors.toList());
     }

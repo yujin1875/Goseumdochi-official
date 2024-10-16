@@ -231,9 +231,11 @@ public class StudentController {
     }
 
     @GetMapping("/lecture/{lectureId}/students/submission-status")
-    public ResponseEntity<?> getStudentsWithSubmissionStatus(@PathVariable Long lectureId, @RequestParam Long assignmentId) {
-        List<StudentDTO> students = studentService.getStudentsByLectureIdWithSubmissionStatus(lectureId, assignmentId);
-        return ResponseEntity.ok(students);
+    public ResponseEntity<?> getStudentsWithSubmissionStatus(
+            @PathVariable Long lectureId,
+            @RequestParam Long assignmentId) {
+        List<StudentDTO> studentDTOList = studentService.getStudentsByLectureIdWithSubmissionStatus(lectureId, assignmentId);
+        return ResponseEntity.ok(studentDTOList);
     }
 
     // 과제 제출

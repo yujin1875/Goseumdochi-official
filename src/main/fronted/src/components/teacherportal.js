@@ -150,15 +150,22 @@ function App26() {
     // 학생 목록을 가져오면서 과제 제출 상태를 포함하도록 수정
     const fetchStudentsWithSubmissionStatus = async () => {
         try {
-            const response = await axios.get(`/api/student/lecture/${lectureId}/students/submission-status`, {
-                params: { assignmentId: currentAssignment.id } // 과제 ID를 요청에 포함
-            });
-            setStudents(response.data.map(student => ({
-                ...student,
-                submissionStatus: student.assignmentSubmission ? student.assignmentSubmission.submissionStatus : '미제출'
-            }))); // 학생 객체에 제출 상태 정보를 저장
+            const response = await axios.get(
+                `/api/student/lecture/${lectureId}/students/submission-status`,
+                { params: { assignmentId: currentAssignment.id } } // 과제 ID를 포함
+            );
+            setStudents(
+                response.data.map((student) => ({
+                    ...student,
+                    submissionStatus: student.assignmentSubmission
+                        ? student.assignmentSubmission.submissionStatus
+                        : '미제출',
+                    score: student.assignmentSubmission?.score || '점수 미입력', // 점수 추가
+                    evaluationComment: student.assignmentSubmission?.evaluationComment || '의견 미입력', // 평가 의견 추가
+                }))
+            );
         } catch (error) {
-            console.error("학생들의 제출 상태를 가져오는 중 에러가 발생했습니다:", error);
+            console.error('학생들의 제출 상태를 가져오는 중 에러가 발생했습니다:', error);
         }
     };
 
@@ -1384,20 +1391,29 @@ function App26() {
                                             <div
                                                 id="Aname"
                                                 onClick={() => {
-                                                    if (student.assignmentSubmission && (student.assignmentSubmission.submissionStatus === '정상제출' || student.assignmentSubmission.submissionStatus === '평가 완료')) {
+                                                    if (
+                                                        student.assignmentSubmission &&
+                                                        (student.assignmentSubmission.submissionStatus === '정상제출' ||
+                                                            student.assignmentSubmission.submissionStatus === '평가 완료')
+                                                    ) {
                                                         handleStudentClick(student);
                                                     }
                                                 }}
-                                                style={{cursor: student.assignmentSubmission && (student.assignmentSubmission.submissionStatus === '정상제출' || student.assignmentSubmission.submissionStatus === '평가 완료') ? 'pointer' : 'default'}}  // 마우스 포인터 변경
+                                                style={{
+                                                    cursor:
+                                                        student.assignmentSubmission &&
+                                                        (student.assignmentSubmission.submissionStatus === '정상제출' ||
+                                                            student.assignmentSubmission.submissionStatus === '평가 완료')
+                                                            ? 'pointer'
+                                                            : 'default',
+                                                }}
                                             >
                                                 {student.studentName}
                                             </div>
                                             <div id="AStudentID">{student.studentId}</div>
-                                            <div id="Asubmit">
-                                                {student.submissionStatus} {/* 직접 제출 상태를 표시 */}
-                                            </div>
-                                            <div id="Ascore">점수 입력</div>
-                                            <div id="Aopinion">평가 의견 입력</div>
+                                            <div id="Asubmit">{student.submissionStatus}</div>
+                                            <div id="Ascore">{student.score}</div> {/* 점수 출력 */}
+                                            <div id="Aopinion">{student.evaluationComment}</div> {/* 평가 의견 출력 */}
                                         </div>
                                     ))
                                 ) : (
