@@ -56,19 +56,19 @@ hr {
 
 #menu_community {
     float: left;
-    width: 295px;
+    width: 275px;
     height: 989px;
     background-color: #D9D9D9;
 }
 
 #menu_community>ul>li {
-    width: 295px;
+    width: 275px;
     height: 80px;
     background-color: #D9D9D9;
 }
 
 #menu_community>ul>li:hover {
-    width: 295px;
+    width: 275px;
     height: 80px;
     background-color: #BCBCBC;
 }
