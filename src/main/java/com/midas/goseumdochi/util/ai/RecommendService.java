@@ -10,11 +10,11 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class RecommentService {
+public class RecommendService {
 
     // 텍스트 입력 후 비방 목적의 글인지 판별
     public List<RecommendDTO> recommend(String major_subject, int n_recommendations) {
-        String url = "http://34.64.237.19:5002/recommend"; // Flask 서버 주소 + route 주소
+        String url = "http://34.64.39.249:5002/recommend"; // Flask 서버 주소 + route 주소
         // Restful (Flask 서버)와 통신할 객체
         RestTemplate restTemplate = new RestTemplate();
 

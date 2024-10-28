@@ -5,17 +5,13 @@ import com.midas.goseumdochi.student.Repository.StudentRepository;
 import com.midas.goseumdochi.student.Service.FileStorageService;
 import com.midas.goseumdochi.student.Service.StudentService;
 import com.midas.goseumdochi.student.entity.StudentEntity;
-import com.midas.goseumdochi.teacher.dto.AssignmentDTO;
 import com.midas.goseumdochi.teacher.dto.LectureDTO;
 import com.midas.goseumdochi.teacher.dto.LectureNameDTO;
 import com.midas.goseumdochi.teacher.dto.TeacherDTO;
 import com.midas.goseumdochi.teacher.service.LectureService;
 import com.midas.goseumdochi.util.Dto.MailDTO;
-import com.midas.goseumdochi.util.Dto.NameDTO;
 import com.midas.goseumdochi.util.Service.MailService;
 import com.midas.goseumdochi.util.ai.EncDecService;
-import com.midas.goseumdochi.util.ai.RecommendDTO;
-import com.midas.goseumdochi.util.ai.RecommentService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -42,7 +38,6 @@ public class StudentController {
     private final LectureService lectureService;
     private final StudentRepository studentRepository;
     private final EncDecService encDecService;
-    private final RecommentService recommentService;
     private final AssignmentService assignmentService;
 
     // 회원가입 페이지 폼 작성 데이터 받기
@@ -221,13 +216,6 @@ public class StudentController {
     public ResponseEntity<?> getTeacherofLecture(@PathVariable Long lectureId) {
         TeacherDTO teacherDTO = lectureService.getTeacherOfLecture(lectureId);
         return ResponseEntity.ok(teacherDTO);
-    }
-
-    // 학생 AI 대학-학과 추천
-    @GetMapping("/recommend/univ")
-    public ResponseEntity<?> recommendUniv(@RequestParam String major_subject, @RequestParam int n_recommendations) {
-        List<RecommendDTO> recommendList = recommentService.recommend(major_subject, n_recommendations);
-        return ResponseEntity.ok(recommendList);
     }
 
     @GetMapping("/lecture/{lectureId}/students/submission-status")

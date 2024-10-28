@@ -11,7 +11,7 @@ public class MathSolveService {
 
     // 수학문제를 text로 입력하면 해답을 문자열로 출력
     public MathSolveDTO mathSolve(String problem) {
-        String url = "http://34.64.237.19:5004/solve"; // Flask 서버 주소 + route 주소
+        String url = "http://34.64.39.249:5004/solve"; // Flask 서버 주소 + route 주소
 
         // Restful (Flask 서버)와 통신할 객체
         RestTemplate restTemplate = new RestTemplate();

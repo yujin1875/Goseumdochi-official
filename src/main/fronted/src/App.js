@@ -44,7 +44,9 @@ import TeacherLectureFind from './components/yewon/teacher_lecture_find'
 import TeacherLectureStudentManage from './components/yewon/teacher_lecture_student_manage'
 import LectureMaterialPaging from './components/yewon/lecture_material_paging'
 import LectureAssignmentPaging from './components/yewon/lecture_assignment_paging'
-import StudentRecommendUniv from './components/yewon/student_recommend_univ'
+import AiRecommendUniv from './components/yewon/ai_recommend_univ'
+import AiTextSummary from './components/yewon/ai_text_summary'
+import AiMathSolve from './components/yewon/ai_math_solve'
 import MessageList from "./components/yewon/message_list";
 import MessageWrite from "./components/yewon/message_write";
 import MessageReply from "./components/yewon/message_reply";
@@ -121,7 +123,9 @@ class App extends Component{
               <Route path='/teacher/lecture/student/manage' element={<TeacherLectureStudentManage/>}/>
               <Route path='/lecture/material/paging' element={<LectureMaterialPaging/>}/>
               <Route path='/lecture/assignment/paging' element={<LectureAssignmentPaging/>}/>
-              <Route path='/student/recommend/univ' element={<StudentRecommendUniv/>}/>
+              <Route path='/ai/recommend/univ' element={<AiRecommendUniv/>}/>
+              <Route path='/ai/text/summary' element={<AiTextSummary/>}/>
+              <Route path='/ai/math/solve' element={<AiMathSolve/>}/>
               <Route path='/community_admin' element={<App40/>}/>
               <Route path='/director_notice_write' element={<DirectorNoticeWrite/>}/>
               <Route path='/community_badword_check' element={<BadWordCheck/>}/>

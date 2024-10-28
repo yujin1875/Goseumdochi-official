@@ -11,7 +11,7 @@ public class TextSummaryService {
 
     // 텍스트 문장 입력 후 요약한 문자열 반환
     public String textSummary(String text) {
-        String url = "http://34.64.237.19:5003/summarize"; // Flask 서버 주소 + route 주소
+        String url = "http://34.64.39.249:5003/summarize"; // Flask 서버 주소 + route 주소
 
         // Restful (Flask 서버)와 통신할 객체
         RestTemplate restTemplate = new RestTemplate();

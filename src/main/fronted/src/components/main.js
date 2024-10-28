@@ -35,7 +35,15 @@ function App6() {
     };
 
     const GoRecommendUniv = () => {
-        navigate('/student/recommend/univ', { state: { user: user } });
+        navigate('/ai/recommend/univ', { state: { user: user } });
+    };
+
+    const GoTextSummary = () => {
+        navigate('/ai/text/summary', { state: { user: user } });
+    };
+
+    const GoMathSolve = () => {
+        navigate('/ai/math/solve', { state: { user: user } });
     };
 
     const GoMessageList = () => {
@@ -144,7 +152,9 @@ function App6() {
                     <div id="rect" />
                 </div>
                 <div>
-                    <button onClick={GoRecommendUniv}>대학 학과추천</button>
+                    <button onClick={GoRecommendUniv}>AI 대학학과추천</button>
+                    <button onClick={GoTextSummary}>AI 문서요약</button>
+                    <button onClick={GoMathSolve}>AI 수학문제풀이</button>
                 </div>
                 <div id="contents_main">
                     <div id="contents1_main">

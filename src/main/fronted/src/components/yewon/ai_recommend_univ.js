@@ -2,7 +2,7 @@ import React, { useState ,useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-function StudentRecommendUniv() {
+function AiRecommendUniv() {
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ function StudentRecommendUniv() {
 
         try {
             const response = await
-                axios.get('/api/student/recommend/univ', {
+                axios.get('/api/ai/recommend/univ', {
                 params: {
                     major_subject: majorSubject,
                     n_recommendations: nRecommendations,
@@ -114,4 +114,4 @@ function StudentRecommendUniv() {
     );
 }
 
-export default StudentRecommendUniv;
+export default AiRecommendUniv;
