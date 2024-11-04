@@ -237,3 +237,8 @@
     text-align: center;
     margin:auto;
 }
+
+.icon{
+    background: none;
+    border: none;
+}

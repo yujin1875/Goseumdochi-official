@@ -1,0 +1,12 @@
+.navbar {
+    width: 100%;
+    background-color: lightgray;
+    padding: 15px 0px;
+    text-align: left;
+}
+
+.navbar-menu {
+    color: white;
+    margin: 8px;
+    text-decoration: none;
+}
