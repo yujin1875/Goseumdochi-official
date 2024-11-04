@@ -43,6 +43,7 @@ public class AssignmentService {
                 .points(assignmentDTO.getPoints())
                 .examType(assignmentDTO.getExamType())
                 .attachmentPath(assignmentDTO.getAttachmentPath())
+                .isScoreVisible(assignmentDTO.getIsScoreVisible())
                 .lectureEntity(lectureRepository.findById(assignmentDTO.getLectureId()).get()) // fk
                 .build();
         assignmentRepository.save(entity);
@@ -60,7 +61,10 @@ public class AssignmentService {
                         entity.getPoints(),
                         entity.getExamType(),
                         entity.getAttachmentPath(),
-                        entity.getSubmissionCount()))
+                        entity.getSubmissionCount(),
+                        entity.getIsScoreVisible(),
+                        entity.getLectureEntity().getId()
+                ))
                 .collect(Collectors.toList());
     }
 
@@ -76,7 +80,10 @@ public class AssignmentService {
                         entity.getPoints(),
                         entity.getExamType(),
                         entity.getAttachmentPath(),
-                        entity.getSubmissionCount()))
+                        entity.getSubmissionCount(),
+                        entity.getIsScoreVisible(),
+                        entity.getLectureEntity().getId()
+                ))
                 .collect(Collectors.toList());
     }
 
@@ -93,7 +100,10 @@ public class AssignmentService {
                 entity.getPoints(),
                 entity.getExamType(),
                 entity.getAttachmentPath(),
-                entity.getSubmissionCount());
+                entity.getSubmissionCount(),
+                entity.getIsScoreVisible(),
+                entity.getLectureEntity().getId()
+        );
     }
 
     public String saveFile(MultipartFile file) throws IOException {
@@ -117,6 +127,7 @@ public class AssignmentService {
         entity.setDeadline(assignmentDTO.getDeadline());
         entity.setPoints(assignmentDTO.getPoints());
         entity.setExamType(assignmentDTO.getExamType());
+        entity.setIsScoreVisible(assignmentDTO.getIsScoreVisible());
 
         // 첨부파일이 존재할 경우에만 업데이트
         if (assignmentDTO.getAttachmentPath() != null) {
@@ -158,9 +169,20 @@ public class AssignmentService {
         Page<AssignmentEntity> assignmentEntityPage = assignmentRepository.findAllByLectureId(lectureId,
                 PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
 
-        Page<AssignmentDTO> assignmentDTOPage = assignmentEntityPage.map(entity -> new AssignmentDTO(entity.getId(),
-                entity.getTitle(), entity.getContent(), entity.getAuthor(), entity.getCreatedAt(), entity.getDeadline(),
-                entity.getPoints(), entity.getExamType(), entity.getAttachmentPath(), entity.getSubmissionCount()));
+        Page<AssignmentDTO> assignmentDTOPage = assignmentEntityPage.map(entity -> new AssignmentDTO(
+                entity.getId(),
+                entity.getTitle(),
+                entity.getContent(),
+                entity.getAuthor(),
+                entity.getCreatedAt(),
+                entity.getDeadline(),
+                entity.getPoints(),
+                entity.getExamType(),
+                entity.getAttachmentPath(),
+                entity.getSubmissionCount(),
+                entity.getIsScoreVisible(),
+                entity.getLectureEntity().getId()
+        ));
 
         return assignmentDTOPage;
     }

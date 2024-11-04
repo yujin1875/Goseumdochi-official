@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString
 public class AssignmentDTO {
     private Long id;
@@ -26,12 +25,14 @@ public class AssignmentDTO {
     private String examType;  // 제출방식 "Online" 또는 "Offline"
     private String attachmentPath;  // 첨부파일
     private int submissionCount; // 제출 인원
+    private Boolean isScoreVisible; // 점수 공개 여부
 
     private Long lectureId; // fk
 
     // lectureId 만 없는 생성자
     public AssignmentDTO(Long id, String title, String content, String author, LocalDateTime createdAt,
-                         LocalDateTime deadline, Integer points, String examType, String attachmentPath, int submissionCount) {
+                         LocalDateTime deadline, Integer points, String examType, String attachmentPath,
+                         int submissionCount, Boolean isScoreVisible, Long lectureId) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -42,5 +43,7 @@ public class AssignmentDTO {
         this.examType = examType;
         this.attachmentPath = attachmentPath;
         this.submissionCount = submissionCount;
+        this.isScoreVisible = isScoreVisible;
+        this.lectureId = lectureId;
     }
 }

@@ -28,6 +28,9 @@ public class AssignmentEntity {
     @Column(nullable = false)
     private int submissionCount = 0; // 제출인원
 
+    @Column(nullable = false)
+    private Boolean isScoreVisible = false; // 점수 공개 여부
+
     // 강의와 N:1 매핑
     @ManyToOne
     @JoinColumn(name = "lecture_id")

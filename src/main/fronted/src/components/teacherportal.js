@@ -229,6 +229,7 @@ function App26() {
     const handleAssignmentClick = async (id) => {
         try {
             const response = await axios.get(`/api/teacher/assignment/${id}`);
+            console.log(response.data);
             setCurrentAssignment(response.data);
             setTitle(response.data.title);
             setContent(response.data.content);
@@ -337,6 +338,7 @@ function App26() {
             createdAt: openDate,
             deadline: closeDate,
             examType,
+            isScoreVisible: scorePublished,
             lectureId
         };
 
@@ -483,7 +485,8 @@ function App26() {
             points,
             createdAt: openDate,
             deadline: closeDate,
-            examType
+            examType,
+            isScoreVisible: scorePublished,
         };
 
         const formData = new FormData();
@@ -492,7 +495,7 @@ function App26() {
         formData.append('id', user.id);
 
         try {
-            const response = await axios.post(`/api/student/submitAssignment`, formData, {
+            const response = await axios.post(`/api/teacher/lecture/${lectureId}/assignment/new`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -1243,7 +1246,8 @@ function App26() {
                         </div>
                         <div id="title_Assignmentadd">
                             <h2>제목</h2>
-                            <input type="text" id="Assignmentadd_title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                            <input type="text" id="Assignmentadd_title" value={title}
+                                   onChange={(e) => setTitle(e.target.value)}/>
                         </div>
                         <div id="method_Assignmentadd">
                             <h2>제출 방식</h2>
@@ -1254,19 +1258,29 @@ function App26() {
                         </div>
                         <div id="date_Assignmentadd">
                             <h2 id="open">공개일</h2>
-                            <input type="date" id="Assignmentadd_opendate" />
+                            <input type="date" id="Assignmentadd_opendate"/>
                             <h2 id="close">마감일</h2>
-                            <input type="date" id="Assignmentadd_closedate" />
+                            <input type="date" id="Assignmentadd_closedate"/>
                         </div>
                         <div id="score_Assignmentadd">
                             <h2>배점</h2>
-                            <input type="text" id="Assignmentadd_score" value={points} onChange={(e) => setPoints(e.target.value)} />
+                            <input type="text" id="Assignmentadd_score" value={points}
+                                   onChange={(e) => setPoints(e.target.value)}/>
+                        </div>
+                        <div id="scorePublished_Assignmentadd">
+                            <h2>점수 공개 여부</h2>
+                            <input
+                                type="checkbox"
+                                checked={scorePublished}
+                                onChange={(e) => setScorePublished(e.target.checked)}
+                            />
                         </div>
                         <div id="content_Assignmentadd">
-                            <input type="text" id="Assignmentadd_content" value={content} onChange={(e) => setContent(e.target.value)} />
+                            <input type="text" id="Assignmentadd_content" value={content}
+                                   onChange={(e) => setContent(e.target.value)}/>
                         </div>
                         <div id="file_Assignmentadd">
-                            <input type="file" id="Assignmentadd_file" onChange={(e) => setFile(e.target.files[0])} />
+                            <input type="file" id="Assignmentadd_file" onChange={(e) => setFile(e.target.files[0])}/>
                         </div>
                         <div id="buttons_Assignmentadd">
                             <button id="save" onClick={handleSaveAssignment}>
@@ -1287,7 +1301,8 @@ function App26() {
                         </div>
                         <div id="title_Assignmentrevise">
                             <h2>제목</h2>
-                            <input type="text" id="Assignmentrevise_title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                            <input type="text" id="Assignmentrevise_title" value={title}
+                                   onChange={(e) => setTitle(e.target.value)}/>
                         </div>
                         <div id="method_Assignmentrevise">
                             <h2>제출 방식</h2>
@@ -1304,13 +1319,23 @@ function App26() {
                         </div>
                         <div id="score_Assignmentrevise">
                             <h2>배점</h2>
-                            <input type="text" id="Assignmentrevise_score" value={points} onChange={(e) => setPoints(e.target.value)} />
+                            <input type="text" id="Assignmentrevise_score" value={points}
+                                   onChange={(e) => setPoints(e.target.value)}/>
+                        </div>
+                        <div id="scorePublished_Assignmentrevise">
+                            <h2>점수 공개 여부</h2>
+                            <input
+                                type="checkbox"
+                                checked={scorePublished}
+                                onChange={(e) => setScorePublished(e.target.checked)}
+                            />
                         </div>
                         <div id="content_Assignmentrevise">
-                            <input type="text" id="Assignmentrevise_content" value={content} onChange={(e) => setContent(e.target.value)} />
+                            <input type="text" id="Assignmentrevise_content" value={content}
+                                   onChange={(e) => setContent(e.target.value)}/>
                         </div>
                         <div id="file_Assignmentrevise">
-                            <input type="file" id="Assignmentrevise_file" onChange={(e) => setFile(e.target.files[0])} />
+                            <input type="file" id="Assignmentrevise_file" onChange={(e) => setFile(e.target.files[0])}/>
                             {existingFile && <div><a href={existingFile} download>기존 첨부파일</a></div>}
                         </div>
                         <div id="buttons_Assignmentrevise">
@@ -1348,11 +1373,18 @@ function App26() {
                             <h2>배점</h2>
                             <div id="Assignmentread_score">{currentAssignment?.points}</div>
                         </div>
+                        <div id="scorePublished_Assignmentread">
+                            <h2>점수 공개 여부</h2>
+                            <div id="Assignmentread_scorePublished">
+                                {currentAssignment?.isScoreVisible ? 'YES' : 'NO'}
+                            </div>
+                        </div>
                         <div id="content_Assignmentread">
-                            <div id="Assignmentread_content">{currentAssignment?.content}</div>
+                        <div id="Assignmentread_content">{currentAssignment?.content}</div>
                         </div>
                         <div id="file_Assignmentread">
-                            <div id="Assignmentread_file"><a href={currentAssignment?.attachmentPath} download>첨부파일</a></div>
+                            <div id="Assignmentread_file"><a href={currentAssignment?.attachmentPath} download>첨부파일</a>
+                            </div>
                         </div>
                         <div id="buttons_Assignmentread">
                             <button id="save" onClick={showDivAssignmentrevise}>
