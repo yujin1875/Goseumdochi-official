@@ -68,6 +68,8 @@ import Messagecheck from './components/messageCheck';
 
 import VideoUploadTest from './components/videoUploadTest';
 
+import Score from './components/Score.js';
+
 class App extends Component{
   constructor(props){
     super(props)
@@ -143,6 +145,8 @@ class App extends Component{
               <Route path='/messagereply' element={<Messagereply/>}/>
               <Route path='/messageread' element={<Messageread/>}/>
               <Route path='/messagecheck' element={<Messagecheck/>}/>
+
+              <Route path='/score' element={<Score/>}/>
 
               <Route path='/videoUploadTest' element={<VideoUploadTest/>}/>
             </Routes>

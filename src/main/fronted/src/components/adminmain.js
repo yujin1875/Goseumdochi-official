@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import logo from './images/goseumdochi.png';
+import '../css/adminmain.css';
 
 function App18() {
     const [adminInfo, setAdminInfo] = useState(null);
@@ -59,19 +60,31 @@ function App18() {
             <div id="admin_info">
                 <div id="info">
                     {adminInfo && <a>관리자 : {adminInfo.username} 님</a>}
-                    <button id="logout" onClick={handleLogout}>
-                        로그아웃
-                    </button>
                 </div>
             </div>
             <div id="button_adminmain">
-                <ul>
-                    <li><button onClick={GoAdminNotice}>공지사항</button></li>
-                    <li><button onClick={GoAdminAcademyFormManage}>학원 신청서</button></li>
-                    <li><button onClick={GoAdminAcademy}>학원 관리</button></li>
-                    <li><button onClick={GoAdminStudent}>학생 관리</button></li>
-                    <li><button onClick={GoAdminCommunity}>커뮤니티</button></li>
-                </ul>
+                <div id="btn_adminmain">
+                    <div id="noti_btn">
+                        <button onClick={GoAdminNotice}>공지사항</button>
+                    </div>
+                    <div id="acaform_btn">
+                        <button onClick={GoAdminAcademyFormManage}>학원 신청서</button>
+                    </div>
+                    <div id="aca_btn">
+                        <button onClick={GoAdminAcademy}>학원 관리</button>
+                    </div>
+                    <div id="stu_btn">
+                        <button onClick={GoAdminStudent}>학생 관리</button>
+                    </div>
+                    <div id="commu_btn">
+                        <button onClick={GoAdminCommunity}>커뮤니티</button>
+                    </div>
+                </div>
+            </div>
+            <div id="footer_adminmain">
+                <button id="logout" onClick={handleLogout}>
+                    로그아웃
+                </button>
             </div>
         </div>
     );
