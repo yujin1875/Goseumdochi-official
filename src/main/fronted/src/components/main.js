@@ -1,10 +1,14 @@
 import '../css/main.css';
 import logo from './images/goseumdochi_moving.gif';
+import message_icon from './images/message.png';
+import logout_icon from './images/logout.jpg';
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import {Link} from "react-router-dom";
+import '../css/nav.css';
 
 function App6() {
     const location = useLocation();
@@ -32,18 +36,6 @@ function App6() {
 
     const GoLecturePotal = (lecture) => {
         navigate('/lectureportal', { state: { user: user, lecture: lecture } });
-    };
-
-    const GoRecommendUniv = () => {
-        navigate('/ai/recommend/univ', { state: { user: user } });
-    };
-
-    const GoTextSummary = () => {
-        navigate('/ai/text/summary', { state: { user: user } });
-    };
-
-    const GoMathSolve = () => {
-        navigate('/ai/math/solve', { state: { user: user } });
     };
 
     const GoMessageList = () => {
@@ -137,11 +129,11 @@ function App6() {
                     <img src={logo} onClick={Gomain} alt="Logo" />
                     <div id="user_info">
                         {userName && `${userName}님`}
-                        <button onClick={GoMessageList}>
-                            <span>쪽지</span>
+                        <button className="icon" onClick={GoMessageList}>
+                            <img src={message_icon} alt="쪽지" style={{ width: '20px', height: '20px' }} />
                         </button>
-                        <button>
-                            <span>로그아웃</span>
+                        <button className="icon">
+                            <img src={logout_icon} alt="로그아웃" style={{ width: '20px', height: '20px' }} />
                         </button>
                     </div>
                 </div>
@@ -151,10 +143,10 @@ function App6() {
                     <input type="submit" value="마이페이지" id="mypage_btn" onClick={Gomypage} />
                     <div id="rect" />
                 </div>
-                <div>
-                    <button onClick={GoRecommendUniv}>AI 대학학과추천</button>
-                    <button onClick={GoTextSummary}>AI 문서요약</button>
-                    <button onClick={GoMathSolve}>AI 수학문제풀이</button>
+                <div className="navbar">
+                    <Link className="navbar-menu" to="/ai/recommend/univ" state={{ user: user }}>대학학과추천</Link>
+                    <Link className="navbar-menu" to="/ai/text/summary" state={{ user: user }}>문서요약</Link>
+                    <Link className="navbar-menu" to="/ai/math/solve" state={{ user: user }}>수학문제풀이</Link>
                 </div>
                 <div id="contents_main">
                     <div id="contents1_main">
