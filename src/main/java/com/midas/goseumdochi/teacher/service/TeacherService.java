@@ -157,4 +157,21 @@ public class TeacherService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 제출물을 찾을 수 없습니다."));
     }
 
+    public Optional<AssignmentSubmissionDTO> getSubmissionEvaluation(Long assignmentId, Long studentId) {
+        return assignmentSubmissionRepository.findByStudentIdAndAssignmentId(studentId, assignmentId)
+                .map(submission -> {
+                    return new AssignmentSubmissionDTO(
+                            submission.getId(),
+                            submission.getStudentId(),
+                            submission.getAssignmentId(),
+                            submission.getTitle(),
+                            submission.getContent(),
+                            submission.getAttachmentPath(),
+                            submission.getSubmissionStatus(),
+                            submission.getScore(),
+                            submission.getEvaluationComment()
+                    );
+                });
+    }
+
 }

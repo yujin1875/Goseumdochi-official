@@ -11,11 +11,8 @@ import com.midas.goseumdochi.teacher.dto.LectureNameDTO;
 import com.midas.goseumdochi.teacher.dto.TeacherDTO;
 import com.midas.goseumdochi.teacher.service.LectureService;
 import com.midas.goseumdochi.util.Dto.MailDTO;
-import com.midas.goseumdochi.util.Dto.NameDTO;
 import com.midas.goseumdochi.util.Service.MailService;
 import com.midas.goseumdochi.util.ai.EncDecService;
-import com.midas.goseumdochi.util.ai.RecommendDTO;
-import com.midas.goseumdochi.util.ai.RecommentService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -42,7 +39,6 @@ public class StudentController {
     private final LectureService lectureService;
     private final StudentRepository studentRepository;
     private final EncDecService encDecService;
-    private final RecommentService recommentService;
     private final AssignmentService assignmentService;
 
     // 회원가입 페이지 폼 작성 데이터 받기
@@ -223,17 +219,12 @@ public class StudentController {
         return ResponseEntity.ok(teacherDTO);
     }
 
-    // 학생 AI 대학-학과 추천
-    @GetMapping("/recommend/univ")
-    public ResponseEntity<?> recommendUniv(@RequestParam String major_subject, @RequestParam int n_recommendations) {
-        List<RecommendDTO> recommendList = recommentService.recommend(major_subject, n_recommendations);
-        return ResponseEntity.ok(recommendList);
-    }
-
     @GetMapping("/lecture/{lectureId}/students/submission-status")
-    public ResponseEntity<?> getStudentsWithSubmissionStatus(@PathVariable Long lectureId, @RequestParam Long assignmentId) {
-        List<StudentDTO> students = studentService.getStudentsByLectureIdWithSubmissionStatus(lectureId, assignmentId);
-        return ResponseEntity.ok(students);
+    public ResponseEntity<?> getStudentsWithSubmissionStatus(
+            @PathVariable Long lectureId,
+            @RequestParam Long assignmentId) {
+        List<StudentDTO> studentDTOList = studentService.getStudentsByLectureIdWithSubmissionStatus(lectureId, assignmentId);
+        return ResponseEntity.ok(studentDTOList);
     }
 
     // 과제 제출
@@ -311,14 +302,35 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
         }
 
-        Optional<AssignmentSubmissionDTO> assignmentSubmission = studentService.getAssignmentSubmission(studentId, assignmentId);
+        // 과제 정보 가져오기
+        AssignmentDTO assignment = assignmentService.getAssignmentById(assignmentId);
+        if (assignment == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 과제를 찾을 수 없습니다.");
+        }
 
+        // 과제 제출 정보 가져오기
+        Optional<AssignmentSubmissionDTO> assignmentSubmission = studentService.getAssignmentSubmission(studentId, assignmentId);
         if (assignmentSubmission.isPresent()) {
-            return ResponseEntity.ok(assignmentSubmission.get());
+            AssignmentSubmissionDTO submissionDTO = assignmentSubmission.get();
+
+            // 점수 공개 여부 확인
+            if (assignment.getIsScoreVisible() != null && assignment.getIsScoreVisible()) {
+                // 점수가 공개되어 있을 때만 점수를 포함
+                if (submissionDTO.getScore() != null) {
+                    return ResponseEntity.ok(submissionDTO);
+                } else {
+                    return ResponseEntity.ok("점수가 존재하지 않습니다.");
+                }
+            } else {
+                // 점수가 비공개일 경우, 점수를 제외한 나머지 정보만 반환
+                submissionDTO.setScore(null); // 점수를 null로 설정하여 숨김
+                return ResponseEntity.ok(submissionDTO);
+            }
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("제출한 과제를 찾을 수 없습니다.");
         }
     }
+
 
     @GetMapping("/lecture/{lectureId}/students")
     public ResponseEntity<?> getStudentsByLectureId(@PathVariable Long lectureId) {

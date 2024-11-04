@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import ScoreChart from './ScoreChart';
+
 function App26() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -64,28 +66,35 @@ function App26() {
         try {
             const response = await axios.get(`/api/teacher/assignment/${currentAssignment.id}/student/${studentId}/submissions`);
 
-            if (response.status === 200) { // HTTP 200 응답 확인
+            if (response.status === 200) {
                 const submission = response.data;
                 setSubmissionDetails({
                     title: submission.title || '제출된 과제가 없습니다.',
                     content: submission.content || '',
-                    attachmentPath: submission.attachmentPath || ''
+                    attachmentPath: submission.attachmentPath || '',
+                    score: submission.score || 0,  // 추가: 평가 점수
+                    evaluationComment: submission.evaluationComment || ''  // 추가: 평가 의견
                 });
             } else {
                 setSubmissionDetails({
                     title: '제출된 과제가 없습니다.',
                     content: '',
-                    attachmentPath: ''
+                    attachmentPath: '',
+                    score: 0,  // 기본 값 설정
+                    evaluationComment: ''  // 기본 값 설정
                 });
             }
         } catch (error) {
             setSubmissionDetails({
                 title: '오류 발생',
                 content: '과제 제출 정보를 불러오는 중 오류가 발생했습니다.',
-                attachmentPath: ''
+                attachmentPath: '',
+                score: 0,  // 기본 값 설정
+                evaluationComment: ''  // 기본 값 설정
             });
         }
     };
+
 
 
 
@@ -143,15 +152,22 @@ function App26() {
     // 학생 목록을 가져오면서 과제 제출 상태를 포함하도록 수정
     const fetchStudentsWithSubmissionStatus = async () => {
         try {
-            const response = await axios.get(`/api/student/lecture/${lectureId}/students/submission-status`, {
-                params: { assignmentId: currentAssignment.id } // 과제 ID를 요청에 포함
-            });
-            setStudents(response.data.map(student => ({
-                ...student,
-                submissionStatus: student.assignmentSubmission ? student.assignmentSubmission.submissionStatus : '미제출'
-            }))); // 학생 객체에 제출 상태 정보를 저장
+            const response = await axios.get(
+                `/api/student/lecture/${lectureId}/students/submission-status`,
+                { params: { assignmentId: currentAssignment.id } } // 과제 ID를 포함
+            );
+            setStudents(
+                response.data.map((student) => ({
+                    ...student,
+                    submissionStatus: student.assignmentSubmission
+                        ? student.assignmentSubmission.submissionStatus
+                        : '미제출',
+                    score: student.assignmentSubmission?.score || '점수 미입력', // 점수 추가
+                    evaluationComment: student.assignmentSubmission?.evaluationComment || '의견 미입력', // 평가 의견 추가
+                }))
+            );
         } catch (error) {
-            console.error("학생들의 제출 상태를 가져오는 중 에러가 발생했습니다:", error);
+            console.error('학생들의 제출 상태를 가져오는 중 에러가 발생했습니다:', error);
         }
     };
 
@@ -215,6 +231,7 @@ function App26() {
     const handleAssignmentClick = async (id) => {
         try {
             const response = await axios.get(`/api/teacher/assignment/${id}`);
+            console.log(response.data);
             setCurrentAssignment(response.data);
             setTitle(response.data.title);
             setContent(response.data.content);
@@ -323,6 +340,7 @@ function App26() {
             createdAt: openDate,
             deadline: closeDate,
             examType,
+            isScoreVisible: scorePublished,
             lectureId
         };
 
@@ -469,7 +487,8 @@ function App26() {
             points,
             createdAt: openDate,
             deadline: closeDate,
-            examType
+            examType,
+            isScoreVisible: scorePublished,
         };
 
         const formData = new FormData();
@@ -478,7 +497,7 @@ function App26() {
         formData.append('id', user.id);
 
         try {
-            const response = await axios.post(`/api/student/submitAssignment`, formData, {
+            const response = await axios.post(`/api/teacher/lecture/${lectureId}/assignment/new`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -775,8 +794,7 @@ function App26() {
     };
 
     const handleSaveEvaluation = async () => {
-        const score = document.getElementById("ScoreOfAssignment").value;
-        const evaluationComment = document.getElementById("OpinionOfAssignment").value;
+        const { score, evaluationComment } = submissionDetails;
 
         if (!score || !evaluationComment) {
             alert("점수와 평가 의견을 모두 입력해주세요.");
@@ -784,12 +802,9 @@ function App26() {
         }
 
         const evaluationData = {
-            score: parseInt(score),
-            evaluationComment: evaluationComment,
+            score: parseInt(score),  // 점수를 정수로 변환
+            evaluationComment: evaluationComment
         };
-
-        // 데이터를 콘솔에 로깅
-        console.log("Sending evaluation data to the backend:", evaluationData);
 
         try {
             const response = await axios.post(
@@ -804,7 +819,6 @@ function App26() {
 
             if (response.status === 200) {
                 alert("평가가 성공적으로 저장되었습니다.");
-                console.log("Response from the backend:", response.data);
             } else {
                 console.error("Unexpected response status:", response.status);
             }
@@ -813,6 +827,7 @@ function App26() {
             alert("평가 저장에 실패했습니다.");
         }
     };
+
 
 
     // 영상 업로드
@@ -888,14 +903,21 @@ function App26() {
     };
 
     useEffect(() => {
-            if (lectureId && user && user.id) {
-                fetchVideoList(user.id); // Fetch videos for the new lecture
-                setVideoUrl(''); // Clear videoUrl when changing lectures
-            }
-        }, [lectureId, user]);
+        if (lectureId && user && user.id) {
+            fetchVideoList(user.id); // Fetch videos for the new lecture
+            setVideoUrl(''); // Clear videoUrl when changing lectures
+        }
+    }, [lectureId, user]);
 
     // 여기까지 영상 업로드
 
+
+    const scores = [
+        85, 92, 75, 60, 45, 88, 95, 66, 70, 55,
+        78, 81, 62, 40, 32, 28, 99, 56, 77, 63,
+        49, 90, 34, 54, 71, 82, 36, 58, 74, 67,
+        85, 91, 72, 61, 52, 43, 39, 94, 53, 80,
+    ];
 
     return (
         <div id="App">
@@ -1233,7 +1255,8 @@ function App26() {
                         </div>
                         <div id="title_Assignmentadd">
                             <h2>제목</h2>
-                            <input type="text" id="Assignmentadd_title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                            <input type="text" id="Assignmentadd_title" value={title}
+                                   onChange={(e) => setTitle(e.target.value)}/>
                         </div>
                         <div id="method_Assignmentadd">
                             <h2>제출 방식</h2>
@@ -1244,19 +1267,29 @@ function App26() {
                         </div>
                         <div id="date_Assignmentadd">
                             <h2 id="open">공개일</h2>
-                            <input type="date" id="Assignmentadd_opendate" />
+                            <input type="date" id="Assignmentadd_opendate"/>
                             <h2 id="close">마감일</h2>
-                            <input type="date" id="Assignmentadd_closedate" />
+                            <input type="date" id="Assignmentadd_closedate"/>
                         </div>
                         <div id="score_Assignmentadd">
                             <h2>배점</h2>
-                            <input type="text" id="Assignmentadd_score" value={points} onChange={(e) => setPoints(e.target.value)} />
+                            <input type="text" id="Assignmentadd_score" value={points}
+                                   onChange={(e) => setPoints(e.target.value)}/>
+                        </div>
+                        <div id="scorePublished_Assignmentadd">
+                            <h2>점수 공개 여부</h2>
+                            <input
+                                type="checkbox"
+                                checked={scorePublished}
+                                onChange={(e) => setScorePublished(e.target.checked)}
+                            />
                         </div>
                         <div id="content_Assignmentadd">
-                            <input type="text" id="Assignmentadd_content" value={content} onChange={(e) => setContent(e.target.value)} />
+                            <input type="text" id="Assignmentadd_content" value={content}
+                                   onChange={(e) => setContent(e.target.value)}/>
                         </div>
                         <div id="file_Assignmentadd">
-                            <input type="file" id="Assignmentadd_file" onChange={(e) => setFile(e.target.files[0])} />
+                            <input type="file" id="Assignmentadd_file" onChange={(e) => setFile(e.target.files[0])}/>
                         </div>
                         <div id="buttons_Assignmentadd">
                             <button id="save" onClick={handleSaveAssignment}>
@@ -1277,7 +1310,8 @@ function App26() {
                         </div>
                         <div id="title_Assignmentrevise">
                             <h2>제목</h2>
-                            <input type="text" id="Assignmentrevise_title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                            <input type="text" id="Assignmentrevise_title" value={title}
+                                   onChange={(e) => setTitle(e.target.value)}/>
                         </div>
                         <div id="method_Assignmentrevise">
                             <h2>제출 방식</h2>
@@ -1294,13 +1328,23 @@ function App26() {
                         </div>
                         <div id="score_Assignmentrevise">
                             <h2>배점</h2>
-                            <input type="text" id="Assignmentrevise_score" value={points} onChange={(e) => setPoints(e.target.value)} />
+                            <input type="text" id="Assignmentrevise_score" value={points}
+                                   onChange={(e) => setPoints(e.target.value)}/>
+                        </div>
+                        <div id="scorePublished_Assignmentrevise">
+                            <h2>점수 공개 여부</h2>
+                            <input
+                                type="checkbox"
+                                checked={scorePublished}
+                                onChange={(e) => setScorePublished(e.target.checked)}
+                            />
                         </div>
                         <div id="content_Assignmentrevise">
-                            <input type="text" id="Assignmentrevise_content" value={content} onChange={(e) => setContent(e.target.value)} />
+                            <input type="text" id="Assignmentrevise_content" value={content}
+                                   onChange={(e) => setContent(e.target.value)}/>
                         </div>
                         <div id="file_Assignmentrevise">
-                            <input type="file" id="Assignmentrevise_file" onChange={(e) => setFile(e.target.files[0])} />
+                            <input type="file" id="Assignmentrevise_file" onChange={(e) => setFile(e.target.files[0])}/>
                             {existingFile && <div><a href={existingFile} download>기존 첨부파일</a></div>}
                         </div>
                         <div id="buttons_Assignmentrevise">
@@ -1338,11 +1382,18 @@ function App26() {
                             <h2>배점</h2>
                             <div id="Assignmentread_score">{currentAssignment?.points}</div>
                         </div>
+                        <div id="scorePublished_Assignmentread">
+                            <h2>점수 공개 여부</h2>
+                            <div id="Assignmentread_scorePublished">
+                                {currentAssignment?.isScoreVisible ? 'YES' : 'NO'}
+                            </div>
+                        </div>
                         <div id="content_Assignmentread">
-                            <div id="Assignmentread_content">{currentAssignment?.content}</div>
+                        <div id="Assignmentread_content">{currentAssignment?.content}</div>
                         </div>
                         <div id="file_Assignmentread">
-                            <div id="Assignmentread_file"><a href={currentAssignment?.attachmentPath} download>첨부파일</a></div>
+                            <div id="Assignmentread_file"><a href={currentAssignment?.attachmentPath} download>첨부파일</a>
+                            </div>
                         </div>
                         <div id="buttons_Assignmentread">
                             <button id="save" onClick={showDivAssignmentrevise}>
@@ -1381,20 +1432,29 @@ function App26() {
                                             <div
                                                 id="Aname"
                                                 onClick={() => {
-                                                    if (student.assignmentSubmission && (student.assignmentSubmission.submissionStatus === '정상제출' || student.assignmentSubmission.submissionStatus === '평가 완료')) {
+                                                    if (
+                                                        student.assignmentSubmission &&
+                                                        (student.assignmentSubmission.submissionStatus === '정상제출' ||
+                                                            student.assignmentSubmission.submissionStatus === '평가 완료')
+                                                    ) {
                                                         handleStudentClick(student);
                                                     }
                                                 }}
-                                                style={{cursor: student.assignmentSubmission && (student.assignmentSubmission.submissionStatus === '정상제출' || student.assignmentSubmission.submissionStatus === '평가 완료') ? 'pointer' : 'default'}}  // 마우스 포인터 변경
+                                                style={{
+                                                    cursor:
+                                                        student.assignmentSubmission &&
+                                                        (student.assignmentSubmission.submissionStatus === '정상제출' ||
+                                                            student.assignmentSubmission.submissionStatus === '평가 완료')
+                                                            ? 'pointer'
+                                                            : 'default',
+                                                }}
                                             >
                                                 {student.studentName}
                                             </div>
                                             <div id="AStudentID">{student.studentId}</div>
-                                            <div id="Asubmit">
-                                                {student.submissionStatus} {/* 직접 제출 상태를 표시 */}
-                                            </div>
-                                            <div id="Ascore">점수 입력</div>
-                                            <div id="Aopinion">평가 의견 입력</div>
+                                            <div id="Asubmit">{student.submissionStatus}</div>
+                                            <div id="Ascore">{student.score}</div> {/* 점수 출력 */}
+                                            <div id="Aopinion">{student.evaluationComment}</div> {/* 평가 의견 출력 */}
                                         </div>
                                     ))
                                 ) : (
@@ -1411,7 +1471,7 @@ function App26() {
                             <h2>과제 조회/제출</h2>
                         </div>
                         <div id="AssignmentEstimationStudent">
-                        <div id="title_AssignmentEstimationStudent">
+                            <div id="title_AssignmentEstimationStudent">
                                 <h2>제출 제목</h2>
                                 <div id="StudentWrite">
                                     {submissionDetails.title || '제출된 과제가 없습니다.'}
@@ -1433,11 +1493,29 @@ function App26() {
                             </div>
                             <div id="Estimation_AssignmentEstimationStudent">
                                 <h2>평가</h2>
-                                <input type="text" id="ScoreOfAssignment" placeholder="점수를 입력하세요" />
+                                <input
+                                    type="text"
+                                    id="ScoreOfAssignment"
+                                    placeholder="점수를 입력하세요"
+                                    value={submissionDetails.score || ''}  // 기존 점수를 입력 폼에 표시
+                                    onChange={(e) => setSubmissionDetails({
+                                        ...submissionDetails,
+                                        score: e.target.value
+                                    })}  // 값이 변경되면 상태 업데이트
+                                />
                             </div>
                             <div id="Opinion_AssignmentEstimationStudent">
                                 <h2>평가 의견</h2>
-                                <input type="text" id="OpinionOfAssignment" placeholder="평가 의견을 입력하세요" />
+                                <input
+                                    type="text"
+                                    id="OpinionOfAssignment"
+                                    placeholder="평가 의견을 입력하세요"
+                                    value={submissionDetails.evaluationComment || ''} // 기존 평가 의견을 입력 폼에 표시
+                                    onChange={(e) => setSubmissionDetails({
+                                        ...submissionDetails,
+                                        evaluationComment: e.target.value
+                                    })}  // 값이 변경되면 상태 업데이트
+                                />
                             </div>
                             <button id="AssignmentEstimationStudent_button" onClick={handleSaveEvaluation}>저장</button>
                         </div>
@@ -1963,7 +2041,7 @@ function App26() {
                                 <div id="tableOfStudentScore">
                                     <div id="tableOfStudentScore_category">
                                         <div id="totalscore">
-                                             배점
+                                            배점
                                         </div>
                                         <div id="aver_exam">
                                             평균
@@ -2004,6 +2082,7 @@ function App26() {
                                 </div>
                             </div>
                             <div id="graph_score">
+                                <ScoreChart scores={scores} />
                             </div>
                             <div id="NameOfStudent_ExamEstimation">
                             </div>

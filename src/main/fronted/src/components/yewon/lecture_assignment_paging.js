@@ -18,17 +18,45 @@ function LectureAssignmentPaging() {
 
     const fetchAssignments = async (page) => {
         try {
+            // 기본 과제 데이터를 가져옴
             const response = await axios.get(`/api/lecture/${lecture.id}/assignment/paging?page=${page}`);
-            setAssignmentList(response.data.assignment.content);
+            const assignments = response.data.assignment.content;
+
+            // 각 과제에 대해 점수 정보를 추가 (isScoreVisible이 true인 경우에만 요청)
+            const assignmentsWithScores = await Promise.all(
+                assignments.map(async (assignment) => {
+                    if (assignment.isScoreVisible) {
+                        try {
+                            // 학생이 제출한 과제 점수 정보를 가져옴
+                            const scoreResponse = await axios.get(`/api/student/submittedAssignment/${assignment.id}`, {
+                                params: { studentId: user.id },
+                            });
+
+                            // score가 null 또는 undefined가 아닌 경우에만 점수를 표시
+                            return {
+                                ...assignment,
+                                score: scoreResponse.data && scoreResponse.data.score !== null ? scoreResponse.data.score : '점수 없음',
+                            };
+                        } catch (error) {
+                            return { ...assignment, score: '점수 없음' };
+                        }
+                    }
+                    return { ...assignment, score: '비공개' };
+                })
+            );
+
+            // 과제 리스트와 페이징 정보 설정
+            setAssignmentList(assignmentsWithScores);
             setPagingInfo({
                 startPage: response.data.startPage,
                 endPage: response.data.endPage,
                 totalPages: response.data.assignment.totalPages,
             });
         } catch (error) {
-            console.error('Failed to fetch materials:', error);
+            console.error('Failed to fetch assignments:', error);
         }
     };
+
 
     const goToPage = (page) => {
         setCurrentPage(page);
@@ -70,7 +98,7 @@ function LectureAssignmentPaging() {
                     <th>배점</th>
                     <th>제출방식</th>
                     <th>첨부파일</th>
-                    {/* 기타 정보에 대한 헤더 */}
+                    <th>점수</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -85,7 +113,11 @@ function LectureAssignmentPaging() {
                         <td>{assignment.points}</td>
                         <td>{assignment.examType}</td>
                         <td><a href={assignment.attachmentPath} download>첨부파일</a></td>
-                        {/* 과제 제출 버튼 추가 (assignment.id를 전달) */}
+                        <td>
+                            {assignment.isScoreVisible ? (
+                                assignment.score !== null ? assignment.score : "점수 없음"
+                            ) : "비공개"}
+                        </td>
                         <td>
                             <button onClick={() => submitAssignment(assignment.id)}>과제 제출</button>
                         </td>
