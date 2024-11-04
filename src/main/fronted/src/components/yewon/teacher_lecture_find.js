@@ -2,6 +2,7 @@ import React, { useState ,useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import './subcss/teacher_lecture_find.css';
 
 function TeacherLectureFind() {
     const location = useLocation();
@@ -61,39 +62,47 @@ function TeacherLectureFind() {
 
     return (
         <div>
-            <h2>강의 학생관리</h2>
-            <h2>강의 검색</h2>
-            <input
-                type="text"
-                placeholder="검색어 입력..."
-                value={searchWord}
-                onChange={handleSearchWordChange}
-            />
-            <button onClick={handleSearch}>찾기</button>
-            <h2>강의 목록</h2>
-            <ul>
-                {lectureList.map((lecture) => (
-                    <li
-                        key={lecture.id}
-                        onClick={() => handleLectureClick(lecture)}
-                        style={{
-                            cursor: 'pointer',
-                            backgroundColor: selectedLecture && selectedLecture.id === lecture.id ? 'pink' : 'white'
-                        }}
-                    >
-                        <span>{lecture.name}</span>
-                        <span>{lecture.headCount}/{lecture.maxCount}</span>
-                        <ul>
-                            {lecture.lectureTimeDTOList.map((time) => (
-                                <li key={time.id}>
-                                    {time.day} {timeSlicingHM(time.startTime)} ~ {timeSlicingHM(time.endTime)}
-                                </li>
-                            ))}
-                        </ul>
-                    </li>
-                ))}
-            </ul>
-            <button onClick={handleStudentManagement}>학생 관리</button>
+            <div id="teacher_lecture_find_header"/>
+            <div id="teacher_lecture_find_frame">
+                <h1>강의 학생관리</h1>
+                <div id="SearchLecture_teacher_lecture_find">
+                    <h2>강의 검색</h2>
+                    <input
+                        type="text"
+                        placeholder="검색어 입력..."
+                        value={searchWord}
+                        onChange={handleSearchWordChange}
+                    />
+                    <button onClick={handleSearch}>찾기</button>
+                </div>
+                <div id="ListOfLecture_teacher_lecture_find">
+                    <h2>강의 목록</h2>
+                    <ul id="ListOfLectureBox_teacher_lecture_find">
+                        {lectureList.map((lecture) => (
+                            <li
+                                key={lecture.id}
+                                onClick={() => handleLectureClick(lecture)}
+                                style={{
+                                    cursor: 'pointer',
+                                    backgroundColor: selectedLecture && selectedLecture.id === lecture.id ? 'pink' : 'white'
+                                }}
+                            >
+                                <span>{lecture.name}</span>
+                                <span>{lecture.headCount}/{lecture.maxCount}</span>
+                                <ul>
+                                    {lecture.lectureTimeDTOList.map((time) => (
+                                        <li key={time.id}>
+                                            {time.day} {timeSlicingHM(time.startTime)} ~ {timeSlicingHM(time.endTime)}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </li>
+                        ))}
+                    </ul>
+                    <button onClick={handleStudentManagement}>학생 관리</button>
+                </div>
+            </div>
+            <div id="teacher_lecture_find_footer"/>
         </div>
     );
 }

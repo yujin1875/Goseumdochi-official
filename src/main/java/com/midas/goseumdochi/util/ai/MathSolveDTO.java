@@ -8,6 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class MathSolveDTO {
-    private String solve;
+    private String solution;
     private String error;
 }

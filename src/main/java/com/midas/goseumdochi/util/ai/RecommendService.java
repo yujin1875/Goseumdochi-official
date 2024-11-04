@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class RecommentService {
+public class RecommendService {
 
     // 텍스트 입력 후 비방 목적의 글인지 판별
     public List<RecommendDTO> recommend(String major_subject, int n_recommendations) {

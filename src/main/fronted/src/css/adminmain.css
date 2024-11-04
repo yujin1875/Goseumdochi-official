@@ -11,18 +11,17 @@ hr{
     width: 276px;
     height: 276px;
     margin:auto;
-    margin-top:50px;
     object-fit: cover;
 }
 
 #admin_info{
     width:100%;
-    height:154px;
+    height:90px;
 }
 
 #admin_info>#info{
     width:300px;
-    height:150px;
+    height:90px;
     margin:auto;
     background-color:aqua;
 }
@@ -45,5 +44,91 @@ hr{
 
 #button_adminmain{
     width:100%;
-    height:600px;
+    height:400px;
+}
+
+#buttons_adminmain>#btn_adminmain{
+    width: 1344px;
+    height: 334px;
+    margin: 0 auto;
+}
+
+#btn_adminmain>#noti_btn{
+    float:left;
+    width: 250px;
+    height: 334px;
+    margin-left:240px;
+    background-color: #FFFFFF;
+}
+
+#noti_btn>button{
+    width: 250px;
+    height: 334px;
+}
+
+#btn_adminmain>#acaform_btn{
+    float:left;
+    width: 250px;
+    height: 334px;
+    margin-left:40px;
+    background-color: #FFFFFF;
+}
+
+#acaform_btn>button{
+    width: 250px;
+    height: 334px;
+}
+
+#btn_adminmain>#aca_btn{
+    float:left;
+    width: 250px;
+    height: 334px;
+    margin-left:40px;
+    background-color: #FFFFFF;
+}
+
+#aca_btn>button{
+    width: 250px;
+    height: 334px;
+}
+
+#btn_adminmain>#stu_btn{
+    float:left;
+    width: 250px;
+    height: 334px;
+    margin-left:40px;
+    background-color: #FFFFFF;
+}
+
+#stu_btn>button{
+    width: 250px;
+    height: 334px;
+}
+
+#btn_adminmain>#commu_btn{
+    float:left;
+    width: 250px;
+    height: 334px;
+    margin-left:40px;
+    background-color: #FFFFFF;
+}
+
+#commu_btn>button{
+    width: 250px;
+    height: 334px;
+}
+
+#footer_adminmain{
+    width: 100%;
+    height:137px;
+}
+
+#footer_adminmain>button{
+    width:150px;
+    height:60px;
+    background-color: unset;
+    font-size:18px;
+    margin-left:45.5%;
+    border:none;
+    text-decoration: underline;
 }

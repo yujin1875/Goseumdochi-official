@@ -1,0 +1,86 @@
+#teacher_lecture_manage_header{
+    width:100%;
+    height:140px;
+}
+
+#teacher_lecture_manage_frame{
+    width: 979px;
+    height: 666px;
+    background-color: #FFFFFF;
+    margin: auto;
+    border-top: solid 3px #000000;
+}
+
+#teacher_lecture_manage_frame>h1{
+    margin-top:5px;
+    margin-left:15px;
+}
+
+#teacher_lecture_manage_frame>#contents_teacher_lecture_manage{
+    width:850px;
+    height:500px;
+    margin:auto;
+    margin-top:50px;
+}
+
+#contents_teacher_lecture_manage>button{
+    width: 150px;
+    height:50px;
+    border-radius:5px;
+    font-size:20px;
+}
+
+#contents_teacher_lecture_manage>#teacher_showing_lecture_manage{
+    width:850px;
+    height:420px;
+    margin-top:25px;
+    background-color:#ced4da;
+}
+
+#teacher_showing_lecture_manage>#info_lecture{
+    width:850px;
+    height:40px;
+    font-size:20px;
+    background-color:#F1F3F5;
+}
+
+#info_lecture>#info_lecture_name{
+    float:left;
+    width:90px;
+    height:40px;
+    margin-left:10px;
+}
+
+
+#info_lecture_name>span{
+    font-size:26px;
+    margin:auto;
+}
+
+#info_lecture>#info_lecture_subject{
+    float:left;
+    width:100px;
+    height:20px;
+    margin-top:8px;
+    margin-left:5px;
+    font-size:17px;
+}
+
+#info_lecture>#Editlecture{
+    margin-top:10px;
+    margin-left:35px;
+    border:none;
+    text-decoration:underline;
+}
+
+#info_lecture>#Deletelecture{
+    margin-top:10px;
+    margin-left:35px;
+    border:none;
+    text-decoration:underline;
+}
+
+#teacher_lecture_manage_footer{
+    width:100%;
+    height:144px;
+}
