@@ -2,6 +2,7 @@ import React, { useState ,useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import './subcss/teacher_lecture_student_manage.css';
 
 function TeacherLectureStudentManage() {
     const location = useLocation();
@@ -63,70 +64,74 @@ function TeacherLectureStudentManage() {
 
     return (
         <div>
-            <h1>강의 학생관리</h1>
-            <div>
-                <h3>강의 상세 정보</h3>
+            <div id="header_teacher_lecture_student_manage"/>
+            <div id="teacher_lecture_student_manage_frame">
+                <h1>강의 학생관리</h1>
                 <div>
-                    <h2>{lecture.name}</h2>
-                    <p>수강 인원 {lecture.headCount}/{lecture.maxCount}</p>
-                    <p>강의 시간</p>
-                    <ul>
-                        {lecture.lectureTimeDTOList.map((time, index) => (
-                            <li key={index}>
-                                {time.day} {time.startTime.slice(0, 5)} ~ {time.endTime.slice(0, 5)}
-                            </li>
-                        ))}
-                    </ul>
+                    <h3>강의 상세 정보</h3>
+                    <div>
+                        <h2>{lecture.name}</h2>
+                        <p>수강 인원 {lecture.headCount}/{lecture.maxCount}</p>
+                        <p>강의 시간</p>
+                        <ul>
+                            {lecture.lectureTimeDTOList.map((time, index) => (
+                                <li key={index}>
+                                    {time.day} {time.startTime.slice(0, 5)} ~ {time.endTime.slice(0, 5)}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <h3>수강중인 학생</h3>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>학생 이름</th>
+                                <th>학번</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {existingStudentList.map((student) => (
+                                <tr key={student.id}>
+                                    <td>{student.studentName}</td>
+                                    <td>{student.studentId}</td>
+                                    <td>
+                                        <button onClick={() => handleDelete(student)}>삭제</button>
+                                    </td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <h3>수강하지 않는 학생</h3>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>학생 이름</th>
+                                <th>학생 ID</th>
+                                <th>동작</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {nonExistingStudentList.map((student) => (
+                                <tr key={student.id}>
+                                    <td>{student.studentName}</td>
+                                    <td>{student.studentId}</td>
+                                    <td>
+                                        <button onClick={() => handleRegist(student)}>등록</button>
+                                    </td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div>
-                <div>
-                    <h3>수강중인 학생</h3>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>학생 이름</th>
-                            <th>학번</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {existingStudentList.map((student) => (
-                            <tr key={student.id}>
-                                <td>{student.studentName}</td>
-                                <td>{student.studentId}</td>
-                                <td>
-                                    <button onClick={() => handleDelete(student)}>삭제</button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
-                <div>
-                    <h3>수강하지 않는 학생</h3>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>학생 이름</th>
-                            <th>학생 ID</th>
-                            <th>동작</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {nonExistingStudentList.map((student) => (
-                            <tr key={student.id}>
-                                <td>{student.studentName}</td>
-                                <td>{student.studentId}</td>
-                                <td>
-                                    <button onClick={() => handleRegist(student)}>등록</button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <div id="footer_teacher_lecture_student_manage"/>
         </div>
 
     );
