@@ -1,7 +1,7 @@
 import '../css/notice.css';
 import logo from './images/goseumdochi.png';
 
-function App10() {
+function App27() {
     const Gomain=()=>{
         window.location.href='/main'
     }
@@ -70,4 +70,4 @@ function App10() {
     );
 }
 
-export default App10;
+export default App27;

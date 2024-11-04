@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import ScoreChart from './ScoreChart';
+
 function App26() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -910,6 +912,13 @@ function App26() {
     // 여기까지 영상 업로드
 
 
+    const scores = [
+        85, 92, 75, 60, 45, 88, 95, 66, 70, 55,
+        78, 81, 62, 40, 32, 28, 99, 56, 77, 63,
+        49, 90, 34, 54, 71, 82, 36, 58, 74, 67,
+        85, 91, 72, 61, 52, 43, 39, 94, 53, 80,
+    ];
+
     return (
         <div id="App">
             <div id="menu_teacherportal">
@@ -922,7 +931,6 @@ function App26() {
                     <li onClick={showVideoLecture}><a>강의관리</a></li>
                     <li onClick={showDivLecturedata}><a>수업자료</a></li>
                     <li onClick={showDivAssignment}><a>과제조회/제출</a></li>
-                    <li><a>평가관리</a></li>
                     <li onClick={showDivExam}><a>시험 관리</a></li>
                     <li onClick={showDivSubject}><a>과목공지</a></li>
                     <li onClick={() => navigate('/teachermain', {state: {user: user}})}><a>강의실 나가기</a></li>
@@ -1520,6 +1528,12 @@ function App26() {
                             <div id="Lecturedata">
                                 {visiblesubDiv === 'List' && (
                                     <div id="List_teacherportal">
+                                        <div id="button_List_teacherportal">
+                                            <button id="newRegister" onClick={showsubDivWrite}>
+                                                <span>새로 등록하기</span>
+                                            </button>
+                                        </div>
+                                        <br/>
                                         <div id="cate_List">
                                             <div id="no">No</div>
                                             <div id="title">제목</div>
@@ -1536,9 +1550,7 @@ function App26() {
                                                 <div id="body_writedate">{material.createdAt}</div>
                                             </div>
                                         ))}
-                                        <button id="newRegister" onClick={showsubDivWrite}>
-                                            <span>새로 등록하기</span>
-                                        </button>
+
                                     </div>
                                 )}
                                 {visiblesubDiv === 'View' && (
@@ -2073,6 +2085,7 @@ function App26() {
                                 </div>
                             </div>
                             <div id="graph_score">
+                                <ScoreChart scores={scores} />
                             </div>
                             <div id="NameOfStudent_ExamEstimation">
                             </div>

@@ -390,7 +390,9 @@ function App24() {
     return (
         <div id="App">
             <div id="community_header">
-                <div id="home_btn" onClick={showMain} />
+                <div id="home_btn" onClick={showMain}>
+                    <img src={logo} alt="고슴도치 로고" />
+                </div>
                 <div id="title">
                     <img src={logo} alt="고슴도치 로고" />
                     <h2>고슴도치 커뮤니티</h2>

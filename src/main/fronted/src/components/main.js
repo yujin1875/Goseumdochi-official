@@ -157,39 +157,44 @@ function App6() {
                                     onChange={setSelectedDate}
                                     value={selectedDate}
                                     tileContent={tileContent}
+                                    className="custom-calendar"
                                 />
                             </div>
                             <div id="more_calendar"></div>
                         </div>
                         <div id="main_subject">
                             <h2>수강과목</h2>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>과목명</th>
-                                        <th>시간</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {lectureList.map((lecture) => (
-                                        <tr
-                                            key={lecture.id}
-                                            onClick={() => GoLecturePotal(lecture)}
-                                            style={{ cursor: 'pointer' }}
-                                        >
-                                            <td>{lecture.name}</td>
-                                            <td>
-                                                {lecture.lectureTimeDTOList.map((time, index) => (
-                                                    <div key={time.id}>
-                                                        {time.day} {time.startTime} - {time.endTime}
-                                                        {lecture.lectureTimeDTOList.length - 1 !== index && ', '}
-                                                    </div>
-                                                ))}
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                            <div id="content_subject">
+
+                                    <table border="1">
+                                        <thead>
+                                            <tr>
+                                                <th>과목명</th>
+                                                <th>시간</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {lectureList.map((lecture) => (
+                                                <tr
+                                                    key={lecture.id}
+                                                    onClick={() => GoLecturePotal(lecture)}
+                                                    style={{ cursor: 'pointer' }}
+                                                >
+                                                    <td className="table-cell">{lecture.name}</td>
+                                                    <td className="table-cell">
+                                                        {lecture.lectureTimeDTOList.map((time, index) => (
+                                                            <div key={time.id}>
+                                                                {time.day} {time.startTime} - {time.endTime}
+                                                                {lecture.lectureTimeDTOList.length - 1 !== index && ', '}
+                                                            </div>
+                                                        ))}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+
+                            </div>
                         </div>
                     </div>
                     <div id="contents2_main">
