@@ -31,7 +31,7 @@ function App6() {
         window.location.href = '/community';
     };
     const Gomypage = () => {
-        window.location.href = '/mypage';
+        navigate('/mypage', { state: { studentId: user.id } });
     };
 
     const GoLecturePotal = (lecture) => {
