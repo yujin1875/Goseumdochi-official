@@ -31,7 +31,7 @@ function App6() {
         window.location.href = '/community';
     };
     const Gomypage = () => {
-        window.location.href = '/mypage';
+        navigate('/mypage', { state: { studentId: user.id } });
     };
 
     const GoLecturePotal = (lecture) => {
@@ -61,33 +61,25 @@ function App6() {
 
         const fetchCalendarEvents = async () => {
             try {
-                const assignmentsResponse = await axios.get(`/api/calendar/assignments/${user.id}`);
-                const examsResponse = await axios.get(`/api/calendar/exams/${user.id}`);
+                const response = await axios.get(`/api/calendar/events/student/${user.id}`);
 
-                const assignments = Array.isArray(assignmentsResponse.data) ? assignmentsResponse.data : [];
-                const exams = Array.isArray(examsResponse.data) ? examsResponse.data : [];
+                const events = Array.isArray(response.data) ? response.data : [];
 
-                const formattedAssignments = assignments.map((assignment) => ({
-                    title: assignment.title,
-                    date: assignment.deadline,
-                    type: '과제',
-                    content: assignment.content, // 과제 내용 추가
-                    points: assignment.points,   // 과제 배점 추가
+                const formattedEvents = events.map((event) => ({
+                    title: event.title,
+                    date: event.date,
+                    type: event.eventType === 'assignment' ? '과제' : '시험',
+                    content: event.eventType === 'assignment' ? event.content : '시험 설명을 입력하세요',
+                    points: event.eventType === 'assignment' ? event.points : null,
+                    duration: event.eventType === 'exam' ? event.duration : null
                 }));
 
-                const formattedExams = exams.map((exam) => ({
-                    title: exam.title,
-                    date: exam.examPeriodStart,
-                    type: '시험',
-                    content: '시험 설명을 입력하세요',  // 시험 설명 추가
-                    duration: exam.duration,   // 시험 시간 추가
-                }));
-
-                setCalendarEvents([...formattedAssignments, ...formattedExams]);
+                setCalendarEvents(formattedEvents);
             } catch (error) {
                 console.error('Error fetching calendar events:', error);
             }
         };
+
 
         fetchLectures();
         fetchCalendarEvents();
