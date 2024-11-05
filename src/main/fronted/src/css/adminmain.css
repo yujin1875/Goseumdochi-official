@@ -23,12 +23,11 @@ hr{
     width:300px;
     height:90px;
     margin:auto;
-    background-color:aqua;
 }
 
-#admin_info>a{
+#info>a{
     display:block;
-    font-size: 30px;
+    font-size: 40px;
     color:#000000;
     text-align: center;
     margin:auto;
@@ -64,6 +63,7 @@ hr{
 #noti_btn>button{
     width: 250px;
     height: 334px;
+    font-size:32px;
 }
 
 #btn_adminmain>#acaform_btn{
@@ -77,6 +77,7 @@ hr{
 #acaform_btn>button{
     width: 250px;
     height: 334px;
+    font-size:32px;
 }
 
 #btn_adminmain>#aca_btn{
@@ -90,6 +91,7 @@ hr{
 #aca_btn>button{
     width: 250px;
     height: 334px;
+    font-size:32px;
 }
 
 #btn_adminmain>#stu_btn{
@@ -103,6 +105,7 @@ hr{
 #stu_btn>button{
     width: 250px;
     height: 334px;
+    font-size:32px;
 }
 
 #btn_adminmain>#commu_btn{
@@ -116,6 +119,7 @@ hr{
 #commu_btn>button{
     width: 250px;
     height: 334px;
+    font-size:32px;
 }
 
 #footer_adminmain{

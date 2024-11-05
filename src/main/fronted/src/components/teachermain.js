@@ -126,68 +126,60 @@ function App25() {
                     <img src={logo}/>
                 </div>
                 <div id="user_info">
-                    <button onClick={GoMessageList}>
-                        <span>쪽지</span>
-                    </button>
+
                 </div>
                 <div id="buttons_teachermain">
                     <input type="submit" value="강의관리" id="lecture_btn" onClick={GoLectureManage}/>
                     <input type="submit" value="학생관리" id="studentmanage_btn" onClick={GoLectureFind}/>
-                    <input type="submit" value="학생문의함" id="mypage_btn"/>
-                    <input type="submit" value="Teacher Portal" id="teacherportal_btn" onClick={GoTeacherPortal}/>
+                    <input type="submit" value="쪽지" id="mypage_btn" onClick={GoMessageList}/>
                     <div id="rect"/>
                 </div>
                 <div id="contents_teachermain">
                     <div id="contents1_teachermain">
-                        <div id="Scheduler_teachermain">
-                            <h2>일정</h2>
-                            <div id="main_calendar">
+                            <div id="teachermain_calendar">
                                 <h2>캘린더</h2>
                                 <div id="content_calendar">
                                     <Calendar
                                         onChange={setSelectedDate}
                                         value={selectedDate}
                                         tileContent={tileContent}
+                                        className="custom-calendar"
                                     />
                                 </div>
                                 <div id="more_calendar"></div>
                                 </div>
-                                <div id="main_subject">
+                                <div id="teachermain_subject">
                                     <h2>수강과목</h2>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>과목명</th>
-                                                <th>시간</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {lectureList.map((lecture) => (
-                                                <tr
-                                                    key={lecture.id}
-                                                    onClick={() => GoLecturePotal(lecture)}
-                                                    style={{ cursor: 'pointer' }}
-                                                >
-                                                    <td>{lecture.name}</td>
-                                                    <td>
-                                                        {lecture.lectureTimeDTOList.map((time, index) => (
-                                                            <div key={time.id}>
-                                                                {time.day} {time.startTime} - {time.endTime}
-                                                                {lecture.lectureTimeDTOList.length - 1 !== index && ', '}
-                                                            </div>
-                                                        ))}
-                                                    </td>
+                                    <div id="content_subject">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>과목명</th>
+                                                    <th>시간</th>
                                                 </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                {lectureList.map((lecture) => (
+                                                    <tr
+                                                        key={lecture.id}
+                                                        onClick={() => GoLecturePotal(lecture)}
+                                                        style={{ cursor: 'pointer' }}
+                                                    >
+                                                        <td className="table-cell">{lecture.name}</td>
+                                                        <td className="table-cell">
+                                                            {lecture.lectureTimeDTOList.map((time, index) => (
+                                                                <div key={time.id}>
+                                                                    {time.day} {time.startTime} - {time.endTime}
+                                                                    {lecture.lectureTimeDTOList.length - 1 !== index && ', '}
+                                                                </div>
+                                                            ))}
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                        </div>
-                        <div id="notice_teachermain">
-                            <h2>공지사항</h2>
-                            <div id="content_notice">
-                            </div>
-                        </div>
                     </div>
                     <div id="contents2_teachermain">
                         <div id="Quickmenu_teachermain">
@@ -195,14 +187,17 @@ function App25() {
                             <div id="content_Quickmenu">
                             </div>
                         </div>
-                        <div id="lectureSchedule">
+                        <div id="lectureSchedule_teachermain">
                             <h2>강의 선택</h2>
-                            <select onChange={(e) => setSelectedLectureId(e.target.value)}>
-                                <option value="">강의를 선택해주세요</option>
-                                {lectures.map((lecture) => (
-                                    <option key={lecture.id} value={lecture.id}>{lecture.name}</option>
-                                ))}
-                            </select>
+                            <div id="content_lectureSchedule">
+                                <select onChange={(e) => setSelectedLectureId(e.target.value)}>
+                                    <option value="">강의를 선택해주세요</option>
+                                    {lectures.map((lecture) => (
+                                        <option key={lecture.id} value={lecture.id}>{lecture.name}</option>
+                                    ))}
+                                </select> <br/>
+                                <input type="submit" value="Teacher Portal" id="teacherportal_btn" onClick={GoTeacherPortal}/>
+                            </div>
                         </div>
                     </div>
                 </div>

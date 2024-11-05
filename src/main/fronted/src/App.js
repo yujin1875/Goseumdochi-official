@@ -26,6 +26,7 @@ import App23 from './components/adminstudentmanage.js';
 import App24 from './components/community.js';
 import App25 from './components/teachermain.js';
 import App26 from './components/teacherportal.js';
+import App27 from './components/notice.js';
 import Yewon from './components/yewon/test';
 import AdminLogin from './components/yewon/admin_login';
 import IntegrateLogin from './components/yewon/integrate_login';
@@ -109,6 +110,7 @@ class App extends Component{
               <Route path='/community' element={<App24/>}/>
               <Route path='/teachermain' element={<App25/>}/>
               <Route path='/teacherportal' element={<App26/>}/>
+              <Route path='/notice' element={<App27/>}/>
               <Route path='/yewon' element={<Yewon/>}/>
               <Route path='/admin/login' element={<AdminLogin/>}/>
               <Route path='/integrate/login' element={<IntegrateLogin/>}/>

@@ -85,14 +85,31 @@ hr{
     height:900px;
 }
 
-#List_teacherportal>#List{
+#List_teacherportal{
     float:left;
     width:1625px;
-    height:800px;
+    height:880px;
     background-color:#FFFFFF;
 }
 
-#List>#cate_List{
+#List_teacherportal>#button_List_teacherportal{
+    width:100%;
+    height:70px;
+    background-color:#EAEAEA;
+}
+
+#button_List_teacherportal>button{
+    float:left;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin-left:1450px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#List_teacherportal>#cate_List{
     width:1625px;
     height:50px;
 }
@@ -163,6 +180,7 @@ hr{
     font-size:24px;
     margin:auto;
     margin-top:5px;
+    cursor: pointer;
 }
 
 #body_List>#body_writer{
@@ -183,19 +201,6 @@ hr{
     font-size:24px;
     margin:auto;
     margin-top:5px;
-}
-
-#List_teacherportal>button{
-    float:right;
-    width:103px;
-    height:51px;
-    background-color:#6F7C86;
-    border-color:#6F7C86;
-    margin:auto;
-    margin-top:22px;
-    margin-right:20px;
-    font-size:15px;
-    color:#FFFFFF;
 }
 
 #View_teacherportal>#View{
@@ -671,6 +676,7 @@ hr{
     font-size:24px;
     margin:auto;
     margin-top:5px;
+    cursor: pointer;
 }
 
 #body_Assignment>#Asubmission{
@@ -1156,6 +1162,7 @@ hr{
     font-size:24px;
     margin:auto;
     margin-top:5px;
+    cursor: pointer;
 }
 
 #body_Subject>#Sauthor {
@@ -2010,6 +2017,7 @@ hr{
     font-size:20px;
     margin:auto;
     margin-top:5px;
+    cursor: pointer;
 }
 #body_Exam>#Emethod{
     float:left;

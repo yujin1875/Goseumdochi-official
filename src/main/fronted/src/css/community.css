@@ -51,7 +51,15 @@ hr {
     background-color: #D9D9D9;
     margin: auto;
     margin-top: 16px;
-    margin-right: 18px;
+    margin-right: 40px;
+}
+
+#home_btn>img {
+    float: left;
+    display: block;
+    width: 58px;
+    height: 58px;
+    object-fit: cover;
 }
 
 #menu_community {
@@ -111,13 +119,14 @@ hr {
 }
 
 #findsomething>button {
-    float: right;
+    float: left;
     width: 103px;
     height: 51px;
     background-color: #6F7C86;
     border-color: #6F7C86;
     margin: auto;
     margin-top: 22px;
+    margin-left:870px;
     font-size: 24px;
     color: #FFFFFF;
 }
