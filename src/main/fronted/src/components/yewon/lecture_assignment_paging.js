@@ -1,16 +1,17 @@
 import React, { useState ,useEffect } from 'react';
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
+import {useNavigate} from "react-router-dom";
 
-function LectureAssignmentPaging() {
-    const location = useLocation();
+import SubmitAssignment from "../SubmitAssignment";
+
+function LectureAssignmentPaging({ user, lecture }) { // props로 user와 lecture 받기
     const navigate = useNavigate();
-
-    const { user, lecture } = location.state;
 
     const [assignmentList, setAssignmentList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [pagingInfo, setPagingInfo] = useState({});
+
+    const [selectedAssignmentId, setSelectedAssignmentId] = useState();
 
     useEffect(() => {
         fetchAssignments(currentPage);
@@ -77,70 +78,76 @@ function LectureAssignmentPaging() {
         const studentId = user.id;
         const studentName = user.name;
 
-        // 과제 제출 페이지로 이동 (과제 ID도 함께 전달)
-        navigate('/submit-assignment', {
-            state: { studentId, studentName, assignmentId },
-        });
+        setSelectedAssignmentId(assignmentId);
     };
 
     return (
         <div>
-            {/* 과제 목록 출력 */}
-            <table>
-                <thead>
-                <tr>
-                    <th>No</th>
-                    <th>제목</th>
-                    <th>내용</th>
-                    <th>작성자</th>
-                    <th>공개일</th>
-                    <th>마감일</th>
-                    <th>배점</th>
-                    <th>제출방식</th>
-                    <th>첨부파일</th>
-                    <th>점수</th>
-                </tr>
-                </thead>
-                <tbody>
-                {assignmentList.map((assignment) => (
-                    <tr key={assignment.id}>
-                        <td>{assignment.id}</td>
-                        <td>{assignment.title}</td>
-                        <td>{assignment.content}</td>
-                        <td>{assignment.author}</td>
-                        <td>{formatDateTime(assignment.createdAt)}</td>
-                        <td>{formatDateTime(assignment.deadline)}</td>
-                        <td>{assignment.points}</td>
-                        <td>{assignment.examType}</td>
-                        <td><a href={assignment.attachmentPath} download>첨부파일</a></td>
-                        <td>
-                            {assignment.isScoreVisible ? (
-                                assignment.score !== null ? assignment.score : "점수 없음"
-                            ) : "비공개"}
-                        </td>
-                        <td>
-                            <button onClick={() => submitAssignment(assignment.id)}>과제 제출</button>
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
+            {selectedAssignmentId == null ? (
+                // selectedAssignment가 true일 때 보여줄 화면 (과제 목록과 페이징 버튼)
+                <div>
+                    {/* 과제 목록 출력 */}
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>제목</th>
+                            <th>내용</th>
+                            <th>작성자</th>
+                            <th>공개일</th>
+                            <th>마감일</th>
+                            <th>배점</th>
+                            <th>제출방식</th>
+                            <th>첨부파일</th>
+                            <th>점수</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {assignmentList.map((assignment) => (
+                            <tr key={assignment.id}>
+                                <td>{assignment.id}</td>
+                                <td>{assignment.title}</td>
+                                <td>{assignment.content}</td>
+                                <td>{assignment.author}</td>
+                                <td>{formatDateTime(assignment.createdAt)}</td>
+                                <td>{formatDateTime(assignment.deadline)}</td>
+                                <td>{assignment.points}</td>
+                                <td>{assignment.examType}</td>
+                                <td><a href={assignment.attachmentPath} download>첨부파일</a></td>
+                                <td>
+                                    {assignment.isScoreVisible ? (
+                                        assignment.score !== null ? assignment.score : "점수 없음"
+                                    ) : "비공개"}
+                                </td>
+                                <td>
+                                    <button onClick={() => submitAssignment(assignment.id)}>과제 제출</button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
 
-            {/* 페이징 버튼 */}
-            <button onClick={() => goToPage(1)}>&lt;&lt;</button>
-            <button onClick={() => currentPage > 1 && goToPage(currentPage - 1)}>&lt;</button>
-            {/* 현재 페이지 기준으로 페이지 버튼 생성 */}
-            {Array.from({ length: pagingInfo.endPage - pagingInfo.startPage + 1 }, (_, i) => i + pagingInfo.startPage).map(page => (
-                <button
-                    key={page}
-                    onClick={() => goToPage(page)}
-                    style={{ backgroundColor: page === currentPage ? '#007BFF' : 'transparent', color: page === currentPage ? 'white' : 'black' }}
-                >
-                    {page}
-                </button>
-            ))}
-            <button onClick={() => currentPage < pagingInfo.totalPages && goToPage(currentPage + 1)}>&gt;</button>
-            <button onClick={() => goToPage(pagingInfo.totalPages)}>&gt;&gt;</button>
+                    {/* 페이징 버튼 */}
+                    <button onClick={() => goToPage(1)}>&lt;&lt;</button>
+                    <button onClick={() => currentPage > 1 && goToPage(currentPage - 1)}>&lt;</button>
+                    {Array.from({ length: pagingInfo.endPage - pagingInfo.startPage + 1 }, (_, i) => i + pagingInfo.startPage).map(page => (
+                        <button
+                            key={page}
+                            onClick={() => goToPage(page)}
+                            style={{ backgroundColor: page === currentPage ? '#007BFF' : 'transparent', color: page === currentPage ? 'white' : 'black' }}
+                        >
+                            {page}
+                        </button>
+                    ))}
+                    <button onClick={() => currentPage < pagingInfo.totalPages && goToPage(currentPage + 1)}>&gt;</button>
+                    <button onClick={() => goToPage(pagingInfo.totalPages)}>&gt;&gt;</button>
+                </div>
+            ) : (
+                // selectedAssignment가 false일 때 보여줄 다른 화면
+                <div>
+                    <SubmitAssignment studentId={user.id} studentName={user.name} assignmentId={selectedAssignmentId} />
+                </div>
+            )}
         </div>
     );
 }

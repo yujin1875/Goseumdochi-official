@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
-function SubmitAssignment() {
+function SubmitAssignment({studentId, studentName, assignmentId}) {
     const location = useLocation();
-    const { studentId, studentName, assignmentId, lectureId } = location.state;
 
     const [submittedAssignment, setSubmittedAssignment] = useState(null);
     const [title, setTitle] = useState('');

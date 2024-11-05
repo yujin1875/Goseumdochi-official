@@ -42,6 +42,10 @@ function App6() {
         navigate('/message/list', { state: { user: user } });
     };
 
+    const GoIntegrateLogin = () => {
+        navigate('/integrate/login', { state: { user: user } });
+    };
+
     const [userName, setUserName] = useState('');
 
     useEffect(() => {
@@ -124,7 +128,7 @@ function App6() {
                         <button className="icon" onClick={GoMessageList}>
                             <img src={message_icon} alt="쪽지" style={{ width: '20px', height: '20px' }} />
                         </button>
-                        <button className="icon">
+                        <button className="icon" onClick={GoIntegrateLogin}>
                             <img src={logout_icon} alt="로그아웃" style={{ width: '20px', height: '20px' }} />
                         </button>
                     </div>
@@ -136,9 +140,10 @@ function App6() {
                     <div id="rect" />
                 </div>
                 <div className="navbar">
+
                     <Link className="navbar-menu" to="/ai/recommend/univ" state={{ user: user }}>대학학과추천</Link>
-                    <Link className="navbar-menu" to="/ai/text/summary" state={{ user: user }}>문서요약</Link>
-                    <Link className="navbar-menu" to="/ai/math/solve" state={{ user: user }}>수학문제풀이</Link>
+                    <Link className="navbar-menu" to="/ai/text/summary" state={{ user: user }}>/ &nbsp;문서요약</Link>
+                    <Link className="navbar-menu" to="/ai/math/solve" state={{ user: user }}>/ &nbsp;수학문제풀이</Link>
                 </div>
                 <div id="contents_main">
                     <div id="contents1_main">
