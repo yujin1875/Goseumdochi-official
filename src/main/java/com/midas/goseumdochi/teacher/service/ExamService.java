@@ -26,7 +26,6 @@ public class ExamService {
         entity.setExamPeriodEnd(examDTO.getExamPeriodEnd());
         entity.setDuration(examDTO.getDuration());
         entity.setScorePublished(examDTO.isScorePublished());
-        entity.setScorePublishDate(examDTO.getScorePublishDate());
         entity.setPoints(examDTO.getPoints());
         entity.setOngoing(examDTO.isOngoing());
         entity.setSubmissionCount(examDTO.getSubmissionCount());
@@ -47,7 +46,6 @@ public class ExamService {
                         entity.getExamPeriodEnd(),
                         entity.getDuration(),
                         entity.isScorePublished(),
-                        entity.getScorePublishDate(),
                         entity.getPoints(),
                         entity.isOngoing(),
                         entity.getSubmissionCount(),
@@ -80,7 +78,6 @@ public class ExamService {
                 entity.getExamPeriodEnd(),
                 entity.getDuration(),
                 entity.isScorePublished(),
-                entity.getScorePublishDate(),
                 entity.getPoints(),
                 entity.isOngoing(),
                 entity.getSubmissionCount(),
@@ -110,7 +107,6 @@ public class ExamService {
         entity.setExamPeriodEnd(examDTO.getExamPeriodEnd());
         entity.setDuration(examDTO.getDuration());
         entity.setScorePublished(examDTO.isScorePublished());
-        entity.setScorePublishDate(examDTO.getScorePublishDate());
         entity.setPoints(examDTO.getPoints());
         entity.setOngoing(examDTO.isOngoing());
         entity.setSubmissionCount(examDTO.getSubmissionCount());

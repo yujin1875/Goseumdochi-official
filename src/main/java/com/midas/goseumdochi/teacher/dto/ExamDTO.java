@@ -19,7 +19,6 @@ public class ExamDTO {
     private LocalDateTime examPeriodEnd;
     private int duration;
     private boolean scorePublished;
-    private LocalDateTime scorePublishDate;
     private int points;
     private boolean isOngoing;
     private int submissionCount;

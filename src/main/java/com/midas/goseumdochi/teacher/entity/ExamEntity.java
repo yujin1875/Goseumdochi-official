@@ -20,7 +20,6 @@ public class ExamEntity {
     private LocalDateTime examPeriodEnd;
     private int duration;
     private boolean scorePublished;
-    private LocalDateTime scorePublishDate;
     private int points; // 배점
     private boolean isOngoing; // 진행상황
     private int submissionCount; // 제출인원
