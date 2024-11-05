@@ -31,7 +31,6 @@ function App26() {
     const [examPeriodEnd, setExamPeriodEnd] = useState('');
     const [duration, setDuration] = useState('');
     const [scorePublished, setScorePublished] = useState(false);
-    const [isOngoing, setIsOngoing] = useState(false);
     const [submissionCount, setSubmissionCount] = useState(0);
     const [evaluationScore, setEvaluationScore] = useState(0.0);
     const [lectureInfo, setLectureInfo] = useState({});
@@ -268,7 +267,6 @@ function App26() {
             setDuration(exam.duration);
             setPoints(exam.points);
             setScorePublished(exam.scorePublished);
-            setIsOngoing(exam.isOngoing);
             setSubmissionCount(exam.submissionCount);
             setEvaluationScore(exam.evaluationScore);
             showDivExamRead(); // 시험 정보 조회 화면을 보여줌
@@ -288,7 +286,6 @@ function App26() {
         setDuration(currentExam.duration);
         setPoints(currentExam.points);
         setScorePublished(currentExam.scorePublished);
-        setIsOngoing(currentExam.isOngoing);
         setSubmissionCount(currentExam.submissionCount);
         setEvaluationScore(currentExam.evaluationScore);
 
@@ -372,7 +369,6 @@ function App26() {
             points,
             scorePublished,
             lectureId,
-            isOngoing,
             submissionCount,
             evaluationScore
         };
@@ -1631,7 +1627,6 @@ function App26() {
                                     <div id="duration">시험 시간</div>
                                     <div id="score">배점</div>
                                     <div id="scorePublished">점수 공개 여부</div>
-                                    <div id="isOngoing">진행 상황</div>
                                     <div id="submissionCount">제출 인원</div>
                                     <div id="evaluationScore">평가 점수</div>
                                 </div>
@@ -1645,7 +1640,6 @@ function App26() {
                                         <div id="Eduration">{exam.duration}분</div>
                                         <div id="Escore">{exam.points}</div>
                                         <div id="EscorePublished">{exam.scorePublished ? 'YES' : 'NO'}</div>
-                                        <div id="EisOngoing">{exam.isOngoing ? '진행중' : '종료'}</div>
                                         <div id="EsubmissionCount">{exam.submissionCount}</div>
                                         <div id="EevaluationScore">{exam.evaluationScore}</div>
                                     </div>
@@ -1747,10 +1741,6 @@ function App26() {
                                 <h2>점수 공개 여부</h2>
                                 <div>{currentExam?.scorePublished ? '네' : '아니요'}</div>
                             </div>
-                        </div>
-                        <div id="isOngoing_ExamRead">
-                            <h2>진행 상황</h2>
-                            <div id="ExamRead_isOngoing">{currentExam?.isOngoing ? '진행중' : '종료'}</div>
                         </div>
                         <div id="submissionCount_ExamRead">
                             <h2>제출 인원</h2>

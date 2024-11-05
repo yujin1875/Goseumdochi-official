@@ -27,7 +27,6 @@ public class ExamService {
         entity.setDuration(examDTO.getDuration());
         entity.setScorePublished(examDTO.isScorePublished());
         entity.setPoints(examDTO.getPoints());
-        entity.setOngoing(examDTO.isOngoing());
         entity.setSubmissionCount(examDTO.getSubmissionCount());
         entity.setEvaluationScore(examDTO.getEvaluationScore());
         entity.setLectureEntity(lectureRepository.findById(examDTO.getLectureId())
@@ -47,7 +46,6 @@ public class ExamService {
                         entity.getDuration(),
                         entity.isScorePublished(),
                         entity.getPoints(),
-                        entity.isOngoing(),
                         entity.getSubmissionCount(),
                         entity.getEvaluationScore(),
                         entity.getLectureEntity().getId(),
@@ -79,7 +77,6 @@ public class ExamService {
                 entity.getDuration(),
                 entity.isScorePublished(),
                 entity.getPoints(),
-                entity.isOngoing(),
                 entity.getSubmissionCount(),
                 entity.getEvaluationScore(),
                 entity.getLectureEntity().getId(),
@@ -108,7 +105,6 @@ public class ExamService {
         entity.setDuration(examDTO.getDuration());
         entity.setScorePublished(examDTO.isScorePublished());
         entity.setPoints(examDTO.getPoints());
-        entity.setOngoing(examDTO.isOngoing());
         entity.setSubmissionCount(examDTO.getSubmissionCount());
         entity.setEvaluationScore(examDTO.getEvaluationScore());
         examRepository.save(entity);
