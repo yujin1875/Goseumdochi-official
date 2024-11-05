@@ -4,11 +4,17 @@ import logo from './images/goseumdochi.png';
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
+import LectureMaterialPaging from "./yewon/lecture_material_paging"; // 강의자료페이징 컴포넌트
+import LectureAssignmentPaging from "./yewon/lecture_assignment_paging"; // 과제페이징 컴포넌트
+
 function App10() {
     const location = useLocation();
     const navigate = useNavigate();
 
     const { user, lecture } = location.state;
+
+    // 선택한 메뉴 (공지사항, 강의자료, 온라인영상, 과제, 시험)
+    const [menu, setMenu] = useState('notice');
 
     const Gomain = () => {
         window.location.href = '/main';
@@ -21,14 +27,6 @@ function App10() {
     const Gomypage = () => {
         window.location.href = '/mypage';
     }
-
-    const GoLectureMaterial = () => {
-        navigate('/lecture/material/paging', { state: { user: user, lecture: lecture } });
-    };
-
-    const GoLectureAssignment = () => {
-        navigate('/lecture/assignment/paging', { state: { user: user, lecture: lecture } });
-    };
 
     // 인강 시작
     const [videoList, setVideoList] = useState([]);
@@ -50,8 +48,19 @@ function App10() {
         }
     }, [lecture, user, showOnlineLectures]);
 
+    // 메뉴 변경 함수 (동일한 메뉴를 눌렀을 때 다시 렌더링(새로고침)하기 위해)
+    const handleMenuChange = (newMenu) => {
+        if (menu === newMenu) {
+            setMenu(""); // 먼저 빈 값으로 리셋
+            setTimeout(() => setMenu(newMenu), 0); // 0ms 지연 후 다시 설정
+        } else {
+            setMenu(newMenu);
+        }
+    };
+
     // 온라인 강의 버튼 클릭 시 강의 목록 표시
     const GoOnlineLecture = () => {
+        setMenu("online_lecture");
         setShowOnlineLectures(true);
         setSelectedVideo(null); // 클릭 시 선택된 강의 초기화
     };
@@ -79,33 +88,36 @@ function App10() {
                     <div id="aboutNotice_lectureportal">
                         <div id="category_aboutNotice_lectureportal">
                             <ul>
-                                <li><a>공지사항</a></li>
-                                <li><a onClick={GoLectureMaterial}>강의자료</a></li>
+                                <li><a onClick={() => handleMenuChange("notice")}>공지사항</a></li>
+                                <li><a onClick={() => handleMenuChange("material")}>강의자료</a></li>
                                 <li><a onClick={GoOnlineLecture}>온라인강의</a></li>
-                                <li><a onClick={GoLectureAssignment}>과제</a></li>
-                                <li><a>시험</a></li>
+                                <li><a onClick={() => handleMenuChange("assignment")}>과제</a></li>
+                                <li><a onClick={() => handleMenuChange("exam")}>시험</a></li>
                             </ul>
                         </div>
                         <div id="contents_aboutNotice_lectureportal">
-                            <div id="category_contents_lectureportal">
-                                <div id="num">
-                                    번호
+                            {/* 공지사항 */}
+                            {menu === "notice" && (
+                                <div id="category_contents_lectureportal">
+                                    <div id="num">번호</div>
+                                    <div id="title">제목</div>
+                                    <div id="postperson">게시자</div>
+                                    <div id="postdate">게시일</div>
+                                    <div id="visit">조회수</div>
                                 </div>
-                                <div id="title">
-                                    제목
+                            )}
+
+                            {/* 강의자료 */}
+                            {menu === "material" && (
+                                <div>
+                                    {/* props로 user와 lecture 전달 */}
+                                    <LectureMaterialPaging user={user} lecture={lecture} />
                                 </div>
-                                <div id="postperson">
-                                    게시자
-                                </div>
-                                <div id="postdate">
-                                    게시일
-                                </div>
-                                <div id="visit">
-                                    조회수
-                                </div>
-                            </div>
-                            <div id="body_contents_lectureportal">
-                                {showOnlineLectures && !selectedVideo && ( // 온라인 강의 클릭 시에만 목록 표시, 선택된 강의 없을 때
+                            )}
+
+                            {/* 온라인강의 */}
+                            {menu === "online_lecture" && ( // 온라인 강의 클릭 시에만 목록 표시, 선택된 강의 없을 때
+                                <div id="body_contents_lectureportal">
                                     <>
                                         <h2>온라인 강의 목록</h2>
                                         {videoList.length === 0 ? (
@@ -115,8 +127,8 @@ function App10() {
                                                 {videoList.map((video, index) => (
                                                     <li key={index}>
                                                         <p
-                                                          style={{ cursor: 'pointer', color: 'blue' }}
-                                                          onClick={() => handleVideoSelect(video)}
+                                                            style={{ cursor: 'pointer', color: 'blue' }}
+                                                            onClick={() => handleVideoSelect(video)}
                                                         >
                                                             {video.title}
                                                         </p>
@@ -124,19 +136,33 @@ function App10() {
                                                 ))}
                                             </ul>
                                         )}
+                                        {selectedVideo && ( // 선택된 강의가 있을 때 해당 영상만 표시
+                                            <>
+                                                <h2>{selectedVideo.title}</h2>
+                                                <video width="640" height="360" controls>
+                                                    <source src={selectedVideo.videoUrl} type="video/mp4" />
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                                <button onClick={() => setSelectedVideo(null)}>뒤로 가기</button>
+                                            </>
+                                        )}
                                     </>
-                                )}
-                                {selectedVideo && ( // 선택된 강의가 있을 때 해당 영상만 표시
-                                    <>
-                                        <h2>{selectedVideo.title}</h2>
-                                        <video width="640" height="360" controls>
-                                            <source src={selectedVideo.videoUrl} type="video/mp4" />
-                                            Your browser does not support the video tag.
-                                        </video>
-                                        <button onClick={() => setSelectedVideo(null)}>뒤로 가기</button>
-                                    </>
-                                )}
-                            </div>
+                                </div>
+                            )}
+
+                            {/* 과제 */}
+                            {menu === "assignment" && (
+                                <div>
+                                    <LectureAssignmentPaging user={user} lecture={lecture} />
+                                </div>
+                            )}
+
+                            {/* 시험 */}
+                            {menu === "exam" && (
+                                <div>
+
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
