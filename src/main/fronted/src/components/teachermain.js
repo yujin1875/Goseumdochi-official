@@ -1,6 +1,6 @@
 import '../css/teachermain.css';
 import logo from './images/goseumdochi_moving.gif';
-import {useLocation, useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Calendar from 'react-calendar';
@@ -14,13 +14,10 @@ function App25() {
 
     const [lectures, setLectures] = useState([]);
     const [selectedLectureId, setSelectedLectureId] = useState(null);
-
-    const [lectureList, setLectureList] = useState([]);
     const [calendarEvents, setCalendarEvents] = useState([]);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedEvent, setSelectedEvent] = useState(null); // 선택된 이벤트 상태
-    const [isModalOpen, setIsModalOpen] = useState(false);    // 모달 상태
-
+    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
 
     useEffect(() => {
         const fetchLectures = async () => {
@@ -34,29 +31,20 @@ function App25() {
 
         const fetchCalendarEvents = async () => {
             try {
-                const assignmentsResponse = await axios.get(`/api/calendar/assignments/teacher/${user.id}`);
-                const examsResponse = await axios.get(`/api/calendar/exams/teacher/${user.id}`);
+                const response = await axios.get(`/api/calendar/events/teacher/${user.id}`);
 
-                const assignments = Array.isArray(assignmentsResponse.data) ? assignmentsResponse.data : [];
-                const exams = Array.isArray(examsResponse.data) ? examsResponse.data : [];
+                const events = Array.isArray(response.data) ? response.data : [];
 
-                const formattedAssignments = assignments.map((assignment) => ({
-                    title: assignment.title,
-                    date: assignment.deadline,
-                    type: '과제',
-                    content: assignment.content, // 과제 내용 추가
-                    points: assignment.points,   // 과제 배점 추가
+                const formattedEvents = events.map((event) => ({
+                    title: event.title,
+                    date: event.date,
+                    type: event.eventType === 'assignment' ? '과제' : '시험',
+                    content: event.eventType === 'assignment' ? event.content : '시험 설명을 입력하세요',
+                    points: event.eventType === 'assignment' ? event.points : null,
+                    duration: event.eventType === 'exam' ? event.duration : null
                 }));
 
-                const formattedExams = exams.map((exam) => ({
-                    title: exam.title,
-                    date: exam.examPeriodStart,
-                    type: '시험',
-                    content: '시험 설명을 입력하세요',  // 시험 설명 추가
-                    duration: exam.duration,   // 시험 시간 추가
-                }));
-
-                setCalendarEvents([...formattedAssignments, ...formattedExams]);
+                setCalendarEvents(formattedEvents);
             } catch (error) {
                 console.error('Error fetching calendar events:', error);
             }
@@ -78,9 +66,9 @@ function App25() {
         }
     };
 
-    const GoLectureFind=()=>{
-        navigate('/teacher/lecture/find', { state: { user: user } })
-    }
+    const GoLectureFind = () => {
+        navigate('/teacher/lecture/find', { state: { user: user } });
+    };
 
     const GoMessageList = () => {
         navigate('/message/list', { state: { user: user } });
@@ -111,19 +99,19 @@ function App25() {
 
     const handleEventClick = (event) => {
         setSelectedEvent(event); // 선택된 이벤트 설정
-        setIsModalOpen(true);    // 모달 열기
+        setIsModalOpen(true); // 모달 열기
     };
 
     const closeModal = () => {
-        setIsModalOpen(false);   // 모달 닫기
-        setSelectedEvent(null);  // 선택된 이벤트 초기화
+        setIsModalOpen(false); // 모달 닫기
+        setSelectedEvent(null); // 선택된 이벤트 초기화
     };
 
     return (
         <div id="App">
             <div id="teachermain-menu">
                 <div id="header_teachermain">
-                    <img src={logo}/>
+                    <img src={logo} alt="logo" />
                 </div>
                 <div id="user_info">
                     <button onClick={GoMessageList}>
@@ -131,11 +119,11 @@ function App25() {
                     </button>
                 </div>
                 <div id="buttons_teachermain">
-                    <input type="submit" value="강의관리" id="lecture_btn" onClick={GoLectureManage}/>
-                    <input type="submit" value="학생관리" id="studentmanage_btn" onClick={GoLectureFind}/>
-                    <input type="submit" value="학생문의함" id="mypage_btn"/>
-                    <input type="submit" value="Teacher Portal" id="teacherportal_btn" onClick={GoTeacherPortal}/>
-                    <div id="rect"/>
+                    <input type="submit" value="강의관리" id="lecture_btn" onClick={GoLectureManage} />
+                    <input type="submit" value="학생관리" id="studentmanage_btn" onClick={GoLectureFind} />
+                    <input type="submit" value="학생문의함" id="mypage_btn" />
+                    <input type="submit" value="Teacher Portal" id="teacherportal_btn" onClick={GoTeacherPortal} />
+                    <div id="rect" />
                 </div>
                 <div id="contents_teachermain">
                     <div id="contents1_teachermain">
@@ -151,37 +139,37 @@ function App25() {
                                     />
                                 </div>
                                 <div id="more_calendar"></div>
-                                </div>
-                                <div id="main_subject">
-                                    <h2>수강과목</h2>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>과목명</th>
-                                                <th>시간</th>
+                            </div>
+                            <div id="main_subject">
+                                <h2>수강과목</h2>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>과목명</th>
+                                            <th>시간</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {lectures.map((lecture) => (
+                                            <tr
+                                                key={lecture.id}
+                                                onClick={() => GoLecturePotal(lecture)}
+                                                style={{ cursor: 'pointer' }}
+                                            >
+                                                <td>{lecture.name}</td>
+                                                <td>
+                                                    {lecture.lectureTimeDTOList.map((time, index) => (
+                                                        <div key={time.id}>
+                                                            {time.day} {time.startTime} - {time.endTime}
+                                                            {lecture.lectureTimeDTOList.length - 1 !== index && ', '}
+                                                        </div>
+                                                    ))}
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            {lectureList.map((lecture) => (
-                                                <tr
-                                                    key={lecture.id}
-                                                    onClick={() => GoLecturePotal(lecture)}
-                                                    style={{ cursor: 'pointer' }}
-                                                >
-                                                    <td>{lecture.name}</td>
-                                                    <td>
-                                                        {lecture.lectureTimeDTOList.map((time, index) => (
-                                                            <div key={time.id}>
-                                                                {time.day} {time.startTime} - {time.endTime}
-                                                                {lecture.lectureTimeDTOList.length - 1 !== index && ', '}
-                                                            </div>
-                                                        ))}
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <div id="notice_teachermain">
                             <h2>공지사항</h2>
@@ -211,7 +199,6 @@ function App25() {
                 </div>
             </div>
 
-
             {/* 모달 부분 */}
             {isModalOpen && selectedEvent && (
                 <div className="modal">
@@ -224,7 +211,6 @@ function App25() {
                     </div>
                 </div>
             )}
-
         </div>
     );
 }

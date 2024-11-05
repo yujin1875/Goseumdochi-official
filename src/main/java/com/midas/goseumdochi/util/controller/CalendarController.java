@@ -2,6 +2,7 @@ package com.midas.goseumdochi.util.controller;
 
 import com.midas.goseumdochi.teacher.entity.AssignmentEntity;
 import com.midas.goseumdochi.teacher.entity.ExamEntity;
+import com.midas.goseumdochi.util.Dto.CalendarDTO;
 import com.midas.goseumdochi.util.Service.CalendarService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,19 +22,15 @@ public class CalendarController {
     }
 
     // 학생
-    @GetMapping("/assignments/{id}")
-    public List<AssignmentEntity> getAssignments(@PathVariable Long id) { return calendarService.getAssignmentsByStudentId(id); }
-
-    @GetMapping("/exams/{id}")
-    public List<ExamEntity> getExams(@PathVariable Long id) {
-        return calendarService.getExamsByStudentId(id);
+    @GetMapping("/events/student/{id}")
+    public List<CalendarDTO> getCalendarEvents(@PathVariable Long id) {
+        return calendarService.getCalendarEventsByStudentId(id);
     }
 
     // 선생
-    @GetMapping("/assignments/teacher/{id}")
-    public List<AssignmentEntity> getAssignmentsTeacher(@PathVariable Long id) { return calendarService.getAssignmentByTeacherId(id); }
-
-    @GetMapping("/exams/teacher/{id}")
-    public List<ExamEntity> getExamsTeacher(@PathVariable Long id) { return calendarService.getExamsByTeacherId(id); }
+    @GetMapping("/events/teacher/{id}")
+    public List<CalendarDTO> getCalendarEventsByTeacherId(@PathVariable Long id) {
+        return calendarService.getCalendarEventsByTeacherId(id);
+    }
 }
 

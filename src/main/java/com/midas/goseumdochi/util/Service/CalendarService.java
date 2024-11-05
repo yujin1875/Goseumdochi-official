@@ -7,8 +7,10 @@ import com.midas.goseumdochi.teacher.entity.LectureEntity;
 import com.midas.goseumdochi.teacher.repository.AssignmentRepository;
 import com.midas.goseumdochi.teacher.repository.ExamRepository;
 import com.midas.goseumdochi.teacher.repository.LectureRepository;
+import com.midas.goseumdochi.util.Dto.CalendarDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,16 +44,52 @@ public class CalendarService {
         return examRepository.findByLectureIds(lectureIds);
     }
 
-    // 선생
-    // 과제
+    public List<CalendarDTO> getCalendarEventsByStudentId(Long studentId) {
+        List<CalendarDTO> events = new ArrayList<>();
+
+        // 과제 가져오기
+        List<AssignmentEntity> assignments = getAssignmentsByStudentId(studentId);
+        for (AssignmentEntity assignment : assignments) {
+            events.add(new CalendarDTO(assignment.getTitle(), "assignment", assignment.getDeadline())); // 변경된 부분
+        }
+
+        // 시험 가져오기
+        List<ExamEntity> exams = getExamsByStudentId(studentId);
+        for (ExamEntity exam : exams) {
+            events.add(new CalendarDTO(exam.getTitle(), "exam", exam.getExamPeriodStart())); // exam의 날짜를 가져오는 부분도 필요에 따라 수정
+        }
+
+        return events;
+    }
+
     public List<AssignmentEntity> getAssignmentByTeacherId(Long id) {
         List<Long> lectureIds = lectureRepository.findAllLectureIdsByTeacherId(id);
         return assignmentRepository.findByLectureIds(lectureIds);
     }
 
-    // 시험
     public List<ExamEntity> getExamsByTeacherId(Long id) {
         List<Long> lectureIds = lectureRepository.findAllLectureIdsByTeacherId(id);
         return examRepository.findByLectureIds(lectureIds);
     }
+
+    // 선생
+    public List<CalendarDTO> getCalendarEventsByTeacherId(Long teacherId) {
+        List<CalendarDTO> events = new ArrayList<>();
+
+        // 과제 가져오기
+        List<AssignmentEntity> assignments = getAssignmentByTeacherId(teacherId);
+        for (AssignmentEntity assignment : assignments) {
+            events.add(new CalendarDTO(assignment.getTitle(), "assignment", assignment.getDeadline()));
+        }
+
+        // 시험 가져오기
+        List<ExamEntity> exams = getExamsByTeacherId(teacherId);
+        for (ExamEntity exam : exams) {
+            events.add(new CalendarDTO(exam.getTitle(), "exam", exam.getExamPeriodStart()));
+        }
+
+        return events;
+    }
+
+
 }
