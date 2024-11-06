@@ -25,14 +25,12 @@ function App26() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [points, setPoints] = useState('');
-    const [examMethod, setExamMethod] = useState('');
+    const [examMethod, setExamMethod] = useState('온라인');
     const [openDate, setOpenDate] = useState('');
     const [examPeriodStart, setExamPeriodStart] = useState('');
     const [examPeriodEnd, setExamPeriodEnd] = useState('');
     const [duration, setDuration] = useState('');
     const [scorePublished, setScorePublished] = useState(false);
-    const [scorePublishDate, setScorePublishDate] = useState('');
-    const [isOngoing, setIsOngoing] = useState(false);
     const [submissionCount, setSubmissionCount] = useState(0);
     const [evaluationScore, setEvaluationScore] = useState(0.0);
     const [lectureInfo, setLectureInfo] = useState({});
@@ -269,8 +267,6 @@ function App26() {
             setDuration(exam.duration);
             setPoints(exam.points);
             setScorePublished(exam.scorePublished);
-            setScorePublishDate(exam.scorePublishDate);
-            setIsOngoing(exam.isOngoing);
             setSubmissionCount(exam.submissionCount);
             setEvaluationScore(exam.evaluationScore);
             showDivExamRead(); // 시험 정보 조회 화면을 보여줌
@@ -290,8 +286,6 @@ function App26() {
         setDuration(currentExam.duration);
         setPoints(currentExam.points);
         setScorePublished(currentExam.scorePublished);
-        setScorePublishDate(currentExam.scorePublishDate);
-        setIsOngoing(currentExam.isOngoing);
         setSubmissionCount(currentExam.submissionCount);
         setEvaluationScore(currentExam.evaluationScore);
 
@@ -374,9 +368,7 @@ function App26() {
             duration,
             points,
             scorePublished,
-            scorePublishDate,
             lectureId,
-            isOngoing,
             submissionCount,
             evaluationScore
         };
@@ -516,14 +508,13 @@ function App26() {
     const handleSaveExam = async () => {
         const examDTO = {
             title,
-            examMethod,
+            examMethod: examMethod || '온라인',
             openDate,
             examPeriodStart,
             examPeriodEnd,
             duration,
             points,
             scorePublished,
-            scorePublishDate,
             lectureId
         };
 
@@ -681,7 +672,6 @@ function App26() {
         setDuration('');
         setPoints('');
         setScorePublished(false);
-        setScorePublishDate('');
         setCurrentExam(null);
     };
 
@@ -1640,7 +1630,6 @@ function App26() {
                                     <div id="duration">시험 시간</div>
                                     <div id="score">배점</div>
                                     <div id="scorePublished">점수 공개 여부</div>
-                                    <div id="isOngoing">진행 상황</div>
                                     <div id="submissionCount">제출 인원</div>
                                     <div id="evaluationScore">평가 점수</div>
                                 </div>
@@ -1648,13 +1637,12 @@ function App26() {
                                     <div key={exam.id} id="body_Exam">
                                         <div id="Eno">{exam.id}</div>
                                         <div id="Etitle" onClick={() => handleExamClick(exam.id)}>{exam.title}</div>
-                                        <div id="Emethod">{exam.examMethod}</div>
+                                        <div id="Emethod">{exam.examMethod || '온라인'}</div>
                                         <div id="Eopendate">{exam.openDate}</div>
                                         <div id="Eexamperiod">{exam.examPeriodStart} ~ {exam.examPeriodEnd}</div>
                                         <div id="Eduration">{exam.duration}분</div>
                                         <div id="Escore">{exam.points}</div>
-                                        <div id="EscorePublished">{exam.scorePublished ? '네' : '아니요'}</div>
-                                        <div id="EisOngoing">{exam.isOngoing ? '진행중' : '종료'}</div>
+                                        <div id="EscorePublished">{exam.scorePublished ? 'YES' : 'NO'}</div>
                                         <div id="EsubmissionCount">{exam.submissionCount}</div>
                                         <div id="EevaluationScore">{exam.evaluationScore}</div>
                                     </div>
@@ -1701,10 +1689,8 @@ function App26() {
                         </div>
                         <div id="scorePublished_ExamAdd">
                             <h2>점수 공개 여부</h2>
-                            <input type="checkbox" id="ExamAdd_scorePublished" checked={scorePublished} onChange={(e) => setScorePublished(e.target.checked)} />
-                            {scorePublished && (
-                                <input type="datetime-local" id="ExamAdd_scorepublishdate" value={scorePublishDate} onChange={(e) => setScorePublishDate(e.target.value)} />
-                            )}
+                            <input type="checkbox" id="ExamAdd_scorePublished" checked={scorePublished}
+                                   onChange={(e) => setScorePublished(e.target.checked)}/>
                         </div>
                         <div id="content_ExamAdd">
                             <input type="text" id="ExamAdd_content"/>
@@ -1754,15 +1740,10 @@ function App26() {
                             <div id="ExamRead_score">{currentExam?.points}</div>
                         </div>
                         <div id="scorePublished_ExamRead">
-                            <h2>점수 공개 여부</h2>
-                            <div id="ExamRead_scorePublished">{currentExam?.scorePublished ? '네' : '아니요'}</div>
-                            {currentExam?.scorePublished && (
-                                <div id="ExamRead_scorepublishdate">{currentExam?.scorePublishDate}</div>
-                            )}
-                        </div>
-                        <div id="isOngoing_ExamRead">
-                            <h2>진행 상황</h2>
-                            <div id="ExamRead_isOngoing">{currentExam?.isOngoing ? '진행중' : '종료'}</div>
+                            <div id="ExamRead_scorePublished">
+                                <h2>점수 공개 여부</h2>
+                                <div>{currentExam?.scorePublished ? '네' : '아니요'}</div>
+                            </div>
                         </div>
                         <div id="submissionCount_ExamRead">
                             <h2>제출 인원</h2>
@@ -1872,10 +1853,8 @@ function App26() {
                         </div>
                         <div id="scorePublished_ExamEdit">
                             <h2>점수 공개 여부</h2>
-                            <input type="checkbox" id="ExamEdit_scorePublished" checked={scorePublished} onChange={(e) => setScorePublished(e.target.checked)} />
-                            {scorePublished && (
-                                <input type="datetime-local" id="ExamEdit_scorepublishdate" value={scorePublishDate} onChange={(e) => setScorePublishDate(e.target.value)} />
-                            )}
+                            <input type="checkbox" id="ExamEdit_scorePublished" checked={scorePublished}
+                                   onChange={(e) => setScorePublished(e.target.checked)}/>
                         </div>
                         <div id="content_ExamEdit">
                             <input type="text" id="ExamAdd_content"/>
