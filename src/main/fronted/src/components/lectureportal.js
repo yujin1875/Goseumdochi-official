@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import '../css/lectureportal.css';
 import logo from './images/goseumdochi.png';
-import { useLocation, useNavigate } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import axios from 'axios';
 
 import LectureMaterialPaging from "./yewon/lecture_material_paging"; // 강의자료페이징 컴포넌트
@@ -11,7 +11,7 @@ function App10() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const { user, lecture } = location.state;
+    const {user, lecture} = location.state;
 
     // 선택한 메뉴 (공지사항, 강의자료, 온라인영상, 과제, 시험)
     const [menu, setMenu] = useState('notice');
@@ -78,7 +78,7 @@ function App10() {
         setIsLoading(true); // 로딩 시작
         console.log(videoUrl);
         try {
-            const response = await axios.post('/api/video/generateCaption', { video_url: videoUrl });
+            const response = await axios.post('/api/video/generateCaption', {video_url: videoUrl});
             setCaptions(prevCaptions => [...prevCaptions, response.data.caption]); // 응답에서 자막 추가
         } catch (error) {
             console.error('Error generating caption:', error);
@@ -87,18 +87,40 @@ function App10() {
         }
     };
 
+    // 시험 관련 상태 및 함수 추가
+    const [examList, setExamList] = useState([]);
+    const [showExams, setShowExams] = useState(false); // 시험 클릭 여부 상태
+
+    const fetchExamList = async (lectureId) => {
+        try {
+            const response = await axios.get(`/api/student/exams/${lectureId}`);
+            setExamList(response.data);
+        } catch (error) {
+            console.error('Error fetching exam list:', error);
+        }
+    };
+
+// 시험 버튼 클릭 시 시험 목록 표시
+    const GoExam = () => {
+        setMenu("exam");
+        setShowOnlineLectures(false); // 온라인 강의 초기화
+        setSelectedVideo(null); // 선택된 강의 초기화
+        fetchExamList(lecture.id);
+    };
+
+
     return (
         <div id="App">
             <div id="lectureportal-menu">
                 <div id="header_lectureportal">
-                    <img src={logo} onClick={Gomain} alt="logo" />
+                    <img src={logo} onClick={Gomain} alt="logo"/>
                     <div id="user_info"></div>
                 </div>
                 <div id="buttons_lectureportal">
-                    <input type="submit" value="공지사항" id="notice_btn" onClick={Gonotice} />
-                    <input type="submit" value="커뮤니티" id="community_btn" />
-                    <input type="submit" value="마이페이지" id="mypage_btn" onClick={Gomypage} />
-                    <div id="rect" />
+                    <input type="submit" value="공지사항" id="notice_btn" onClick={Gonotice}/>
+                    <input type="submit" value="커뮤니티" id="community_btn"/>
+                    <input type="submit" value="마이페이지" id="mypage_btn" onClick={Gomypage}/>
+                    <div id="rect"/>
                 </div>
                 <div id="contents_lectureportal">
                     <div id="aboutNotice_lectureportal">
@@ -108,7 +130,7 @@ function App10() {
                                 <li><a onClick={() => handleMenuChange("material")}>강의자료</a></li>
                                 <li><a onClick={GoOnlineLecture}>온라인강의</a></li>
                                 <li><a onClick={() => handleMenuChange("assignment")}>과제</a></li>
-                                <li><a onClick={() => handleMenuChange("exam")}>시험</a></li>
+                                <li><a onClick={GoExam}>시험</a></li>
                             </ul>
                         </div>
                         <div id="contents_aboutNotice_lectureportal">
@@ -127,7 +149,7 @@ function App10() {
                             {menu === "material" && (
                                 <div>
                                     {/* props로 user와 lecture 전달 */}
-                                    <LectureMaterialPaging user={user} lecture={lecture} />
+                                    <LectureMaterialPaging user={user} lecture={lecture}/>
                                 </div>
                             )}
 
@@ -165,7 +187,6 @@ function App10() {
                                     </>
                                 </div>
                             )}
-
                             {/* 과제 */}
                             {menu === "assignment" && (
                                 <div>
@@ -176,6 +197,49 @@ function App10() {
                             {/* 시험 */}
                             {menu === "exam" && (
                                 <div>
+                                    <>
+                                        <h2>시험 목록</h2>
+                                        <div id="exam_list">
+                                            <div className="exam_header">
+                                                <div>No</div>
+                                                <div>제목</div>
+                                                <div>시험 방식</div>
+                                                <div>공개일</div>
+                                                <div>응시기간</div>
+                                                <div>시험 시간</div>
+                                                <div>배점</div>
+                                                <div>점수</div>
+                                                <div>시험 시작</div>
+                                            </div>
+                                            {examList.length === 0 ? (
+                                                <p>시험이 없습니다.</p>
+                                            ) : (
+                                                examList.map((exam, index) => (
+                                                    <div className="exam_row" key={index}>
+                                                        <div>{index + 1}</div>
+                                                        <div>{exam.title}</div>
+                                                        <div>{exam.examMethod}</div>
+                                                        <div>{exam.openDate}</div>
+                                                        <div>{exam.examPeriodStart} ~ {exam.examPeriodEnd}</div>
+                                                        <div>{exam.duration}분</div>
+                                                        <div>{exam.points}</div>
+                                                        <div>{exam.score ?? "점수 미등록"}</div>
+                                                        <div>
+                                                            <button
+                                                                onClick={() => navigate(`/exam/start/${exam.id}`, {
+                                                                    state: {
+                                                                        user: user,
+                                                                        lecture: lecture
+                                                                    }
+                                                                })}>
+                                                                시작
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            )}
+                                        </div>
+                                    </>
 
                                 </div>
                             )}
