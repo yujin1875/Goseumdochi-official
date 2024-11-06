@@ -1,5 +1,6 @@
 package com.midas.goseumdochi.teacher.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -24,14 +25,13 @@ public class ExamEntity {
     private LocalDateTime examPeriodEnd;
     private int duration;
     private boolean scorePublished;
-    private LocalDateTime scorePublishDate;
     private int points; // 배점
-    private boolean isOngoing; // 진행상황
     private int submissionCount; // 제출인원
     private double evaluationScore; // 평가점수
 
     @ManyToOne
     @JoinColumn(name = "lecture_id")
+    @JsonIgnore
     private LectureEntity lectureEntity;
 
     @OneToMany(mappedBy = "examEntity", cascade = CascadeType.ALL, orphanRemoval = true)
