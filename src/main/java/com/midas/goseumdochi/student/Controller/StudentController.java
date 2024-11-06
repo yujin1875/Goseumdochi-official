@@ -5,10 +5,8 @@ import com.midas.goseumdochi.student.Repository.StudentRepository;
 import com.midas.goseumdochi.student.Service.FileStorageService;
 import com.midas.goseumdochi.student.Service.StudentService;
 import com.midas.goseumdochi.student.entity.StudentEntity;
-import com.midas.goseumdochi.teacher.dto.AssignmentDTO;
-import com.midas.goseumdochi.teacher.dto.LectureDTO;
-import com.midas.goseumdochi.teacher.dto.LectureNameDTO;
-import com.midas.goseumdochi.teacher.dto.TeacherDTO;
+import com.midas.goseumdochi.teacher.dto.*;
+import com.midas.goseumdochi.teacher.service.ExamService;
 import com.midas.goseumdochi.teacher.service.LectureService;
 import com.midas.goseumdochi.util.Dto.MailDTO;
 import com.midas.goseumdochi.util.Service.MailService;
@@ -40,6 +38,7 @@ public class StudentController {
     private final StudentRepository studentRepository;
     private final EncDecService encDecService;
     private final AssignmentService assignmentService;
+    private final ExamService examService;
 
     // 회원가입 페이지 폼 작성 데이터 받기
     @PostMapping("/signup")
@@ -338,6 +337,11 @@ public class StudentController {
         return ResponseEntity.ok(studentDTOList);
     }
 
+    @GetMapping("/exams/{lectureId}")
+    public ResponseEntity<List<ExamDTO>> getExamListForStudent(@PathVariable Long lectureId) {
+        List<ExamDTO> examList = examService.getExamsByLectureId(lectureId);
+        return ResponseEntity.ok(examList);
+    }
 
 
 }

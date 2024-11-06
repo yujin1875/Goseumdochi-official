@@ -56,6 +56,7 @@ import MessageViewSend from "./components/yewon/message_view_send";
 import { Component } from 'react';
 import React from 'react';
 import SubmitAssignment from './components/SubmitAssignment';  // 과제 제출 페이지
+import ExamStart from './components/ExamStart';
 
 import App40 from './components/community_admin';
 import DirectorNoticeWrite from './components/director_notice_write';
@@ -151,6 +152,7 @@ class App extends Component{
               <Route path='/score' element={<Score/>}/>
 
               <Route path='/videoUploadTest' element={<VideoUploadTest/>}/>
+              <Route path="/exam/start/:examId" element={<ExamStart />} />
             </Routes>
         </BrowserRouter> 
       </div>
