@@ -32,19 +32,24 @@ function ExamStart() {
         try {
             const submissionData = questions.map((question) => ({
                 questionId: question.id,
+                studentId: user.id, // studentId 추가
+                examId: examId, // examId 추가
                 answer: answers[question.id] || ""
             }));
-            await axios.post(`/api/student/exams/${examId}/answers`, {
-                studentId: user.id,
-                examId: examId,
-                submissionData
+
+            console.log("Submission Data:", submissionData); // 브라우저 콘솔에서 확인
+
+            await axios.post(`/api/student/exams/${examId}/answers`, submissionData, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
             });
+
             alert('답안이 성공적으로 제출되었습니다.');
         } catch (error) {
             console.error('Error submitting answers:', error);
         }
     };
-
     return (
         <div>
             <h2>{lecture.name} - 시험 문제</h2>
