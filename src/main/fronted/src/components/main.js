@@ -25,7 +25,7 @@ function App6() {
         window.location.href = '/main';
     };
     const Gonotice = () => {
-        window.location.href = '/notice';
+        navigate('/notice', { state: { studentId: user.id } });
     };
     const Gocommunity = () => {
         window.location.href = '/community';

@@ -17,4 +17,8 @@ public interface DirectorNoticeRepository extends JpaRepository<DirectorNoticeEn
     Page<DirectorNoticeEntity> findAllByDirectorId(@Param("directorId") Long directorId, Pageable pageable);
 
     List<DirectorNoticeEntity> findByDirectorEntityId(Long directorId);  // 원장 ID로 공지사항 조회
+
+    // 여러 원장 ID에 해당하는 공지사항을 찾는 쿼리 메서드
+    @Query("SELECT dn FROM DirectorNoticeEntity dn WHERE dn.directorEntity.id IN :directorIds")
+    List<DirectorNoticeEntity> findByDirectorEntityIds(@Param("directorIds") List<Long> directorIds);
 }

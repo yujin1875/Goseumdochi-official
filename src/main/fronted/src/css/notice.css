@@ -223,7 +223,11 @@ li>a{
     width: 1075px;
     height: 512px;
     margin:auto;
-    background-color:blueviolet
+    background-color:blueviolet;
+
+    max-height: 500px;  /* 원하는 높이로 설정 */
+    overflow-y: auto;   /* 세로 스크롤 활성화 */
+    padding-right: 10px; /* 스크롤 바가 겹치지 않도록 여백 추가 */
 }
 
 #notice-menu>#footer_notice{
@@ -237,4 +241,31 @@ li>a{
     color:#838383;
     text-align: center;
     margin:auto;
+}
+
+
+/* 공지사항 때문에 추가한 것들 */
+/* 공지사항 항목을 가로로 정렬 */
+.notice-item {
+    display: flex;
+    align-items: center;  /* 세로 가운데 정렬 */
+    margin-bottom: 10px;   /* 각 항목 간 간격 */
+    border-bottom: 1px solid #ddd;  /* 구분선 추가 */
+    padding: 10px 0;
+}
+
+/* 각 항목을 가로로 배치 */
+.notice-item .num,
+.notice-item .title,
+.notice-item .postperson,
+.notice-item .postdate,
+.notice-item .visit {
+    margin-right: 20px;   /* 각 항목 간 간격 */
+    white-space: nowrap;  /* 항목 내용이 줄 바꿈되지 않도록 설정 */
+}
+
+/* 제목은 길이가 길어질 수 있으므로 가로 크기 조정 */
+.notice-item .title {
+    flex-grow: 1; /* 제목이 가능한 공간을 차지하도록 설정 */
+    word-wrap: break-word;  /* 긴 제목이 있을 경우 자동으로 줄 바꿈 */
 }

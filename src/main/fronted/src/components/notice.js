@@ -1,30 +1,43 @@
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import '../css/notice.css';
 import logo from './images/goseumdochi.png';
 
-function App27() {
-    const Gomain=()=>{
-        window.location.href='/main'
-    }
+function NoticePage() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const studentId = location.state?.studentId; // 메인에서 전달받은 studentId
+    const [notices, setNotices] = useState([]);
 
-    const Gonotice=()=>{
-        window.location.href='/notice'
-    }
+    // 메인 페이지로 이동
+    const goToMain = () => {
+        navigate('/main');
+    };
 
-    const Gomypage=()=>{
-        window.location.href='/mypage'
-    }
+    // 공지사항 데이터 불러오기
+    useEffect(() => {
+        if (studentId) {
+            axios.get(`/api/academyNotice/student/${studentId}`)
+                .then(response => {
+                    console.log(response.data);
+                    setNotices(response.data);
+                })
+                .catch(error => console.error('Error fetching notices:', error));
+        }
+    }, [studentId]);
 
     return (
         <div id="App">
             <div id="notice-menu">
                 <div id="header_notice">
-                    <img src={logo} onClick={Gomain}/>
-                    <div id="user_info"></div>
+                    <img src={logo} onClick={goToMain} alt="Logo"/>
+                    <div id="user_info">ID: {studentId}</div>
                 </div>
                 <div id="buttons_notice">
-                    <input type="submit" value="공지사항" id="notice_btn" onClick={Gonotice}/>
-                    <input type="submit" value="커뮤니티" id="community_btn"/>
-                    <input type="submit" value="마이페이지" id="mypage_btn" onClick={Gomypage}/>
+                    <button id="notice_btn" onClick={() => navigate('/notice')}>공지사항</button>
+                    <button id="community_btn">커뮤니티</button>
+                    <button id="mypage_btn" onClick={() => navigate('/mypage')}>마이페이지</button>
                     <div id="rect"/>
                 </div>
                 <div id="contents_notice">
@@ -40,34 +53,36 @@ function App27() {
                         </div>
                         <div id="contents_aboutNotice_notice">
                             <div id="category_contents_notice">
-                                <div id="num">
-                                    번호
-                                </div>
-                                <div id="title">
-                                    제목
-                                </div>
-                                <div id="postperson">
-                                    게시자
-                                </div>
-                                <div id="postdate">
-                                    게시일
-                                </div>
-                                <div id="visit">
-                                    조회수
-                                </div>
+                                <div id="num">번호</div>
+                                <div id="title">제목</div>
+                                <div id="postperson">게시자</div>
+                                <div id="postdate">게시일</div>
+                                <div id="visit">조회수</div>
                             </div>
                             <div id="body_contents_notice">
-
+                                {notices.length === 0 ? (
+                                    <div>공지사항이 없습니다.</div>
+                                ) : (
+                                    notices.map((notice, index) => (
+                                        <div key={notice.num} className="notice-item">
+                                            <div className="num">{index + 1}</div>
+                                            <div className="title">{notice.title}</div>
+                                            <div className="postperson">관리자</div>
+                                            <div className="postdate">{new Date(notice.regdate).toLocaleDateString()}</div>
+                                            <div className="visit">0</div>
+                                        </div>
+                                    ))
+                                )}
                             </div>
                         </div>
                     </div>
                 </div>
                 <div id="footer_notice">
-                    <a>문의 | midas2024.ver01@gmail.com</a>
+                    <a href="mailto:midas2024.ver01@gmail.com">문의 | midas2024.ver01@gmail.com</a>
                 </div>
             </div>
         </div>
     );
 }
 
-export default App27;
+export default NoticePage;

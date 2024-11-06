@@ -22,4 +22,9 @@ public interface StudentAcademyRepository extends JpaRepository<StudentAcademyEn
 
     @Query("SELECT a.name FROM StudentAcademyEntity sa JOIN sa.academyEntity a WHERE sa.studentEntity.id = :studentId")
     List<String> findAcademyNamesByStudentId(@Param("studentId") Long studentId);
+
+    // 학생 ID로 학원 ID를 조회
+    @Query("SELECT sa.academyEntity.id FROM StudentAcademyEntity sa WHERE sa.studentEntity.id = :studentId")
+    List<Long> findAcademyIdByStudentId(@Param("studentId") Long studentId);
+
 }
