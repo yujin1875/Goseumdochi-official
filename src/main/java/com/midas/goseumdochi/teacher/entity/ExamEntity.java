@@ -1,5 +1,6 @@
 package com.midas.goseumdochi.teacher.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -26,6 +27,7 @@ public class ExamEntity {
 
     @ManyToOne
     @JoinColumn(name = "lecture_id")
+    @JsonIgnore
     private LectureEntity lectureEntity;
 
     @OneToMany(mappedBy = "examEntity", cascade = CascadeType.ALL, orphanRemoval = true)

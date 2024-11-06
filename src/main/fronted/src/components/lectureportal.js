@@ -62,6 +62,28 @@ function App10() {
     };
     // 인강 끝
 
+    // 시험 관련 상태 및 함수 추가
+    const [examList, setExamList] = useState([]);
+    const [showExams, setShowExams] = useState(false); // 시험 클릭 여부 상태
+
+    const fetchExamList = async (lectureId) => {
+        try {
+            const response = await axios.get(`/api/student/exams/${lectureId}`);
+            setExamList(response.data);
+        } catch (error) {
+            console.error('Error fetching exam list:', error);
+        }
+    };
+
+// 시험 버튼 클릭 시 시험 목록 표시
+    const GoExam = () => {
+        setShowExams(true);
+        setShowOnlineLectures(false); // 온라인 강의 초기화
+        setSelectedVideo(null); // 선택된 강의 초기화
+        fetchExamList(lecture.id);
+    };
+
+
     return (
         <div id="App">
             <div id="lectureportal-menu">
@@ -83,7 +105,7 @@ function App10() {
                                 <li><a onClick={GoLectureMaterial}>강의자료</a></li>
                                 <li><a onClick={GoOnlineLecture}>온라인강의</a></li>
                                 <li><a onClick={GoLectureAssignment}>과제</a></li>
-                                <li><a>시험</a></li>
+                                <li><a onClick={GoExam}>시험</a></li>
                             </ul>
                         </div>
                         <div id="contents_aboutNotice_lectureportal">
@@ -134,6 +156,45 @@ function App10() {
                                             Your browser does not support the video tag.
                                         </video>
                                         <button onClick={() => setSelectedVideo(null)}>뒤로 가기</button>
+                                    </>
+                                )}
+                                {showExams && (
+                                    <>
+                                        <h2>시험 목록</h2>
+                                        <div id="exam_list">
+                                            <div className="exam_header">
+                                                <div>No</div>
+                                                <div>제목</div>
+                                                <div>시험 방식</div>
+                                                <div>공개일</div>
+                                                <div>응시기간</div>
+                                                <div>시험 시간</div>
+                                                <div>배점</div>
+                                                <div>점수</div>
+                                                <div>시험 시작</div>
+                                            </div>
+                                            {examList.length === 0 ? (
+                                                <p>시험이 없습니다.</p>
+                                            ) : (
+                                                examList.map((exam, index) => (
+                                                    <div className="exam_row" key={index}>
+                                                        <div>{index + 1}</div>
+                                                        <div>{exam.title}</div>
+                                                        <div>{exam.examMethod}</div>
+                                                        <div>{exam.openDate}</div>
+                                                        <div>{exam.examPeriodStart} ~ {exam.examPeriodEnd}</div>
+                                                        <div>{exam.duration}분</div>
+                                                        <div>{exam.points}</div>
+                                                        <div>{exam.score ?? "점수 미등록"}</div>
+                                                        <div>
+                                                            <button onClick={() => navigate(`/exam/start/${exam.id}`, { state: { user: user, lecture: lecture } })}>
+                                                                시작
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            )}
+                                        </div>
                                     </>
                                 )}
                             </div>

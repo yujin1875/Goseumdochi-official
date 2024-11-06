@@ -5,6 +5,7 @@ import com.midas.goseumdochi.teacher.dto.ExamQuestionDTO;
 import com.midas.goseumdochi.teacher.entity.ExamEntity;
 import com.midas.goseumdochi.teacher.repository.ExamRepository;
 import com.midas.goseumdochi.teacher.repository.LectureRepository;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,7 @@ public class ExamService {
         examRepository.save(entity);
     }
 
+    @Transactional(readOnly = true) // 트랜잭션 범위 내에서 Lazy Loading 해결
     public List<ExamDTO> getExamsByLectureId(Long lectureId) {
         return examRepository.findAllByLectureEntityId(lectureId).stream()
                 .map(entity -> new ExamDTO(
@@ -48,7 +50,7 @@ public class ExamService {
                         entity.getPoints(),
                         entity.getSubmissionCount(),
                         entity.getEvaluationScore(),
-                        entity.getLectureEntity().getId(),
+                        entity.getLectureEntity() != null ? entity.getLectureEntity().getId() : null, // null 체크 추가
                         entity.getQuestions() != null ? entity.getQuestions().stream()
                                 .map(q -> new ExamQuestionDTO(
                                         q.getId(),
@@ -63,6 +65,7 @@ public class ExamService {
                 ))
                 .collect(Collectors.toList());
     }
+
 
     public ExamDTO getExamById(Long id) {
         ExamEntity entity = examRepository.findById(id)
