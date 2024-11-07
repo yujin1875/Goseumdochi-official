@@ -1554,7 +1554,7 @@ hr{
 #info>#infobox{
     float:left;
     width:1400px;
-    height:150px;
+    height:120px;
     font-size:15px;
     margin:auto;
     margin-top:10px;
@@ -1566,7 +1566,7 @@ hr{
     float:left;
     width:700px;
     height:50px;
-    margin-top:10px;
+    margin-top:20px;
 }
 
 #subjecttitle>h2{
@@ -1591,7 +1591,7 @@ hr{
     float:left;
     width:700px;
     height:50px;
-    margin-top:10px;
+    margin-top:20px;
 }
 
 #lecturetime>h2{
@@ -1681,6 +1681,18 @@ hr{
     background-color:#FFFFFF;
 }
 
+#info_subcontent>#content_subcontent{
+    width:1350px;
+    height:280px;
+    margin: 0 auto;
+}
+
+#content_subcontent>#blank_content_subcontent{
+    width:1350px;
+    height:15px;
+    margin: 0 auto;
+}
+
 #Home_teacherportal>#weekplan{
     float:left;
     width:1400px;
@@ -1689,6 +1701,7 @@ hr{
 }
 
 #weekplan>h2{
+    margin-top:10px;
     margin-left:40px;
 }
 
@@ -1698,6 +1711,18 @@ hr{
     margin:auto;
     margin-top:10px;
     background-color:#FFFFFF;
+}
+
+#info_weekplan>#content_weekplan{
+    width:1350px;
+    height:280px;
+    margin: 0 auto;
+}
+
+#content_weekplan>#blank_content_weekplan{
+    width:1350px;
+    height:15px;
+    margin: 0 auto;
 }
 
 /* home 수정*/

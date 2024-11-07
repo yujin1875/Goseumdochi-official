@@ -968,13 +968,19 @@ function App26() {
                             <div id="subcontent">
                                 <h2>세부내용</h2>
                                 <div id="info_subcontent">
-                                    {lectureInfo.lectureDetails}
+                                    <div id="content_subcontent">
+                                        <div id="blank_content_subcontent"/>
+                                        {lectureInfo.lectureDetails}
+                                    </div>
                                 </div>
                             </div>
                             <div id="weekplan">
                                 <h2>주별계획</h2>
                                 <div id="info_weekplan">
-                                    {lectureInfo.lectureWeeklyPlan}
+                                    <div id="content_weekplan">
+                                        <div id="blank_content_weekplan"/>
+                                        {lectureInfo.lectureWeeklyPlan}
+                                    </div>
                                 </div>
                             </div>
                         </div>

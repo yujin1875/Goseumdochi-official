@@ -85,7 +85,7 @@
 #contents1_teachermain>#teachermain_calendar{
     float:right;
     width: 630px;
-    height: 735px;
+    height: 665px;
     background-color:#363636;
     border-radius:15px;
     color:white;
@@ -98,7 +98,7 @@
 
 #teachermain_calendar>#content_calendar{
     width:604px;
-    height:530px;
+    height:580px;
     background-color:#FFFFFF;
     margin:auto;
     margin-top:15px;
@@ -107,8 +107,9 @@
 
 .custom-calendar {
     width: 604px !important;
-    height: 530px !important;
+    height: 580px !important;
     font-size: 16px;
+    border-radius:15px;
 }
 
 .react-calendar__month-view__weekdays {
@@ -123,18 +124,10 @@
     font-size: 16px; /* Font size for active tiles */
 }
 
-#teachermain_calendar>#more_calendar{
-    width:604px;
-    height:109px;
-    background-color:#FFFFFF;
-    margin:20px auto;
-    border-radius:15px;
-}
-
 #contents1_teachermain>#teachermain_subject{
     float:right;
     width: 630px;
-    height: 333px;
+    height: 403px;
     background-color:#363636;
     border-radius:15px;
     margin-top:20px;
@@ -148,7 +141,7 @@
 
 #teachermain_subject>#content_subject{
     width: 604px;
-    height:250px;
+    height:320px;
     background-color:#FFFFFF;
     margin:0 auto;
     border-radius:15px;
@@ -157,7 +150,7 @@
 
 #content_subject>table{
     width:580px;
-    height:250px;
+    height:320px;
     margin:0 auto;
     margin-top:10px;
     font-size:18px;
@@ -197,7 +190,7 @@
 
 #Quickmenu_teachermain>#content_Quickmenu{
     width:519px;
-    height:517px;
+    height:510px;
     background-color:#FFFFFF;
     margin:auto;
     margin-top:20px;
@@ -223,7 +216,7 @@
 
 #lectureSchedule_teachermain>#content_lectureSchedule{
     width:519px;
-    height:385px;
+    height:380px;
     background-color:#FFFFFF;
     margin:auto;
     margin-top:20px;

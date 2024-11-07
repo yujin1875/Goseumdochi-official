@@ -11,7 +11,7 @@
 #main-menu{
     display: block;
     width: 1358px;
-    height: 1507px;
+    height: 1537px;
     margin: auto;
     background-color: #FFFFFF;
     border-radius: 100px;
@@ -101,7 +101,7 @@
 #contents1_main>#main_calendar{
     float:right;
     width: 630px;
-    height: 735px;
+    height: 665px;
     background-color:#363636;
     border-radius:15px;
     color:white;
@@ -114,7 +114,7 @@
 
 #main_calendar>#content_calendar{
     width:604px;
-    height:530px;
+    height:580px;
     background-color:#FFFFFF;
     margin:auto;
     margin-top:15px;
@@ -123,8 +123,9 @@
 
 .custom-calendar {
     width: 604px !important;
-    height: 530px !important;
+    height: 580px !important;
     font-size: 16px;
+    border-radius:15px;
 }
 
 .react-calendar__month-view__weekdays {
@@ -139,18 +140,10 @@
     font-size: 16px; /* Font size for active tiles */
 }
 
-#main_calendar>#more_calendar{
-    width:604px;
-    height:109px;
-    background-color:#FFFFFF;
-    margin:20px auto;
-    border-radius:15px;
-}
-
 #contents1_main>#main_subject{
     float:right;
     width: 630px;
-    height: 333px;
+    height: 403px;
     background-color:#363636;
     border-radius:15px;
     margin-top:20px;
@@ -164,7 +157,7 @@
 
 #main_subject>#content_subject{
     width: 604px;
-    height:250px;
+    height:320px;
     background-color:#FFFFFF;
     margin:0 auto;
     border-radius:15px;
@@ -173,7 +166,7 @@
 
 #content_subject>table{
     width:580px;
-    height:250px;
+    height:320px;
     margin:0 auto;
     margin-top:10px;
     font-size:18px;
@@ -194,21 +187,24 @@
 }
 
 #contents2_main>#main_schedule{
+    float:left;
     width:545px;
     height:600px;
     background-color:#363636;
     margin:auto;
+    margin-left:65px;
     border-radius:15px;
 }
 
 #main_schedule>h2{
+    margin-top:15px;
     margin-left:30px;
     color:white;
 }
 
 #main_schedule>#content_schedule{
     width:519px;
-    height:517px;
+    height:510px;
     background-color:#FFFFFF;
     margin:auto;
     margin-top:20px;
@@ -216,11 +212,13 @@
 }
 
 #contents2_main>#main_submission{
+    float:left;
     width:545px;
     height:468px;
     background-color:#363636;
     margin:auto;
     margin-top:20px;
+    margin-left:65px;
     border-radius:15px;
 }
 
@@ -232,7 +230,7 @@
 
 #main_submission>#content_submission{
     width:519px;
-    height:385px;
+    height:380px;
     background-color:#FFFFFF;
     margin:auto;
     margin-top:20px;
