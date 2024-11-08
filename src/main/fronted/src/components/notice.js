@@ -9,17 +9,21 @@ function NoticePage() {
     const navigate = useNavigate();
     const studentId = location.state?.studentId; // 메인에서 전달받은 studentId
     const [notices, setNotices] = useState([]);
+    const [selectedNotice, setSelectedNotice] = useState(null); // 선택된 공지사항 저장
 
     // 메인 페이지로 이동
     const goToMain = () => {
         navigate('/main', {state: {studentId}});
     };
+
     const Gonotice = () => {
         navigate('/notice', { state: { studentId } });
     };
+
     const Gocommunity = () => {
         navigate('/community', { state: { studentId } });
     };
+
     const Gomypage = () => {
         navigate('/mypage', { state: { studentId } });
     };
@@ -35,6 +39,16 @@ function NoticePage() {
                 .catch(error => console.error('Error fetching notices:', error));
         }
     }, [studentId]);
+
+    // 공지사항 제목 클릭 시 상세 보기
+    const viewNoticeDetails = (notice) => {
+        setSelectedNotice(notice);  // 클릭한 공지사항 저장
+    };
+
+    // 모달 닫기
+    const closeModal = () => {
+        setSelectedNotice(null);  // 선택된 공지사항 초기화
+    };
 
     return (
         <div id="App">
@@ -73,10 +87,15 @@ function NoticePage() {
                                     <div>공지사항이 없습니다.</div>
                                 ) : (
                                     notices.map((notice, index) => (
-                                        <div key={notice.num} className="notice-item">
+                                        <div
+                                            key={notice.num}
+                                            className="notice-item"
+                                            onClick={() => viewNoticeDetails(notice)} // 제목 클릭 시 상세 보기
+                                        >
                                             <div className="num">{index + 1}</div>
                                             <div className="title">{notice.title}</div>
-                                            <div className="postperson">관리자</div>
+                                            <div className="academy-name">[{notice.academyName}]</div>
+                                            <div className="postperson">{notice.directorName}</div>
                                             <div className="postdate">{new Date(notice.regdate).toLocaleDateString()}</div>
                                             <div className="visit">0</div>
                                         </div>
@@ -86,6 +105,22 @@ function NoticePage() {
                         </div>
                     </div>
                 </div>
+
+                {/* 공지사항 상세보기 모달 */}
+                {selectedNotice && (
+                    <div id="notice-modal" className="modal">
+                        <div className="modal-content">
+                            <span className="close-btn" onClick={closeModal}>&times;</span>
+                            <h2>{selectedNotice.title}</h2>
+                            <p><strong>작성자:</strong> {selectedNotice.directorName}</p>
+                            <p><strong>학원:</strong> {selectedNotice.academyName}</p>
+                            <p><strong>게시일:</strong> {new Date(selectedNotice.regdate).toLocaleDateString()}</p>
+                            <p><strong>내용:</strong></p>
+                            <p>{selectedNotice.body}</p>
+                        </div>
+                    </div>
+                )}
+
                 <div id="footer_notice">
                     <a href="mailto:midas2024.ver01@gmail.com">문의 | midas2024.ver01@gmail.com</a>
                 </div>
