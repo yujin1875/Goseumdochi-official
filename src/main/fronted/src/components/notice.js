@@ -12,7 +12,16 @@ function NoticePage() {
 
     // 메인 페이지로 이동
     const goToMain = () => {
-        navigate('/main');
+        navigate('/main', {state: {studentId}});
+    };
+    const Gonotice = () => {
+        navigate('/notice', { state: { studentId } });
+    };
+    const Gocommunity = () => {
+        navigate('/community', { state: { studentId } });
+    };
+    const Gomypage = () => {
+        navigate('/mypage', { state: { studentId } });
     };
 
     // 공지사항 데이터 불러오기
@@ -35,10 +44,10 @@ function NoticePage() {
                     <div id="user_info">ID: {studentId}</div>
                 </div>
                 <div id="buttons_notice">
-                    <button id="notice_btn" onClick={() => navigate('/notice')}>공지사항</button>
-                    <button id="community_btn">커뮤니티</button>
-                    <button id="mypage_btn" onClick={() => navigate('/mypage')}>마이페이지</button>
-                    <div id="rect"/>
+                    <input type="submit" value="공지사항" id="notice_btn" onClick={Gonotice} />
+                    <input type="submit" value="커뮤니티" id="community_btn" onClick={Gocommunity} />
+                    <input type="submit" value="마이페이지" id="mypage_btn" onClick={Gomypage} />
+                    <div id="rect" />
                 </div>
                 <div id="contents_notice">
                     <div id="aboutNotice_notice">

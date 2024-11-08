@@ -8,16 +8,16 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 function App12() {
     const Gomain = () => {
-        window.location.href = '/main';
+        navigate('/main', { state: { studentId } });
     };
     const Gonotice = () => {
-        window.location.href = '/notice';
+        navigate('/notice', { state: { studentId } });
     };
     const Gocommunity = () => {
-        window.location.href = '/community';
+        navigate('/community', { state: { studentId } });
     };
     const Gomypage = () => {
-        window.location.href = '/mypage';
+        navigate('/mypage', { state: { studentId } });
     };
 
     const [visibleDiv, setVisibleDiv] = useState('Profile');

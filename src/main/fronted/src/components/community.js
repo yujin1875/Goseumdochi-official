@@ -26,7 +26,6 @@ function App24() {
     const navigate = useNavigate();
     const { user } = location.state || {};  // state에서 user 정보 받기
 
-
     const [newPost, setNewPost] = useState({
         title: '',
         content: '',
@@ -49,9 +48,8 @@ function App24() {
 
     // main으로 ㄱㄱ
     const showMain = () => {
-            navigate('/main', { state: { user: user } });  // user 정보를 state로 전달
-        };
-
+        navigate('/main', { state: { user: user } }); // user 정보를 state로 전달
+    };
 
     useEffect(() => {
         if (visibleDiv === '글쓰기') {
