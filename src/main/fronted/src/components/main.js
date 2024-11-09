@@ -29,7 +29,7 @@ function App6() {
     const day = days[new Date().getDay()]; // 오늘 요일
 
     const Gomain = () => {
-        window.location.href = '/main';
+        navigate('/main', {state: {user: user}});
     };
     const Gonotice = () => {
         navigate('/notice', { state: { studentId: user.id } });
