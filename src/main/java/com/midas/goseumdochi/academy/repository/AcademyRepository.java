@@ -26,4 +26,5 @@ public interface AcademyRepository extends JpaRepository<AcademyEntity, Long> {
     @Query("SELECT a.name FROM AcademyEntity a WHERE a.id IN :academyIds")
     List<String> findNamesByIds(@Param("academyIds") List<Long> academyIds);
 
+    List<AcademyEntity> findByIdIn(List<Long> ids);
 }

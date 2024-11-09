@@ -1,5 +1,6 @@
 package com.midas.goseumdochi.academy.service;
 
+import com.midas.goseumdochi.academy.entity.AcademyEntity;
 import com.midas.goseumdochi.academy.repository.AcademyRepository;
 import com.midas.goseumdochi.academy.repository.StudentAcademyRepository;
 import com.midas.goseumdochi.director.entity.DirectorEntity;
@@ -41,12 +42,11 @@ public class NoticeService {
             throw new RuntimeException("학생이 다니는 학원을 찾을 수 없습니다.");
         }
 
-        // 학원 ID로 학원 이름을 찾기
-        List<String> academyNames = academyRepository.findNamesByIds(academyIds);
-
-        // 학원 이름이 없는 경우 처리
-        if (academyNames.size() != academyIds.size()) {
-            throw new RuntimeException("학원 이름을 찾을 수 없습니다.");
+        // 학원 ID와 학원 이름을 Map 형태로 조회
+        List<AcademyEntity> academies = academyRepository.findByIdIn(academyIds);
+        Map<Long, String> academyNameMap = new HashMap<>();
+        for (AcademyEntity academy : academies) {
+            academyNameMap.put(academy.getId(), academy.getName());
         }
 
         // 학원 ID로 원장 ID를 찾기
@@ -69,43 +69,30 @@ public class NoticeService {
         // 결과 리스트에 학원 이름을 추가
         List<Map<String, Object>> result = new ArrayList<>();
 
-        // 학원 이름을 공지사항에 맞게 매핑
-        for (int i = 0; i < notices.size(); i++) {
-            DirectorNoticeEntity notice = notices.get(i);
+        for (DirectorNoticeEntity notice : notices) {
             Map<String, Object> noticeWithAcademy = new HashMap<>();
             noticeWithAcademy.put("num", notice.getNum());
             noticeWithAcademy.put("title", notice.getTitle());
             noticeWithAcademy.put("regdate", notice.getRegdate());
             noticeWithAcademy.put("body", notice.getContent());
 
-            // 원장 정보를 Map에서 찾기
+            // 원장 정보와 학원 이름을 매핑
             DirectorEntity director = directorMap.get(notice.getDirectorEntity().getId());
             if (director == null) {
                 throw new RuntimeException("원장을 찾을 수 없습니다.");
             }
 
-            // 하... 학원 이름 안 불러와진다............
-            String academyName = "";
-            switch (director.getName()) {
-                case "조하운":
-                    academyName = "코딩학원";
-                    break;
-                case "박에원":
-                    academyName = "딩딩학원";
-                    break;
-                default:
-                    academyName = "알 수 없음";
-                    break;
-            }
-
+            // 공지사항에 해당하는 학원 이름을 Map에서 조회하여 추가
+            Long academyId = director.getAcademyEntity().getId();  // 학원 ID 가져오기
+            String academyName = academyNameMap.getOrDefault(academyId, "알 수 없음");
             noticeWithAcademy.put("academyName", academyName);
             noticeWithAcademy.put("directorName", director.getName());
 
-            // 결과 리스트에 공지사항 추가
             result.add(noticeWithAcademy);
         }
 
         return result;
     }
+
 
 }
