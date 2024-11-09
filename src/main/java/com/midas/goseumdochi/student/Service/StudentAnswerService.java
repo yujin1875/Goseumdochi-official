@@ -27,6 +27,7 @@ public class StudentAnswerService {
         answerEntity.setStudentId(studentAnswerDTO.getStudentId());
         answerEntity.setQuestion(question);
         answerEntity.setAnswer(studentAnswerDTO.getAnswer());
+        answerEntity.setScore(studentAnswerDTO.getScore());
 
         studentAnswerRepository.save(answerEntity);
     }
@@ -38,7 +39,8 @@ public class StudentAnswerService {
                         entity.getQuestion().getId(), // questionId 설정
                         entity.getStudentId(),
                         entity.getAnswer(),
-                        entity.getQuestion().getExamEntity().getId() // examId 설정
+                        entity.getQuestion().getExamEntity().getId(), // examId 설정
+                        entity.getScore() // score 설정
                 ))
                 .collect(Collectors.toList());
     }

@@ -13,5 +13,6 @@ public class StudentAnswerDTO {
     private Long studentId; // 학생 ID
     private String answer; // 학생이 제출한 답안
     private Long examId;
+    private Integer score;
 }
 
