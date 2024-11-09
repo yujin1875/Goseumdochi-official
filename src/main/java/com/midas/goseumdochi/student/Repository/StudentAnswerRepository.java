@@ -15,6 +15,6 @@ public interface StudentAnswerRepository extends JpaRepository<StudentAnswerEnti
     List<StudentAnswerEntity> findByStudentIdAndQuestionExamEntityId(Long studentId, Long examId);
 
     @Query("SELECT sa FROM StudentAnswerEntity sa WHERE sa.studentId = :studentId AND sa.question.examEntity.id = :examId")
-    Optional<StudentAnswerEntity> findByStudentIdAndExamId(@Param("studentId") Long studentId, @Param("examId") Long examId);
+    List<StudentAnswerEntity> findByStudentIdAndExamId(@Param("studentId") Long studentId, @Param("examId") Long examId);
 
 }

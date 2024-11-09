@@ -50,25 +50,26 @@ public class StudentAnswerService {
                 .collect(Collectors.toList());
     }
 
-    public List<StudentDTO> getStudentsByExamIdWithScore(Long examId) {
-        List<StudentEntity> students = studentRepository.findStudentsByLectureId(examId); // 강의 ID로 학생 목록 가져오기
+    public List<StudentDTO> getStudentsByExamIdWithScore(Long examId, Long lectureId) {
+        List<StudentEntity> students = studentRepository.findStudentsByLectureId(lectureId); // lectureId로 학생 목록 가져오기
         return students.stream()
-                .map(student -> {
-                    StudentDTO studentDTO = StudentDTO.toStudentDTO(student);
+            .map(student -> {
+                StudentDTO studentDTO = StudentDTO.toStudentDTO(student);
 
-                    Optional<StudentAnswerEntity> answerEntity = studentAnswerRepository.findByStudentIdAndExamId(student.getId(), examId);
+                List<StudentAnswerEntity> answerEntities = studentAnswerRepository.findByStudentIdAndExamId(student.getId(), examId);
 
-                    if (answerEntity.isPresent()) {
-                        StudentAnswerDTO studentAnswerDTO = new StudentAnswerDTO();
-                        studentAnswerDTO.setScore(answerEntity.get().getScore());
-                        studentDTO.setExamAnswer(studentAnswerDTO);
-                    } else {
-                        StudentAnswerDTO studentAnswerDTO = new StudentAnswerDTO();
-                        studentAnswerDTO.setScore(0); // 미제출인 경우 기본 점수 0 설정
-                        studentDTO.setExamAnswer(studentAnswerDTO);
-                    }
-                    return studentDTO;
-                })
-                .collect(Collectors.toList());
+                if (!answerEntities.isEmpty()) {
+                    StudentAnswerDTO studentAnswerDTO = new StudentAnswerDTO();
+                    studentAnswerDTO.setScore(answerEntities.get(0).getScore());
+                    studentDTO.setExamAnswer(studentAnswerDTO);
+                } else {
+                    StudentAnswerDTO studentAnswerDTO = new StudentAnswerDTO();
+                    studentAnswerDTO.setScore(0); // 미제출인 경우 기본 점수 0 설정
+                    studentDTO.setExamAnswer(studentAnswerDTO);
+                }
+                return studentDTO;
+            })
+            .collect(Collectors.toList());
     }
+
 }

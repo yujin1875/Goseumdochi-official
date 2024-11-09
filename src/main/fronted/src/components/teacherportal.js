@@ -823,9 +823,11 @@ function App26() {
     const fetchStudentsWithScoresByExam = async () => {
         try {
             if (currentExam && currentExam.id) {
-                const response = await axios.get(`/api/teacher/exam/${currentExam.id}/students-with-scores`);
+                const response = await axios.get(`/api/student/exams/${currentExam.id}/answers/students-with-scores`,
+                    { params: { lectureId } }
+                );
                 console.log("Fetched students:", response.data);
-                setStudents(response.data); // 학생 목록 설정
+                setStudents(response.data);
             } else {
                 console.warn("No exam selected");
             }
@@ -833,6 +835,7 @@ function App26() {
             console.error("Error fetching students with scores:", error);
         }
     };
+
 
     useEffect(() => {
         if (visibleDiv === 'ExamEstimation' && currentExam) { // currentExam이 설정된 경우에만 호출

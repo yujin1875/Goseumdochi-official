@@ -35,8 +35,9 @@ public class StudentAnswerController {
 
     // 특정 시험에 등록된 학생들의 점수 목록을 조회하는 엔드포인트
     @GetMapping("/students-with-scores")
-    public ResponseEntity<List<StudentDTO>> getStudentsWithScoresByExam(@PathVariable Long examId) {
-        List<StudentDTO> studentDTOs = studentAnswerService.getStudentsByExamIdWithScore(examId);
+    public ResponseEntity<List<StudentDTO>> getStudentsWithScoresByExam(@PathVariable Long examId, @RequestParam Long lectureId) {
+        List<StudentDTO> studentDTOs = studentAnswerService.getStudentsByExamIdWithScore(examId, lectureId);
         return ResponseEntity.ok(studentDTOs);
     }
+
 }
