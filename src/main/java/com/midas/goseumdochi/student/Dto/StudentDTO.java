@@ -37,6 +37,7 @@ public class StudentDTO {
 
     private AssignmentSubmissionDTO assignmentSubmission;
 
+    private StudentAnswerDTO examAnswer;
 
     public static StudentDTO toStudentDTO(StudentEntity studentEntity){
         StudentDTO studentDTO = new StudentDTO();
