@@ -1,5 +1,6 @@
 package com.midas.goseumdochi.student.Controller;
 import com.midas.goseumdochi.student.Dto.StudentAnswerDTO;
+import com.midas.goseumdochi.student.Dto.StudentDTO;
 import com.midas.goseumdochi.student.Service.StudentAnswerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +31,12 @@ public class StudentAnswerController {
     public ResponseEntity<List<StudentAnswerDTO>> getAnswersByExamAndStudent(@PathVariable Long examId, @PathVariable Long studentId) {
         List<StudentAnswerDTO> answers = studentAnswerService.getStudentAnswers(studentId, examId);
         return ResponseEntity.ok(answers);
+    }
+
+    // 특정 시험에 등록된 학생들의 점수 목록을 조회하는 엔드포인트
+    @GetMapping("/students-with-scores")
+    public ResponseEntity<List<StudentDTO>> getStudentsWithScoresByExam(@PathVariable Long examId) {
+        List<StudentDTO> studentDTOs = studentAnswerService.getStudentsByExamIdWithScore(examId);
+        return ResponseEntity.ok(studentDTOs);
     }
 }

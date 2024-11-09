@@ -37,6 +37,8 @@ function App26() {
     const [file, setFile] = useState(null);
     const [existingFile, setExistingFile] = useState(null);
 
+    const [examId, setExamId] = useState(null);
+
     const [questionType, setQuestionType] = useState(''); // 문제 유형 선택을 위한 상태
     const [questionText, setQuestionText] = useState(''); // 문제 텍스트 입력 상태
     const [choices, setChoices] = useState(['', '', '', '']); // 4지선다 보기를 위한 상태
@@ -817,6 +819,35 @@ function App26() {
             alert("평가 저장에 실패했습니다.");
         }
     };
+
+    const fetchStudentsWithScoresByExam = async () => {
+        try {
+            if (currentExam && currentExam.id) {
+                const response = await axios.get(`/api/teacher/exam/${currentExam.id}/students-with-scores`);
+                console.log("Fetched students:", response.data);
+                setStudents(response.data); // 학생 목록 설정
+            } else {
+                console.warn("No exam selected");
+            }
+        } catch (error) {
+            console.error("Error fetching students with scores:", error);
+        }
+    };
+
+    useEffect(() => {
+        if (visibleDiv === 'ExamEstimation' && currentExam) { // currentExam이 설정된 경우에만 호출
+            fetchStudentsWithScoresByExam(); // 학생 목록 가져오기
+        }
+    }, [visibleDiv, currentExam]);
+
+    useEffect(() => {
+        console.log("VisibleDiv:", visibleDiv);
+        if (visibleDiv === 'ExamEstimation' && currentExam) {
+            console.log("Fetching students for exam:", currentExam.id);
+            fetchStudentsWithScoresByExam();
+        }
+    }, [visibleDiv, currentExam]);
+
 
 
 
@@ -2021,7 +2052,8 @@ function App26() {
                             <div id="table_score">
                                 <div id="blank_table_score"/>
                                 <div id="howmanystudent">
-                                    대상인원 : 00명 | 참여인원 : 00명
+                                    대상인원 : {students.length}명 | 참여인원
+                                    : {students.filter(student => student.score > 0).length}명
                                 </div>
                                 <div id="tableOfStudentScore">
                                     <div id="tableOfStudentScore_category">
@@ -2067,9 +2099,23 @@ function App26() {
                                 </div>
                             </div>
                             <div id="graph_score">
-                                <ScoreChart scores={scores} />
+                                <ScoreChart scores={scores}/>
                             </div>
                             <div id="NameOfStudent_ExamEstimation">
+                                <h3>학생 목록</h3>
+                                <div id="studentList">
+                                    {students.length > 0 ? (
+                                        students.map((student) => (
+                                            <div key={student.studentId} className="student-info">
+                                                <div className="student-id">ID: {student.studentId}</div>
+                                                <div className="student-name">이름: {student.studentName}</div>
+                                                <div className="student-score">점수: {student.score || 0}</div>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p>학생 목록을 불러오는 중입니다...</p>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </>
