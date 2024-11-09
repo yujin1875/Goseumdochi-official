@@ -1,8 +1,10 @@
 package com.midas.goseumdochi.teacher.service;
 
 import com.midas.goseumdochi.student.Dto.AssignmentSubmissionDTO;
+import com.midas.goseumdochi.student.Repository.RegistLectureRepository;
 import com.midas.goseumdochi.student.entity.AssignmentSubmissionEntity;
 import com.midas.goseumdochi.teacher.dto.AssignmentDTO;
+import com.midas.goseumdochi.teacher.dto.AssignmentRemainDTO;
 import com.midas.goseumdochi.teacher.dto.LectureMaterialDTO;
 import com.midas.goseumdochi.teacher.entity.AssignmentEntity;
 import com.midas.goseumdochi.teacher.entity.LectureEntity;
@@ -22,7 +24,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +37,7 @@ public class AssignmentService {
     private final AssignmentRepository assignmentRepository;
     private final LectureRepository lectureRepository;
     private final AssignmentSubmissionRepository assignmentSubmissionRepository;
+    private final RegistLectureRepository registLectureRepository;
 
     public void saveAssignment(AssignmentDTO assignmentDTO) {
         AssignmentEntity entity = AssignmentEntity.builder()
@@ -185,5 +191,23 @@ public class AssignmentService {
         ));
 
         return assignmentDTOPage;
+    }
+
+    // 남은 과제 리턴
+    public List<AssignmentRemainDTO> getRemainAssignment(Long studentId, LocalDate todayDate) {
+        List<AssignmentRemainDTO> assignmentRemainDTOList = new ArrayList<>();
+        List<LectureEntity> lectureEntityList = registLectureRepository.findAllLectureByStudentId(studentId);
+        for (LectureEntity lecture : lectureEntityList) {
+            // 모든 강의의 과제 찾아서 현재 날짜보다 마감일이 이후면 리스트에 추가
+            List<AssignmentEntity> assignmentEntityList = assignmentRepository.findAllByLectureId(lecture.getId());
+            for (AssignmentEntity assignment : assignmentEntityList) {
+                // 오늘 날짜가 마감일보다 작거나 같으면
+                if (!todayDate.isAfter(assignment.getDeadline().toLocalDate()))
+                    assignmentRemainDTOList.add(new AssignmentRemainDTO(assignment.getId(), assignment.getTitle(),
+                            (int) ChronoUnit.DAYS.between(todayDate, assignment.getDeadline().toLocalDate()),
+                            lecture.getName(), lecture.getId()));
+            }
+        }
+        return assignmentRemainDTOList;
     }
 }

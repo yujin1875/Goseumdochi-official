@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 @RestController
@@ -216,6 +217,13 @@ public class StudentController {
     public ResponseEntity<?> getTeacherofLecture(@PathVariable Long lectureId) {
         TeacherDTO teacherDTO = lectureService.getTeacherOfLecture(lectureId);
         return ResponseEntity.ok(teacherDTO);
+    }
+
+    // 학생의 남은과제 리스트 조회 (강의명, 과제제목, D-day)
+    @GetMapping("/{studentId}/remain/assignment")
+    public ResponseEntity<?> getRemainAssignment(@PathVariable Long studentId, @RequestParam("todayDate") LocalDate todayDate) {
+        List<AssignmentRemainDTO> assignmentRemainDTOList = assignmentService.getRemainAssignment(studentId, todayDate);
+        return ResponseEntity.ok(assignmentRemainDTOList);
     }
 
     @GetMapping("/lecture/{lectureId}/students/submission-status")
