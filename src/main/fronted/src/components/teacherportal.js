@@ -1760,6 +1760,9 @@ function App26() {
                             <button id="delete" onClick={() => handleDeleteExam(currentExam.id)}>
                                 삭제
                             </button>
+                            <button id="evaluate" onClick={showDivExamEstimation}>
+                                평가
+                            </button>
                             <button id="back" onClick={showDivExam}>
                                 목록
                             </button>
