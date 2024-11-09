@@ -1,21 +1,23 @@
 import '../css/mypage.css';
 import logo from './images/goseumdochi.png';
+import message_icon from './images/message.png';
+import logout_icon from './images/logout.jpg';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function App12() {
     const Gomain = () => {
-        window.location.href = '/main';
+        navigate('/main', { state: { studentId } });
     };
     const Gonotice = () => {
-        window.location.href = '/notice';
+        navigate('/notice', { state: { studentId } });
     };
     const Gocommunity = () => {
-        window.location.href = '/community';
+        navigate('/community', { state: { studentId } });
     };
     const Gomypage = () => {
-        window.location.href = '/mypage';
+        navigate('/mypage', { state: { studentId } });
     };
 
     const [visibleDiv, setVisibleDiv] = useState('Profile');
@@ -36,6 +38,8 @@ function App12() {
     });
 
     const location = useLocation();
+    const navigate = useNavigate();
+    const { user } = location.state || {};
     const { studentId } = location.state || {};
 
     const [userAcademies, setUserAcademies] = useState([]); // 학원 목록 불러오는 것
@@ -206,12 +210,35 @@ function App12() {
         }
     }, [visibleDiv]);
 
+    const [userName, setUserName] = useState('');
+
+    useEffect(() => {
+        const userIdFromLocalStorage = localStorage.getItem('userId');
+        setUserName(userIdFromLocalStorage);
+    }, []);
+
+    const GoMessageList = () => {
+        navigate('/message/list', { state: { user: { id: studentId } } });
+    };
+
+    const GoIntegrateLogin = () => {
+        navigate('/integrate/login', { state: { user: { id: studentId } } });
+    };
+
     return (
         <div id="App">
             <div id="mypage-menu">
                 <div id="header_mypage">
-                    <img src={logo} onClick={Gomain} />
-                    <div id="user_info"></div>
+                    <img src={logo} onClick={() => navigate('/main')} alt="Logo" />
+                        <div id="user_info">
+                            {userName && `${userName}님`}
+                            <button className="icon" onClick={GoMessageList}>
+                                <img src={message_icon} alt="쪽지" style={{ width: '20px', height: '20px' }} />
+                            </button>
+                            <button className="icon" onClick={GoIntegrateLogin}>
+                                <img src={logout_icon} alt="로그아웃" style={{ width: '20px', height: '20px' }} />
+                            </button>
+                        </div>
                 </div>
                 <div id="buttons_mypage">
                     <input type="submit" value="공지사항" id="notice_btn" onClick={Gonotice} />

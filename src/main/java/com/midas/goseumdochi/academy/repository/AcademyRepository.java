@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AcademyRepository extends JpaRepository<AcademyEntity, Long> {
@@ -14,4 +15,16 @@ public interface AcademyRepository extends JpaRepository<AcademyEntity, Long> {
 
     @Query("SELECT a.name FROM AcademyEntity a WHERE a.id = :academyId")
     Optional<String> findNameById(@Param("academyId") Long academyId);
+
+    @Query("SELECT a.directorEntity.id FROM AcademyEntity a WHERE a.id = :academyId")
+    Long findDirectorIdByAcademyId(@Param("academyId") Long academyId);
+
+    // 여러 학원 ID에 대해 원장 ID를 찾는 쿼리 메서드
+    @Query("SELECT a.directorEntity.id FROM AcademyEntity a WHERE a.id IN :academyIds")
+    List<Long> findDirectorIdsByAcademyIds(@Param("academyIds") List<Long> academyIds);
+
+    @Query("SELECT a.name FROM AcademyEntity a WHERE a.id IN :academyIds")
+    List<String> findNamesByIds(@Param("academyIds") List<Long> academyIds);
+
+    List<AcademyEntity> findByIdIn(List<Long> ids);
 }

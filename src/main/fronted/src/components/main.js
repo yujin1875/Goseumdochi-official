@@ -32,10 +32,10 @@ function App6() {
         window.location.href = '/main';
     };
     const Gonotice = () => {
-        window.location.href = '/notice';
+        navigate('/notice', { state: { studentId: user.id } });
     };
     const Gocommunity = () => {
-        window.location.href = '/community';
+        navigate('/community', { state: { user: user } });  // user 정보를 state로 전달
     };
     const Gomypage = () => {
         navigate('/mypage', { state: { studentId: user.id } });

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../css/community.css';
 import logo from './images/goseumdochi.png';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // main으로 이동할 때 사용
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function App24() {
     const [visibleDiv, setVisibleDiv] = useState('자유');
@@ -22,7 +22,9 @@ function App24() {
     const [searchResults, setSearchResults] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
 
-    const navigate = useNavigate(); // main으로 이동할 때 사용
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { user } = location.state || {};  // state에서 user 정보 받기
 
     const [newPost, setNewPost] = useState({
         title: '',
@@ -45,15 +47,9 @@ function App24() {
     };
 
     // main으로 ㄱㄱ
-    const showMain = async () => {
-        try {
-            const userInfo = await fetchStudentInfo();
-            navigate('/main', { state: { userInfo } }); // 사용자 정보를 state로 전달
-        } catch (error) {
-            console.error('Error fetching user info for navigation:', error);
-        }
+    const showMain = () => {
+        navigate('/main', { state: { user: user } }); // user 정보를 state로 전달
     };
-
 
     useEffect(() => {
         if (visibleDiv === '글쓰기') {

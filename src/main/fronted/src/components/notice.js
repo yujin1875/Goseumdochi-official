@@ -1,31 +1,67 @@
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import '../css/notice.css';
 import logo from './images/goseumdochi.png';
 
-function App27() {
-    const Gomain=()=>{
-        window.location.href='/main'
-    }
+function NoticePage() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const studentId = location.state?.studentId; // 메인에서 전달받은 studentId
+    const [notices, setNotices] = useState([]);
+    const [selectedNotice, setSelectedNotice] = useState(null); // 선택된 공지사항 저장
 
-    const Gonotice=()=>{
-        window.location.href='/notice'
-    }
+    // 메인 페이지로 이동
+    const goToMain = () => {
+        navigate('/main', {state: {studentId}});
+    };
 
-    const Gomypage=()=>{
-        window.location.href='/mypage'
-    }
+    const Gonotice = () => {
+        navigate('/notice', { state: { studentId } });
+    };
+
+    const Gocommunity = () => {
+        navigate('/community', { state: { studentId } });
+    };
+
+    const Gomypage = () => {
+        navigate('/mypage', { state: { studentId } });
+    };
+
+    // 공지사항 데이터 불러오기
+    useEffect(() => {
+        if (studentId) {
+            axios.get(`/api/academyNotice/student/${studentId}`)
+                .then(response => {
+                    console.log(response.data);
+                    setNotices(response.data);
+                })
+                .catch(error => console.error('Error fetching notices:', error));
+        }
+    }, [studentId]);
+
+    // 공지사항 제목 클릭 시 상세 보기
+    const viewNoticeDetails = (notice) => {
+        setSelectedNotice(notice);  // 클릭한 공지사항 저장
+    };
+
+    // 모달 닫기
+    const closeModal = () => {
+        setSelectedNotice(null);  // 선택된 공지사항 초기화
+    };
 
     return (
         <div id="App">
             <div id="notice-menu">
                 <div id="header_notice">
-                    <img src={logo} onClick={Gomain}/>
-                    <div id="user_info"></div>
+                    <img src={logo} onClick={goToMain} alt="Logo"/>
+                    <div id="user_info">ID: {studentId}</div>
                 </div>
                 <div id="buttons_notice">
-                    <input type="submit" value="공지사항" id="notice_btn" onClick={Gonotice}/>
-                    <input type="submit" value="커뮤니티" id="community_btn"/>
-                    <input type="submit" value="마이페이지" id="mypage_btn" onClick={Gomypage}/>
-                    <div id="rect"/>
+                    <input type="submit" value="공지사항" id="notice_btn" onClick={Gonotice} />
+                    <input type="submit" value="커뮤니티" id="community_btn" onClick={Gocommunity} />
+                    <input type="submit" value="마이페이지" id="mypage_btn" onClick={Gomypage} />
+                    <div id="rect" />
                 </div>
                 <div id="contents_notice">
                     <div id="aboutNotice_notice">
@@ -40,34 +76,57 @@ function App27() {
                         </div>
                         <div id="contents_aboutNotice_notice">
                             <div id="category_contents_notice">
-                                <div id="num">
-                                    번호
-                                </div>
-                                <div id="title">
-                                    제목
-                                </div>
-                                <div id="postperson">
-                                    게시자
-                                </div>
-                                <div id="postdate">
-                                    게시일
-                                </div>
-                                <div id="visit">
-                                    조회수
-                                </div>
+                                <div id="num">번호</div>
+                                <div id="title">제목</div>
+                                <div id="postperson">게시자</div>
+                                <div id="postdate">게시일</div>
+                                <div id="visit">조회수</div>
                             </div>
                             <div id="body_contents_notice">
-
+                                {notices.length === 0 ? (
+                                    <div>공지사항이 없습니다.</div>
+                                ) : (
+                                    notices.map((notice, index) => (
+                                        <div
+                                            key={notice.num}
+                                            className="notice-item"
+                                            onClick={() => viewNoticeDetails(notice)} // 제목 클릭 시 상세 보기
+                                        >
+                                            <div className="num">{index + 1}</div>
+                                            <div className="title">{notice.title}</div>
+                                            <div className="academy-name">[{notice.academyName}]</div>
+                                            <div className="postperson">{notice.directorName}</div>
+                                            <div className="postdate">{new Date(notice.regdate).toLocaleDateString()}</div>
+                                            <div className="visit">0</div>
+                                        </div>
+                                    ))
+                                )}
                             </div>
                         </div>
                     </div>
                 </div>
+
+                {/* 공지사항 상세보기 모달 */}
+                {selectedNotice && (
+                    <div id="notice-modal" className="modal">
+                        <div className="modal-content">
+                            <span className="close-btn" onClick={closeModal}>&times;</span>
+                            <h2>{selectedNotice.title}</h2>
+                            <p><strong>작성자:</strong> {selectedNotice.directorName}</p>
+                            <p><strong>학원:</strong> {selectedNotice.academyName}</p>
+                            <p><strong>게시일:</strong> {new Date(selectedNotice.regdate).toLocaleDateString()}</p>
+                            <p><strong>내용:</strong></p>
+                            <p>{selectedNotice.body}</p>
+                        </div>
+                    </div>
+                )}
+
                 <div id="footer_notice">
-                    <a>문의 | midas2024.ver01@gmail.com</a>
+                    <a href="mailto:midas2024.ver01@gmail.com">문의 | midas2024.ver01@gmail.com</a>
                 </div>
             </div>
         </div>
     );
 }
 
-export default App27;
+export default NoticePage;
