@@ -21,6 +21,13 @@ function App6() {
     const [selectedEvent, setSelectedEvent] = useState(null); // 선택된 이벤트 상태
     const [isModalOpen, setIsModalOpen] = useState(false);    // 모달 상태
 
+    const [todayLectureList, setTodayLectureList] = useState([]); // 오늘의 강의 리스트
+    const [assignmentList, setassignmentList] = useState([]); // 남은 과제 리스트
+
+    const today = new Date(); // 오늘 날짜
+    const days = ['일', '월', '화', '수', '목', '금', '토'];
+    const day = days[new Date().getDay()]; // 오늘 요일
+
     const Gomain = () => {
         window.location.href = '/main';
     };
@@ -84,10 +91,42 @@ function App6() {
             }
         };
 
+        // 남은과제 가져오기
+        const fetchRemainingAssignments = async () => {
+            try {
+                const todayDate = today.toISOString().split('T')[0]; // yyyy-MM-dd 형식으로 변환
+
+                const response = await axios.get(`/api/student/${user.id}/remain/assignment`, {
+                    params: { todayDate: todayDate },
+                });
+
+                setassignmentList(response.data);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
 
         fetchLectures();
         fetchCalendarEvents();
+        fetchRemainingAssignments();
     }, [user]);
+
+    // lectureList가 업데이트될 때 todayLectureList를 설정하는 useEffect
+    useEffect(() => {
+        const todayLectures = lectureList
+            .flatMap((lecture) =>
+                lecture.lectureTimeDTOList
+                    .filter((time) => time.day === day)
+                    .map((time) => ({
+                        name: lecture.name,
+                        startTime: time.startTime.slice(0, 5),
+                        endTime: time.endTime.slice(0, 5),
+                    }))
+            );
+
+        setTodayLectureList(todayLectures);
+    }, [lectureList, day]);
 
     const tileContent = ({ date, view }) => {
         if (view === 'month') {
@@ -181,7 +220,7 @@ function App6() {
                                                     <td className="table-cell">
                                                         {lecture.lectureTimeDTOList.map((time, index) => (
                                                             <div key={time.id}>
-                                                                {time.day} {time.startTime} - {time.endTime}
+                                                                {time.day} {time.startTime.slice(0, 5)} - {time.endTime.slice(0, 5)}
                                                                 {lecture.lectureTimeDTOList.length - 1 !== index && ', '}
                                                             </div>
                                                         ))}
@@ -197,11 +236,41 @@ function App6() {
                     <div id="contents2_main">
                         <div id="main_schedule">
                             <h2>수업일정</h2>
-                            <div id="content_schedule"></div>
+                            <div id="content_schedule">
+                                <h1>{today.toLocaleDateString()} ({day})</h1>
+                                <div>
+                                    {todayLectureList.length > 0 ? (
+                                        <ul>
+                                            {todayLectureList.map((lecture, index) => (
+                                                <li key={index}>
+                                                    <strong>{lecture.name}</strong> {lecture.startTime} - {lecture.endTime}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        <p>강의가 없는 날입니다.</p>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                         <div id="main_submission">
                             <h2>남은 제출</h2>
-                            <div id="content_submission"></div>
+                            <div id="content_submission">
+                                <h3>남은 과제 목록</h3>
+                                {assignmentList.length > 0 ? (
+                                    <ul>
+                                        {assignmentList.map((assignment) => (
+                                            <li key={assignment.id}>
+                                                <h4>{assignment.lectureName}</h4>
+                                                <p>과제 제목: {assignment.title}</p>
+                                                <p>D-day: {assignment.dDay}</p>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p>남은 과제가 없습니다.</p>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
