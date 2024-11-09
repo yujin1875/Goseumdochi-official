@@ -53,6 +53,13 @@ function App26() {
         attachmentPath: ''
     });
 
+    // 메뉴 클릭시 색 변경
+    const [selectedIndex, setSelectedIndex] = useState(null);
+
+    const handleClick = (index, callback) => {
+        setSelectedIndex(index);
+        callback();
+    };
     // currentAssignment와 studentId가 변경될 때 fetchStudentSubmission 호출
     useEffect(() => {
         if (currentAssignment && currentAssignment.id && studentId) {
@@ -917,14 +924,43 @@ function App26() {
                     <h2>고슴도치</h2>
                 </div>
                 <ul>
-                    <li onClick={showDivHome}><a>교과정보</a></li>
-                    <li onClick={showVideoLecture}><a>강의관리</a></li>
-                    <li onClick={showDivLecturedata}><a>수업자료</a></li>
-                    <li onClick={showDivAssignment}><a>과제조회/제출</a></li>
-                    <li onClick={showDivExam}><a>시험 관리</a></li>
-                    <li onClick={showDivSubject}><a>과목공지</a></li>
+                    <li
+                        onClick={() => handleClick(0, showDivHome)}
+                        style={{ backgroundColor: selectedIndex === 0 ? '#BCBCBC' : '#D9D9D9' }}
+                    >
+                        <a>교과정보</a>
+                    </li>
+                    <li
+                        onClick={() => handleClick(1, showVideoLecture)}
+                        style={{ backgroundColor: selectedIndex === 1 ? '#BCBCBC' : '#D9D9D9' }}
+                    >
+                        <a>강의관리</a>
+                    </li>
+                    <li
+                        onClick={() => handleClick(2, showDivLecturedata)}
+                        style={{ backgroundColor: selectedIndex === 2 ? '#BCBCBC' : '#D9D9D9' }}
+                    >
+                        <a>수업자료</a>
+                    </li>
+                    <li
+                        onClick={() => handleClick(3, showDivAssignment)}
+                        style={{ backgroundColor: selectedIndex === 3 ? '#BCBCBC' : '#D9D9D9' }}
+                    >
+                        <a>과제조회/제출</a>
+                    </li>
+                    <li
+                        onClick={() => handleClick(4, showDivExam)}
+                        style={{ backgroundColor: selectedIndex === 4 ? '#BCBCBC' : '#D9D9D9' }}
+                    >
+                        <a>시험 관리</a>
+                    </li>
+                    <li
+                        onClick={() => handleClick(5, showDivSubject)}
+                        style={{ backgroundColor: selectedIndex === 5 ? '#BCBCBC' : '#D9D9D9' }}
+                    >
+                        <a>과목공지</a>
+                    </li>
                     <li onClick={() => navigate('/teachermain', {state: {user: user}})}><a>강의실 나가기</a></li>
-
                 </ul>
             </div>
             <div id="teacherportal_header">
@@ -1194,7 +1230,7 @@ function App26() {
                             <input type="text" id="Subjectedit_title" value={title} onChange={(e) => setTitle(e.target.value)} />
                         </div>
                         <div id="content_Subjectedit">
-                            <input type="text" id="Subjectedit_content" value={content} onChange={(e) => setContent(e.target.value)} />
+                            <textarea id="Subjectedit_content" value={content} onChange={(e) => setContent(e.target.value)} />
                         </div>
                         <div id="file_Subjectedit">
                             <input type="file" id="Subjectedit_file" onChange={(e) => setFile(e.target.files[0])} />
@@ -1270,10 +1306,9 @@ function App26() {
                             <h2>배점</h2>
                             <input type="text" id="Assignmentadd_score" value={points}
                                    onChange={(e) => setPoints(e.target.value)}/>
-                        </div>
-                        <div id="scorePublished_Assignmentadd">
-                            <h2>점수 공개 여부</h2>
+                            <h2>점수 공개</h2>
                             <input
+                                id="Assignmentadd_scorePublished"
                                 type="checkbox"
                                 checked={scorePublished}
                                 onChange={(e) => setScorePublished(e.target.checked)}
@@ -1325,22 +1360,23 @@ function App26() {
                             <h2>배점</h2>
                             <input type="text" id="Assignmentrevise_score" value={points}
                                    onChange={(e) => setPoints(e.target.value)}/>
-                        </div>
-                        <div id="scorePublished_Assignmentrevise">
-                            <h2>점수 공개 여부</h2>
+                            <h2>점수 공개</h2>
                             <input
+                                id="Assignmentrevise_scorePublished"
                                 type="checkbox"
                                 checked={scorePublished}
                                 onChange={(e) => setScorePublished(e.target.checked)}
                             />
                         </div>
                         <div id="content_Assignmentrevise">
-                            <input type="text" id="Assignmentrevise_content" value={content}
+                            <textarea id="Assignmentrevise_content" value={content}
                                    onChange={(e) => setContent(e.target.value)}/>
                         </div>
                         <div id="file_Assignmentrevise">
                             <input type="file" id="Assignmentrevise_file" onChange={(e) => setFile(e.target.files[0])}/>
-                            {existingFile && <div><a href={existingFile} download>기존 첨부파일</a></div>}
+                            <div id="existing_Assignmentrevise_file">
+                                {existingFile && <div><a href={existingFile} download>기존 첨부파일</a></div>}
+                            </div>
                         </div>
                         <div id="buttons_Assignmentrevise">
                             <button id="revise_save" onClick={handleUpdateAssignment}>
@@ -1376,15 +1412,16 @@ function App26() {
                         <div id="score_Assignmentread">
                             <h2>배점</h2>
                             <div id="Assignmentread_score">{currentAssignment?.points}</div>
-                        </div>
-                        <div id="scorePublished_Assignmentread">
-                            <h2>점수 공개 여부</h2>
+                            <h2>점수 공개</h2>
                             <div id="Assignmentread_scorePublished">
                                 {currentAssignment?.isScoreVisible ? 'YES' : 'NO'}
                             </div>
                         </div>
                         <div id="content_Assignmentread">
-                        <div id="Assignmentread_content">{currentAssignment?.content}</div>
+                            <div id="Assignmentread_content">
+                                <div id="padding_Assignmentread_content"/>
+                                {currentAssignment?.content}
+                            </div>
                         </div>
                         <div id="file_Assignmentread">
                             <div id="Assignmentread_file"><a href={currentAssignment?.attachmentPath} download>첨부파일</a>
@@ -1480,11 +1517,13 @@ function App26() {
                             </div>
                             <div id="file_AssignmentEstimationStudent">
                                 <h2>첨부 파일</h2>
-                                {submissionDetails.attachmentPath ? (
-                                    <a href={submissionDetails.attachmentPath} download>첨부파일 다운로드</a>
-                                ) : (
-                                    <p>첨부 파일이 없습니다.</p>
-                                )}
+                                <div id="StudentFile">
+                                    {submissionDetails.attachmentPath ? (
+                                        <a href={submissionDetails.attachmentPath} download>첨부파일 다운로드</a>
+                                    ) : (
+                                        <p>첨부 파일이 없습니다.</p>
+                                    )}
+                                </div>
                             </div>
                             <div id="Estimation_AssignmentEstimationStudent">
                                 <h2>평가</h2>
@@ -1501,8 +1540,7 @@ function App26() {
                             </div>
                             <div id="Opinion_AssignmentEstimationStudent">
                                 <h2>평가 의견</h2>
-                                <input
-                                    type="text"
+                                <textarea
                                     id="OpinionOfAssignment"
                                     placeholder="평가 의견을 입력하세요"
                                     value={submissionDetails.evaluationComment || ''} // 기존 평가 의견을 입력 폼에 표시
@@ -1512,7 +1550,9 @@ function App26() {
                                     })}  // 값이 변경되면 상태 업데이트
                                 />
                             </div>
-                            <button id="AssignmentEstimationStudent_button" onClick={handleSaveEvaluation}>저장</button>
+                            <div id="buttons_AssignmentEstimationStudent">
+                                <button id="AssignmentEstimationStudent_button" onClick={handleSaveEvaluation}>저장</button>
+                            </div>
                         </div>
                     </div>
                 )}
@@ -1520,16 +1560,15 @@ function App26() {
                 {visibleDiv === 'Lecturedata' && (
                     <>
                         <div id="Lecturedata_teacherportal">
-                            <h2>수업자료실</h2>
+                            <div id="button_List_teacherportal">
+                                <h2>수업자료실</h2>
+                                <button id="newRegister" onClick={showsubDivWrite}>
+                                    <span>새로 등록하기</span>
+                                </button>
+                            </div>
                             <div id="Lecturedata">
                                 {visiblesubDiv === 'List' && (
                                     <div id="List_teacherportal">
-                                        <div id="button_List_teacherportal">
-                                            <button id="newRegister" onClick={showsubDivWrite}>
-                                                <span>새로 등록하기</span>
-                                            </button>
-                                        </div>
-                                        <br/>
                                         <div id="cate_List">
                                             <div id="no">No</div>
                                             <div id="title">제목</div>
@@ -1556,7 +1595,9 @@ function App26() {
                                                 <h2>제목</h2>
                                                 <div id="title_View">{currentMaterial?.title}</div>
                                             </div>
-                                            <div id="content_View">{currentMaterial?.content}</div>
+                                            <div id="content_View">
+                                                {currentMaterial?.content}
+                                            </div>
                                             <div id="file_View">
                                                 <a href={currentMaterial?.attachmentPath} download>첨부파일</a>
                                             </div>
@@ -1576,15 +1617,13 @@ function App26() {
                                     <div id="Write_teacherportal">
                                         <div id="Write">
                                             <div id="title_Write">
-                                                <div id="tWrite">제목</div>
+                                                <h2>제목</h2>
                                                 <input type="text" id="titleWrite" value={title} onChange={(e) => setTitle(e.target.value)} />
                                             </div>
                                             <div id="content_Write">
-                                                <div id="cWrite">내용</div>
-                                                <input type="text" id="contentWrite" value={content} onChange={(e) => setContent(e.target.value)} />
+                                                <textarea id="contentWrite" placeholder="내용을 입력하세요" value={content} onChange={(e) => setContent(e.target.value)}/>
                                             </div>
                                             <div id="file_Write">
-                                                <div id="fWrite">첨부파일</div>
                                                 <input type="file" id="fileWrite" onChange={(e) => setFile(e.target.files[0])} />
                                             </div>
                                         </div>
@@ -1597,15 +1636,13 @@ function App26() {
                                     <div id="reviseWrite_teacherportal">
                                         <div id="reviseWrite">
                                             <div id="title_reviseWrite">
-                                                <div id="treviseWrite">제목</div>
+                                                <h2>제목</h2>
                                                 <input type="text" id="titlereviseWrite" value={title} onChange={(e) => setTitle(e.target.value)} />
                                             </div>
                                             <div id="content_reviseWrite">
-                                                <div id="creviseWrite">내용</div>
-                                                <input type="text" id="contentreviseWrite" value={content} onChange={(e) => setContent(e.target.value)} />
+                                                <textarea id="contentreviseWrite" value={content} onChange={(e) => setContent(e.target.value)} />
                                             </div>
                                             <div id="file_reviseWrite">
-                                                <div id="freviseWrite">첨부파일</div>
                                                 <input type="file" id="filereviseWrite" onChange={(e) => setFile(e.target.files[0])} />
                                                 {existingFile && <div><a href={existingFile} download>기존 첨부파일</a></div>}
                                             </div>

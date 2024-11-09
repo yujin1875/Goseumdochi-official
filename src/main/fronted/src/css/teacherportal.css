@@ -30,21 +30,23 @@ hr{
     margin-left:15px;
 }
 
-#menu_teacherportal>ul>li{
-    width:295px;
-    height:80px;
-    background-color:#D9D9D9;
+#menu_teacherportal ul li {
+    width: 295px;
+    height: 80px;
+    background-color: #D9D9D9;
+    cursor: pointer;
+    /*border-bottom: 1px solid #BCBCBC;*/
 }
-
-#menu_teacherportal>ul>li:hover{
-    width:295px;
-    height:80px;
-    background-color:#BCBCBC;
+/*
+#menu_teacherportal ul li:hover {
+    background-color: #BCBCBC;
+    cursor: pointer;
 }
-
-#menu_teacherportal>ul>li>a{
-    margin:auto;
-    margin-top:25px;
+*/
+#menu_teacherportal ul li a {
+    display: block;
+    text-align: center;
+    margin-top: 25px;
 }
 
 #teacherportal_header{
@@ -72,14 +74,6 @@ hr{
     height:989px;
 }
 
-#Lecturedata_teacherportal>h2{
-    display:block;
-    width:920px;
-    height:60px;
-    margin-top:10px;
-    margin-left:350px;
-}
-
 #Lecturedata_teacherportal>#Lecturedata{
     width:1920px;
     height:900px;
@@ -92,10 +86,20 @@ hr{
     background-color:#FFFFFF;
 }
 
-#List_teacherportal>#button_List_teacherportal{
-    width:100%;
-    height:70px;
+#Lecturedata_teacherportal>#button_List_teacherportal{
+    float:left;
+    width:1625px;
+    height:80px;
     background-color:#EAEAEA;
+}
+
+#button_List_teacherportal>h2{
+    float:left;
+    display:block;
+    width:500px;
+    height:60px;
+    margin-top:20px;
+    margin-left:70px;
 }
 
 #button_List_teacherportal>button{
@@ -104,7 +108,8 @@ hr{
     height:51px;
     background-color:#6F7C86;
     border-color:#6F7C86;
-    margin-left:1450px;
+    margin-top:15px;
+    margin-left:870px;
     font-size:15px;
     color:#FFFFFF;
 }
@@ -237,23 +242,25 @@ hr{
 }
 
 #View>#content_View{
-    width:1500px;
-    height:500px;
+    width:1460px;
+    height:460px;
     background-color:#FFFFFF;
     font-size:24px;
     margin:auto;
     margin-top:70px;
+    padding: 20px;
 }
 
 #View>#file_View{
     float:left;
-    width:1500px;
-    height:200px;
+    width:1460px;
+    height:160px;
     background-color:#FFFFFF;
     font-size:24px;
     margin:auto;
     margin-top:40px;
     margin-left:63px;
+    padding: 20px;
 }
 
 #View>#back{
@@ -296,73 +303,74 @@ hr{
 }
 
 #Lecturedata>#Write_teacherportal{
-     width:1920px;
-     height:800px;
+    float:left;
+    width:1625px;
+    height:800px;
 }
 
 #Write_teacherportal>#Write{
-    width:1920px;
+    float:left;
+    width:1625px;
     height:800px;
-    background-color:#FFFFFF;
 }
 
 #Write>#title_Write{
-    width:1920px;
-    height:100px;
+    float:left;
+    width:1500px;
+    height:50px;
+    background-color:#FFFFFF;
+    margin:auto;
+    margin-left:63px;
 }
 
-#title_Write>#tWrite{
-    margin:auto;
-    margin-top:25px;
+#title_Write>h2{
     float:left;
-    width:300px;
+    width:100px;
     height:50px;
     font-size:24px;
-    text-align:right;
+    margin-top:7px;
+    margin-left:70px;
 }
 
 #title_Write>input{
     float:left;
-    width:1000px;
-    height:50px;
-    margin:auto;
-    margin-top:20px;
-    margin-left:30px;
-    background-color:#FFFFFF;
+    width:1200px;
+    height:40px;
     font-size:24px;
-    text-align:left;
+    margin-top:3px;
 }
 
 #Write>#content_Write{
-    width:1920px;
-    height:500px;
-}
-
-#content_Write>#cWrite{
-    margin:auto;
-    margin-top:25px;
-    float:left;
-    width:300px;
-    height:400px;
-    font-size:24px;
-    text-align:right;
-}
-
-#content_Write>input{
-    float:left;
-    width:1000px;
-    height:450px;
-    margin:auto;
-    margin-top:20px;
-    margin-left:30px;
+    width:1460px;
+    height:460px;
     background-color:#FFFFFF;
     font-size:24px;
-    text-align:left;
+    margin:auto;
+    margin-top:70px;
+    padding: 20px;
+}
+
+#content_Write>textarea{
+    width:1400px;
+    height:450px;
+    margin-left:30px;
+    background-color:#FFFFFF;
+    resize: none;
+    font-size:24px;
+    font-align:left;
+    vertical-align: top;
 }
 
 #Write>#file_Write{
-    width:1920px;
-    height:200px;
+    float:left;
+    width:1460px;
+    height:160px;
+    background-color:#FFFFFF;
+    font-size:24px;
+    margin:auto;
+    margin-top:40px;
+    margin-left:63px;
+    padding: 20px;
 }
 
 #file_Write>#fWrite{
@@ -380,24 +388,10 @@ hr{
     width:1000px;
     height:50px;
     margin:auto;
-    margin-top:20px;
     margin-left:30px;
     background-color:#FFFFFF;
     font-size:24px;
     text-align:left;
-}
-
-#file_Write>#find{
-    float:left;
-    width:103px;
-    height:51px;
-    background-color:#6F7C86;
-    border-color:#6F7C86;
-    margin:auto;
-    margin-top:22px;
-    margin-left:20px;
-    font-size:15px;
-    color:#FFFFFF;
 }
 
 #Write_teacherportal>#save{
@@ -407,8 +401,8 @@ hr{
     background-color:#6F7C86;
     border-color:#6F7C86;
     margin:auto;
-    margin-top:22px;
-    margin-right:20px;
+    margin-top:32px;
+    margin-right:80px;
     font-size:15px;
     color:#FFFFFF;
 }
@@ -416,83 +410,74 @@ hr{
 /*수정할때 쓰는*/
 
 #Lecturedata>#reviseWrite_teacherportal{
-     width:1920px;
-     height:800px;
+    float:left;
+    width:1625px;
+    height:800px;
 }
 
 #reviseWrite_teacherportal>#reviseWrite{
-    width:1920px;
+    float:left;
+    width:1625px;
     height:800px;
-    background-color:#FFFFFF;
 }
 
 #reviseWrite>#title_reviseWrite{
-    width:1920px;
-    height:100px;
+    float:left;
+    width:1500px;
+    height:50px;
+    background-color:#FFFFFF;
+    margin:auto;
+    margin-left:63px;
 }
 
-#title_reviseWritee>#treviseWrite{
-    margin:auto;
-    margin-top:25px;
+#title_reviseWrite>h2{
     float:left;
-    width:300px;
+    width:100px;
     height:50px;
     font-size:24px;
-    text-align:right;
+    margin-top:7px;
+    margin-left:70px;
 }
 
 #title_reviseWrite>input{
     float:left;
-    width:1000px;
-    height:50px;
-    margin:auto;
-    margin-top:20px;
-    margin-left:30px;
-    background-color:#FFFFFF;
+    width:1200px;
+    height:40px;
     font-size:24px;
-    text-align:left;
+    margin-top:3px;
 }
 
 #reviseWrite>#content_reviseWrite{
-    width:1920px;
-    height:500px;
-}
-
-#content_reviseWrite>#creviseWrite{
-    margin:auto;
-    margin-top:25px;
-    float:left;
-    width:300px;
-    height:400px;
-    font-size:24px;
-    text-align:right;
-}
-
-#content_reviseWrite>input{
-    float:left;
-    width:1000px;
-    height:450px;
-    margin:auto;
-    margin-top:20px;
-    margin-left:30px;
+    width:1460px;
+    height:460px;
     background-color:#FFFFFF;
     font-size:24px;
-    text-align:left;
+    margin:auto;
+    margin-top:70px;
+    padding: 20px;
+}
+
+#content_reviseWrite>textarea{
+    width:1400px;
+    height:450px;
+    margin-left:30px;
+    background-color:#FFFFFF;
+    resize: none;
+    font-size:24px;
+    font-align:left;
+    vertical-align: top;
 }
 
 #reviseWrite>#file_reviseWrite{
-    width:1920px;
-    height:200px;
-}
-
-#file_reviseWrite>#freviseWrite{
-    margin:auto;
-    margin-top:25px;
     float:left;
-    width:300px;
-    height:100px;
+    width:1460px;
+    height:160px;
+    background-color:#FFFFFF;
     font-size:24px;
-    text-align:right;
+    margin:auto;
+    margin-top:40px;
+    margin-left:63px;
+    padding: 20px;
 }
 
 #file_reviseWrite>input{
@@ -500,24 +485,10 @@ hr{
     width:1000px;
     height:50px;
     margin:auto;
-    margin-top:20px;
     margin-left:30px;
     background-color:#FFFFFF;
     font-size:24px;
     text-align:left;
-}
-
-#file_reviseWrite>#find{
-    float:left;
-    width:103px;
-    height:51px;
-    background-color:#6F7C86;
-    border-color:#6F7C86;
-    margin:auto;
-    margin-top:22px;
-    margin-left:20px;
-    font-size:15px;
-    color:#FFFFFF;
 }
 
 #reviseWrite_teacherportal>#revise_save{
@@ -527,8 +498,8 @@ hr{
     background-color:#6F7C86;
     border-color:#6F7C86;
     margin:auto;
-    margin-top:22px;
-    margin-right:20px;
+    margin-top:32px;
+    margin-right:80px;
     font-size:15px;
     color:#FFFFFF;
 }
@@ -823,11 +794,18 @@ hr{
     margin-left:110px;
 }
 
-#score_Assignmentadd>input{
+#score_Assignmentadd>#Assignmentadd_score{
     float:left;
     width:100px;
     height:30px;
     margin-top:7px;
+    margin-right:100px;
+}
+
+#score_Assignmentadd>#Assignmentadd_scorePublished{
+    width:20px;
+    height:20px;
+    margin-top:12px;
 }
 
 #content_Assignmentadd{
@@ -988,6 +966,14 @@ hr{
     width:100px;
     height:30px;
     margin-top:7px;
+    margin-right:100px;
+}
+
+#score_Assignmentread>#Assignmentread_scorePublished{
+float:left;
+    width:20px;
+    height:20px;
+    margin-top:12px;
 }
 
 #content_Assignmentread{
@@ -1001,18 +987,26 @@ hr{
     height:450px;
     margin:auto;
     margin-top:30px;
-    margin-left:110px;
+    margin-left:330px;
+}
+
+#Assignmentread_content>#padding_Assignmentread_content{
+    width:1400px;
+    height:20px;
+    margin:auto;
+    margin-top:30px;
+    margin-left:330px;
 }
 
 #file_Assignmentread{
     width:1920px;
-    height:50px;
+    height:80px;
     background-color:#FFFFFF;
 }
 
 #file_Assignmentread>#Assignmentread_file{
     width:800px;
-    height:50px;
+    height:80px;
     margin:auto;
     margin-top:30px;
     margin-left:120px;
@@ -1020,7 +1014,7 @@ hr{
 
 #buttons_Assignmentread{
     width:1920px;
-    height:100px;
+    height:70px;
 }
 
 #buttons_Assignmentread>button{
@@ -1029,7 +1023,7 @@ hr{
     height:51px;
     background-color:#6F7C86;
     border-color:#6F7C86;
-    margin-top:15px;
+    margin-top:7px;
     font-size:15px;
     color:#FFFFFF;
 }
@@ -1277,9 +1271,14 @@ hr{
 }
 
 /* 과목 공지 읽는 */
+#Subjectread_teacherportal{
+    float:left;
+    width:1625px;
+    height:800px;
+}
 
 #Subjectread_teacherportal>#but{
-    width:1920px;
+    width:1625px;
     height:80px;
 }
 
@@ -1292,60 +1291,58 @@ hr{
     margin-left:70px;
 }
 
-#title_Subjectread{
-    width:1920px;
+#Subjectread_teacherportal>#title_Subjectread{
+    float:left;
+    width:1500px;
     height:50px;
     background-color:#FFFFFF;
+    margin:auto;
+    margin-left:63px;
 }
 
 #title_Subjectread>h2{
     float:left;
     width:100px;
-    height:30px;
-    margin-top:5px;
-    margin-left:110px;
+    height:50px;
+    font-size:24px;
+    margin-top:7px;
+    margin-left:70px;
 }
 
 #title_Subjectread>#Subjectread_title{
     float:left;
-    width:1200px;
-    height:30px;
-    margin-top:7px;
-    margin-left:40px;
-}
-
-#content_Subjectread{
-    width:1920px;
-    height:600px;
-    background-color:#FFFFFF;
-}
-
-#content_Subjectread>#Subjectread_content{
-    width:1400px;
-    height:550px;
-    margin:auto;
-    margin-top:30px;
-    margin-left:110px;
-}
-
-#file_Subjectread{
-    width:1920px;
-    height:100px;
-    background-color:#FFFFFF;
-}
-
-#file_Subjectread>#Subjectread_file{
-    width:1000px;
+    width:500px;
     height:50px;
+    font-size:24px;
+    margin-top:7px;
+}
+
+#Subjectread_teacherportal>#content_Subjectread{
+    width:1460px;
+    height:460px;
+    background-color:#FFFFFF;
+    font-size:24px;
     margin:auto;
-    margin-top:30px;
-    margin-left:120px;
+    margin-top:70px;
+    padding: 20px;
+}
+
+#Subjectread_teacherportal>#file_Subjectread{
+    float:left;
+    width:1460px;
+    height:160px;
+    background-color:#FFFFFF;
+    font-size:24px;
+    margin:auto;
+    margin-top:40px;
+    margin-left:63px;
+    padding: 20px;
 }
 
 #buttons_Subjectread{
-    width:1920px;
+    float:left;
+    width:1625px;
     height:100px;
-    background-color:#FFFFFF;
 }
 
 #buttons_Subjectread>button{
@@ -1368,6 +1365,111 @@ hr{
 }
 
 #buttons_Subjectread>#back{
+    margin-left:20px;
+}
+
+/* 과목 공지 수정 */
+#Subjectedit_teacherportal{
+    float:left;
+    width:1625px;
+    height:800px;
+}
+
+#Subjectedit_teacherportal>#but{
+    width:1625px;
+    height:80px;
+}
+
+#but>h2{
+    float:left;
+    display:block;
+    width:500px;
+    height:60px;
+    margin-top:20px;
+    margin-left:70px;
+}
+
+#Subjectedit_teacherportal>#title_Subjectedit{
+    float:left;
+    width:1500px;
+    height:50px;
+    background-color:#FFFFFF;
+    margin:auto;
+    margin-left:63px;
+}
+
+#title_Subjectedit>h2{
+    float:left;
+    width:100px;
+    height:50px;
+    font-size:24px;
+    margin-top:7px;
+    margin-left:70px;
+}
+
+#title_Subjectedit>#Subjectedit_title{
+    float:left;
+    width:1200px;
+    height:40px;
+    font-size:24px;
+    margin-top:3px;
+}
+
+#Subjectedit_teacherportal>#content_Subjectedit{
+    width:1460px;
+    height:460px;
+    background-color:#FFFFFF;
+    font-size:24px;
+    margin:auto;
+    margin-top:70px;
+    padding: 20px;
+}
+
+#content_Subjectedit>textarea{
+    width:1400px;
+    height:450px;
+    margin-left:30px;
+    background-color:#FFFFFF;
+    resize: none;
+    font-size:24px;
+    font-align:left;
+    vertical-align: top;
+}
+
+#Subjectedit_teacherportal>#file_Subjectedit{
+    float:left;
+    width:1460px;
+    height:160px;
+    background-color:#FFFFFF;
+    font-size:24px;
+    margin:auto;
+    margin-top:40px;
+    margin-left:63px;
+    padding: 20px;
+}
+
+#buttons_Subjectedit{
+    float:left;
+    width:1625px;
+    height:100px;
+}
+
+#buttons_Subjectedit>button{
+    float:left;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin-top:15px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#buttons_Subjectedit>#save{
+    margin-left:1323px;
+}
+
+#buttons_Subjectedit>#back{
     margin-left:20px;
 }
 
@@ -1464,11 +1566,19 @@ hr{
     margin-left:110px;
 }
 
-#score_Assignmentrevise>input{
+#score_Assignmentrevise>#Assignmentrevise_score{
     float:left;
     width:100px;
     height:30px;
     margin-top:7px;
+    margin-right:100px;
+}
+
+#score_Assignmentrevise>#Assignmentrevise_scorePublished{
+    float:left;
+    width:20px;
+    height:20px;
+    margin-top:12px;
 }
 
 #content_Assignmentrevise{
@@ -1477,17 +1587,22 @@ hr{
     background-color:#FFFFFF;
 }
 
-#content_Assignmentrevise>input{
+#content_Assignmentrevise>textarea{
     width:1400px;
     height:450px;
     margin:auto;
     margin-top:30px;
     margin-left:110px;
+    font-size:20px;
+    resize:none;
+    text-align:left;
+    vertical-align:top;
 }
 
 #file_Assignmentrevise{
-    width:1920px;
-    height:100px;
+    float:left;
+    width:1625px;
+    height:130px;
     background-color:#FFFFFF;
 }
 
@@ -1499,10 +1614,15 @@ hr{
     margin-left:120px;
 }
 
+#file_Assignmentrevise>#existing_Assignmentrevise_file{
+    width:1000px;
+    height: 50px;
+    margin-left:120px;
+}
+
 #buttons_Assignmentrevise{
     width:1920px;
     height:100px;
-    background-color:#FFFFFF;
 }
 
 #buttons_Assignmentrevise>button{
@@ -1516,7 +1636,7 @@ hr{
     color:#FFFFFF;
 }
 
-#buttons_Assignmentrevise>#save{
+#buttons_Assignmentrevise>#revise_save{
     margin-left:1350px;
 }
 
@@ -2705,7 +2825,7 @@ hr{
     margin-top:5px;
 }
 
-/* 과제 조회/제출 평가에서 학생이름 클릭 1128*/
+/* 과제 조회/제출 평가에서 학생이름 클릭 1500*/
 #AssignmentEstimationStudent_teacherportal{
     float:left;
     width:1625px;
@@ -2725,7 +2845,7 @@ hr{
 
 #AssignmentEstimationStudent>#title_AssignmentEstimationStudent{
     width:1625px;
-    height:180px;
+    height:120px;
     background-color:#FFFFFF;
 }
 
@@ -2736,21 +2856,46 @@ hr{
 }
 
 #title_AssignmentEstimationStudent>#StudentWrite{
-    width:700px;
-    height:100px;
+    width:900px;
+    height:70px;
     margin-top:7px;
     margin-left:210px;
     border: 1px solid #CED4DA;
 }
 
-#AssignmentEstimationStudent>button{
+#AssignmentEstimationStudent>#content_AssignmentEstimationStudent{
+    width:1625px;
+    height:230px;
+}
+
+#content_AssignmentEstimationStudent>h2{
+    width:150px;
+    height:30px;
+    margin-left:210px;
+}
+
+#content_AssignmentEstimationStudent>#StudentContent{
+    width:900px;
+    height:170px;
+    margin-top:7px;
+    margin-left:210px;
+    border: 1px solid #CED4DA;
+}
+
+#AssignmentEstimationStudent>#buttons_AssignmentEstimationStudent{
+    width:1625px;
+    height:80px;
+    background-color:#EAEAEA;
+}
+
+#buttons_AssignmentEstimationStudent>button{
     float:left;
     width:103px;
     height:51px;
     background-color:#6F7C86;
     border-color:#6F7C86;
     margin-top:15px;
-    margin-left:900px;
+    margin-left:1200px;
     font-size:15px;
     color:#FFFFFF;
 }
@@ -2758,7 +2903,7 @@ hr{
 
 #AssignmentEstimationStudent>#file_AssignmentEstimationStudent{
     width:1625px;
-    height:250px;
+    height:150px;
     background-color:#FFFFFF;
 }
 
@@ -2769,8 +2914,8 @@ hr{
 }
 
 #file_AssignmentEstimationStudent>#StudentFile{
-    width:700px;
-    height:100px;
+    width:900px;
+    height:80px;
     margin-top:10px;
     margin-left:210px;
     border: 1px solid #CED4DA;
@@ -2778,7 +2923,7 @@ hr{
 
 #AssignmentEstimationStudent>#Estimation_AssignmentEstimationStudent{
     width:1625px;
-    height:60px;
+    height:50px;
     background-color:#FFFFFF;
 }
 
@@ -2811,11 +2956,14 @@ hr{
 }
 
 #Opinion_AssignmentEstimationStudent>#OpinionOfAssignment{
-    width:800px;
+    width:1000px;
     height:200px;
     margin-top:10px;
     margin-left:210px;
     border: 1px solid #CED4DA;
+    text-align: left;
+    vertical-align: top;
+    font-size:18px;
 }
 
 /* 시험관리 평가버튼 누르고 1664*/
