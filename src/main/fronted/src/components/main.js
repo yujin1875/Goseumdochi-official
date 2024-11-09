@@ -196,13 +196,11 @@ function App6() {
                                     className="custom-calendar"
                                 />
                             </div>
-                            <div id="more_calendar"></div>
                         </div>
                         <div id="main_subject">
                             <h2>수강과목</h2>
                             <div id="content_subject">
-
-                                    <table border="1">
+                                    <table>
                                         <thead>
                                             <tr>
                                                 <th>과목명</th>
@@ -229,7 +227,6 @@ function App6() {
                                             ))}
                                         </tbody>
                                     </table>
-
                             </div>
                         </div>
                     </div>

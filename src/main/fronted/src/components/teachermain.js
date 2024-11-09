@@ -137,7 +137,6 @@ function App25() {
                                         className="custom-calendar"
                                     />
                                 </div>
-                                <div id="more_calendar"></div>
                                 </div>
                                 <div id="teachermain_subject">
                                     <h2>수강과목</h2>
