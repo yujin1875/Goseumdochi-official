@@ -1,8 +1,11 @@
 package com.midas.goseumdochi.teacher.service;
 
+import com.midas.goseumdochi.student.Repository.StudentAnswerRepository;
 import com.midas.goseumdochi.teacher.dto.ExamDTO;
 import com.midas.goseumdochi.teacher.dto.ExamQuestionDTO;
 import com.midas.goseumdochi.teacher.entity.ExamEntity;
+import com.midas.goseumdochi.teacher.entity.ExamQuestionEntity;
+import com.midas.goseumdochi.teacher.repository.ExamQuestionRepository;
 import com.midas.goseumdochi.teacher.repository.ExamRepository;
 import com.midas.goseumdochi.teacher.repository.LectureRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -113,11 +116,26 @@ public class ExamService {
         examRepository.save(entity);
     }
 
-    public void deleteExam(Long id) {
+    private final ExamQuestionRepository examQuestionRepository;
+    private final StudentAnswerRepository studentAnswerRepository;
 
+    @Transactional
+    public void deleteExam(Long id) {
         if (!examRepository.existsById(id)) {
             throw new IllegalArgumentException("해당 시험이 존재하지 않습니다. ID: " + id);
         }
+
+        List<ExamQuestionEntity> questions = examQuestionRepository.findByExamEntityId(id);
+
+        // StudentAnswer 삭제
+        for (ExamQuestionEntity question : questions) {
+            studentAnswerRepository.deleteAll(studentAnswerRepository.findByQuestionId(question.getId()));
+        }
+
+        // ExamQuestion 삭제
+        examQuestionRepository.deleteAll(questions);
+
+        // Exam 삭제
         examRepository.deleteById(id);
     }
 }

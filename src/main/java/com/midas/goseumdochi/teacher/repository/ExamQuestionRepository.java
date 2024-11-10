@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface ExamQuestionRepository extends JpaRepository<ExamQuestionEntity, Long> {
     List<ExamQuestionEntity> findAllByExamEntityId(Long examId);
     Optional<ExamQuestionEntity> findByIdAndExamEntityId(Long questionId, Long examId);
+
+    List<ExamQuestionEntity> findByExamEntityId(Long examId);
 }
