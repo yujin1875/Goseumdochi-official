@@ -15,6 +15,8 @@ public class StudentAnswerEntity {
     private Long studentId;
 
     private String answer; // 학생이 제출한 답안
+
+    @Column(name = "score")
     private Integer score;
 
     @ManyToOne
