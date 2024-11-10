@@ -91,12 +91,15 @@ function TeacherLectureRegist() {
                     ))}
                 </select>
                 {selectedSubjectId && (
-                    <div>
+                    <div id="teacher_lecture_regist_form">
                         <form onSubmit={handleSubmit}>
-                            <h2>강의 등록</h2>
-                            <div>
+                            <div id="header_teacher_lecture_regist_form">
+                                <h2>강의 등록</h2>
+                                <button type="submit">등록</button>
+                            </div>
+                            <div id="LectureName_teacher_lecture_regist_form">
                                 <label>
-                                    강의 이름:
+                                    강의 이름 :
                                     <input
                                         type="text"
                                         value={lectureName}
@@ -104,7 +107,7 @@ function TeacherLectureRegist() {
                                         required />
                                 </label>
                             </div>
-                            <div>
+                            <div id="LecturePeople_teacher_lecture_regist_form">
                                 <label>
                                     최대 인원수:
                                     <input
@@ -128,12 +131,12 @@ function TeacherLectureRegist() {
                                     </datalist>
                                 </label>
                             </div>
-                            <div>
+                            <div id="LectureTime_teacher_lecture_regist_form">
                                 <h3>강의 시간</h3>
                                 {lectureTimeList.map((lectureTime, index) => (
-                                    <div key={index}>
+                                    <div id="LectureTimeLine_teacher_lecture_regist_form" key={index}>
                                         <label>
-                                            요일:
+                                            요일 :
                                             <select value={lectureTime.day} onChange={(e) => handleLectureTimeChange(index, 'day', e.target.value)} required>
                                                 <option value="월">월</option>
                                                 <option value="화">화</option>
@@ -145,16 +148,16 @@ function TeacherLectureRegist() {
                                             </select>
                                         </label>
                                         <label>
-                                            시작 시간:
+                                            시작 시간 :
                                             <input type="time"
+                                                   id="start_time"
                                                    value={lectureTime.startTime}
                                                    onChange={(e) => handleLectureTimeChange(index, 'startTime', e.target.value)}
                                                    required
                                             />
                                         </label>
-                                        ~
                                         <label>
-                                            종료 시간:
+                                            ~  종료 시간 :
                                             <input
                                                 type="time"
                                                 value={lectureTime.endTime}
@@ -169,7 +172,7 @@ function TeacherLectureRegist() {
                                 ))}
                                 <button type="button" onClick={handleAddLectureTime}>강의 시간 추가</button>
                             </div>
-                            <button type="submit">등록</button>
+
                         </form>
                     </div>
                 )}
