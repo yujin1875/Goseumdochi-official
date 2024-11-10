@@ -14,5 +14,9 @@ public class StudentAnswerDTO {
     private String answer; // 학생이 제출한 답안
     private Long examId;
     private Integer score;
+
+    public StudentAnswerDTO(int totalScore) {
+        this.score = totalScore;
+    }
 }
 

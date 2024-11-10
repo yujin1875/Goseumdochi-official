@@ -2098,54 +2098,29 @@ function App26() {
                             <div id="table_score">
                                 <div id="blank_table_score"/>
                                 <div id="howmanystudent">
-                                    대상인원 : {students.length}명 | 참여인원
-                                    : {students.filter(student => student.score > 0).length}명
+                                    대상인원 : {students.length}명 | 참여인원 : {students.filter(student => student.examAnswer && student.examAnswer.score > 0).length}명
                                 </div>
                                 <div id="tableOfStudentScore">
                                     <div id="tableOfStudentScore_category">
-                                        <div id="totalscore">
-                                            배점
-                                        </div>
-                                        <div id="aver_exam">
-                                            평균
-                                        </div>
-                                        <div id="min_exam">
-                                            최소
-                                        </div>
-                                        <div id="max_exam">
-                                            최대
-                                        </div>
-                                        <div id="mid_exam">
-                                            중앙
-                                        </div>
-                                        <div id="abs_exam">
-                                            표준편차
-                                        </div>
+                                        <div id="totalscore">배점</div>
+                                        <div id="aver_exam">평균</div>
+                                        <div id="min_exam">최소</div>
+                                        <div id="max_exam">최대</div>
+                                        <div id="mid_exam">중앙</div>
+                                        <div id="abs_exam">표준편차</div>
                                     </div>
                                     <div id="tableOfStudentScore_score">
-                                        <div id="totalscore">
-
-                                        </div>
-                                        <div id="aver_exam">
-
-                                        </div>
-                                        <div id="min_exam">
-
-                                        </div>
-                                        <div id="max_exam">
-
-                                        </div>
-                                        <div id="mid_exam">
-
-                                        </div>
-                                        <div id="abs_exam">
-
-                                        </div>
+                                        <div id="totalscore"></div>
+                                        <div id="aver_exam"></div>
+                                        <div id="min_exam"></div>
+                                        <div id="max_exam"></div>
+                                        <div id="mid_exam"></div>
+                                        <div id="abs_exam"></div>
                                     </div>
                                 </div>
                             </div>
                             <div id="graph_score">
-                                <ScoreChart scores={scores}/>
+                                <ScoreChart scores={students.map(student => student.examAnswer?.score || 0)}/>
                             </div>
                             <div id="NameOfStudent_ExamEstimation">
                                 <h3>학생 목록</h3>
@@ -2155,7 +2130,7 @@ function App26() {
                                             <div key={student.studentId} className="student-info">
                                                 <div className="student-id">ID: {student.studentId}</div>
                                                 <div className="student-name">이름: {student.studentName}</div>
-                                                <div className="student-score">점수: {student.score || 0}</div>
+                                                <div className="student-score">점수: {student.examAnswer?.score || 0}</div>
                                             </div>
                                         ))
                                     ) : (
