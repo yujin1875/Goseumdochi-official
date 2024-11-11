@@ -22,10 +22,133 @@
     height:40px;
     background-color:#FFFFFF;
     border: 1px solid #000000;
-    margin-top: 20px;
+    margin-top: 25px;
     margin-left:50px;
     font-size:18px;
     border-radius:5px;
+}
+
+#teacher_lecture_regist_frame>#teacher_lecture_regist_form{
+    width:900px;
+    height: 510px;
+    margin: 0 auto;
+    margin-top:80px;
+    border: 2px solid #BCBCBC;
+    border-radius: 15px;
+}
+
+#teacher_lecture_regist_form>form>#header_teacher_lecture_regist_form{
+    width:100%;
+    height:60px;
+}
+
+#teacher_lecture_regist_form>form>#header_teacher_lecture_regist_form>h2{
+    float:left;
+    margin-top:5px;
+    margin-left:15px;
+}
+
+#teacher_lecture_regist_form>form>#header_teacher_lecture_regist_form>button{
+    float:left;
+    width: 90px;
+    height: 50px;
+    background-color: #363636;
+    border-color: #363636;
+    border-radius: 15px;
+    margin-top:10px;
+    margin-left: 650px;
+    font-size: 15px;
+    color: #FFFFFF;
+    box-shadow: none;
+}
+
+form>#LectureName_teacher_lecture_regist_form{
+    width:800px;
+    height:50px;
+    margin-left:50px;
+    font-size:20px;
+}
+
+#LectureName_teacher_lecture_regist_form>label>input{
+    width:500px;
+    height:30px;
+    margin-left:10px;
+    font-size:16px;
+}
+
+form>#LecturePeople_teacher_lecture_regist_form{
+    width:800px;
+    height:50px;
+    margin-top:10px;
+    margin-left:50px;
+    font-size:20px;
+}
+
+#LecturePeople_teacher_lecture_regist_form>label>input{
+    width:100px;
+    height:30px;
+    margin-left:10px;
+    font-size:16px;
+}
+
+form>#LectureTime_teacher_lecture_regist_form{
+    width:800px;
+    height:270px;
+    margin-top:10px;
+    margin-left:50px;
+    font-size:20px;
+}
+
+#LectureTime_teacher_lecture_regist_form>#LectureTimeLine_teacher_lecture_regist_form{
+    width:700px;
+    height:40px;
+    margin-top:5px;
+    margin-left:50px;
+    font-size:20px;
+}
+
+#LectureTimeLine_teacher_lecture_regist_form>label>select{
+    width: 50px;
+    height: 25px;
+    margin-right:20px;
+    margin-left:5px;
+}
+
+#LectureTimeLine_teacher_lecture_regist_form>label>input{
+    width: 120px;
+    height: 25px;
+    margin-left:10px;
+    font-size:16px;
+}
+
+#LectureTimeLine_teacher_lecture_regist_form>label>#start_time{
+    margin-right:10px;
+}
+
+#LectureTimeLine_teacher_lecture_regist_form>button{
+    float:right;
+    display: block;
+    width: 60px;
+    height: 30px;
+    background-color: #363636;
+    border-color: #363636;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #FFFFFF;
+    box-shadow: none;
+}
+
+#LectureTime_teacher_lecture_regist_form>button{
+    display: block;
+    width: 120px;
+    height: 30px;
+    margin-top:5px;
+    background-color: #363636;
+    border-color: #363636;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #FFFFFF;
+    box-shadow: none;
 }
 
 #footer_teacher_lecture_regist{

@@ -1,0 +1,126 @@
+#header_director_main{
+    width:100%;
+    height: 326px;
+}
+
+#header_director_main>img{
+    display:block;
+    width: 276px;
+    height: 276px;
+    margin:auto;
+    object-fit: cover;
+}
+
+#director_main_info{
+    width:100%;
+    height:90px;
+}
+
+#director_main_info>#info{
+    width:300px;
+    height:80px;
+    margin:auto;
+}
+
+#info>a{
+    display:block;
+    font-size: 40px;
+    color:#000000;
+    text-align: center;
+    margin:auto;
+}
+
+#director_main_info>#logout{
+    display:block;
+    font-size: 30px;
+    color:#000000;
+    text-align: center;
+    margin:auto;
+}
+
+#button_director_main{
+    width:100%;
+    height:400px;
+}
+
+#button_director_main>#btn_director_main{
+    width: 1344px;
+    height: 334px;
+    margin: 0 auto;
+}
+
+#btn_director_main>#lecture_btn{
+    float:left;
+    width: 250px;
+    height: 334px;
+    margin-left:115px;
+    background-color: #FFFFFF;
+}
+
+#lecture_btn>button{
+    width: 250px;
+    height: 334px;
+    font-size:32px;
+}
+
+#btn_director_main>#studentmanage_btn{
+    float:left;
+    width: 250px;
+    height: 334px;
+    margin-left:40px;
+    background-color: #FFFFFF;
+}
+
+#studentmanage_btn>button{
+    width: 250px;
+    height: 334px;
+    font-size:32px;
+}
+
+#btn_director_main>#mypage_btn{
+    float:left;
+    width: 250px;
+    height: 334px;
+    margin-left:40px;
+    background-color: #FFFFFF;
+}
+
+#mypage_btn>button{
+    width: 250px;
+    height: 334px;
+    font-size:32px;
+}
+
+#btn_director_main>#notice_write_btn{
+    float:left;
+    width: 250px;
+    height: 334px;
+    margin-left:40px;
+    background-color: #FFFFFF;
+}
+
+#notice_write_btn>button{
+    width: 250px;
+    height: 334px;
+    font-size:32px;
+}
+
+#footer_director_main{
+    width: 100%;
+    height:137px;
+}
+
+#footer_director_main>button{
+    width:150px;
+    height:60px;
+    background-color: unset;
+    font-size:18px;
+    margin-left:46.3%;
+    border:none;
+    text-decoration: underline;
+    cursor:pointer;
+}
+
+.img_directorMain{
+    margin-bottom:10px;
+}
