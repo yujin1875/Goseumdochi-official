@@ -40,7 +40,7 @@ public class SubjectController {
     }
 
     // 과목 수정
-    @PostMapping("/update/subject/{subjectId}")
+    @PostMapping("/{subjectId}/update")
     public ResponseEntity<?> updateSubject(@PathVariable Long subjectId, @RequestParam String inputSubjectName) { // (이름, 학원 id) 전달
         SubjectDTO subjectDTO = subjectService.update(subjectId, inputSubjectName);
 

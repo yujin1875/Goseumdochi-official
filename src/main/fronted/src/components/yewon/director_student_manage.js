@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -9,6 +9,39 @@ function DirectorStudentManage() {
     const navigate = useNavigate();
 
     const { user } = location.state || {};
+
+    const [studentList, setStudentList] = useState([]);
+
+    // 학원에 등록된 학생 리스트 가져오기
+    useEffect(() => {
+        const fetchStudents = async () => {
+            try {
+                const response = await axios.get(`/api/director/academy/${user.id}/students`);
+                setStudentList(response.data);
+                console.log(studentList)
+            } catch (error) {
+                console.error('Error fetching students:', error);
+            }
+        };
+
+        fetchStudents();
+    }, [user]);
+
+    // 학생 삭제
+    const handleDelete = async (studentId) => {
+        try {
+            const response = await axios.put(`/api/director/academy/${user.id}/student/${studentId}/delete`);
+            if (response.status === 200) {
+                setStudentList((prevStudents) => prevStudents.filter((student) => student.id !== studentId));
+                alert(response.data);
+            } else {
+                alert('학생 삭제 실패');
+            }
+        } catch (error) {
+            console.error('Error deleting student:', error);
+            alert('학생 삭제 실패');
+        }
+    };
 
     const GoStudentAdd=()=>{
         navigate('/director/student/regist', { state: { user: user } })
@@ -24,15 +57,17 @@ function DirectorStudentManage() {
                         <span>+ 학생 등록</span>
                     </button>
                     <div id="director_showing_student_manage">
-                        <div id="info_student1">
-                            <div id="info_student1_name">
-                                <span>하하</span>
+                        {studentList.map((student) => (
+                            <div key={student.id} id="info_student1">
+                                <div id="info_student1_name">
+                                    <span>{student.studentName}</span>
+                                </div>
+                                <span>{student.studentPhoneNumber}</span>
+                                <button id="DeleteStudent" onClick={() => handleDelete(student.id)}>
+                                    <span>삭제</span>
+                                </button>
                             </div>
-                            <a href="">상세정보</a>
-                            <button id="DeleteStudent">
-                                <span>삭제</span>
-                            </button>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </div>

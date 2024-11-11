@@ -1,10 +1,14 @@
 package com.midas.goseumdochi.academy.entity;
 
 import com.midas.goseumdochi.academy.dto.SubjectDTO;
+import com.midas.goseumdochi.teacher.entity.LectureEntity;
+import com.midas.goseumdochi.teacher.entity.LectureTimeEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,7 +28,9 @@ public class SubjectEntity {
     @JoinColumn(name = "academy_id")
     private AcademyEntity academyEntity;
 
-    // 선생-강의와 양방향 연결을 위한다면 매핑 추가하기
+    // 선생-강의와 양방향 연결을 위한다면 매핑 추가하기 (과목 삭제시 강의 삭제를 위해)
+    @OneToMany(mappedBy = "subjectEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<LectureEntity> lectureEntityList;
 
     // DTO -> Entity
     @Builder

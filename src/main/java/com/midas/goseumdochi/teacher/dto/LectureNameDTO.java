@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class LectureNameDTO { // 강의 이름만 저장한 dto
-    public Long id; // 강의 id
+    private Long id; // 강의 id
     private String name; // 강의 이름
 
     public static LectureNameDTO toLectureNameDTO(LectureEntity lectureEntity) {

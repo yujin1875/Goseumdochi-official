@@ -203,8 +203,9 @@ public class AssignmentService {
             for (AssignmentEntity assignment : assignmentEntityList) {
                 // 오늘 날짜가 마감일보다 작거나 같으면
                 if (!todayDate.isAfter(assignment.getDeadline().toLocalDate()))
+                    System.out.println("차이" + (int)ChronoUnit.DAYS.between(todayDate, assignment.getDeadline().toLocalDate()));
                     assignmentRemainDTOList.add(new AssignmentRemainDTO(assignment.getId(), assignment.getTitle(),
-                            (int) ChronoUnit.DAYS.between(todayDate, assignment.getDeadline().toLocalDate()),
+                            (int) ChronoUnit.DAYS.between(todayDate, assignment.getDeadline().toLocalDate()) - 1, // 디데이 빼기1
                             lecture.getName(), lecture.getId()));
             }
         }

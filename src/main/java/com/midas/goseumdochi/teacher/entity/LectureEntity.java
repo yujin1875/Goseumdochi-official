@@ -1,6 +1,7 @@
 package com.midas.goseumdochi.teacher.entity;
 
 import com.midas.goseumdochi.academy.entity.SubjectEntity;
+import com.midas.goseumdochi.student.entity.RegistLectureEntity;
 import com.midas.goseumdochi.teacher.dto.LectureDTO;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -57,6 +58,16 @@ public class LectureEntity {
 
     @OneToMany(mappedBy = "lectureEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AssignmentEntity> assignmentEntityList;
+
+    // 수강 관계 설정 (삭제 때문에 추가) + 이 이후로도 삭제위해
+    @OneToMany(mappedBy = "lectureEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<RegistLectureEntity> registLectureEntityList;
+
+    @OneToMany(mappedBy = "lectureEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SubjectNoticeEntity> subjectNoticeEntityList;
+
+    @OneToMany(mappedBy = "lectureEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ExamEntity> examEntityList;
 
     @Builder
     public LectureEntity(Long id, String name, int maxCount, int headCount, String lectureLocation, String lectureDetails,
