@@ -108,6 +108,42 @@ function App10() {
         fetchExamList(lecture.id);
     };
 
+    // 공지사항
+    const [noticeList, setNoticeList] = useState([]);
+
+    const fetchNoticeList = async (lectureId) => {
+        try {
+            const response = await axios.get(`/api/subjectnotice/lecture/${lectureId}`);
+            setNoticeList(response.data);
+        } catch (error) {
+            console.error('Error fetching notice list:', error);
+        }
+    };
+
+    useEffect(() => {
+        if (menu === 'notice' && lecture && lecture.id) {
+            fetchNoticeList(lecture.id);
+        }
+    }, [menu, lecture]);
+
+    const [selectedNotice, setSelectedNotice] = useState(null);
+
+    const handleNoticeClick = (notice) => {
+        setSelectedNotice(notice); // 클릭한 공지사항의 데이터 설정
+    };
+
+    const formatDateTime = (dateString) => {
+        const date = new Date(dateString);
+
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        return `${year}-${month}-${day} ${hours}:${minutes}`; // 원하는 형식: YYYY-MM-DD HH:mm
+    };
+
 
     return (
         <div id="App">
@@ -142,8 +178,42 @@ function App10() {
                                     <div id="postperson">게시자</div>
                                     <div id="postdate">게시일</div>
                                     <div id="visit">조회수</div>
+
+                                    {noticeList.length === 0 ? (
+                                        <p>공지사항이 없습니다.</p>
+                                    ) : (
+                                        noticeList.map((notice, index) => (
+                                            <div key={index} className="notice_row">
+                                                <div>{index + 1}</div>
+                                                <div>
+                                                    <p
+                                                        style={{ cursor: 'pointer', color: 'blue' }}
+                                                        onClick={() => handleNoticeClick(notice)} // 제목 클릭 시 상세보기
+                                                    >
+                                                        {notice.title}
+                                                    </p>
+                                                </div>
+                                                <div>{notice.author}</div>
+                                                <div>{notice.postDate}</div>
+                                                <div>{notice.views}</div>
+                                            </div>
+                                        ))
+                                    )}
+
+                                    {/* 선택된 공지사항 상세보기 */}
+                                    {selectedNotice && (
+                                        <div id="notice_detail">
+                                            <h3>{selectedNotice.title}</h3>
+                                            <p><strong>작성자:</strong> {selectedNotice.author}</p>
+                                            <p><strong>게시일:</strong> {selectedNotice.createdAt && formatDateTime(selectedNotice.createdAt)}</p>
+                                            <p><strong>내용:</strong> {selectedNotice.content}</p> {/* 공지사항 내용 */}
+                                            <button onClick={() => setSelectedNotice(null)}>닫기</button>
+                                        </div>
+                                    )}
                                 </div>
                             )}
+
+
 
                             {/* 강의자료 */}
                             {menu === "material" && (

@@ -30,7 +30,7 @@ function App6() {
     const day = '수';
 
     const Gomain = () => {
-        window.location.href = '/main';
+        navigate('/main', {state: {user: user}});
     };
     const Gonotice = () => {
         navigate('/notice', { state: { studentId: user.id } });
