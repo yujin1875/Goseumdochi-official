@@ -1,7 +1,10 @@
-import '../../css/teachermain.css';
-import logo from '../images/goseumdochi_moving.gif';
+import './subcss/director_main.css';
+import logo from '../images/goseumdochi.png';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { GiOpenBook } from "react-icons/gi";
+import { RiNotification3Fill } from "react-icons/ri";
+import { FaAddressBook, FaChalkboardTeacher } from "react-icons/fa";
 
 function DirectorMain() {
     const location = useLocation();
@@ -28,31 +31,46 @@ function DirectorMain() {
 
     return (
         <div id="App">
-            <div id="teachermain-menu">
-                <div id="header_teachermain">
-                    <img src={logo}/>
-                </div>
-                <div id="buttons_teachermain">
-                    <input type="submit" value="과목관리" id="lecture_btn" onClick={GoSubjectManage}/>
-                    <input type="submit" value="선생관리" id="studentmanage_btn " onClick={GoTeacherManage}/>
-                    <input type="submit" value="학생관리" id="mypage_btn" onClick={GoStudentManage}/>
-                    <input type="submit" value="공지 작성" id="notice_write_btn" onClick={GoNoticeWrite}/>
-                    <div id="rect"/>
-                </div>
-                <div id="contents_teachermain">
-                    <div id="contents1_teachermain">
-                        <div id="calendar">
-                        </div>
-                        <div id="lectureSchedule">
-                        </div>
-                    </div>
-                    <div id="contents2_teachermain">
+            <div id="header_director_main">
+                <img src={logo} alt="Logo"/>
+            </div>
+            <div id="director_main_info">
+                <div id="info">
 
+                </div>
+            </div>
+            <div id="button_director_main">
+                <div id="btn_director_main">
+                    <div id="lecture_btn">
+                        <button onClick={GoSubjectManage}>
+                            <GiOpenBook className="img_directorMain" size={100} /> <br/>
+                            과목 관리
+                        </button>
+                    </div>
+                    <div id="studentmanage_btn">
+                        <button onClick={GoTeacherManage}>
+                            <FaChalkboardTeacher className="img_directorMain" size={100} /> <br/>
+                            선생 관리
+                        </button>
+                    </div>
+                    <div id="mypage_btn">
+                        <button onClick={GoStudentManage}>
+                            <FaAddressBook className="img_directorMain" size={100} /> <br/>
+                            학생 관리
+                        </button>
+                    </div>
+                    <div id="notice_write_btn">
+                        <button onClick={GoNoticeWrite}>
+                            <RiNotification3Fill className="img_directorMain" size={100} /> <br/>
+                            공지사항
+                        </button>
                     </div>
                 </div>
-                <div id="footer_teachermain">
-                    <a>문의 | midas2024.ver01@gmail.com</a>
-                </div>
+            </div>
+            <div id="footer_director_main">
+                <button id="logout">
+                    로그아웃
+                </button>
             </div>
         </div>
     );

@@ -40,6 +40,19 @@ public class LectureService {
             lectureTimeRepository.save(LectureTimeEntity.toLectureTimeEntity(dto, lectureEntity));
     }
 
+    // 강의 삭제
+    public Boolean deleteLecture(Long lectureId) {
+        Optional<LectureEntity> lectureEntity = lectureRepository.findById(lectureId);
+
+        // 강의 삭제 실패
+        if(lectureEntity.isEmpty())
+            return false;
+
+        // 성공
+        lectureRepository.delete(lectureEntity.get());
+        return true;
+    }
+
     // 강의 선생 '이름' 조회
     public NameDTO getTeacherNameOfLecture(Long lectureId) {
         Optional<LectureEntity> lectureEntity = lectureRepository.findById(lectureId);

@@ -26,7 +26,8 @@ function App6() {
 
     const today = new Date(); // 오늘 날짜
     const days = ['일', '월', '화', '수', '목', '금', '토'];
-    const day = days[new Date().getDay()]; // 오늘 요일
+    //const day = days[new Date().getDay()]; // 오늘 요일
+    const day = '수';
 
     const Gomain = () => {
         window.location.href = '/main';
@@ -101,6 +102,7 @@ function App6() {
                 });
 
                 setassignmentList(response.data);
+                console.log(assignmentList)
             } catch (err) {
                 console.error(err);
             }
@@ -119,6 +121,7 @@ function App6() {
                 lecture.lectureTimeDTOList
                     .filter((time) => time.day === day)
                     .map((time) => ({
+                        id: lecture.id,
                         name: lecture.name,
                         startTime: time.startTime.slice(0, 5),
                         endTime: time.endTime.slice(0, 5),
@@ -239,7 +242,7 @@ function App6() {
                                     {todayLectureList.length > 0 ? (
                                         <ul>
                                             {todayLectureList.map((lecture, index) => (
-                                                <li key={index}>
+                                                <li key={index} onClick={() => GoLecturePotal(lecture)} style={{ cursor: 'pointer' }}>
                                                     <strong>{lecture.name}</strong> {lecture.startTime} - {lecture.endTime}
                                                 </li>
                                             ))}
@@ -253,19 +256,18 @@ function App6() {
                         <div id="main_submission">
                             <h2>남은 제출</h2>
                             <div id="content_submission">
-                                <h3>남은 과제 목록</h3>
                                 {assignmentList.length > 0 ? (
                                     <ul>
                                         {assignmentList.map((assignment) => (
                                             <li key={assignment.id}>
-                                                <h4>{assignment.lectureName}</h4>
-                                                <p>과제 제목: {assignment.title}</p>
-                                                <p>D-day: {assignment.dDay}</p>
+                                                <span>{assignment.lectureName}</span>
+                                                <span> | {assignment.title}</span>
+                                                <p>D - {assignment.dday}</p>
                                             </li>
                                         ))}
                                     </ul>
                                 ) : (
-                                    <p>남은 과제가 없습니다.</p>
+                                    <p>과제가 없습니다.</p>
                                 )}
                             </div>
                         </div>
