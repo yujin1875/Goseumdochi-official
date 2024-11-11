@@ -12,11 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,5 +77,15 @@ public class LectureController {
     public ResponseEntity<?> getStudentNameListofLecture(@PathVariable Long lectureId) {
         List<NameDTO> studentNameList = registLectureService.getExistStudentNameList(lectureId);
         return ResponseEntity.ok(studentNameList);
+    }
+
+    // 강의 삭제
+    @DeleteMapping("/{lectureId}/delete")
+    public ResponseEntity<?> deleteLecture(@PathVariable Long lectureId) {
+        // 삭제 실패
+        if (!lectureService.deleteLecture(lectureId))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("강의 삭제 실패");
+        // 삭제 성공
+        return ResponseEntity.ok("강의 삭제 성공");
     }
 }

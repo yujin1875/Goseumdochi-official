@@ -46,7 +46,7 @@
 
 #info_lecture>#info_lecture_name{
     float:left;
-    width:90px;
+    width:250px;
     height:40px;
     margin-left:10px;
 }
@@ -64,6 +64,19 @@
     margin-top:8px;
     margin-left:5px;
     font-size:17px;
+}
+
+#info_lecture>.info_lecture_meta{
+    float:left;
+    width:100px;
+    height:20px;
+    margin-top:8px;
+    margin-left:5px;
+    font-size:17px;
+}
+
+#info_lecture>#info_lecture_time{
+    width:250px;
 }
 
 #info_lecture>#Editlecture{
