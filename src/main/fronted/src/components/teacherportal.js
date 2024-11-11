@@ -1058,27 +1058,31 @@ function App26() {
                 )}
                 {visibleDiv === 'VideoManagement' && (
                     <>
-                        <div>
-                            <h1>동영상 업로드 테스트</h1>
-                            <input
-                                type="text"
-                                placeholder="강의 제목을 입력하세요"
-                                value={lectureTitle}
-                                onChange={handleTitleChange}
-                            />
-                            <input type="file" accept="video/mp4" onChange={handleFileChange} />
-                            <button onClick={uploadFile}>업로드</button>
-
-                            {videoUrl && (
-                                <div>
-                                    <h2>비디오 강의</h2>
-                                    <video width="600" controls key={videoUrl}>
-                                        <source src={videoUrl} type="video/mp4" />
-                                        해당 브라우저에서 비디오 재생이 지원되지 않습니다.
-                                    </video>
-                                </div>
-                            )}
-
+                        <div id="VideoManagement_teacherportal">
+                            <h2>강의 관리</h2>
+                            <div id="UploadVideo_teacherportal">
+                                <div id="blank_UploadVideo"/>
+                                <input
+                                    type="text"
+                                    id="title_UploadVideo"
+                                    placeholder="강의 제목을 입력하세요"
+                                    value={lectureTitle}
+                                    onChange={handleTitleChange}
+                                /> <br/>
+                                <input type="file" id="file_UploadVideo" accept="video/mp4" onChange={handleFileChange} />
+                                <button onClick={uploadFile}>업로드</button>
+                            <div id="Video_teacherportal">
+                                {videoUrl && (
+                                    <div id="video_UploadVideo">
+                                        <h2>비디오 강의</h2>
+                                        <video width="600" controls key={videoUrl}>
+                                            <source src={videoUrl} type="video/mp4" />
+                                            해당 브라우저에서 비디오 재생이 지원되지 않습니다.
+                                        </video>
+                                    </div>
+                                )}
+                            </div>
+                            </div>
                             <h2>업로드된 영상 목록</h2>
                             <ul>
                                 {videoList

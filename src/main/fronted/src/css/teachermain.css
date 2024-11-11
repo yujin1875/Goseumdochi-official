@@ -1,7 +1,7 @@
 #teachermain-menu{
     display: block;
     width: 1358px;
-    height: 1507px;
+    height: 1107px;
     margin: auto;
     background-color: #FFFFFF;
     border-radius: 100px;
@@ -72,14 +72,15 @@
 #teachermain-menu>#contents_teachermain{
     display: block;
     width: 1358px;
-    height: 1130px;
+    height: 730px;
+    margin-top:20px;
 }
 
 #contents_teachermain>#contents1_teachermain{
     display:block;
     float:left;
     width:679px;
-    height:1120px;
+    height:720px;
 }
 
 #contents1_teachermain>#teachermain_calendar{
@@ -124,83 +125,86 @@
     font-size: 16px; /* Font size for active tiles */
 }
 
-#contents1_teachermain>#teachermain_subject{
-    float:right;
-    width: 630px;
-    height: 403px;
-    background-color:#363636;
-    border-radius:15px;
-    margin-top:20px;
-}
-
-#teachermain_subject>h2{
-    margin-top:15px;
-    margin-left:30px;
-    color:#FFFFFF;
-}
-
-#teachermain_subject>#content_subject{
-    width: 604px;
-    height:320px;
-    background-color:#FFFFFF;
-    margin:0 auto;
-    border-radius:15px;
-    margin-top:15px;
-}
-
-#content_subject>table{
-    width:580px;
-    height:320px;
-    margin:0 auto;
-    margin-top:10px;
-    font-size:18px;
-    font-align:center;
-}
-
-.table-cell {
-    height: 50px;
-    text-align: center;
-    vertical-align: middle;
-}
-
-
 
 #contents_teachermain>#contents2_teachermain{
     display:block;
     float:left;
     width:679px;
-    height:1120px;
+    height:720px;
 }
 
-#contents2_teachermain>#Quickmenu_teachermain{
+#contents2_teachermain>#Teacherinfo_teachermain{
     float:left;
     width:545px;
-    height:600px;
+    height:300px;
     background-color:#363636;
     margin:auto;
     margin-left:65px;
     border-radius:15px;
 }
 
-#Quickmenu_teachermain>h2{
+#Teacherinfo_teachermain>h2{
     margin-top:15px;
     margin-left:30px;
     color:white;
 }
 
-#Quickmenu_teachermain>#content_Quickmenu{
+#Teacherinfo_teachermain>#contents_Teacherinfo{
     width:519px;
-    height:510px;
+    height:210px;
     background-color:#FFFFFF;
     margin:auto;
     margin-top:20px;
     border-radius:15px;
 }
 
+#contents_Teacherinfo>#blank_Teacherinfo{
+    width:100%;
+    height:40px;
+}
+
+#contents_Teacherinfo>#content_Teacherinfo{
+    width:459px;
+    height:150px;
+    margin-left:30px;
+
+}
+
+#content_Teacherinfo>img{
+    float:left;
+    display:block;
+    width:100px;
+    height:100px;
+    margin-left:40px;
+    object-fit: cover;
+    border:1px solid #BCBCBC;
+}
+
+#content_Teacherinfo>#Teachername{
+    float:left;
+    display:block;
+    width:280px;
+    height:50px;
+    font-size:30px;
+    margin-top:30px;
+    margin-left:25px;
+}
+
+#content_Teacherinfo>button{
+    width:100px;
+    height:40px;
+    background-color: unset;
+    margin-left:20px;
+    font-size:18px;
+    border:none;
+    text-decoration: underline;
+    cursor:pointer;
+}
+
 #contents2_teachermain>#lectureSchedule_teachermain{
     float:left;
     width:545px;
-    height:468px;
+    height:345px;
     background-color:#363636 !important;
     margin:auto;
     margin-top:20px;
@@ -216,7 +220,7 @@
 
 #lectureSchedule_teachermain>#content_lectureSchedule{
     width:519px;
-    height:380px;
+    height:255px;
     background-color:#FFFFFF;
     margin:auto;
     margin-top:20px;

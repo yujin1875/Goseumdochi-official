@@ -3181,3 +3181,96 @@ float:left;
 }
 
 
+/* 강의 관리 */
+#VideoManagement_teacherportal{
+    float:left;
+    width:1625px;
+    height:950px;
+}
+
+#VideoManagement_teacherportal>h2{
+    margin-top:20px;
+    margin-left:150px;
+}
+
+#VideoManagement_teacherportal>#UploadVideo_teacherportal{
+    width:700px;
+    height:150px;
+    background-color:#FFFFFF;
+    margin-top:30px;
+    margin-left:120px;
+    border:1px solid #BCBCBC;
+    border-radius:5px;
+}
+
+#UploadVideo_teacherportal>#blank_UploadVideo{
+    width:100%;
+    height:20px;
+}
+
+#UploadVideo_teacherportal>#title_UploadVideo{
+    width:500px;
+    height:30px;
+    margin-left:50px;
+}
+
+#UploadVideo_teacherportal>#file_UploadVideo{
+    width:500px;
+    height:30px;
+    margin-top:15px;
+    margin-left:50px;
+}
+
+#UploadVideo_teacherportal>button{
+    float:left;
+    width: 70px;
+    height: 40px;
+    background-color: #363636;
+    border-color: #363636;
+    border-radius: 15px;
+    margin-left: 600px;
+    font-size: 15px;
+    color: #FFFFFF;
+    box-shadow: none;
+}
+
+#VideoManagement_teacherportal>#Video_teacherportal{
+    width:1000px;
+    height:600px;
+    background-color:#FFFFFF;
+    margin:10px auto;
+    border:1px solid #BCBCBC;
+    border-radius:5px;
+    overflow-y: auto
+}
+
+#Video_teacherportal>#video_UploadVideo>h2{
+    margin-top:5px;
+    margin-left:15px;
+}
+
+#VideoManagement_teacherportal>ul{
+    width:1400px;
+    height:200px;
+    background-color:#FFFFFF;
+    margin-top:10px;
+    margin-left:120px;
+    border:1px solid #BCBCBC;
+    border-radius:5px;
+    overflow-y: auto
+}
+
+#VideoManagement_teacherportal>ul>li{
+    width:260px;
+    height:60px;
+    margin-top:10px;
+    margin-left:20px;
+    border:1px solid #BCBCBC;
+    border-radius:5px;
+    overflow-y: auto
+}
+
+#VideoManagement_teacherportal>ul>li>h3{
+    margin-top:2px;
+    margin-left:5px;
+}
