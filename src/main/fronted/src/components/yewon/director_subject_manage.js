@@ -75,7 +75,7 @@ function DirectorSubjectManage() {
             });
 
             if (response.status === 200) {
-                alert("과목 수정 성공");
+                alert(response.data);
 
                 // 수정된 과목 이름으로 리스트 업데이트
                 setSubjectList(

@@ -42,16 +42,14 @@ public class SubjectController {
     // 과목 수정
     @PostMapping("/{subjectId}/update")
     public ResponseEntity<?> updateSubject(@PathVariable Long subjectId, @RequestParam String inputSubjectName) { // (이름, 학원 id) 전달
-        SubjectDTO subjectDTO = subjectService.update(subjectId, inputSubjectName);
-
-        if(subjectDTO != null) { // 과목 수정 실패
+         if(subjectService.update(subjectId, inputSubjectName) == false) { // 과목 수정 실패
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED) // 에러 상태
                     .body("과목 수정 실패. 과목 이름 중복!");
         }
 
         // 과목 등록 성공
-        return ResponseEntity.ok(subjectDTO);
+        return ResponseEntity.ok("과목 등록 성공");
     }
 
     // 과목 삭제
