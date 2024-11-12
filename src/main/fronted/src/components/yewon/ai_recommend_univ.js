@@ -1,6 +1,7 @@
 import React, { useState ,useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
+import '../../css/ai_recommend_univ.css';
 
 function AiRecommendUniv() {
     const location = useLocation();
@@ -86,7 +87,7 @@ function AiRecommendUniv() {
                         recommendations.map((recommendation, index) => (
                             <tr key={index}>
                                 <td>{recommendation.distance}</td>
-                                <td>{recommendation.관련직업명}</td>
+                                <td title={recommendation.관련직업명}>{recommendation.관련직업명}</td>
                                 <td>{recommendation.단과대학명}</td>
                                 <td>{recommendation.대학자체계열명}</td>
                                 <td>{recommendation.수업연한}</td>
