@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -9,6 +9,85 @@ function DirectorTeacherManage() {
     const navigate = useNavigate();
 
     const { user } = location.state || {};
+
+    const [teacherList, setTeacherList] = useState([]);
+    const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
+    const [selectedTeacher, setSelectedTeacher] = useState(null);
+    const [formData, setFormData] = useState({
+        name: "",
+        phoneNumber: "",
+        birthdate: "",
+        email: "",
+    });
+
+    useEffect(() => {
+        const fetchTeachers = async () => {
+            try {
+                const response = await axios.get(`/api/teacher/academy/${user.id}/all`);
+                setTeacherList(response.data);
+            } catch (error) {
+                console.error("Error fetching teachers:", error);
+                alert(error.response.data)
+            }
+        };
+
+        fetchTeachers();
+    }, [user]);
+
+    const openEditPopup = (teacher) => {
+        setSelectedTeacher(teacher);
+        setFormData({
+            name: teacher.name,
+            phoneNumber: teacher.phoneNumber,
+            birthdate: teacher.birthdate,
+            email: teacher.email,
+        });
+        setIsEditPopupOpen(true);
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    // 선생 수정
+    const handleUpdateTeacher = async () => {
+        if (!selectedTeacher) return;
+
+        try {
+            const response = await axios.post(
+                `/api/teacher/${selectedTeacher.id}/update`,
+                formData
+            );
+
+            // 업데이트 후 목록 다시 불러오기
+            const updatedTeacherList = teacherList.map((teacher) =>
+                teacher.id === selectedTeacher.id ? { ...teacher, ...formData } : teacher
+            );
+            setTeacherList(updatedTeacherList);
+            setIsEditPopupOpen(false);
+        } catch (error) {
+            console.error("Error updating teacher:", error);
+            alert(error.response.data);
+        }
+    };
+
+    // 선생 삭제
+    const deleteTeacher = async (teacherId) => {
+        try {
+            const response = await axios.put(`/api/teacher/${teacherId}/delete`);
+
+            // 삭제된 선생님을 목록에서 제거
+            setTeacherList(teacherList.filter((teacher) => teacher.id !== teacherId));
+            alert(response.data);
+        } catch (error) {
+            console.error("Error deleting teacher:", error);
+            alert(error.response.data);
+        }
+    };
 
     const GoTeacherAdd=()=>{
         navigate('/director/teacher/regist', { state: { user: user } })
@@ -24,20 +103,74 @@ function DirectorTeacherManage() {
                         <span>+ 선생 등록</span>
                     </button>
                     <div id="director_showing_teacher_manage">
-                        <div id="info_teacher1">
-                            <div id="info_teacher1_name">
-                                <span>박명수</span>
+                        {teacherList.map((teacher) => (
+                            <div id="info_teacher" key={teacher.id}>
+                                <div id="info_teacher_name">
+                                    <span>{teacher.name}</span>
+                                </div>
+                                <div id="info_teacher_subject">
+                                    {teacher.lectureNameDTOList.length > 0 ?
+                                        <span>{teacher.lectureNameDTOList.map((lecture) => lecture.name).join(", ")}</span>
+                                        : <span>강의가 없습니다</span>
+                                    }
+                                </div>
+                                <button id="EditTeacher" onClick={() => openEditPopup(teacher)}>
+                                    <span>수정</span>
+                                </button>
+                                <button id="DeleteTeacher" onClick={() => deleteTeacher(teacher.id)}>
+                                    <span>삭제</span>
+                                </button>
                             </div>
-                            <div id="info_teacher1_subject">
-                                국어, 수학
+                        ))}
+
+                        {/* 수정 팝업 */}
+                        {isEditPopupOpen && (
+                            <div className="popup-overlay">
+                                <div className="popup">
+                                    <h3>선생님 정보 수정</h3>
+                                    <label>
+                                        이름:
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleInputChange}
+                                        />
+                                    </label>
+                                    <label>
+                                        전화번호:
+                                        <input
+                                            type="text"
+                                            name="phoneNumber"
+                                            value={formData.phoneNumber}
+                                            onChange={handleInputChange}
+                                        />
+                                    </label>
+                                    <label>
+                                        생년월일:
+                                        <input
+                                            type="date"
+                                            name="birthdate"
+                                            value={formData.birthdate}
+                                            onChange={handleInputChange}
+                                        />
+                                    </label>
+                                    <label>
+                                        이메일:
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleInputChange}
+                                        />
+                                    </label>
+                                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                        <button onClick={handleUpdateTeacher}>저장</button>
+                                        <button onClick={() => setIsEditPopupOpen(false)}>취소</button>
+                                    </div>
+                                </div>
                             </div>
-                            <button id="EditTeacher">
-                                <span>수정</span>
-                            </button>
-                            <button id="DeleteTeacher">
-                                <span>삭제</span>
-                            </button>
-                        </div>
+                        )}
                     </div>
                 </div>
             </div>

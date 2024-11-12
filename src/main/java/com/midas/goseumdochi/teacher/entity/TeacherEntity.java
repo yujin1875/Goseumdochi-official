@@ -69,11 +69,20 @@ public class TeacherEntity {
                 .name(teacherDTO.getName())
                 .loginid(teacherDTO.getLoginid())
                 .password(teacherDTO.getPassword())
+                .phoneNumber(teacherDTO.getPhoneNumber())
                 .birthdate(teacherDTO.getBirthdate())
                 .email(teacherDTO.getEmail())
                 .academyEntity(academyEntity)
                 .build();
 
         return teacherEntity;
+    }
+
+    // 선생 정보 수정시 (id 빼고, 이름, 전화번호, 생일, 이메일)
+    public void updateTeacherEntity(TeacherDTO teacherDTO) {
+        this.name = teacherDTO.getName();
+        this.phoneNumber = teacherDTO.getPhoneNumber();
+        this.birthdate = teacherDTO.getBirthdate();
+        this.email = teacherDTO.getEmail();
     }
 }

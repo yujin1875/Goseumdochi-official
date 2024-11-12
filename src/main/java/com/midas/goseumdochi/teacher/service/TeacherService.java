@@ -68,24 +68,31 @@ public class TeacherService {
         return mailDTO;
     }
 
-    // 학원의 모든 선생 찾기
+    // 학원의 모든 선생 찾기 + 강의 이름 리스트
     public List<TeacherDTO> getAllTeacherByAcademyId(Long academyId) {
         List<TeacherEntity> teacherEntityList = teacherRepository.findAllByAcademyId(academyId);
 
         // DTO로 변환
         List<TeacherDTO> teacherDTOList = new ArrayList<>();
-        for (TeacherEntity teacherEntity : teacherEntityList)
-            teacherDTOList.add(TeacherDTO.toTeacherDTO(teacherEntity));
+        for (TeacherEntity teacherEntity : teacherEntityList) {
+            System.out.println(teacherEntity.getBirthdate());
+            teacherDTOList.add(TeacherDTO.toTeacherAndLectureNameDTO(teacherEntity));
+        }
         return teacherDTOList;
     }
 
     // 선생 정보 수정
-    public TeacherDTO update(TeacherDTO teacherDTO) {
-        TeacherEntity updateTeacherEntity = TeacherEntity.toTeacherEntity(teacherDTO,
-                academyRepository.findById(teacherDTO.getId()).get());
-        teacherRepository.save(updateTeacherEntity);
+    public Boolean update(Long teacherId, TeacherDTO teacherDTO) {
+        Optional<TeacherEntity> teacherEntity = teacherRepository.findById(teacherId);
+        if(teacherEntity.isEmpty()) // 수정 실패
+            return false;
 
-        return teacherDTO;
+        // 수정 성공
+        System.out.println(teacherDTO);
+        teacherEntity.get().updateTeacherEntity(teacherDTO);
+        teacherRepository.save(teacherEntity.get());
+
+        return true;
     }
 
     // 선생 삭제
