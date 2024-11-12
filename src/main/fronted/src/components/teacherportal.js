@@ -609,6 +609,33 @@ function App26() {
         }
     };
 
+    const calculateStatistics = (scores) => {
+        const n = scores.length;
+        if (n === 0) return {};
+
+        const sortedScores = [...scores].sort((a, b) => a - b);
+        const total = scores.reduce((sum, score) => sum + score, 0);
+        const mean = total / n;
+        const min = sortedScores[0];
+        const max = sortedScores[n - 1];
+        const median = n % 2 === 0
+            ? (sortedScores[n / 2 - 1] + sortedScores[n / 2]) / 2
+            : sortedScores[Math.floor(n / 2)];
+        const variance = scores.reduce((sum, score) => sum + Math.pow(score - mean, 2), 0) / n;
+        const stdDeviation = Math.sqrt(variance);
+
+        return { total, mean, min, max, median, stdDeviation };
+    };
+
+    const [statistics, setStatistics] = useState({
+        total: 0,
+        mean: 0,
+        min: 0,
+        max: 0,
+        median: 0,
+        stdDeviation: 0,
+    });
+
 
     const showDivHome = () => {
         setVisibleDiv('Home');
@@ -833,8 +860,12 @@ function App26() {
                 const response = await axios.get(`/api/student/exams/${currentExam.id}/answers/students-with-scores`,
                     { params: { lectureId } }
                 );
-                console.log("Fetched students:", response.data);
-                setStudents(response.data);
+                const fetchedStudents = response.data;
+                setStudents(fetchedStudents);
+
+                const scores = fetchedStudents.map(student => student.examAnswer?.score || 0);
+                const stats = calculateStatistics(scores);
+                setStatistics(stats);
             } else {
                 console.warn("No exam selected");
             }
@@ -2110,12 +2141,13 @@ function App26() {
                                         <div id="abs_exam">표준편차</div>
                                     </div>
                                     <div id="tableOfStudentScore_score">
-                                        <div id="totalscore"></div>
-                                        <div id="aver_exam"></div>
-                                        <div id="min_exam"></div>
-                                        <div id="max_exam"></div>
-                                        <div id="mid_exam"></div>
-                                        <div id="abs_exam"></div>
+                                        <div id="totalscore">{currentExam?.points || 'N/A'}</div>
+                                        {/* 시험 총 배점 */}
+                                        <div id="aver_exam">{statistics.mean.toFixed(2)}</div>
+                                        <div id="min_exam">{statistics.min}</div>
+                                        <div id="max_exam">{statistics.max}</div>
+                                        <div id="mid_exam">{statistics.median}</div>
+                                        <div id="abs_exam">{statistics.stdDeviation.toFixed(2)}</div>
                                     </div>
                                 </div>
                             </div>
