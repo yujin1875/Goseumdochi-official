@@ -1,16 +1,16 @@
-body {
+#ai_recommend body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f4f4f9;
 }
 
-div {
+#ai_recommend div {
   padding: 10px;
 }
 
 /* 폼 스타일링 */
-form {
+#ai_recommend form {
   width: 95%;
   display: flex;
   flex-direction: column;
@@ -21,13 +21,13 @@ form {
   margin-bottom: 30px;
 }
 
-form label {
+#ai_recommend form label {
   font-size: 14px;
   margin-bottom: 8px;
   font-weight: bold;
 }
 
-form input {
+#ai_recommend form input {
   padding: 8px;
   margin-bottom: 20px;
   font-size: 14px;
@@ -36,11 +36,11 @@ form input {
   outline: none;
 }
 
-form input:focus {
+#ai_recommend form input:focus {
   border-color: #007bff;
 }
 
-form button {
+#ai_recommend form button {
   padding: 10px;
   background-color: #007bff;
   color: white;
@@ -52,12 +52,12 @@ form button {
   margin: 0px 10px 10px 10px;
 }
 
-form button:hover {
+#ai_recommend form button:hover {
   background-color: #0056b3;
 }
 
 /* 테이블 스타일링 */
-table {
+#ai_recommend table {
   width: 95%;
   border-collapse: collapse;
   background-color: #fff;
@@ -68,7 +68,7 @@ table {
 }
 
 /* 테이블 셀 스타일 */
-th, td {
+#ai_recommend th, #ai_recommend td {
   padding: 12px;
   text-align: center;
   border: 1px solid #ddd;
@@ -77,80 +77,78 @@ th, td {
 }
 
 /* 스크롤을 사용할 열 스타일 */
-td {
+#ai_recommend td {
   max-width: 150px;  /* 최대 너비 설정 */
   overflow-x: auto;  /* 가로 스크롤 추가 */
   white-space: nowrap;  /* 텍스트가 한 줄로 유지되도록 */
 }
 
-
-th {
+#ai_recommend th {
   background-color: #f8f9fa;
   font-weight: bold;
 }
 
-tr:nth-child(even) {
+#ai_recommend tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-tr:hover {
+#ai_recommend tr:hover {
   background-color: #e9ecef;
 }
 
 /* 각 열 고정 크기 */
-th:nth-child(1), td:nth-child(1) {
+#ai_recommend th:nth-child(1), #ai_recommend td:nth-child(1) {
   width: 60px; /* 거리 */
 }
 
-th:nth-child(2), td:nth-child(2) {
+#ai_recommend th:nth-child(2), #ai_recommend td:nth-child(2) {
   width: 120px; /* 관련 직업명 */
 }
 
-th:nth-child(3), td:nth-child(3) {
+#ai_recommend th:nth-child(3), #ai_recommend td:nth-child(3) {
   width: 150px; /* 단과대학명 */
 }
 
-th:nth-child(4), td:nth-child(4) {
+#ai_recommend th:nth-child(4), #ai_recommend td:nth-child(4) {
   width: 125px; /* 대학 자체 계열명 */
 }
 
-th:nth-child(5), td:nth-child(5) {
+#ai_recommend th:nth-child(5), #ai_recommend td:nth-child(5) {
   width: 65px; /* 수업연한 */
 }
 
-th:nth-child(6), td:nth-child(6) {
+#ai_recommend th:nth-child(6), #ai_recommend td:nth-child(6) {
   width: 85px; /* 입학 정원수 */
 }
 
-th:nth-child(7), td:nth-child(7) {
+#ai_recommend th:nth-child(7), #ai_recommend td:nth-child(7) {
   width: 65px; /* 졸업자수 */
 }
 
-th:nth-child(8), td:nth-child(8) {
+#ai_recommend th:nth-child(8), #ai_recommend td:nth-child(8) {
   width: 85px; /* 주야과정명 */
 }
 
-th:nth-child(9), td:nth-child(9) {
+#ai_recommend th:nth-child(9), #ai_recommend td:nth-child(9) {
   width: 150px; /* 주요 교과목명 */
 }
 
-th:nth-child(10), td:nth-child(10) {
+#ai_recommend th:nth-child(10), #ai_recommend td:nth-child(10) {
   width: 120px; /* 학과명 */
 }
 
-th:nth-child(11), td:nth-child(11) {
+#ai_recommend th:nth-child(11), #ai_recommend td:nth-child(11) {
   width: 85px; /* 학교 구분명 */
 }
 
-th:nth-child(12), td:nth-child(12) {
+#ai_recommend th:nth-child(12), #ai_recommend td:nth-child(12) {
   width: 150px; /* 학교명 */
 }
 
-th:nth-child(13), td:nth-child(13) {
+#ai_recommend th:nth-child(13), #ai_recommend td:nth-child(13) {
   width: 125px; /* 학교 학과 특성명 */
 }
 
-th:nth-child(14), td:nth-child(14) {
+#ai_recommend th:nth-child(14), #ai_recommend td:nth-child(14) {
   width: 85px; /* 학위 과정명 */
 }
-
