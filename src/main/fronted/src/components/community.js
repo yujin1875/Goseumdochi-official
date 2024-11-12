@@ -452,7 +452,7 @@ function App24() {
                                             <li key={post.id}>
                                                 <div>{categoryName} 게시판</div>
                                                 <div>{post.likeCount} 좋아요</div>
-                                                <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
+                                                <a onClick={() => handlePostClick(post.id)}>{post.title}</a>
                                                 <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div>
                                             </li>
                                         );
@@ -467,10 +467,9 @@ function App24() {
                     {visibleDiv === '글쓰기' && (
                         <div id="write_contents_community">
                             <form onSubmit={handleFormSubmit}>
-                                <label>작성자 아이디: {newPost.writerId} </label>
                                 <label htmlFor="categoryId">카테고리: </label>
                                 <select id="categoryId" onChange={handleInputChange} value={newPost.categoryId}>
-                                    <option value="">카테고리를 선택하세요</option>
+                                    <option value="" selected>카테고리를 선택하세요</option>
                                     <option value="1">자유</option>
                                     <option value="2">대입</option>
                                     <option value="3">질문</option>
@@ -520,11 +519,20 @@ function App24() {
                             {posts.map(post => {
                                 if (post.id === selectedPostId) {
                                     const hasLiked = likedPosts.some(likedPost => likedPost.id === post.id);
+
+                                    // 별점 계산: '학원리뷰'일 때만 별점 표시
+                                    let starsDisplay = null;
+                                    if (post.categoryId === 4) {  // 학원리뷰 카테고리인 경우
+                                        const fullStars = '⭐'.repeat(post.star);  // 노란 별
+                                        const emptyStars = '☆'.repeat(5 - post.star);  // 회색 별
+                                        starsDisplay = <p>{fullStars}{emptyStars}</p>;
+                                    }
+
                                     return (
                                         <div key={post.id}>
                                             <h2>{post.title}</h2>
-                                            <p>({post.academyName})</p>
-                                            <p>{post.star}/5</p>
+                                            <p>{post.academyName}</p>
+                                            <p>{starsDisplay}</p> {/* 별점 표시 */}
                                             <p>{post.content}</p>
                                             <p>작성자: 익명</p>
                                             <p>작성일: {post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</p>
@@ -551,7 +559,6 @@ function App24() {
                     )}
 
 
-
                     {visibleDiv === '자유' && (
                         <div id="letter_contents_community">
                             <ul>
@@ -570,7 +577,7 @@ function App24() {
                                             {/* 핫게시글 표시 */}
                                             {post.likeCount >= 3 && <span className="hot-badge">🔥 핫게시글</span>}
                                             <div>{post.likeCount} 좋아요</div>
-                                            <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
+                                            <a onClick={() => handlePostClick(post.id)}>{post.title}</a>
                                             <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div>
                                         </li>
                                     ))}
@@ -596,7 +603,7 @@ function App24() {
                                             {/* 핫게시글 표시 */}
                                             {post.likeCount >= 3 && <span className="hot-badge">🔥 핫게시글</span>}
                                             <div>{post.likeCount} 좋아요</div>
-                                            <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
+                                            <a onClick={() => handlePostClick(post.id)}>{post.title}</a>
                                             <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div>
                                         </li>
                                     ))}
@@ -621,7 +628,7 @@ function App24() {
                                             {/* 핫게시글 표시 */}
                                             {post.likeCount >= 3 && <span className="hot-badge">🔥 핫게시글</span>}
                                             <div>{post.likeCount} 좋아요</div>
-                                            <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
+                                            <a onClick={() => handlePostClick(post.id)}>{post.title}</a>
                                             <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div>
                                         </li>
                                     ))}
@@ -631,19 +638,25 @@ function App24() {
                     {visibleDiv === '학원리뷰' && (
                         <div id="letter_contents_community">
                             <ul>
-                                {posts.map(post => (
-                                    <li key={post.id}>
-                                        <div>학원 이름: {post.academyName}</div>
-                                        <div>{post.star}/5</div>
-                                        <div>{post.likeCount} 좋아요</div>
-                                        <button onClick={() => handlePostClick(post.id)}>{post.title}</button>
-                                        <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div>
-                                    </li>
-                                ))}
+                                {posts.map(post => {
+                                    // 별점 계산
+                                    const fullStars = '⭐'.repeat(post.star);  // 노란 별
+                                    const emptyStars = '☆'.repeat(5 - post.star);  // 회색 별
 
+                                    return (
+                                        <li key={post.id}>
+                                            <div>학원 이름: {post.academyName}</div>
+                                            <div>{fullStars}{emptyStars}</div> {/* 별점 표시 */}
+                                            <div>{post.likeCount} 좋아요</div>
+                                            <a onClick={() => handlePostClick(post.id)}>{post.title}</a>
+                                            <div>{post.createDate.split('T')[0]} {post.createDate.split('T')[1].split('.')[0]}</div>
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         </div>
                     )}
+
 
 
                     {visibleDiv === 'Mypage' && (

@@ -33,7 +33,17 @@ public class LoginController {
     // 현재 로그인한 관리자 정보 가져오기
     @GetMapping("/adminInfo")
     public ResponseEntity<?> getAdminInfo(HttpSession session) {
-        String loginId = (String) session.getAttribute("loginId");
+        Object loginIdObj = session.getAttribute("loginId");
+        String loginId = null;
+
+        if (loginIdObj != null) {
+            if (loginIdObj instanceof Long) {
+                loginId = String.valueOf(loginIdObj); // Long을 String으로 변환
+            } else {
+                loginId = (String) loginIdObj; // 이미 String 타입인 경우
+            }
+        }
+
         if (loginId != null) {
             AdminDTO adminDTO = new AdminDTO(loginId); // 생성자를 통해 관리자 이름 설정
             return ResponseEntity.ok(adminDTO);
