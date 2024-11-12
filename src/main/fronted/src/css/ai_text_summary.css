@@ -1,0 +1,109 @@
+/* 전체 컨테이너 스타일 */
+body {
+    background-color: #EAEAEA; /* 연한 회색 */
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+#ai_text_summary_container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 100px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 헤더 스타일 */
+#ai_text_summary_header {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 폼 컨테이너 스타일 */
+#ai_text_summary_form_container {
+    margin-bottom: 30px;
+}
+
+/* 폼 스타일 */
+#ai_text_summary_form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 텍스트 영역과 버튼을 가로로 배치 */
+#ai_text_summary_input_container {
+    display: flex;
+    gap: 15px; /* 텍스트영역과 버튼 간의 간격 */
+    width: 200%;
+    align-items: center; /* 세로 중앙 정렬 */
+}
+
+/* 라벨 스타일 */
+#ai_text_summary_label {
+    font-size: 16px;
+    color: #333;
+}
+
+/* 텍스트 영역 스타일 */
+#ai_text_summary_textarea {
+    width: 80%; /* 텍스트영역 크기 조정 */
+    padding: 12px;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+#ai_text_summary_textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* 버튼 스타일 */
+#ai_text_summary_submit_button {
+    padding: 12px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0px 10px 10px 40%;
+}
+
+#ai_text_summary_submit_button:hover {
+    background-color: #0056b3;
+}
+
+/* 결과 영역 스타일 */
+#ai_text_summary_result_container {
+    margin-top: 30px;
+}
+
+/* 결과 텍스트 스타일 */
+#ai_text_summary_result {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    color: #333;
+    word-wrap: break-word;
+    width: 92%; /* 너비를 100%로 설정 */
+    height: 100px; /* 결과 텍스트 영역 최대 높이 설정 */
+    overflow-y: scroll; /* 세로로 스크롤 */
+}
+
+#ai_text_summary_text {
+    white-space: pre-wrap; /* 줄 바꿈을 위해 */
+}
