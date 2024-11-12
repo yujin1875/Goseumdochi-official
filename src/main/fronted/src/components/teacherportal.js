@@ -31,8 +31,6 @@ function App26() {
     const [examPeriodEnd, setExamPeriodEnd] = useState('');
     const [duration, setDuration] = useState('');
     const [scorePublished, setScorePublished] = useState(false);
-    const [submissionCount, setSubmissionCount] = useState(0);
-    const [evaluationScore, setEvaluationScore] = useState(0.0);
     const [lectureInfo, setLectureInfo] = useState({});
     const [file, setFile] = useState(null);
     const [existingFile, setExistingFile] = useState(null);
@@ -276,8 +274,6 @@ function App26() {
             setDuration(exam.duration);
             setPoints(exam.points);
             setScorePublished(exam.scorePublished);
-            setSubmissionCount(exam.submissionCount);
-            setEvaluationScore(exam.evaluationScore);
             showDivExamRead(); // 시험 정보 조회 화면을 보여줌
         } catch (error) {
             console.error("There was an error fetching the exam!", error);
@@ -295,8 +291,6 @@ function App26() {
         setDuration(currentExam.duration);
         setPoints(currentExam.points);
         setScorePublished(currentExam.scorePublished);
-        setSubmissionCount(currentExam.submissionCount);
-        setEvaluationScore(currentExam.evaluationScore);
 
         // 수정 화면 보여주기
         showDivExamEdit();
@@ -378,8 +372,6 @@ function App26() {
             points,
             scorePublished,
             lectureId,
-            submissionCount,
-            evaluationScore
         };
 
         try {
@@ -1738,8 +1730,6 @@ function App26() {
                                     <div id="duration">시험 시간</div>
                                     <div id="score">배점</div>
                                     <div id="scorePublished">점수 공개 여부</div>
-                                    <div id="submissionCount">제출 인원</div>
-                                    <div id="evaluationScore">평가 점수</div>
                                 </div>
                                 {exams.map(exam => (
                                     <div key={exam.id} id="body_Exam">
@@ -1751,8 +1741,6 @@ function App26() {
                                         <div id="Eduration">{exam.duration}분</div>
                                         <div id="Escore">{exam.points}</div>
                                         <div id="EscorePublished">{exam.scorePublished ? 'YES' : 'NO'}</div>
-                                        <div id="EsubmissionCount">{exam.submissionCount}</div>
-                                        <div id="EevaluationScore">{exam.evaluationScore}</div>
                                     </div>
                                 ))}
                             </div>
@@ -1852,14 +1840,6 @@ function App26() {
                                 <h2>점수 공개 여부</h2>
                                 <div>{currentExam?.scorePublished ? '네' : '아니요'}</div>
                             </div>
-                        </div>
-                        <div id="submissionCount_ExamRead">
-                            <h2>제출 인원</h2>
-                            <div id="ExamRead_submissionCount">{currentExam?.submissionCount}</div>
-                        </div>
-                        <div id="evaluationScore_ExamRead">
-                            <h2>평가 점수</h2>
-                            <div id="ExamRead_evaluationScore">{currentExam?.evaluationScore}</div>
                         </div>
                         <div id="buttons_ExamRead">
                             <button id="revise" onClick={showDivExamEdit}>

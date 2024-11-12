@@ -20,8 +20,6 @@ public class ExamDTO {
     private int duration;
     private boolean scorePublished;
     private int points;
-    private int submissionCount;
-    private double evaluationScore;
     private Long lectureId;
     private List<ExamQuestionDTO> questions;
 }

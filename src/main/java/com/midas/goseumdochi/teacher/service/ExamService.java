@@ -31,8 +31,6 @@ public class ExamService {
         entity.setDuration(examDTO.getDuration());
         entity.setScorePublished(examDTO.isScorePublished());
         entity.setPoints(examDTO.getPoints());
-        entity.setSubmissionCount(examDTO.getSubmissionCount());
-        entity.setEvaluationScore(examDTO.getEvaluationScore());
         entity.setLectureEntity(lectureRepository.findById(examDTO.getLectureId())
                 .orElseThrow(() -> new RuntimeException("강의가 존재하지 않습니다.")));
         examRepository.save(entity);
@@ -51,8 +49,6 @@ public class ExamService {
                         entity.getDuration(),
                         entity.isScorePublished(),
                         entity.getPoints(),
-                        entity.getSubmissionCount(),
-                        entity.getEvaluationScore(),
                         entity.getLectureEntity() != null ? entity.getLectureEntity().getId() : null, // null 체크 추가
                         entity.getQuestions() != null ? entity.getQuestions().stream()
                                 .map(q -> new ExamQuestionDTO(
@@ -83,8 +79,6 @@ public class ExamService {
                 entity.getDuration(),
                 entity.isScorePublished(),
                 entity.getPoints(),
-                entity.getSubmissionCount(),
-                entity.getEvaluationScore(),
                 entity.getLectureEntity().getId(),
                 entity.getQuestions() != null ? entity.getQuestions().stream()
                         .map(q -> new ExamQuestionDTO(
@@ -111,8 +105,6 @@ public class ExamService {
         entity.setDuration(examDTO.getDuration());
         entity.setScorePublished(examDTO.isScorePublished());
         entity.setPoints(examDTO.getPoints());
-        entity.setSubmissionCount(examDTO.getSubmissionCount());
-        entity.setEvaluationScore(examDTO.getEvaluationScore());
         examRepository.save(entity);
     }
 
