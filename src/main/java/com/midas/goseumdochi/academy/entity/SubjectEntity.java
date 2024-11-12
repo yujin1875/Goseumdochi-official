@@ -49,4 +49,9 @@ public class SubjectEntity {
 
         return subjectEntity;
     }
+
+    // 과목 이름만 setter 만들기
+    public void setName(String name) {
+        this.name = name;
+    }
 }

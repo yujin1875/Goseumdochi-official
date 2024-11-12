@@ -74,11 +74,12 @@ public class TeacherController {
     }
 
     // 선생 정보 수정
-    @PostMapping("/update")
-    public ResponseEntity<?> updateTeacher(@RequestBody TeacherDTO teacherDTO) {
-        teacherService.update(teacherDTO);
+    @PostMapping("/{teacherId}/update")
+    public ResponseEntity<?> updateTeacher(@PathVariable Long teacherId, @RequestBody TeacherDTO teacherDTO) {
+        if(teacherService.update(teacherId, teacherDTO) == false)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("수정 실패");
 
-        return ResponseEntity.ok(teacherDTO);
+        return ResponseEntity.ok("수정 성공");
     }
 
     // 선생 삭제

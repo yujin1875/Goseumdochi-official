@@ -61,22 +61,21 @@ public class SubjectService {
     }
 
     // 과목 수정
-    public SubjectDTO update(Long subjectId, String inputName) {
+    public Boolean update(Long subjectId, String inputName) {
         SubjectEntity subjectEntity = subjectRepository.findById(subjectId).get();
 
         // 중복 체크
         List<SubjectEntity> subjectEntityList = subjectRepository.findAllByAcademyId(subjectEntity.getAcademyEntity().getId());// 학원의 모든 과목
         for (SubjectEntity subject : subjectEntityList) {
             if(inputName.equals(subject.getName())) // 과목 중복
-                return null;
+                return false;
         }
 
         // 이름 수정
-        SubjectDTO updateSubjectDTO = new SubjectDTO(subjectEntity.getId(), inputName, subjectEntity.getAcademyEntity().getId());
-        SubjectEntity updateSubjectEntity = SubjectEntity.toSubjectEntity(updateSubjectDTO, subjectEntity.getAcademyEntity());
-        subjectRepository.save(updateSubjectEntity); // 수정하여 저장
+        subjectEntity.setName(inputName);
+        subjectRepository.save(subjectEntity); // 수정하여 저장
 
-        return updateSubjectDTO;
+        return true;
     }
 
     // 과목 삭제

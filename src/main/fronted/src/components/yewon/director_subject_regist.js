@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './subcss/director_subject_regist.css';
 
+// 이제 안 씀
 function DirectorSubjectRegist() {
     const location = useLocation();
     const navigate = useNavigate();
