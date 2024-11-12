@@ -268,3 +268,226 @@ hr {
     margin:auto;
 }
 
+/* 글쓰기 */
+#write_contents_community {
+    width: 1547px;
+    height: 790px;
+    margin: auto;
+    margin-top: 20px;
+    margin-left: 40px;
+    background-color: #FFFFFF;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+#write_contents_community form {
+    display: flex;
+    flex-direction: column;
+}
+
+#write_contents_community label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #333333;
+}
+
+#write_contents_community select {
+    width: 20%;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+    border: 1px solid #BCBCBC;
+    border-radius: 4px;
+    background-color: #F7F7F7;
+    color: #333333;
+}
+
+#write_contents_community textarea,
+#write_contents_community input[type="text"] {
+    width: 95%;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+    border: 1px solid #BCBCBC;
+    border-radius: 4px;
+    background-color: #F7F7F7;
+    color: #333333;
+}
+
+#write_contents_community textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+#write_contents_community button[type="submit"] {
+    width: 150px;
+    height: 40px;
+    font-size: 18px;
+    color: #FFFFFF;
+    background-color: #6F7C86;
+    border: none;
+    border-radius: 4px;
+    margin-top: 20px;
+    cursor: pointer;
+    align-self: flex-end;
+}
+
+#write_contents_community button[type="submit"]:hover {
+    background-color: #5a6873;
+}
+
+/* 별점 스타일 */
+/* 학원 선택과 별점 배치 조정 */
+#write_contents_community form label[for="academy"],
+#write_contents_community form select#academy,
+#write_contents_community form label[for="rating"],
+#write_contents_community form .rating {
+    display: block;
+    margin-top: 10px;
+}
+
+#write_contents_community form label[for="rating"] {
+    margin-top: 20px; /* 별점과 위 요소 사이에 여백 추가 */
+}
+
+.rating {
+    display: inline-block;
+    margin-top: 5px;
+}
+
+
+#write_contents_community .rating {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+#write_contents_community .icon {
+    font-size: 24px;
+    color: #FFD700;
+    cursor: pointer;
+}
+
+#detail {
+    width: 1547px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+#detail h2 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+#detail p {
+    font-size: 16px;
+    color: #666;
+    margin: 8px 0;
+}
+
+#detail p:first-child {
+    font-weight: bold;
+}
+
+#detail p:nth-child(2) {
+    color: #888;
+}
+
+#detail p:last-child {
+    font-style: italic;
+}
+
+#detail .like-button-container {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#detail .like-button-container button {
+    padding: 10px 20px;
+    background-color: #6F7C86;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#detail .like-button-container button:hover {
+    background-color: #505D6B;
+}
+
+#detail .like-button-container span {
+    font-size: 16px;
+    color: #333;
+}
+
+#detail textarea {
+    width: 95%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 20px;
+    resize: vertical;
+}
+
+#detail button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #6F7C86;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#detail button:hover {
+    background-color: #505D6B;
+}
+
+#detail h3 {
+    margin-top: 30px;
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+}
+
+#detail ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#detail ul p {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+#detail button.back-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #D9D9D9;
+    border: none;
+    border-radius: 5px;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#detail button.back-btn:hover {
+    background-color: #BCBCBC;
+}
