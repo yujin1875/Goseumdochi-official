@@ -1,0 +1,112 @@
+/* 수학문제 풀이 컨테이너 */
+#ai_math_solve_container {
+    max-width: 400px; /* 너비 설정 */
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 100px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+/* 헤더 스타일 */
+#ai_math_solve_header {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 폼 컨테이너 스타일 */
+#ai_math_solve_form_container {
+    margin-bottom: 30px;
+}
+
+/* 폼 스타일 */
+#ai_math_solve_form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 수학문제 입력 라벨 */
+#ai_math_solve_label {
+    font-size: 16px;
+    color: #333;
+}
+
+/* 수학문제 입력 텍스트영역 */
+#ai_math_solve_problem {
+    width: 80%; /* 텍스트영역 크기 조정 */
+    padding: 12px;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+#ai_math_solve_problem:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* 풀이 버튼 스타일 */
+#ai_math_solve_submit_button {
+    padding: 12px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0 auto; /* 가운데 정렬 */
+}
+
+#ai_math_solve_submit_button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#ai_math_solve_submit_button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+/* 결과 컨테이너 */
+#ai_math_solve_result_container {
+    margin-top: 30px;
+}
+
+/* 로딩 표시 */
+#ai_math_solve_loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#ai_math_solve_loading_image {
+    width: 100px;
+    height: 100px;
+}
+
+/* 풀이 결과 영역 */
+#ai_math_solve_solution {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    color: #333;
+    word-wrap: break-word;
+    width: 92%; /* 결과 영역 너비 조정 */
+    height: 100px; /* 최대 높이 */
+    overflow-y: auto; /* 세로 스크롤 추가 */
+}
+
+/* 풀이 결과 텍스트 */
+#ai_math_solve_solution_text {
+    white-space: pre-wrap; /* 줄 바꿈을 위해 */
+}
