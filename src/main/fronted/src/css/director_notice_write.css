@@ -1,0 +1,223 @@
+/* director_notice_write.css */
+
+#App_dn {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+#director_noticewrite_frame {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+}
+
+#director_noticewrite_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+#back_button {
+    font-size: 20px;
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#header_title {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+#write_btn {
+    display: flex;
+}
+
+#write {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#write:hover {
+    background-color: #218838;
+}
+
+#rect {
+    width: 100%;
+    height: 1px;
+    background-color: #e9ecef;
+    margin: 20px 0;
+}
+
+#director_noticewrite_body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+#title_section,
+#content_section {
+    display: flex;
+    flex-direction: column;
+}
+
+#title_section label,
+#content_section label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+#title,
+#content {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 95%;
+}
+
+#content {
+    min-height: 100px;
+    resize: vertical;
+}
+
+#notice_list {
+    margin-top: 20px;
+}
+
+#notice_list_header {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#loading_message,
+#error_message,
+#no_notices_message {
+    color: #888;
+    font-size: 14px;
+    text-align: center;
+}
+
+#notice_items {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* 항목 간 간격 */
+}
+
+#notice_items li {
+    background-color: #f8f9fa;
+    width: 95%;
+    border: 1px solid #e9ecef;
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    flex-direction: row; /* 제목, 내용, 버튼을 가로로 배치 */
+    justify-content: space-between; /* 각 항목의 공간을 균등하게 배치 */
+    align-items: center;
+}
+
+.notice_title,
+.notice_content {
+    overflow: hidden; /* 넘치는 텍스트를 숨김 */
+    text-overflow: ellipsis; /* ... 으로 표시 */
+    white-space: nowrap; /* 텍스트가 한 줄로 표시되게 설정 */
+}
+
+.notice_title {
+    font-size: 18px;
+    color: #333;
+    flex: 1; /* 제목이 공간을 차지하도록 설정 */
+    margin-right: 10px;
+}
+
+.notice_content {
+    color: #555;
+    font-size: 14px;
+    flex: 2; /* 내용 부분이 조금 더 넓도록 설정 */
+    margin-right: 10px;
+}
+
+
+.notice_date {
+    color: #888;
+    font-size: 12px;
+    margin-bottom: 0px;
+}
+
+.edit_button,
+.delete_button {
+    font-size: 14px;
+    color: #007bff;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.3s;
+}
+
+.edit_button:hover {
+    color: #0056b3;
+}
+
+.delete_button {
+    color: #dc3545;
+}
+
+.delete_button:hover {
+    color: #c82333;
+}
+
+/* 모달 창 배경 */
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+/* 모달 콘텐츠 스타일 */
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 500px;
+}
+
+/* 닫기 버튼 */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #333;
+}

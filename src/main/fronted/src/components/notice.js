@@ -52,7 +52,6 @@ function NoticePage() {
                 <div id="header_notice">
                     <img src={logo} onClick={() => navigate('/main', { state: { studentId } })} alt="Logo" />
                     <div id="user_info">
-                        {studentId && `${studentId}님`}
                         <button className="icon" onClick={() => navigate('/message/list', { state: { studentId } })}>
                             <img src={message_icon} alt="쪽지" style={{ width: '20px', height: '20px' }} />
                         </button>
