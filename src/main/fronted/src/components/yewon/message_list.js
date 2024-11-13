@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
+import './subcss/message_list.css';
+import './subcss/page.css';
+
 function MessageList() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -72,81 +75,94 @@ function MessageList() {
     };
 
     return (
-        <div>
-            <h1>쪽지</h1>
-            <select value={messageType} onChange={handleChange}>
-                <option value="receive">받은쪽지</option>
-                <option value="send">보낸쪽지</option>
-            </select>
+        <div id="App">
+            <div id="header_message" />
+            <div id="message">
+                <h1>쪽지</h1>
+                <select value={messageType} onChange={handleChange}>
+                    <option value="receive">받은쪽지</option>
+                    <option value="send">보낸쪽지</option>
+                </select>
 
-            <button onClick={GoMessageWrite}>
-                <span>쪽지쓰기</span>
-            </button>
+                <button onClick={GoMessageWrite}>
+                    <span>쪽지쓰기</span>
+                </button>
 
-            <div>
-                {messageType === 'receive' ? (
-                    /*받은쪽지 리스트*/
-                    <table>
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>발신자</th>
-                            <th>제목</th>
-                            <th>날짜</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {messageList.map((message) => (
-                            // onClick을 이렇게 사용해야 클릭 이벤트가 실행됐을 때 함수 실행됨
-                            <tr key={message.id} onClick={() => handleViewReceiveMessage(message)}>
-                                <td>{message.viewState}</td>
-                                <td>{message.senderName}</td>
-                                <td>{message.title}</td>
-                                <td>{formatLocalDateTime(message.sendDate)}</td>
+                <div id="message_list_box">
+                    {messageType === 'receive' ? (
+                        /*받은쪽지 리스트*/
+                        <table id="message_receive_table" className="message_table">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>발신자</th>
+                                <th>제목</th>
+                                <th>날짜</th>
                             </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                ) : (
-                    /*보낸쪽지 리스트*/
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>수신자</th>
-                            <th>제목</th>
-                            <th>날짜</th>
-                            <th>수신확인</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {messageList.map((message) => (
-                            <tr key={message.id} onClick={() => handleViewSendMessage(message)}>
-                                <td>{message.receiverName}</td>
-                                <td>{message.title}</td>
-                                <td>{formatLocalDateTime(message.sendDate)}</td>
-                                <td>{message.viewState}</td>
+                            </thead>
+                            <tbody>
+                            {messageList.map((message) => (
+                                // onClick을 이렇게 사용해야 클릭 이벤트가 실행됐을 때 함수 실행됨
+                                <tr key={message.id} onClick={() => handleViewReceiveMessage(message)}>
+                                    <td id="message_viewStatus">
+                                        {message.viewState === "N" && <span id="unread_dot"></span>}
+                                    </td>
+                                    <td>{message.senderName}</td>
+                                    <td>{message.title}</td>
+                                    <td>{formatLocalDateTime(message.sendDate)}</td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    ) : (
+                        /*보낸쪽지 리스트*/
+                        <table id="message_send_table" className="message_table">
+                            <thead>
+                            <tr>
+                                <th>수신자</th>
+                                <th>제목</th>
+                                <th>날짜</th>
+                                <th>수신확인</th>
                             </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                )}
+                            </thead>
+                            <tbody>
+                            {messageList.map((message) => (
+                                <tr key={message.id} onClick={() => handleViewSendMessage(message)}>
+                                    <td>{message.receiverName}</td>
+                                    <td>{message.title}</td>
+                                    <td>{formatLocalDateTime(message.sendDate)}</td>
+                                    <td className="message_status">
+                                        {message.viewState === "N" ?
+                                            <span>읽지 않음</span> :
+                                            <span>읽음</span>
+                                        }
+                                    </td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    )}
 
-                {/* 페이징 버튼 */}
-                <button onClick={() => goToPage(1)}>&lt;&lt;</button>
-                <button onClick={() => currentPage > 1 && goToPage(currentPage - 1)}>&lt;</button>
-                {/* 현재 페이지 기준으로 페이지 버튼 생성 */}
-                {Array.from({ length: pagingInfo.endPage - pagingInfo.startPage + 1 }, (_, i) => i + pagingInfo.startPage).map(page => (
-                    <button
-                        key={page}
-                        onClick={() => goToPage(page)}
-                        style={{ backgroundColor: page === currentPage ? '#007BFF' : 'transparent', color: page === currentPage ? 'white' : 'black' }}
-                    >
-                        {page}
-                    </button>
-                ))}
-                <button onClick={() => currentPage < pagingInfo.totalPages && goToPage(currentPage + 1)}>&gt;</button>
-                <button onClick={() => goToPage(pagingInfo.totalPages)}>&gt;&gt;</button>
+                    {/* 페이징 버튼 */}
+                    <div id="page_box">
+                        <button onClick={() => goToPage(1)}>&lt;&lt;</button>
+                        <button onClick={() => currentPage > 1 && goToPage(currentPage - 1)}>&lt;</button>
+                        {/* 현재 페이지 기준으로 페이지 버튼 생성 */}
+                        {Array.from({ length: pagingInfo.endPage - pagingInfo.startPage + 1 }, (_, i) => i + pagingInfo.startPage).map(page => (
+                            <button
+                                key={page}
+                                onClick={() => goToPage(page)}
+                                style={{ backgroundColor: page === currentPage ? '#007BFF' : 'transparent', color: page === currentPage ? 'white' : 'black' }}
+                            >
+                                {page}
+                            </button>
+                        ))}
+                        <button onClick={() => currentPage < pagingInfo.totalPages && goToPage(currentPage + 1)}>&gt;</button>
+                        <button onClick={() => goToPage(pagingInfo.totalPages)}>&gt;&gt;</button>
+                    </div>
+                </div>
             </div>
+            <div id="footer_message" />
         </div>
     );
 }
