@@ -52,12 +52,14 @@ function NoticePage() {
                 <div id="header_notice">
                     <img src={logo} onClick={() => navigate('/main', { state: { studentId } })} alt="Logo" />
                     <div id="user_info">
-                        {studentId && `${studentId}님`}
+                        <div className="infoBox">
+                            {studentId && `${studentId}님`}
+                        </div>
                         <button className="icon" onClick={() => navigate('/message/list', { state: { studentId } })}>
-                            <img src={message_icon} alt="쪽지" style={{ width: '20px', height: '20px' }} />
+                            <img src={message_icon} alt="쪽지"/>
                         </button>
                         <button className="icon" onClick={() => navigate('/integrate/login', { state: { studentId } })}>
-                            <img src={logout_icon} alt="로그아웃" style={{ width: '20px', height: '20px' }} />
+                            <img src={logout_icon} alt="로그아웃"/>
                         </button>
                     </div>
                 </div>
