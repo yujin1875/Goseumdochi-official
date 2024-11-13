@@ -1,0 +1,27 @@
+#page_box {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+#page_box button {
+    border: none;
+    border-radius: 4px;
+    padding: 8px;
+    margin: 5px;
+    font-size: 1em;
+    background-color: transparent;
+    color: #007bff;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#page_box button:hover {
+    background-color: #e7f3ff;
+    color: #0056b3;
+}
+
+#page_box button[style*="background-color: #007BFF"] {
+    background-color: #007bff;
+    color: white;
+}

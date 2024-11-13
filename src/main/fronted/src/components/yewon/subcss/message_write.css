@@ -1,0 +1,98 @@
+.container_box {
+    width: 1200px;
+    height: 700px;
+    background-color: #FFFFFF;
+    margin: auto;
+    border-radius:5px;
+    border: 1px solid #4f4f4f;
+}
+
+.container_box>h1 {
+    margin-top: 15px;
+    margin-left:30px;
+}
+
+#message_write_form {
+    margin: 20px auto;
+    padding: 20px 80px;
+}
+
+.form_table {
+    width: 100%;
+    margin-bottom: 20px;
+
+    border-collapse: collapse;
+}
+
+.form_table tr {
+    height: 50px;
+}
+
+.form_table td {
+    border: 1px solid #ccc;
+}
+
+.form_left {
+    width: 20%;
+    text-align: center;
+
+    background-color: #f4f4f4;
+}
+
+.form_label {
+    font-weight: bold;
+    color: #333;
+    padding-right: 10px;
+    white-space: nowrap;
+
+    font-size: 21px;
+}
+
+.form_input,
+.form_select,
+.form_textarea {
+    width: 97%;
+    padding: 10px;
+    font-size: 1em;
+    border: none;
+}
+
+.form_select {
+    height: 40px;
+}
+
+.form_textarea {
+    height: 200px;
+    resize: vertical;
+    font-size: 17px;
+    padding: 10px;
+}
+
+.button_container {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.form_button {
+    padding: 11px 20px;
+    margin: 5px;
+    font-size: 1em;
+    border: none;
+    border-radius: 4px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+}
+
+.form_button:hover {
+    background-color: #0056b3;
+}
+
+.form_button_submit {
+    background-color: #28a745;
+}
+
+.form_button_submit:hover {
+    background-color: #218838;
+}
