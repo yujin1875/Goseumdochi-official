@@ -39,8 +39,14 @@
 }
 
 #SearchLecture_teacher_lecture_find>button{
-    width:50px;
-    height:38px;
+    width: 50px;
+    height: 38px;
+    background-color: #363636;
+    border-color: #363636;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #FFFFFF;
+    box-shadow: none;
 }
 
 #teacher_lecture_find_frame>#ListOfLecture_teacher_lecture_find{
@@ -58,15 +64,43 @@
     background-color:#ced4da;
     margin: 0 auto;
     margin-top:10px;
+    overflow-y:auto;
+}
+
+#ListOfLectureBox_teacher_lecture_find>li{
+    float:left;
+    width:155px;
+    height:80px;
+    margin-top:5px;
+    margin-left:5px;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+#ListOfLectureBox_teacher_lecture_find>li>span{
+    margin-top:5px;
+    margin-left:5px;
+}
+
+#ListOfLectureBox_teacher_lecture_find>li>ul>li{
+    width:130px;
+    height:30px;
+    margin-top:3px;
+    margin-left:10px;
 }
 
 #ListOfLecture_teacher_lecture_find>button{
-    width:100px;
-    height:35px;
-    font-size:16px;
-    margin-top: 10px;
-    margin-left:815px;
-    border-radius:5px;
+    display: block;
+    width: 100px;
+    height: 35px;
+    margin-top:10px;
+    margin-left:810px;
+    background-color: #363636;
+    border-color: #363636;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #FFFFFF;
+    box-shadow: none;
 }
 
 #teacher_lecture_find_footer{

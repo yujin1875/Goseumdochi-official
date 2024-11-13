@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../css/notice.css';
 import logo from './images/goseumdochi.png';
+import message_icon from './images/message.png';
+import logout_icon from './images/logout.jpg';
 
 function NoticePage() {
     const location = useLocation();
@@ -10,6 +12,7 @@ function NoticePage() {
     const studentId = location.state?.studentId; // 메인에서 전달받은 studentId
     const [notices, setNotices] = useState([]);
     const [selectedNotice, setSelectedNotice] = useState(null); // 선택된 공지사항 저장
+    const { user } = location.state || {};
 
     // 메인 페이지로 이동
     const goToMain = () => {
@@ -50,12 +53,31 @@ function NoticePage() {
         setSelectedNotice(null);  // 선택된 공지사항 초기화
     };
 
+    const [userName, setUserName] = useState('');
+
+    const GoMessageList = () => {
+        navigate('/message/list', { state: { user: user } });
+    };
+
+    const GoIntegrateLogin = () => {
+        navigate('/integrate/login', { state: { user: user } });
+    };
     return (
         <div id="App">
             <div id="notice-menu">
                 <div id="header_notice">
                     <img src={logo} onClick={goToMain} alt="Logo"/>
-                    <div id="user_info">ID: {studentId}</div>
+                    <div id="user_info">
+                        <div className="infoBox">
+                            ID: {studentId}
+                        </div>
+                            <button className="icon" onClick={GoMessageList}>
+                                <img src={message_icon} alt="쪽지" />
+                            </button>
+                            <button className="icon" onClick={GoIntegrateLogin}>
+                                <img src={logout_icon} alt="로그아웃" />
+                            </button>
+                    </div>
                 </div>
                 <div id="buttons_notice">
                     <input type="submit" value="공지사항" id="notice_btn" onClick={Gonotice} />

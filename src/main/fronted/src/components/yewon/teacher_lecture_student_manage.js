@@ -67,9 +67,9 @@ function TeacherLectureStudentManage() {
             <div id="header_teacher_lecture_student_manage"/>
             <div id="teacher_lecture_student_manage_frame">
                 <h1>강의 학생관리</h1>
-                <div>
+                <div id="LectureInfo_teacher_lecture_student_manage">
                     <h3>강의 상세 정보</h3>
-                    <div>
+                    <div id="LecturePeople_teacher_lecture_student_manage">
                         <h2>{lecture.name}</h2>
                         <p>수강 인원 {lecture.headCount}/{lecture.maxCount}</p>
                         <p>강의 시간</p>
@@ -82,20 +82,20 @@ function TeacherLectureStudentManage() {
                         </ul>
                     </div>
                 </div>
-                <div>
-                    <div>
+                <div id="StudentList_teacher_lecture_student_manage">
+                    <div id="LectureStudentList">
                         <h3>수강중인 학생</h3>
                         <table>
-                            <thead>
-                            <tr>
-                                <th>학생 이름</th>
-                                <th>학번</th>
-                                <th></th>
-                            </tr>
+                            <thead className="thead-height">
+                                <tr>
+                                    <th>학생 이름</th>
+                                    <th>학번</th>
+                                    <th></th>
+                                </tr>
                             </thead>
                             <tbody>
                             {existingStudentList.map((student) => (
-                                <tr key={student.id}>
+                                <tr key={student.id}  className="tbody-height">
                                     <td>{student.studentName}</td>
                                     <td>{student.studentId}</td>
                                     <td>
@@ -106,10 +106,10 @@ function TeacherLectureStudentManage() {
                             </tbody>
                         </table>
                     </div>
-                    <div>
+                    <div id="NotLectureStudentList">
                         <h3>수강하지 않는 학생</h3>
                         <table>
-                            <thead>
+                            <thead className="thead-height">
                             <tr>
                                 <th>학생 이름</th>
                                 <th>학생 ID</th>
@@ -118,7 +118,7 @@ function TeacherLectureStudentManage() {
                             </thead>
                             <tbody>
                             {nonExistingStudentList.map((student) => (
-                                <tr key={student.id}>
+                                <tr key={student.id}  className="tbody-height">
                                     <td>{student.studentName}</td>
                                     <td>{student.studentId}</td>
                                     <td>

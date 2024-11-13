@@ -11,6 +11,116 @@
     border-top: solid 3px #000000;
 }
 
+#teacher_lecture_student_manage_frame>h1{
+    height:60px;
+    margin-top:5px;
+    margin-left:15px;
+}
+
+#teacher_lecture_student_manage_frame>#LectureInfo_teacher_lecture_student_manage{
+    width:650px;
+    height:180px;
+    background-color:#FFFFFF;
+    border:2px solid #BCBCBC;
+    border-radius:15px;
+    margin-left:100px;
+}
+
+#LectureInfo_teacher_lecture_student_manage>h3{
+    margin-top:5px;
+    margin-left:15px;
+}
+
+#LectureInfo_teacher_lecture_student_manage>#LecturePeople_teacher_lecture_student_manage{
+    width:100%;
+    height:140px;
+    margin-top:5px;
+    overflow-y:auto;
+}
+
+#LecturePeople_teacher_lecture_student_manage>h2{
+    margin-left:25px;
+}
+
+#LecturePeople_teacher_lecture_student_manage>p{
+    margin-top:5px;
+    margin-left:30px;
+    font-size:16px;
+}
+
+#LecturePeople_teacher_lecture_student_manage>ul>li{
+    float:left;
+    margin-top:10px;
+    margin-left:5px;
+}
+
+#LecturePeople_teacher_lecture_student_manage>ul>li:first-child{
+    float:left;
+    margin-top:10px;
+    margin-left:25px;
+}
+
+#teacher_lecture_student_manage_frame>#StudentList_teacher_lecture_student_manage{
+    float:left;
+    width:100%;
+    height:400px;
+    margin-top:10px;
+}
+
+#StudentList_teacher_lecture_student_manage>#LectureStudentList{
+    float:left;
+    width:350px;
+    height:380px;
+    border:2px solid #BCBCBC;
+    margin-top:5px;
+    margin-left:110px;
+    overflow-y:auto;
+}
+
+#LectureStudentList>h3{
+    margin-top:10px;
+    margin-left: 15px;
+    margin-bottom:10px;
+}
+
+#LectureStudentList>table{
+    margin-top:5px;
+    width:100%;
+    border-top:1px solid #BCBCBC;
+    text-align:center;
+}
+
+.thead-height {
+    height: 30px;
+}
+
+.tbody-height {
+    height: 30px;
+}
+
+#StudentList_teacher_lecture_student_manage>#NotLectureStudentList{
+    float:left;
+    width:350px;
+    height:380px;
+    border:2px solid #BCBCBC;
+    margin-top:5px;
+    margin-left:50px;
+    overflow-y:auto;
+}
+
+#NotLectureStudentList>h3{
+    margin-top:10px;
+    margin-left: 15px;
+    margin-bottom:10px;
+}
+
+#NotLectureStudentList>table{
+    margin-top:5px;
+    width:100%;
+    border-top:1px solid #BCBCBC;
+    text-align:center;
+}
+
 #footer_teacher_lecture_student_manage{
     width:100%;
     height:144px;

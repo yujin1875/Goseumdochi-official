@@ -230,11 +230,11 @@
 #content_lectureSchedule>select{
     float: left;
     width:449px;
-    height:50px;
+    height:60px;
     background-color:#FFFFFF;
     border: 1px solid #000000;
     margin:0 auto;
-    margin-top: 35px;
+    margin-top: 45px;
     margin-left:35px;
     font-size:18px;
     border-radius:5px;
@@ -244,9 +244,9 @@
     display:block;
     float:left;
     width: 449px;
-    height: 50px;
+    height: 70px;
     background-color: #6F7C86;
-    margin-top:30px;
+    margin-top:40px;
     margin-left:35px;
     border-radius: 15px;
 

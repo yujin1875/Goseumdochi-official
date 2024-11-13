@@ -166,13 +166,15 @@ function App6() {
                 <div id="header_main">
                     <img src={logo} onClick={Gomain} alt="Logo" />
                     <div id="user_info">
-                        {userName && `${userName}님`}
-                        <button className="icon" onClick={GoMessageList}>
-                            <img src={message_icon} alt="쪽지" style={{ width: '20px', height: '20px' }} />
-                        </button>
-                        <button className="icon" onClick={GoIntegrateLogin}>
-                            <img src={logout_icon} alt="로그아웃" style={{ width: '20px', height: '20px' }} />
-                        </button>
+                        <div className="infoBox">
+                            {userName && `${userName}님`}
+                        </div>
+                            <button className="icon" onClick={GoMessageList}>
+                                <img src={message_icon} alt="쪽지" />
+                            </button>
+                            <button className="icon" onClick={GoIntegrateLogin}>
+                                <img src={logout_icon} alt="로그아웃" />
+                            </button>
                     </div>
                 </div>
                 <div id="buttons_main">
