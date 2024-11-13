@@ -93,10 +93,11 @@ form>#LecturePeople_teacher_lecture_regist_form{
 
 form>#LectureTime_teacher_lecture_regist_form{
     width:800px;
-    height:270px;
+    height:300px;
     margin-top:10px;
     margin-left:50px;
     font-size:20px;
+    overflow-y:auto;
 }
 
 #LectureTime_teacher_lecture_regist_form>#LectureTimeLine_teacher_lecture_regist_form{

@@ -15,17 +15,46 @@
 
 #header_notice>img{
     display:block;
+    float:left;
     width: 162px;
     height: 162px;
-    margin:auto;
+    margin-left:600px;
     object-fit: cover;
 }
 
 #header_notice>#user_info{
     display:block;
+    float:left;
     width: 238px;
-    height: 34px;
-    margin-left:984px;
+    height: 40px;
+    margin-top: 80px;
+    margin-left: 200px;
+    border:1px solid #BCBCBC;
+    border-radius:5px;
+}
+
+#user_info>.infoBox{
+    float:left;
+    width:110px;
+    height:30px;
+    margin-top:5px;
+    margin-left:20px;
+    font-size:24px;
+    font-family:;
+}
+
+#user_info>button{
+    float:left;
+    width:30px;
+    height:30px;
+    margin-top:5px;
+    margin-left:15px;
+}
+
+#user_info>button>img{
+    width:30px;
+    height:30px;
+    object-fit: cover;
 }
 
 #notice-menu>#buttons_notice{
@@ -96,14 +125,25 @@ input>#notice_btn{
     height: 60px;
 }
 
-#category_aboutNotice_notice>a{
-    margin-top:20px;
-    margin-left:20px;
+#category_aboutNotice_notice>ul{
+    position: absolute;
+    width: 759px;
+    height: 40px;
+    margin-top:10px;
+    margin-left:426px;
+}
+
+ul>li{
     float: left;
     width: 141px;
     height: 40px;
-    background-color: #ffffff;
+    background-color: #EAEAEA;
+    margin-right:10px;
     border-radius: 5px;
+}
+
+li>a{
+    margin-top: 5px;
     display: block;
     font-size: 20px;
     color:#000000;
@@ -211,6 +251,7 @@ input>#notice_btn{
     width: 1075px;
     height: 512px;
     margin:auto;
+    background-color:blueviolet;
 
     max-height: 500px;  /* 원하는 높이로 설정 */
     overflow-y: auto;   /* 세로 스크롤 활성화 */
@@ -235,10 +276,10 @@ input>#notice_btn{
 /* 공지사항 항목을 가로로 정렬 */
 .notice-item {
     display: flex;
-    align-items: center;
-    justify-content: space-between; /* 요소 간 여백을 균등하게 분배 */
+    align-items: center;  /* 세로 가운데 정렬 */
+    margin-bottom: 10px;   /* 각 항목 간 간격 */
+    border-bottom: 1px solid #ddd;  /* 구분선 추가 */
     padding: 10px 0;
-    border-bottom: 1px solid #ddd;
 }
 
 /* 각 항목을 가로로 배치 */
@@ -253,55 +294,6 @@ input>#notice_btn{
 
 /* 제목은 길이가 길어질 수 있으므로 가로 크기 조정 */
 .notice-item .title {
-    flex-grow: 3; /* 제목이 더 큰 공간을 차지하도록 설정 */
-    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-    overflow: hidden;
-    text-overflow: ellipsis; /* 제목이 길 때 '...'으로 표시 */
+    flex-grow: 1; /* 제목이 가능한 공간을 차지하도록 설정 */
+    word-wrap: break-word;  /* 긴 제목이 있을 경우 자동으로 줄 바꿈 */
 }
-
-.notice-item .num,
-.notice-item .postperson,
-.notice-item .postdate {
-    width: 75px;
-    text-align: center;
-}
-
-.notice-item .visit {
-    width: 80px;
-    text-align: right;
-}
-
-/* 모달 배경 */
-#notice-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 반투명 검정 배경 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-/* 모달 내용 */
-.modal-content {
-    width: 500px;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
-    text-align: left;
-}
-
-/* 닫기 버튼 */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 24px;
-    cursor: pointer;
-}
-

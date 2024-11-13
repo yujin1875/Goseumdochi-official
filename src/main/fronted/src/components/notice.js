@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import logo from './images/goseumdochi_moving.gif';
-import message_icon from './images/message.png';
-import logout_icon from './images/logout.jpg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../css/notice.css';
+import logo from './images/goseumdochi.png';
+import message_icon from './images/message.png';
+import logout_icon from './images/logout.jpg';
 
 function NoticePage() {
     const location = useLocation();
@@ -12,16 +12,23 @@ function NoticePage() {
     const studentId = location.state?.studentId; // 메인에서 전달받은 studentId
     const [notices, setNotices] = useState([]);
     const [selectedNotice, setSelectedNotice] = useState(null); // 선택된 공지사항 저장
+    const { user } = location.state || {};
 
-    // 날짜와 시간을 YYYY-MM-DD HH:mm 형식으로 변환
-    const formatDateTime = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        return `${year}-${month}-${day} ${hours}:${minutes}`;
+    // 메인 페이지로 이동
+    const goToMain = () => {
+        navigate('/main', {state: {studentId}});
+    };
+
+    const Gonotice = () => {
+        navigate('/notice', { state: { studentId } });
+    };
+
+    const Gocommunity = () => {
+        navigate('/community', { state: { studentId } });
+    };
+
+    const Gomypage = () => {
+        navigate('/mypage', { state: { studentId } });
     };
 
     // 공지사항 데이터 불러오기
@@ -46,31 +53,48 @@ function NoticePage() {
         setSelectedNotice(null);  // 선택된 공지사항 초기화
     };
 
+    const [userName, setUserName] = useState('');
+
+    const GoMessageList = () => {
+        navigate('/message/list', { state: { user: user } });
+    };
+
+    const GoIntegrateLogin = () => {
+        navigate('/integrate/login', { state: { user: user } });
+    };
     return (
         <div id="App">
             <div id="notice-menu">
                 <div id="header_notice">
-                    <img src={logo} onClick={() => navigate('/main', { state: { studentId } })} alt="Logo" />
+                    <img src={logo} onClick={goToMain} alt="Logo"/>
                     <div id="user_info">
-                        {studentId && `${studentId}님`}
-                        <button className="icon" onClick={() => navigate('/message/list', { state: { studentId } })}>
-                            <img src={message_icon} alt="쪽지" style={{ width: '20px', height: '20px' }} />
-                        </button>
-                        <button className="icon" onClick={() => navigate('/integrate/login', { state: { studentId } })}>
-                            <img src={logout_icon} alt="로그아웃" style={{ width: '20px', height: '20px' }} />
-                        </button>
+                        <div className="infoBox">
+                            ID: {studentId}
+                        </div>
+                            <button className="icon" onClick={GoMessageList}>
+                                <img src={message_icon} alt="쪽지" />
+                            </button>
+                            <button className="icon" onClick={GoIntegrateLogin}>
+                                <img src={logout_icon} alt="로그아웃" />
+                            </button>
                     </div>
                 </div>
                 <div id="buttons_notice">
-                    <input type="submit" value="공지사항" id="notice_btn" onClick={() => navigate('/notice', { state: { studentId } })} />
-                    <input type="submit" value="커뮤니티" id="community_btn" onClick={() => navigate('/community', { state: { studentId } })} />
-                    <input type="submit" value="마이페이지" id="mypage_btn" onClick={() => navigate('/mypage', { state: { studentId } })} />
+                    <input type="submit" value="공지사항" id="notice_btn" onClick={Gonotice} />
+                    <input type="submit" value="커뮤니티" id="community_btn" onClick={Gocommunity} />
+                    <input type="submit" value="마이페이지" id="mypage_btn" onClick={Gomypage} />
                     <div id="rect" />
                 </div>
                 <div id="contents_notice">
                     <div id="aboutNotice_notice">
                         <div id="category_aboutNotice_notice">
-                            <a>공지사항</a>
+                            <ul>
+                                <li><a>공지사항</a></li>
+                                <li><a>강의자료</a></li>
+                                <li><a>온라인강의</a></li>
+                                <li><a>과제</a></li>
+                                <li><a>시험</a></li>
+                            </ul>
                         </div>
                         <div id="contents_aboutNotice_notice">
                             <div id="category_contents_notice">
@@ -94,7 +118,7 @@ function NoticePage() {
                                             <div className="title">{notice.title}</div>
                                             <div className="academy-name">[{notice.academyName}]</div>
                                             <div className="postperson">{notice.directorName}</div>
-                                            <div className="postdate">{formatDateTime(notice.regdate)}</div>
+                                            <div className="postdate">{new Date(notice.regdate).toLocaleDateString()}</div>
                                             <div className="visit">0</div>
                                         </div>
                                     ))
@@ -112,7 +136,7 @@ function NoticePage() {
                             <h2>{selectedNotice.title}</h2>
                             <p><strong>작성자:</strong> {selectedNotice.directorName}</p>
                             <p><strong>학원:</strong> {selectedNotice.academyName}</p>
-                            <p><strong>게시일:</strong> {formatDateTime(selectedNotice.regdate)}</p>
+                            <p><strong>게시일:</strong> {new Date(selectedNotice.regdate).toLocaleDateString()}</p>
                             <p><strong>내용:</strong></p>
                             <p>{selectedNotice.body}</p>
                         </div>

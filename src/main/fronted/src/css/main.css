@@ -36,9 +36,35 @@
     display:block;
     float:left;
     width: 238px;
-    height: 34px;
+    height: 40px;
     margin-top: 80px;
     margin-left: 200px;
+    border:1px solid #BCBCBC;
+    border-radius:5px;
+}
+
+#user_info>.infoBox{
+    float:left;
+    width:110px;
+    height:30px;
+    margin-top:5px;
+    margin-left:20px;
+    font-size:24px;
+    font-family:;
+}
+
+#user_info>button{
+    float:left;
+    width:30px;
+    height:30px;
+    margin-top:5px;
+    margin-left:15px;
+}
+
+#user_info>button>img{
+    width:30px;
+    height:30px;
+    object-fit: cover;
 }
 
 #main-menu>#buttons_main{

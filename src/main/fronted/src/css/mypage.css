@@ -15,18 +15,46 @@
 
 #header_mypage>img{
     display:block;
+    float:left;
     width: 162px;
     height: 162px;
-    margin:auto;
+    margin-left:600px;
     object-fit: cover;
 }
 
 #header_mypage>#user_info{
     display:block;
+    float:left;
     width: 238px;
-    height: 34px;
-    /*background-color: #646464;*/
-    margin-left:984px;
+    height: 40px;
+    margin-top: 80px;
+    margin-left: 200px;
+    border:1px solid #BCBCBC;
+    border-radius:5px;
+}
+
+#user_info>.infoBox{
+    float:left;
+    width:110px;
+    height:30px;
+    margin-top:5px;
+    margin-left:20px;
+    font-size:24px;
+    font-family:;
+}
+
+#user_info>.icon{
+    float:left;
+    width:30px;
+    height:30px;
+    margin-top:5px;
+    margin-left:15px;
+}
+
+#user_info>.icon>img{
+    width:30px;
+    height:30px;
+    object-fit: cover;
 }
 
 #user_info_mypage > input {
