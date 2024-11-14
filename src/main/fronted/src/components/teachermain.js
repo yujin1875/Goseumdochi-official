@@ -149,7 +149,7 @@ function App25() {
                                 <div id="content_Teacherinfo">
                                     <img src={logo_pic} alt="logo" />
                                     <div id="Teachername">
-                                        선생님
+                                        {user.name}
                                     </div>
                                     <button id="logout">
                                         로그아웃

@@ -33,8 +33,8 @@ public class IntegrateService {
         Optional<DirectorEntity> findDirector = directorRepository.findByLoginid(loginid);
         if (findDirector.isPresent()) { // 로그인id으로 찾음
             if (encDecService.decrypt(findDirector.get().getPassword()).equals(password)) // 비밀번호 일치 -> 원장 로그인 성공
-                return ResponseEntity.ok(new UserDTO(findDirector.get().getId(), "director"
-                        , findDirector.get().getAcademyEntity().getId()));
+                return ResponseEntity.ok(new UserDTO(findDirector.get().getId(), "director",
+                        findDirector.get().getName(), findDirector.get().getAcademyEntity().getId()));
             else // 비밀번호 불일치
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("원장님 비밀번호가 일치하지 않습니다.");
         }
@@ -48,8 +48,8 @@ public class IntegrateService {
                 session.setAttribute("loginId", findTeacher.get().getId());
                 session.setAttribute("teacherName", findTeacher.get().getName());
 
-                return ResponseEntity.ok(new UserDTO(findTeacher.get().getId(), "teacher"
-                        , findTeacher.get().getAcademyEntity().getId()));
+                return ResponseEntity.ok(new UserDTO(findTeacher.get().getId(), "teacher",
+                        findTeacher.get().getName(), findTeacher.get().getAcademyEntity().getId()));
             }else // 실패
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("선생님 비밀번호가 일치하지 않습니다.");
         }
@@ -66,7 +66,8 @@ public class IntegrateService {
                 List<Long> academyIdList = new ArrayList<>();
                 for (StudentAcademyEntity entity : findStudent.get().getStudentAcademyEntityList())
                     academyIdList.add(entity.getAcademyEntity().getId()); // 학생은 학원 id 리스트 저장
-                return ResponseEntity.ok(new UserDTO(findStudent.get().getId(), "student", academyIdList));
+                return ResponseEntity.ok(new UserDTO(findStudent.get().getId(), "student",
+                        findStudent.get().getStudentName(), academyIdList));
             }
             else // 실패
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("학생 비밀번호가 일치하지 않습니다.");
