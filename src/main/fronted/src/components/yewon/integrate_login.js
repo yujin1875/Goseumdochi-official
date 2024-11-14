@@ -36,7 +36,7 @@ function IntegrateLogin() {
                 // sessionStorage에 로그인 ID 저장
                 sessionStorage.setItem('directorId', id);
 
-                navigate('/director/main', { state: { user: response.data } }) // id, role, academyId 전달
+                navigate('/director/main', { state: { user: response.data } }) // id, role, name, academyId 전달
             }
             else if (role === 'teacher') { // 선생 로그인 성공
                 alert("환영합니다 선생님")

@@ -10,7 +10,7 @@ function DirectorMain() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const { user } = location.state || {}; // id, role 전달
+    const { user } = location.state || {}; // id, role, name, academyId 전달
 
     const GoSubjectManage=()=>{
         navigate('/director/subject/manage', { state: { user: user } })
