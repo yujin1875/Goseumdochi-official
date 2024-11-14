@@ -110,7 +110,8 @@ ul>li{
     width: 141px;
     height: 40px;
     background-color: #EAEAEA;
-    margin-right:10px;
+    margin-top:5px;
+    margin-left:10px;
     border-radius: 5px;
 }
 
@@ -133,18 +134,32 @@ li>a{
     border-radius: 10px;
 }
 
-#contents_aboutNotice_notice>#category_contents_notice{
-    width: 1075px;
-    height: 70px;
-    margin:auto;
+#contents_aboutNotice_lectureportal{
+    float:left;
+    width: 1170px;
+    height: 612px;
+    margin-left:10px;
+    border-radius:5px;
+    background-color: #EAEAEA;
 }
 
-#category_contents_notice>#num{
+#contents_aboutNotice_lectureportal>#category_contents_lectureportal{
+    float:left;
+    width: 1150px;
+    height: 592px;
+    margin-top:10px;
+    margin-left:10px;
+    background-color: #FFFFFF;
+    overflow-y:auto;
+}
+
+#category_contents_lectureportal>#num{
     float:left;
     display: block;
     width: 67px;
     height: 50px;
     margin-top:20px;
+    margin-left:10px;
 
     font-size: 24px;
     color:#000000;
@@ -155,10 +170,10 @@ li>a{
     font-weight: bold;
 }
 
-#category_contents_notice>#title{
+#category_contents_lectureportal>#title{
     float:left;
     display: block;
-    width: 567px;
+    width: 507px;
     height: 50px;
     margin-top:20px;
 
@@ -171,7 +186,7 @@ li>a{
     font-weight: bold;
 }
 
-#category_contents_notice>#postperson{
+#category_contents_lectureportal>#postperson{
     float:left;
     display: block;
     width: 167px;
@@ -187,10 +202,10 @@ li>a{
     font-weight: bold;
 }
 
-#category_contents_notice>#postdate{
+#category_contents_lectureportal>#postdate{
     float:left;
     display: block;
-    width: 190px;
+    width: 290px;
     height: 50px;
     margin-top:20px;
 
@@ -203,7 +218,7 @@ li>a{
     font-weight: bold;
 }
 
-#category_contents_notice>#visit{
+#category_contents_lectureportal>#visit{
     float:left;
     display: block;
     width: 84px;
@@ -219,19 +234,57 @@ li>a{
     font-weight: bold;
 }
 
-#contents_aboutNotice_notice>#body_contents_notice{
-    width: 1075px;
-    height: 512px;
-    margin:auto;
-    /*background-color: aliceblue;*/
+#category_contents_lectureportal>p{
+    width:300px;
+    margin-left:505px;
 }
 
-#notice-menu>#footer_notice{
+#contents_aboutNotice_lectureportal>#content_material{
+    float:left;
+    width: 1150px;
+    height: 592px;
+    margin-top:10px;
+    margin-left:10px;
+    background-color: #FFFFFF;
+    overflow-y:auto;
+}
+
+#contents_aboutNotice_lectureportal>#body_contents_lectureportal{
+    float:left;
+    width: 1150px;
+    height: 592px;
+    margin-top:10px;
+    margin-left:10px;
+    background-color: #FFFFFF;
+    overflow-y:auto;
+}
+
+#contents_aboutNotice_lectureportal>#content_assignment{
+    float:left;
+    width: 1150px;
+    height: 592px;
+    margin-top:10px;
+    margin-left:10px;
+    background-color: #FFFFFF;
+    overflow-y:auto;
+}
+
+#contents_aboutNotice_lectureportal>#content_exam{
+    float:left;
+    width: 1150px;
+    height: 592px;
+    margin-top:10px;
+    margin-left:10px;
+    background-color: #FFFFFF;
+    overflow-y:auto;
+}
+
+#lectureportal-menu>#footer_lectureportal{
     width: 1358px;
-    height: 40px;
+    height: 130px;
 }
 
-#footer_notice>a{
+#footer_lectureportal>a{
     display:block;
     font-size: 16px;
     color:#838383;

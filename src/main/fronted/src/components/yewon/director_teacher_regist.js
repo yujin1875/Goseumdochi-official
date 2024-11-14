@@ -43,51 +43,55 @@ function DirectorTeacherRegist() {
     };
 
     return (
-        <div id="director_teacher_regist_frame">
-            <h2>선생님 등록</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>이름:</label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="아이디"
-                        required />
-                </div>
-                <div>
-                    <label>전화번호:</label>
-                    <input
-                        type="text"
-                        name="phoneNumber"
-                        value={formData.phoneNumber}
-                        onChange={handleChange}
-                        placeholder="010XXXXXXXX"
-                        required />
-                </div>
-                <div>
-                    <label>생년월일:</label>
-                    <input
-                        type="date"
-                        name="birthdate"
-                        value={formData.birthdate}
-                        onChange={handleChange}
-                        placeholder="생년월일"
-                        required />
-                </div>
-                <div>
-                    <label>이메일:</label>
-                    <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="example@goseumdochi.com"
-                        required />
-                </div>
-                <button type="submit">등록</button>
-            </form>
+        <div id="App">
+            <div id="director_teacher_regist_header"/>
+            <div id="director_teacher_regist_frame">
+                <h1>선생님 등록</h1>
+                <form onSubmit={handleSubmit}>
+                    <div className="teacher_name">
+                        <label>이름:</label>
+                        <input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="아이디"
+                            required />
+                    </div>
+                    <div className="teacher_number">
+                        <label>전화번호:</label>
+                        <input
+                            type="text"
+                            name="phoneNumber"
+                            value={formData.phoneNumber}
+                            onChange={handleChange}
+                            placeholder="010XXXXXXXX"
+                            required />
+                    </div>
+                    <div className="teacher_birth">
+                        <label>생년월일:</label>
+                        <input
+                            type="date"
+                            name="birthdate"
+                            value={formData.birthdate}
+                            onChange={handleChange}
+                            placeholder="생년월일"
+                            required />
+                    </div>
+                    <div className="teacher_email">
+                        <label>이메일:</label>
+                        <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            placeholder="example@goseumdochi.com"
+                            required />
+                    </div>
+                    <button type="submit" className="btn_director_teacher_regist">등록</button>
+                </form>
+            </div>
+            <div id="director_teacher_regist_footer"/>
         </div>
     );
 

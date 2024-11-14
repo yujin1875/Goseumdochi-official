@@ -230,7 +230,7 @@ function App10() {
 
                             {/* 강의자료 */}
                             {menu === "material" && (
-                                <div>
+                                <div id="content_material">
                                     {/* props로 user와 lecture 전달 */}
                                     <LectureMaterialPaging user={user} lecture={lecture}/>
                                 </div>
@@ -272,14 +272,14 @@ function App10() {
                             )}
                             {/* 과제 */}
                             {menu === "assignment" && (
-                                <div>
+                                <div id="content_assignment">
                                     <LectureAssignmentPaging user={user} lecture={lecture} />
                                 </div>
                             )}
 
                             {/* 시험 */}
                             {menu === "exam" && (
-                                <div>
+                                <div id="content_exam">
                                     <>
                                         <h2>시험 목록</h2>
                                         <div id="exam_list">
