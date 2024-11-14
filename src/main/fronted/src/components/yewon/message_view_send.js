@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
+import './subcss/message_view.css'
+
 function MessageViewSend() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -82,37 +84,64 @@ function MessageViewSend() {
             <div id="message">
                 <h1>보낸쪽지</h1>
                 <button id="letSendMessage" onClick={GoMessageWrite}>
-                    쪽지 쓰기
+                    쪽지쓰기
                 </button>
-                <div id="message_view">
-                    <div id="category">
-                        <div id="">제목</div>
-                        <div id="">발신자</div>
-                        <div id="">발신일</div>
-                    </div>
-                    <div>
-                        <div id="">{message.title}</div>
-                        <div id="">{message.receiverName}</div>
-                        <div id="">
-                            <span>{formatLocalDateTime(message.sendDate)}</span>
-                            <span>{message.viewState === "Y" ? "읽음" : "안읽음"}</span>
+                <div className="message_view_box">
+                    <table className="message_view_table">
+                        <tbody>
+                        <tr>
+                            <td className="table_label">
+                                <label>제목</label>
+                            </td>
+                            <td className="table_value">
+                                <div id="">{message.title}</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="table_label">
+                                <label>수신자</label>
+                            </td>
+                            <td className="table_value">
+                                <div id="">{message.receiverName}</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="table_label">
+                                <label>발신일</label>
+                            </td>
+                            <td className="table_value">
+                                <span>{formatLocalDateTime(message.sendDate)}</span>
+                                <span
+                                    id="sendDate_text"
+                                    style={{
+                                        fontSize: "14px", // 원하는 글씨 크기
+                                        color: message.viewState === "Y" ? "#5cb85c" : "#d9534f" // 초록색 또는 빨간색
+                                    }}>
+                                    {message.viewState === "Y" ? "읽음" : "읽지않음"}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="table_value_content" colSpan="2">
+                                <span>{message.content}</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div className="button_container">
+                        <button className="form_button" onClick={GoMessageList}>
+                            목록
+                        </button>
+                        <div className="button_group_right">
+                            <button className="form_button form_orange_button" onClick={handleMessageCancel}>
+                                전송취소
+                            </button>
+                            <button className="form_button form_red_button" onClick={handleMessageDelete}>
+                                삭제
+                            </button>
                         </div>
                     </div>
-                    <div>
-                        <span>
-                            {message.content}
-                        </span>
-                    </div>
                 </div>
-                <button id="GotoMessageList" onClick={GoMessageList}>
-                    목록
-                </button>
-                <button id="" onClick={handleMessageCancel}>
-                    전송취소
-                </button>
-                <button id="" onClick={handleMessageDelete}>
-                    삭제
-                </button>
             </div>
             <div id="footer_message"/>
         </div>

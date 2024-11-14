@@ -114,12 +114,12 @@ function MessageWrite() {
             <div id="header_message" />
             <div className="container_box">
                 <h1>쪽지쓰기</h1>
-                <form id="message_write_form" onSubmit={handleSubmit}>
+                <form className="message_write_form" onSubmit={handleSubmit}>
                     <table className="form_table">
                         <tbody>
                         <tr>
-                            <td className="form_left">
-                                <label className="form_label">제목</label>
+                            <td className="form_label">
+                                <label>제목</label>
                             </td>
                             <td>
                                 <input
@@ -132,8 +132,8 @@ function MessageWrite() {
                             </td>
                         </tr>
                         <tr>
-                            <td className="form_left">
-                                <label className="form_label">강의</label>
+                            <td className="form_label">
+                                <label>강의</label>
                             </td>
                             <td>
                                 <select className="form_select" value={selectedLectureId} onChange={handleLectureSelect}>
@@ -145,8 +145,8 @@ function MessageWrite() {
                             </td>
                         </tr>
                         <tr>
-                            <td className="form_left">
-                                <label className="form_label">받는사람</label>
+                            <td className="form_label">
+                                <label>받는사람</label>
                             </td>
                             <td>
                                 {receiverList && (
@@ -160,8 +160,8 @@ function MessageWrite() {
                             </td>
                         </tr>
                         <tr>
-                            <td className="form_left">
-                                <label className="form_label">내용</label>
+                            <td className="form_label">
+                                <label>내용</label>
                             </td>
                             <td>
                     <textarea

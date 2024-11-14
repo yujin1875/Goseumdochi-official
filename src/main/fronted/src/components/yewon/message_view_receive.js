@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
+import './subcss/message_view.css'
+
 function MessageViewReceive() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -86,34 +88,56 @@ function MessageViewReceive() {
             <div id="message">
                 <h1>받은쪽지</h1>
                 <button id="letSendMessage" onClick={GoMessageWrite}>
-                    쪽지 쓰기
+                    쪽지쓰기
                 </button>
-                <div id="message_view">
-                    <div id="category">
-                        <div id="">제목</div>
-                        <div id="">발신자</div>
-                        <div id="">발신일</div>
-                    </div>
-                    <div>
-                        <div id="">{message.title}</div>
-                        <div id="">{message.senderName}</div>
-                        <div id="">{formatLocalDateTime(message.sendDate)}</div>
-                    </div>
-                    <div>
-                        <span>
-                            {message.content}
-                        </span>
+                <div className="message_view_box">
+                    <table className="message_view_table">
+                        <tbody>
+                            <tr>
+                                <td className="table_label">
+                                    <label>제목</label>
+                                </td>
+                                <td className="table_value">
+                                    <div id="">{message.title}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="table_label">
+                                    <label>발신자</label>
+                                </td>
+                                <td className="table_value">
+                                    <div id="">{message.senderName}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="table_label">
+                                    <label>발신일</label>
+                                </td>
+                                <td className="table_value">
+                                    <div id="">{formatLocalDateTime(message.sendDate)}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="table_value_content" colSpan="2">
+                                    <span>{message.content}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div className="button_container">
+                        <button className="form_button" onClick={GoMessageList}>
+                            목록
+                        </button>
+                        <div className="button_group_right">
+                            <button className="form_button form_green_button" onClick={GoMessageReply}>
+                                답장
+                            </button>
+                            <button className="form_button form_red_button" onClick={handleMessageDelete}>
+                                삭제
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <button id="GotoMessageList" onClick={GoMessageList}>
-                    목록
-                </button>
-                <button id="" onClick={GoMessageReply}>
-                    답장
-                </button>
-                <button id="" onClick={handleMessageDelete}>
-                    삭제
-                </button>
             </div>
             <div id="footer_message"/>
         </div>

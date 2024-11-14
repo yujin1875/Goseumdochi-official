@@ -31,11 +31,11 @@
 }
 
 #message>button{
-    float:left;
+    float:right;
     width:100px;
     height:40px;
     margin-top: 20px;
-    margin-left:830px;
+    margin-right:80px;
     font-size:16px;
     border-radius:5px;
 
