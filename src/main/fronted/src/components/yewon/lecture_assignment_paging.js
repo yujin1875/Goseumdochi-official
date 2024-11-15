@@ -1,6 +1,7 @@
 import React, { useState ,useEffect } from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
+import './subcss/lecture_assignment_paging.css';
 
 import SubmitAssignment from "../SubmitAssignment";
 
@@ -82,7 +83,7 @@ function LectureAssignmentPaging({ user, lecture }) { // props로 user와 lectur
     };
 
     return (
-        <div>
+        <div className="assignment_paging">
             {selectedAssignmentId == null ? (
                 // selectedAssignment가 true일 때 보여줄 화면 (과제 목록과 페이징 버튼)
                 <div>
@@ -104,7 +105,7 @@ function LectureAssignmentPaging({ user, lecture }) { // props로 user와 lectur
                         </thead>
                         <tbody>
                         {assignmentList.map((assignment) => (
-                            <tr key={assignment.id}>
+                            <tr key={assignment.id} style={{ height: '40px', overflow: 'hidden'}}>
                                 <td>{assignment.id}</td>
                                 <td>{assignment.title}</td>
                                 <td>{assignment.content}</td>
@@ -128,19 +129,21 @@ function LectureAssignmentPaging({ user, lecture }) { // props로 user와 lectur
                     </table>
 
                     {/* 페이징 버튼 */}
-                    <button onClick={() => goToPage(1)}>&lt;&lt;</button>
-                    <button onClick={() => currentPage > 1 && goToPage(currentPage - 1)}>&lt;</button>
-                    {Array.from({ length: pagingInfo.endPage - pagingInfo.startPage + 1 }, (_, i) => i + pagingInfo.startPage).map(page => (
-                        <button
-                            key={page}
-                            onClick={() => goToPage(page)}
-                            style={{ backgroundColor: page === currentPage ? '#007BFF' : 'transparent', color: page === currentPage ? 'white' : 'black' }}
-                        >
-                            {page}
-                        </button>
-                    ))}
-                    <button onClick={() => currentPage < pagingInfo.totalPages && goToPage(currentPage + 1)}>&gt;</button>
-                    <button onClick={() => goToPage(pagingInfo.totalPages)}>&gt;&gt;</button>
+                    <div className="button_assignment_paging">
+                        <button className="first_paging_btn" onClick={() => goToPage(1)}>&lt;&lt;</button>
+                        <button onClick={() => currentPage > 1 && goToPage(currentPage - 1)}>&lt;</button>
+                        {Array.from({ length: pagingInfo.endPage - pagingInfo.startPage + 1 }, (_, i) => i + pagingInfo.startPage).map(page => (
+                            <button
+                                key={page}
+                                onClick={() => goToPage(page)}
+                                style={{ backgroundColor: page === currentPage ? '#007BFF' : 'transparent', color: page === currentPage ? 'white' : 'black' }}
+                            >
+                                {page}
+                            </button>
+                        ))}
+                        <button onClick={() => currentPage < pagingInfo.totalPages && goToPage(currentPage + 1)}>&gt;</button>
+                        <button onClick={() => goToPage(pagingInfo.totalPages)}>&gt;&gt;</button>
+                    </div>
                 </div>
             ) : (
                 // selectedAssignment가 false일 때 보여줄 다른 화면

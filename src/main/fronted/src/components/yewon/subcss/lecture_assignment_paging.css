@@ -1,0 +1,37 @@
+.assignment_paging{
+    float:left;
+    width:1150px;
+    height:592px;
+    position: relative;
+}
+
+.assignment_paging>div>table{
+    width:1150px;
+    margin-top:20px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.assignment_paging>div>.button_assignment_paging{
+    position: absolute;
+    bottom: 0;
+}
+
+.assignment_paging>div>.button_assignment_paging>button{
+    float:left;
+    display: block;
+    width: 40px;
+    height: 30px;
+    background-color: #363636;
+    border-color: #363636;
+    margin-top:5px;
+    margin-left:10px;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #FFFFFF;
+    box-shadow: none;
+}
+
+.assignment_paging>div>.button_assignment_paging>.first_paging_btn{
+    margin-left:470px;
+}

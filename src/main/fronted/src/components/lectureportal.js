@@ -188,14 +188,16 @@ function App10() {
                             {/* 공지사항 */}
                             {menu === "notice" && (
                                 <div id="category_contents_lectureportal">
-                                    <div id="num">번호</div>
-                                    <div id="title">제목</div>
-                                    <div id="postperson">게시자</div>
-                                    <div id="postdate">게시일</div>
-                                    <div id="visit">조회수</div>
+                                    <div id="num_notice">번호</div>
+                                    <div id="title_notice">제목</div>
+                                    <div id="postperson_notice">게시자</div>
+                                    <div id="postdate_notice">게시일</div>
+                                    <div id="visit_notice">조회수</div><br/>
 
                                     {noticeList.length === 0 ? (
-                                        <p>공지사항이 없습니다.</p>
+                                        <div id="No_notice">
+                                            <p>공지사항이 없습니다.</p>
+                                        </div>
                                     ) : (
                                         noticeList.map((notice, index) => (
                                             <div key={index} className="notice_row">
@@ -286,35 +288,36 @@ function App10() {
                                         <h2>시험 목록</h2>
                                         <div id="exam_list">
                                             <div className="exam_header">
-                                                <div>No</div>
-                                                <div>제목</div>
-                                                <div>시험 방식</div>
-                                                <div>공개일</div>
-                                                <div>응시기간</div>
-                                                <div>시험 시간</div>
-                                                <div>배점</div>
-                                                <div>점수</div>
-                                                <div>시험 시작</div>
+                                                <div id="no_exam_header">No</div>
+                                                <div id="title_exam_header">제목</div>
+                                                <div id="exammethod_exam_header">시험 방식</div>
+                                                <div id="opendate_exam_header">공개일</div>
+                                                <div id="testingtime_exam_header">응시기간</div>
+                                                <div id="testtime_exam_header">시험 시간</div>
+                                                <div id="howscore_exam_header">배점</div>
+                                                <div id="score_exam_header">점수</div>
+                                                <div id="start_exam_header">시험 시작</div>
                                             </div>
                                             {examList.length === 0 ? (
-                                                <p>시험이 없습니다.</p>
+                                                <div className="NonTest">
+                                                    <p>시험이 없습니다.</p>
+                                                </div>
                                             ) : (
                                                 examList.map((exam, index) => (
                                                     <div className="exam_row" key={index}>
-                                                        <div>{index + 1}</div>
-                                                        <div>{exam.title}</div>
-                                                        <div>{exam.examMethod}</div>
-                                                        <div>{exam.openDate}</div>
-                                                        <div>{exam.examPeriodStart} ~ {exam.examPeriodEnd}</div>
-                                                        <div>{exam.duration}분</div>
-                                                        <div>{exam.points}</div>
-                                                        <div>
+                                                        <div id="no_exam_row">{index + 1}</div>
+                                                        <div id="title_exam_row">{exam.title}</div>
+                                                        <div id="exammethod_exam_row">{exam.examMethod}</div>
+                                                        <div id="opendate_exam_row">{exam.openDate}</div>
+                                                        <div id="testingtime_exam_row">{exam.examPeriodStart} ~ {exam.examPeriodEnd}</div>
+                                                        <div id="testtime_exam_row">{exam.duration}분</div>
+                                                        <div id="howscore_exam_row">{exam.points}</div>
+                                                        <div id="score_exam_row">
                                                             {(exam.scorePublished === true || exam.scorePublished === 1) && exam.totalScore !== "비공개" ? (
                                                                 exam.totalScore === -1 ? "미응시" : (exam.totalScore !== null ? exam.totalScore : "점수 미등록")
                                                             ) : "비공개"}
                                                         </div>
-
-                                                        <div>
+                                                        <div id="start_exam_row">
                                                             <button
                                                                 onClick={() => navigate(`/exam/start/${exam.id}`, {
                                                                     state: {

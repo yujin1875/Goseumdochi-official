@@ -1,0 +1,43 @@
+.material_paging{
+    float:left;
+    width:1150px;
+    height:592px;
+    position: relative;
+}
+
+.material_paging>h2{
+    margin-top:5px;
+    margin-left:15px;
+    margin-bottom:5px;
+}
+
+.material_paging>table{
+    width:1150px;
+    text-align:center;
+    vertical-align:middle;
+    overflow:hidden;
+}
+
+.material_paging>.button_material_paging{
+    position: absolute;
+    bottom: 0;
+}
+
+.material_paging>.button_material_paging>button{
+    float:left;
+    display: block;
+    width: 40px;
+    height: 30px;
+    background-color: #363636;
+    border-color: #363636;
+    margin-top:5px;
+    margin-left:10px;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #FFFFFF;
+    box-shadow: none;
+}
+
+.material_paging>.button_material_paging>button:first-child{
+    margin-left:470px;
+}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './subcss/lecture_material_paging.css';
 
 function LectureMaterialPaging({ user, lecture }) { // props로 user와 lecture 받기
     const [materialList, setMaterialList] = useState([]);
@@ -36,7 +37,7 @@ function LectureMaterialPaging({ user, lecture }) { // props로 user와 lecture 
     }
 
     return (
-        <div>
+        <div className="material_paging">
             <h2>강의자료</h2>
             <table>
                 <thead>
@@ -51,7 +52,7 @@ function LectureMaterialPaging({ user, lecture }) { // props로 user와 lecture 
                 </thead>
                 <tbody>
                 {materialList.map((material) => (
-                    <tr key={material.id}>
+                    <tr key={material.id} style={{ height: '40px', overflow: 'hidden'}}>
                         <td>{material.id}</td>
                         <td>{material.content}</td>
                         <td>{material.title}</td>
@@ -63,7 +64,7 @@ function LectureMaterialPaging({ user, lecture }) { // props로 user와 lecture 
                 </tbody>
             </table>
 
-            <div>
+            <div className="button_material_paging">
                 <button onClick={() => goToPage(1)}>&lt;&lt;</button>
                 <button onClick={() => currentPage > 1 && goToPage(currentPage - 1)}>&lt;</button>
                 {Array.from({ length: pagingInfo.endPage - pagingInfo.startPage + 1 }, (_, i) => i + pagingInfo.startPage).map(page => (
