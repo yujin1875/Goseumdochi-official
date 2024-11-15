@@ -123,7 +123,7 @@ function DirectorNoticeWrite() {
                 <div id="director_noticewrite_body">
                     <div id="title_section">
                         <label htmlFor="title">제목:</label>
-                        <input type="text" id="title" value={title} onChange={handleTitleChange} />
+                        <input type="text" id="title_director_noticewrite" value={title} onChange={handleTitleChange} />
                     </div>
                     <div id="content_section">
                         <label htmlFor="content">내용:</label>
