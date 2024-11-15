@@ -17,15 +17,19 @@ function App10() {
     const [menu, setMenu] = useState('notice');
 
     const Gomain = () => {
-        window.location.href = '/main';
+        navigate('/main', {state: {user: user}});
     }
 
     const Gonotice = () => {
-        window.location.href = '/notice';
+        navigate('/notice', { state: { studentId: user.id }});
+    }
+
+    const Gocommunity = () => {
+        navigate('/community', { state: { studentId: user.id }});
     }
 
     const Gomypage = () => {
-        window.location.href = '/mypage';
+        navigate('/mypage', { state: { studentId: user.id } });
     }
 
     // 인강 시작
@@ -169,7 +173,7 @@ function App10() {
                 </div>
                 <div id="buttons_lectureportal">
                     <input type="submit" value="공지사항" id="notice_btn" onClick={Gonotice}/>
-                    <input type="submit" value="커뮤니티" id="community_btn"/>
+                    <input type="submit" value="커뮤니티" id="community_btn" onClick={Gocommunity}/>
                     <input type="submit" value="마이페이지" id="mypage_btn" onClick={Gomypage}/>
                     <div id="rect"/>
                 </div>
