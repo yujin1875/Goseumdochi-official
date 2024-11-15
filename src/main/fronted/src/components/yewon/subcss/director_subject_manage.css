@@ -39,6 +39,7 @@ hr{
     height:420px;
     margin-top:25px;
     background-color:#ced4da;
+    border-radius: 5px;
 }
 
 #director_subject_write {
@@ -81,37 +82,51 @@ hr{
     box-shadow: none;
 }
 
-#director_showing_subject_manage>#info_subject1{
-    width:850px;
-    height:40px;
+#director_showing_subject_manage>#subject_table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#subject_table_head>th {
+    padding: 7px 0px;
+    text-align: center; /* 헤더의 텍스트 가운데 정렬 */
+}
+
+#subject_table>tbody>#info_subject1{
+    width:100%;
+    height: 50px;
     font-size:20px;
     background-color:#F1F3F5;
+    padding: 10px 20px;
+    box-sizing: border-box; /* width:100%를 패딩과 border가 포함된 너비로 계산*/
+    border-bottom: 1px solid #ddd;
+}
+
+#subject_table tbody td:nth-child(odd) {
+    background-color: #E9ECEF; /* 짝수 번째 항목 (어울리는 색상) */
 }
 
 #info_subject1>#info_subject1_name{
-    float:left;
-    width:90px;
-    height:40px;
-    margin-left:10px;
+    text-align: center; /* 수평 가운데 정렬 */
+    vertical-align: middle; /* 수직 가운데 정렬 */
+    width: 60%;
 }
 
 #info_subject1_name>span{
     font-size:26px;
-    margin:auto;
 }
 
-#info_subject1>#EditSubject{
-    margin-top:10px;
-    margin-left:45px;
-    border:none;
-    text-decoration:underline;
+#info_subject1>.info_subject1_button {
+    width: 20%;
 }
 
-#info_subject1>#DeleteSubject{
-    margin-top:10px;
-    margin-left:35px;
-    border:none;
-    text-decoration:underline;
+#info_subject1>td>#EditSubject,
+#info_subject1>td>#DeleteSubject {
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    display: block; /* 버튼을 block으로 설정하여 가운데 정렬 */
+    margin: 0 auto; /* 버튼을 수평 중앙에 배치 */
 }
 
 #director_subject_manage_footer{
