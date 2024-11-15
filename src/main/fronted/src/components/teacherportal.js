@@ -1092,17 +1092,7 @@ function App26() {
                                 /> <br/>
                                 <input type="file" id="file_UploadVideo" accept="video/mp4" onChange={handleFileChange} />
                                 <button onClick={uploadFile}>업로드</button>
-                            <div id="Video_teacherportal">
-                                {videoUrl && (
-                                    <div id="video_UploadVideo">
-                                        <h2>비디오 강의</h2>
-                                        <video width="600" controls key={videoUrl}>
-                                            <source src={videoUrl} type="video/mp4" />
-                                            해당 브라우저에서 비디오 재생이 지원되지 않습니다.
-                                        </video>
-                                    </div>
-                                )}
-                            </div>
+
                             </div>
                             <h2>업로드된 영상 목록</h2>
                             <ul>
@@ -1122,6 +1112,17 @@ function App26() {
                                         </li>
                                     ))}
                             </ul>
+                            <div id="Video_teacherportal">
+                                {videoUrl && (
+                                    <div id="video_UploadVideo">
+                                        <h2>비디오 강의</h2>
+                                        <video width="600" controls key={videoUrl}>
+                                            <source src={videoUrl} type="video/mp4" />
+                                            해당 브라우저에서 비디오 재생이 지원되지 않습니다.
+                                        </video>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </>
                 )}

@@ -70,13 +70,13 @@ hr {
 }
 
 #menu_community>ul>li {
-    width: 275px;
+    width: 265px;
     height: 80px;
     background-color: #D9D9D9;
 }
 
 #menu_community>ul>li:hover {
-    width: 275px;
+    width: 265px;
     height: 80px;
     background-color: #BCBCBC;
 }
@@ -120,13 +120,13 @@ hr {
 
 #findsomething>button {
     float: left;
-    width: 103px;
+    width: 123px;
     height: 51px;
     background-color: #6F7C86;
     border-color: #6F7C86;
     margin: auto;
     margin-top: 22px;
-    margin-left:870px;
+    margin-left:850px;
     font-size: 24px;
     color: #FFFFFF;
 }

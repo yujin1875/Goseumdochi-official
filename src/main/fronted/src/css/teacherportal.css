@@ -3189,11 +3189,15 @@ float:left;
 }
 
 #VideoManagement_teacherportal>h2{
+    float:left;
+    width:100%;
+    margin-left:120px;
     margin-top:20px;
     margin-left:150px;
 }
 
 #VideoManagement_teacherportal>#UploadVideo_teacherportal{
+    float:left;
     width:700px;
     height:150px;
     background-color:#FFFFFF;
@@ -3235,21 +3239,33 @@ float:left;
 }
 
 #VideoManagement_teacherportal>#Video_teacherportal{
-    width:1000px;
-    height:600px;
+    float:left;
+    width:700px;
+    height:400px;
     background-color:#FFFFFF;
-    margin:10px auto;
     border:1px solid #BCBCBC;
     border-radius:5px;
-    overflow-y: auto
+    overflow-y: auto;
+    margin-top:10px;
+    margin-left:120px;
 }
 
 #Video_teacherportal>#video_UploadVideo>h2{
+    float:left;
+    width:350px;
+    margin-left:120px;
     margin-top:5px;
     margin-left:15px;
 }
 
+#Video_teacherportal>#video_UploadVideo>video{
+    float:left;
+    margin-top:25px;
+    margin-left:50px;
+}
+
 #VideoManagement_teacherportal>ul{
+    float:left;
     width:1400px;
     height:200px;
     background-color:#FFFFFF;
@@ -3257,7 +3273,7 @@ float:left;
     margin-left:120px;
     border:1px solid #BCBCBC;
     border-radius:5px;
-    overflow-y: auto
+    overflow-y: auto;
 }
 
 #VideoManagement_teacherportal>ul>li{
