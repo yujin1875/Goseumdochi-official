@@ -14,4 +14,14 @@ public class AdminService {
     public AdminService(AdminRepository adminRepository) {
         this.adminRepository = adminRepository;
     }
+
+    public boolean authenticate(String id, String password) {
+        AdminEntity admin = adminRepository.findByIdIgnoreCase(id);
+        System.out.println("admin: " + admin);
+        System.out.println("getPw: " + admin.getPassword());
+        if (admin != null && admin.getPassword().equals(password)) {
+            return true;
+        }
+        return false;
+    }
 }
