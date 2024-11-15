@@ -1,6 +1,6 @@
 #header_IntegrateLogin{
     width:100%;
-    height:270px;
+    height:255px;
 }
 hr{
     border:0 ;
@@ -9,15 +9,26 @@ hr{
     position: relative;
     display: block;
     width: 556px;
-    height: 400px;
+    height: 450px;
     background-color: #FFFFFF;
     margin:0 auto;
 }
 
 #IntegrateLogin_write>#IntegrateLogin_write_header{
     width: 556px;
-    height: 100px;
+    height: 150px;
     border-top: solid 3px #000000;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#IntegrateLogin_write_header>img {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
 }
 
 #IntegrateLogin_write_header>a{
@@ -26,7 +37,7 @@ hr{
     color:#000000;
     text-align: center;
     margin:auto;
-    margin-top:40px;
+    margin-top:5px;
 }
 
 #IntegrateLogin_write>form{

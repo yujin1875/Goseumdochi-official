@@ -29,6 +29,11 @@ function DirectorMain() {
         navigate('/director_notice_write', { state: { user: user } })
     }
 
+    // 로그아웃 후 통합로그인
+    const GoIntegrateLogin = () => {
+        navigate('/integrate/login');
+    };
+
     return (
         <div id="App">
             <div id="header_director_main">
@@ -68,7 +73,7 @@ function DirectorMain() {
                 </div>
             </div>
             <div id="footer_director_main">
-                <button id="logout">
+                <button id="logout" onClick={GoIntegrateLogin}>
                     로그아웃
                 </button>
             </div>

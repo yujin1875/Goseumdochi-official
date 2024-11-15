@@ -111,6 +111,11 @@ function App25() {
         setSelectedEvent(null); // 선택된 이벤트 초기화
     };
 
+    // 로그아웃 후 통합로그인
+    const GoIntegrateLogin = () => {
+        navigate('/integrate/login');
+    };
+
     return (
         <div id="App">
             <div id="teachermain-menu">
@@ -151,7 +156,7 @@ function App25() {
                                     <div id="Teachername">
                                         {user.name}
                                     </div>
-                                    <button id="logout">
+                                    <button id="logout" onClick={GoIntegrateLogin}>
                                         로그아웃
                                     </button>
                                 </div>
