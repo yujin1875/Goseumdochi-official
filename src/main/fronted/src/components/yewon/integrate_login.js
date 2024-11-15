@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import logo from '../images/goseumdochi.png';
+
 function IntegrateLogin() {
     const [loginid, setLoginid] = useState('');
     const [password, setPassword] = useState('');
@@ -14,6 +16,10 @@ function IntegrateLogin() {
     }
     const GoFindPW=()=>{
         window.location.href='/findPW'
+    }
+
+    const GoStart=()=>{
+        navigate("/");
     }
 
     const handleLogin = async (e) => {
@@ -61,6 +67,7 @@ function IntegrateLogin() {
             <div id="header_IntegrateLogin"/>
             <div id="IntegrateLogin_write">
                 <div id="IntegrateLogin_write_header">
+                    <img src={logo} onClick={GoStart}/>
                     <a>통합로그인</a>
                 </div>
                 <form onSubmit={handleLogin}>

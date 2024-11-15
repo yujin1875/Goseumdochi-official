@@ -51,7 +51,7 @@ function App6() {
     };
 
     const GoIntegrateLogin = () => {
-        navigate('/integrate/login', { state: { user: user } });
+        navigate('/integrate/login');
     };
 
     const [userName, setUserName] = useState('');
