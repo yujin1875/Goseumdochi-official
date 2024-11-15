@@ -312,8 +312,10 @@ function App10() {
                                                         <div id="no_exam_row">{index + 1}</div>
                                                         <div id="title_exam_row">{exam.title}</div>
                                                         <div id="exammethod_exam_row">{exam.examMethod}</div>
-                                                        <div id="opendate_exam_row">{formatDateTime(exam.openDate)}</div>
-                                                        <div id="testingtime_exam_row">{formatDateTime(exam.examPeriodStart)} ~ {formatDateTime(exam.examPeriodEnd)}</div>
+                                                        <div
+                                                            id="opendate_exam_row">{formatDateTime(exam.openDate)}</div>
+                                                        <div
+                                                            id="testingtime_exam_row">{formatDateTime(exam.examPeriodStart)} ~ {formatDateTime(exam.examPeriodEnd)}</div>
                                                         <div id="testtime_exam_row">{exam.duration}분</div>
                                                         <div id="howscore_exam_row">{exam.points}</div>
                                                         <div id="score_exam_row">
@@ -328,10 +330,17 @@ function App10() {
                                                                         user: user,
                                                                         lecture: lecture
                                                                     }
-                                                                })}>
-                                                                시작
+                                                                })}
+                                                                disabled={exam.totalScore !== -1} // 시험 점수가 -1이 아니면 비활성화
+                                                                style={{
+                                                                    cursor: exam.totalScore !== -1 ? "not-allowed" : "pointer", // 비활성화된 경우 커서를 "not-allowed"로 표시
+                                                                    backgroundColor: exam.totalScore !== -1 ? "#d3d3d3" : "#007bff" // 비활성화된 경우 버튼 색을 회색으로 변경
+                                                                }}
+                                                            >
+                                                                {exam.totalScore !== -1 ? "응시 완료" : "시작"} {/* 버튼 텍스트 동적 변경 */}
                                                             </button>
                                                         </div>
+
                                                     </div>
                                                 ))
                                             )}
