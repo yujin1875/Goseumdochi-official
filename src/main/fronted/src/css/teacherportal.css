@@ -2083,7 +2083,7 @@ float:left;
 }
 #cate_Exam>#examperiod{
     float:left;
-    width:120px;
+    width:480px;
     height:40px;
     text-align:center;
     font-size:20px;
@@ -2184,7 +2184,7 @@ float:left;
 }
 #body_Exam>#Eexamperiod{
     float:left;
-    width:120px;
+    width:480px;
     height:40px;
     text-align:center;
     font-size:20px;
