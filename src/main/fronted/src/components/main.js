@@ -26,8 +26,8 @@ function App6() {
 
     const today = new Date(); // 오늘 날짜
     const days = ['일', '월', '화', '수', '목', '금', '토'];
-    //const day = days[new Date().getDay()]; // 오늘 요일
-    const day = '수';
+    const day = days[new Date().getDay()]; // 오늘 요일
+    //const day = '목';
 
     const Gomain = () => {
         navigate('/main', {state: {user: user}});
@@ -125,6 +125,7 @@ function App6() {
                         name: lecture.name,
                         startTime: time.startTime.slice(0, 5),
                         endTime: time.endTime.slice(0, 5),
+                        lectureLocation: lecture.lectureLocation // 강의장소 추가
                     }))
             );
 
@@ -184,10 +185,11 @@ function App6() {
                     <div id="rect" />
                 </div>
                 <div className="navbar">
-
                     <Link className="navbar-menu" to="/ai/recommend/univ" state={{ user: user }}>대학학과추천</Link>
-                    <Link className="navbar-menu" to="/ai/text/summary" state={{ user: user }}>/ &nbsp;문서요약</Link>
-                    <Link className="navbar-menu" to="/ai/math/solve" state={{ user: user }}>/ &nbsp;수학문제풀이</Link>
+                    <span className="slash">/</span>
+                    <Link className="navbar-menu" to="/ai/text/summary" state={{ user: user }}>문서요약</Link>
+                    <span className="slash">/</span>
+                    <Link className="navbar-menu" to="/ai/math/solve" state={{ user: user }}>수학문제풀이</Link>
                 </div>
                 <div id="contents_main">
                     <div id="contents1_main">
@@ -245,12 +247,14 @@ function App6() {
                                         <ul>
                                             {todayLectureList.map((lecture, index) => (
                                                 <li key={index} onClick={() => GoLecturePotal(lecture)} style={{ cursor: 'pointer' }}>
-                                                    <strong>{lecture.name}</strong> {lecture.startTime} - {lecture.endTime}
+                                                    <strong id="content_schedule_name">{lecture.name}</strong>
+                                                    <span id="content_schedule_location">{lecture.lectureLocation}</span>
+                                                    <span id="content_schedule_time">{lecture.startTime} - {lecture.endTime}</span>
                                                 </li>
                                             ))}
                                         </ul>
                                     ) : (
-                                        <p>강의가 없는 날입니다.</p>
+                                        <p className="no_item">강의가 없는 날입니다.</p>
                                     )}
                                 </div>
                             </div>
@@ -262,14 +266,15 @@ function App6() {
                                     <ul>
                                         {assignmentList.map((assignment) => (
                                             <li key={assignment.id}>
-                                                <span>{assignment.lectureName}</span>
-                                                <span> | {assignment.title}</span>
-                                                <p>D - {assignment.dday}</p>
+                                                <strong id="content_submission_name">{assignment.lectureName}</strong>
+                                                <span id="content_submission_slash">|</span>
+                                                <span id="content_submission_title">{assignment.title}</span>
+                                                <strong id="content_submission_dday">D - {assignment.dday}</strong>
                                             </li>
                                         ))}
                                     </ul>
                                 ) : (
-                                    <p>과제가 없습니다.</p>
+                                    <p className="no_item">과제가 없습니다.</p>
                                 )}
                             </div>
                         </div>
