@@ -1023,9 +1023,6 @@ function App26() {
             <div id="teacherportal_header">
                 <div id="menu_btn" />
                 <div id="home_btn" />
-                <div id="title">
-
-                </div>
             </div>
             <div id="contents_teacherportal">
                 {visibleDiv === 'Home' && (

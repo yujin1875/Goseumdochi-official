@@ -405,76 +405,85 @@ li>a{
     vertical-align:middle;
 }
 
-.exam_header>#no_exam_row{
+.exam_row>#no_exam_row{
     float:left;
     width:50px;
     height:30px;
     text-align:center;
     vertical-align:middle;
+    overflow:hidden;
 }
 
-.exam_header>#title_exam_row{
+.exam_row>#title_exam_row{
     float:left;
     width:280px;
     height:30px;
     text-align:center;
     vertical-align:middle;
+    overflow:hidden;
 }
 
-.exam_header>#exammethod_exam_row{
+.exam_row>#exammethod_exam_row{
     float:left;
     width:80px;
     height:30px;
     text-align:center;
     vertical-align:middle;
+    overflow:hidden;
 }
 
-.exam_header>#opendate_exam_row{
+.exam_row>#opendate_exam_row{
     float:left;
     width:140px;
     height:30px;
     text-align:center;
     vertical-align:middle;
+    overflow:hidden;
 }
 
-.exam_header>#testingtime_exam_row{
+.exam_row>#testingtime_exam_row{
     float:left;
     width:250px;
     height:30px;
     text-align:center;
     vertical-align:middle;
+    overflow:hidden;
 }
 
-.exam_header>#testtime_exam_row{
+.exam_row>#testtime_exam_row{
     float:left;
     width:150px;
     height:30px;
     text-align:center;
     vertical-align:middle;
+    overflow:hidden;
 }
 
-.exam_header>#howscore_exam_row{
+.exam_row>#howscore_exam_row{
     float:left;
     width:60px;
     height:30px;
     text-align:center;
     vertical-align:middle;
+    overflow:hidden;
 }
 
-.exam_header>#score_exam_row{
+.exam_row>#score_exam_row{
     float:left;
     width:60px;
     height:30px;
     text-align:center;
     vertical-align:middle;
+    overflow:hidden;
 }
 
-.exam_header>#start_exam_row{
+.exam_row>#start_exam_row{
     float:left;
     width:80px;
     height:30px;
     text-align:center;
     vertical-align:middle;
+    overflow:hidden;
 }
 
 #lectureportal-menu>#footer_lectureportal{
