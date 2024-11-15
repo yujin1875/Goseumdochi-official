@@ -8,6 +8,11 @@
 
 .navbar-menu {
     color: white;
-    margin: 8px;
+    margin: 10px;
     text-decoration: none;
+}
+
+.navbar > .slash {
+    margin: 0px 15px;
+    color: white;
 }
