@@ -34,54 +34,87 @@ hr{
     font-size:20px;
 }
 
+/* 관리 manage 박스 디자인 (과목, 선생, 학생 관리 동일) */
 #contents_director_teacher_manage>#director_showing_teacher_manage{
     width:850px;
     height:420px;
     margin-top:25px;
-    background-color:#ced4da;
+    background-color:#edf0f5;
+    border-radius: 5px;
 }
 
-#director_showing_teacher_manage>#info_teacher{
-    width:850px;
-    height:40px;
-    font-size:20px;
-    background-color:#F1F3F5;
+/* 테이블 스타일 */
+#teacher_manage_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: white;
 }
 
-#info_teacher>#info_teacher_name{
-    float:left;
-    width:150px;
-    height:40px;
-    margin-left:10px;
+#teacher_manage_table_head {
+    background-color: #495057;
+    color: white;
+    text-align: left;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #adb5bd;
 }
 
-
-#info_teacher_name>span{
-    font-size:26px;
-    margin:auto;
+#teacher_manage_table_head>th {
+    padding: 7px 0px;
+    text-align: center; /* 헤더의 텍스트 가운데 정렬 */
 }
 
-#info_teacher>#info_teacher_subject{
-    float:left;
-    width:300px;
-    height:20px;
-    margin-top:8px;
-    margin-left:5px;
+#teacher_manage_table>tbody>#manage_table_info_teacher {
+    width:100%;
     font-size:17px;
+    padding: 10px 20px;
+    box-sizing: border-box; /* width:100%를 패딩과 border가 포함된 너비로 계산*/
+    border-bottom: 1px solid #ddd;
+
+    text-align: center;
 }
 
-#info_teacher>#EditTeacher{
-    margin-top:10px;
-    margin-left:35px;
-    border:none;
-    text-decoration:underline;
+#manage_table_info_teacher>td {
+    vertical-align: middle; /* 세로 정렬: 가운데 */
+    padding: 10px; /* 셀 내부 여백 */
 }
 
-#info_teacher>#DeleteTeacher{
-    margin-top:10px;
-    margin-left:35px;
-    border:none;
-    text-decoration:underline;
+#manage_table_info_teacher:nth-child(odd) {
+    background-color: #f8f9fa;
+}
+
+#manage_table_info_teacher:nth-child(even) {
+    background-color: #e9ecef;
+}
+
+/* 버튼 스타일 */
+#manage_table_info_teacher>td>#EditTeacher,
+#manage_table_info_teacher>td>#DeleteTeacher {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+#manage_table_info_teacher>td>#EditTeacher:hover,
+#manage_table_info_teacher>td>#DeleteTeacher:hover {
+    background-color: #495057;
+}
+
+/* '등록된 선생님이 없습니다' 메시지 스타일 */
+#teacher_manage_table>tbody>.no_item {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #495057;
+    background-color: #e9ecef;
+    padding: 10px;
+    border: 1px solid #adb5bd;
+    border-radius: 4px;
 }
 
 #director_teacher_manage_footer{

@@ -33,7 +33,7 @@ function App6() {
         navigate('/main', {state: {user: user}});
     };
     const Gonotice = () => {
-        navigate('/notice', { state: { studentId: user.id } });
+        navigate('/notice', { state: { user: user } });
     };
     const Gocommunity = () => {
         navigate('/community', { state: { user: user } });  // user 정보를 state로 전달

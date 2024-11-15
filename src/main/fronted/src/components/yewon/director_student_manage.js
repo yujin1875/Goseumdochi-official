@@ -43,6 +43,15 @@ function DirectorStudentManage() {
         }
     };
 
+    // 날짜형식
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}.${month}.${day}`;
+    }
+
     const GoStudentAdd=()=>{
         navigate('/director/student/regist', { state: { user: user } })
     }
@@ -57,17 +66,35 @@ function DirectorStudentManage() {
                         <span>+ 학생 등록</span>
                     </button>
                     <div id="director_showing_student_manage">
-                        {studentList.map((student) => (
-                            <div key={student.id} id="info_student1">
-                                <div id="info_student1_name">
-                                    <span>{student.studentName}</span>
-                                </div>
-                                <span>{student.studentPhoneNumber}</span>
-                                <button id="DeleteStudent" onClick={() => handleDelete(student.id)}>
-                                    <span>삭제</span>
-                                </button>
-                            </div>
-                        ))}
+                        <table id="student_manage_table">
+                            <thead>
+                            <tr id="student_manage_table_head">
+                                <th>이름</th>
+                                <th>생년월일</th>
+                                <th>전화번호</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {studentList.length > 0 ? (
+                                studentList.map((student) => (
+                                    <tr key={student.id} id="manage_table_info_student">
+                                        <td>{student.studentName || '없음'}</td>
+                                        <td>{student.studentBirthDate ? formatDate(student.studentBirthDate) : '없음'}</td>
+                                        <td>{student.studentPhoneNumber || '없음'}</td>
+                                        <td>
+                                            <button id="DeleteStudent" onClick={() => handleDelete(student.id)}>
+                                                <span>삭제</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <div className="no_item">등록된 선생님이 없습니다</div>
+                            )}
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>

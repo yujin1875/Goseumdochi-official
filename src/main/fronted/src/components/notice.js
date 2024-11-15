@@ -9,9 +9,10 @@ import '../css/notice.css';
 function NoticePage() {
     const location = useLocation();
     const navigate = useNavigate();
-    const studentId = location.state?.studentId; // 메인에서 전달받은 studentId
     const [notices, setNotices] = useState([]);
     const [selectedNotice, setSelectedNotice] = useState(null); // 선택된 공지사항 저장
+
+    const { user } = location.state || {};
 
     // 날짜와 시간을 YYYY-MM-DD HH:mm 형식으로 변환
     const formatDateTime = (dateString) => {
@@ -26,15 +27,15 @@ function NoticePage() {
 
     // 공지사항 데이터 불러오기
     useEffect(() => {
-        if (studentId) {
-            axios.get(`/api/academyNotice/student/${studentId}`)
+        if (user.id) {
+            axios.get(`/api/academyNotice/student/${user.id}`)
                 .then(response => {
                     console.log(response.data);
                     setNotices(response.data);
                 })
                 .catch(error => console.error('Error fetching notices:', error));
         }
-    }, [studentId]);
+    }, [user.id]);
 
     // 공지사항 제목 클릭 시 상세 보기
     const viewNoticeDetails = (notice) => {
@@ -46,27 +47,31 @@ function NoticePage() {
         setSelectedNotice(null);  // 선택된 공지사항 초기화
     };
 
+    const Gomain = () => {
+        navigate('/main', {state: {user: user}});
+    };
+
     return (
         <div id="App">
             <div id="notice-menu">
                 <div id="header_notice">
-                    <img src={logo} onClick={() => navigate('/main', { state: { studentId } })} alt="Logo" />
+                    <img src={logo} onClick={Gomain} alt="Logo" />
                     <div id="user_info">
                         <div className="infoBox">
-                            {studentId && `${studentId}님`}
+                            {user.id && `${user.id}님`}
                         </div>
-                        <button className="icon" onClick={() => navigate('/message/list', { state: { studentId } })}>
+                        <button className="icon" onClick={() => navigate('/message/list', { state: { user } })}>
                             <img src={message_icon} alt="쪽지"/>
                         </button>
-                        <button className="icon" onClick={() => navigate('/integrate/login', { state: { studentId } })}>
+                        <button className="icon" onClick={() => navigate('/integrate/login')}>
                             <img src={logout_icon} alt="로그아웃"/>
                         </button>
                     </div>
                 </div>
                 <div id="buttons_notice">
-                    <input type="submit" value="공지사항" id="notice_btn" onClick={() => navigate('/notice', { state: { studentId } })} />
-                    <input type="submit" value="커뮤니티" id="community_btn" onClick={() => navigate('/community', { state: { studentId } })} />
-                    <input type="submit" value="마이페이지" id="mypage_btn" onClick={() => navigate('/mypage', { state: { studentId } })} />
+                    <input type="submit" value="공지사항" id="notice_btn" onClick={() => navigate('/notice', { state: { user } })} />
+                    <input type="submit" value="커뮤니티" id="community_btn" onClick={() => navigate('/community', { state: { user } })} />
+                    <input type="submit" value="마이페이지" id="mypage_btn" onClick={() => navigate('/mypage', { state: { studentId: user.id } })} />
                     <div id="rect" />
                 </div>
                 <div id="contents_notice">
