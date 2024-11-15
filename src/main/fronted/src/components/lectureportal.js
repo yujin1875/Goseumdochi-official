@@ -94,18 +94,20 @@ function App10() {
     const fetchExamList = async (lectureId) => {
         try {
             const response = await axios.get(`/api/student/exams/${lectureId}`);
-            console.log("Fetched exam data:", response.data); // 응답 데이터 확인
+            console.log("Fetched exam data:", response.data);
 
             const exams = await Promise.all(response.data.map(async (exam) => {
-                if (exam.scorePublished === true || exam.scorePublished === 1) { // 점수 공개 여부가 true 또는 1일 때
+                if (exam.scorePublished === true || exam.scorePublished === 1) {
                     const scoreResponse = await axios.get(`/api/student/exams/${exam.id}/answers/${user.id}`);
-                    const totalScore = scoreResponse.data.reduce((sum, answer) => sum + (answer.score || 0), 0); // 모든 점수 합산
+                    const totalScore = scoreResponse.data.length > 0
+                        ? scoreResponse.data.reduce((sum, answer) => sum + (answer.score ?? 0), 0)
+                        : -1; // 답안이 없으면 -1로 설정
                     return { ...exam, totalScore: totalScore };
                 }
                 return { ...exam, totalScore: "비공개" };
             }));
 
-            console.log("Processed exams:", exams); // 콘솔에 처리된 시험 데이터 출력
+            console.log("Processed exams:", exams);
             setExamList(exams);
         } catch (error) {
             console.error('Error fetching exam list:', error);
@@ -308,9 +310,10 @@ function App10() {
                                                         <div>{exam.points}</div>
                                                         <div>
                                                             {(exam.scorePublished === true || exam.scorePublished === 1) && exam.totalScore !== "비공개" ? (
-                                                                exam.totalScore !== null ? exam.totalScore : "점수 미등록"
+                                                                exam.totalScore === -1 ? "미응시" : (exam.totalScore !== null ? exam.totalScore : "점수 미등록")
                                                             ) : "비공개"}
                                                         </div>
+
                                                         <div>
                                                             <button
                                                                 onClick={() => navigate(`/exam/start/${exam.id}`, {

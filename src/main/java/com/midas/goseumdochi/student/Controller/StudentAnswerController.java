@@ -45,27 +45,7 @@ public class StudentAnswerController {
     // 특정 시험에 등록된 학생들의 점수 목록을 조회하는 엔드포인트
     @GetMapping("/students-with-scores")
     public ResponseEntity<List<StudentDTO>> getStudentsByExamIdWithScore(@PathVariable Long examId, @RequestParam Long lectureId) {
-        List<StudentEntity> students = studentRepository.findStudentsByLectureId(lectureId); // lectureId로 학생 목록 가져오기
-
-        List<StudentDTO> studentDTOs = students.stream()
-                .map(student -> {
-                    StudentDTO studentDTO = StudentDTO.toStudentDTO(student);
-
-                    // 학생 답안을 가져와서 점수 합산
-                    List<StudentAnswerEntity> answerEntities = studentAnswerRepository.findByStudentIdAndExamId(student.getId(), examId);
-                    int totalScore = answerEntities.stream()
-                            .mapToInt(StudentAnswerEntity::getScore)
-                            .sum();
-
-                    // 합산한 총 점수를 설정
-                    StudentAnswerDTO studentAnswerDTO = new StudentAnswerDTO();
-                    studentAnswerDTO.setScore(totalScore);
-                    studentDTO.setExamAnswer(studentAnswerDTO);
-
-                    return studentDTO;
-                })
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(studentDTOs);
+        List<StudentDTO> studentsWithScores = studentAnswerService.getStudentsByExamIdWithScore(examId, lectureId);
+        return ResponseEntity.ok(studentsWithScores);
     }
 }
