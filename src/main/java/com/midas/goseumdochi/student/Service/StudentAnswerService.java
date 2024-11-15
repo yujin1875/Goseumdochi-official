@@ -115,23 +115,31 @@ public class StudentAnswerService {
     public List<StudentDTO> getStudentsByExamIdWithScore(Long examId, Long lectureId) {
         List<StudentEntity> students = studentRepository.findStudentsByLectureId(lectureId); // lectureId로 학생 목록 가져오기
         return students.stream()
-            .map(student -> {
-                StudentDTO studentDTO = StudentDTO.toStudentDTO(student);
+                .map(student -> {
+                    StudentDTO studentDTO = StudentDTO.toStudentDTO(student);
 
-                List<StudentAnswerEntity> answerEntities = studentAnswerRepository.findByStudentIdAndExamId(student.getId(), examId);
+                    List<StudentAnswerEntity> answerEntities = studentAnswerRepository.findByStudentIdAndExamId(student.getId(), examId);
 
-                if (!answerEntities.isEmpty()) {
-                    StudentAnswerDTO studentAnswerDTO = new StudentAnswerDTO();
-                    studentAnswerDTO.setScore(answerEntities.get(0).getScore());
-                    studentDTO.setExamAnswer(studentAnswerDTO);
-                } else {
-                    StudentAnswerDTO studentAnswerDTO = new StudentAnswerDTO();
-                    studentAnswerDTO.setScore(0); // 미제출인 경우 기본 점수 0 설정
-                    studentDTO.setExamAnswer(studentAnswerDTO);
-                }
-                return studentDTO;
-            })
-            .collect(Collectors.toList());
+                    if (!answerEntities.isEmpty()) {
+                        System.out.println("답안이 있는 학생 ID: " + student.getId() + ", 답안 개수: " + answerEntities.size());
+                        int totalScore = answerEntities.stream()
+                                .mapToInt(StudentAnswerEntity::getScore)
+                                .sum();
+                        StudentAnswerDTO studentAnswerDTO = new StudentAnswerDTO();
+                        studentAnswerDTO.setScore(totalScore); // 총점 계산
+                        System.out.println("총 점수: " + totalScore);
+                        studentDTO.setExamAnswer(studentAnswerDTO);
+                    } else {
+                        System.out.println("답안이 없는 학생 ID: " + student.getId() + ", 기본 점수 -1 설정");
+                        StudentAnswerDTO studentAnswerDTO = new StudentAnswerDTO();
+                        studentAnswerDTO.setScore(-1);
+                        studentDTO.setExamAnswer(studentAnswerDTO);
+                    }
+
+                    return studentDTO;
+                })
+                .collect(Collectors.toList());
     }
+
 
 }

@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class StudentAnswerDTO {
     private Long id;
     private Long questionId; // 문제 ID
@@ -17,6 +16,10 @@ public class StudentAnswerDTO {
 
     public StudentAnswerDTO(int totalScore) {
         this.score = totalScore;
+    }
+    // 기본 생성자에서 score를 -1로 설정
+    public StudentAnswerDTO() {
+        this.score = -1; // 기본값 설정
     }
 }
 

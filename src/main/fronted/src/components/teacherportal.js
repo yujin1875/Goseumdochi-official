@@ -602,22 +602,25 @@ function App26() {
     };
 
     const calculateStatistics = (scores) => {
-        const n = scores.length;
-        if (n === 0) return {};
+        const validScores = scores.filter(score => score !== -1); // -1 제외
+        const n = validScores.length;
 
-        const sortedScores = [...scores].sort((a, b) => a - b);
-        const total = scores.reduce((sum, score) => sum + score, 0);
+        if (n === 0) return { total: 0, mean: 0, min: 0, max: 0, median: 0, stdDeviation: 0 };
+
+        const sortedScores = [...validScores].sort((a, b) => a - b);
+        const total = validScores.reduce((sum, score) => sum + score, 0);
         const mean = total / n;
         const min = sortedScores[0];
         const max = sortedScores[n - 1];
         const median = n % 2 === 0
             ? (sortedScores[n / 2 - 1] + sortedScores[n / 2]) / 2
             : sortedScores[Math.floor(n / 2)];
-        const variance = scores.reduce((sum, score) => sum + Math.pow(score - mean, 2), 0) / n;
+        const variance = validScores.reduce((sum, score) => sum + Math.pow(score - mean, 2), 0) / n;
         const stdDeviation = Math.sqrt(variance);
 
         return { total, mean, min, max, median, stdDeviation };
     };
+
 
     const [statistics, setStatistics] = useState({
         total: 0,
@@ -849,13 +852,17 @@ function App26() {
     const fetchStudentsWithScoresByExam = async () => {
         try {
             if (currentExam && currentExam.id) {
-                const response = await axios.get(`/api/student/exams/${currentExam.id}/answers/students-with-scores`,
-                    { params: { lectureId } }
-                );
+                const response = await axios.get(`/api/student/exams/${currentExam.id}/answers/students-with-scores`, {
+                    params: { lectureId },
+                });
                 const fetchedStudents = response.data;
+
                 setStudents(fetchedStudents);
 
-                const scores = fetchedStudents.map(student => student.examAnswer?.score || 0);
+                const scores = fetchedStudents
+                    .map(student => student.examAnswer?.score)
+                    .filter(score => score !== -1); // 점수 -1 제외
+
                 const stats = calculateStatistics(scores);
                 setStatistics(stats);
             } else {
@@ -865,6 +872,7 @@ function App26() {
             console.error("Error fetching students with scores:", error);
         }
     };
+
 
 
     useEffect(() => {
@@ -965,13 +973,6 @@ function App26() {
 
     // 여기까지 영상 업로드
 
-
-    const scores = [
-        85, 92, 75, 60, 45, 88, 95, 66, 70, 55,
-        78, 81, 62, 40, 32, 28, 99, 56, 77, 63,
-        49, 90, 34, 54, 71, 82, 36, 58, 74, 67,
-        85, 91, 72, 61, 52, 43, 39, 94, 53, 80,
-    ];
 
     return (
         <div id="App">
@@ -2113,11 +2114,12 @@ function App26() {
                             <div id="table_score">
                                 <div id="blank_table_score"/>
                                 <div id="howmanystudent">
-                                    대상인원 : {students.length}명 | 참여인원 : {students.filter(student => student.examAnswer && student.examAnswer.score > 0).length}명
+                                    대상인원 : {students.length}명 | 참여인원
+                                    : {students.filter(student => student.examAnswer && student.examAnswer.score !== -1).length}명
                                 </div>
                                 <div id="tableOfStudentScore">
                                     <div id="tableOfStudentScore_category">
-                                        <div id="totalscore">배점</div>
+                                    <div id="totalscore">배점</div>
                                         <div id="aver_exam">평균</div>
                                         <div id="min_exam">최소</div>
                                         <div id="max_exam">최대</div>
@@ -2136,7 +2138,7 @@ function App26() {
                                 </div>
                             </div>
                             <div id="graph_score">
-                                <ScoreChart scores={students.map(student => student.examAnswer?.score || 0)}/>
+                                <ScoreChart scores={students.map(student => student.examAnswer?.score).filter(score => score !== -1)} />
                             </div>
                             <div id="NameOfStudent_ExamEstimation">
                                 <h3>학생 목록</h3>
@@ -2146,7 +2148,9 @@ function App26() {
                                             <div key={student.studentId} className="student-info">
                                                 <div className="student-id">ID: {student.studentId}</div>
                                                 <div className="student-name">이름: {student.studentName}</div>
-                                                <div className="student-score">점수: {student.examAnswer?.score || 0}</div>
+                                                <div className="student-score">
+                                                    점수: {student.examAnswer?.score === -1 ? "미응시" : student.examAnswer?.score || 0}
+                                                </div>
                                             </div>
                                         ))
                                     ) : (
