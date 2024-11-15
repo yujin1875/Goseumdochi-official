@@ -43,8 +43,8 @@ function LectureMaterialPaging({ user, lecture }) { // props로 user와 lecture 
                 <thead>
                 <tr>
                     <th>No</th>
-                    <th>제목</th>
                     <th>내용</th>
+                    <th>제목</th>
                     <th>작성자</th>
                     <th>작성일시</th>
                     <th>강의자료</th>
