@@ -128,38 +128,38 @@ function DirectorSubjectManage() {
                         </div>
                     </form>
                     <div id="director_showing_subject_manage">
-                        {subjectList.length !== 0 ? (
-                            <table id="subject_table">
-                                <thead>
-                                <tr id="subject_table_head">
-                                    <th>과목명</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {subjectList.map((subject) => (
-                                    <tr key={subject.id} id="info_subject1">
-                                        <td id="info_subject1_name">
+                        <table id="subject_manage_table">
+                            <thead>
+                            <tr id="subject_manage_table_head">
+                                <th>과목명</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {subjectList.length > 0 ? (
+                                subjectList.map((subject) => (
+                                    <tr key={subject.id} id="manage_table_info_subject">
+                                        <td id="info_subject_name">
                                             <span>{subject.name}</span>
                                         </td>
-                                        <td className="info_subject1_button">
+                                        <td>
                                             <button id="EditSubject" onClick={() => openEditPopup(subject.id, subject.name)}>
                                                 <span>수정</span>
                                             </button>
                                         </td>
-                                        <td className="info_subject1_button">
+                                        <td>
                                             <button id="DeleteSubject" onClick={() => handleDelete(subject.id)}>
                                                 <span>삭제</span>
                                             </button>
                                         </td>
                                     </tr>
-                                ))}
-                                </tbody>
-                            </table>
-                        ) : (
-                            <div>등록된 과목이 없습니다.</div>
-                        )}
+                                ))
+                            ) : (
+                                <div className="no_item">등록된 과목 없습니다</div>
+                            )}
+                            </tbody>
+                        </table>
 
                         {/* 수정 팝업 */}
                         {isEditPopupOpen && (

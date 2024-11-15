@@ -38,7 +38,7 @@ hr{
     width:850px;
     height:420px;
     margin-top:25px;
-    background-color:#ced4da;
+    background-color:#edf0f5;
     border-radius: 5px;
 }
 
@@ -82,51 +82,92 @@ hr{
     box-shadow: none;
 }
 
-#director_showing_subject_manage>#subject_table {
-    width: 100%;
-    border-collapse: collapse;
+/* 관리 manage 박스 디자인 (과목, 선생, 학생 관리 동일) */
+#contents_director_subject_manage>#director_showing_subject_manage{
+    width:850px;
+    height:420px;
+    margin-top:25px;
+    background-color:#edf0f5;
+    border-radius: 5px;
 }
 
-#subject_table_head>th {
+/* 테이블 스타일 */
+#subject_manage_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: white;
+}
+
+#subject_manage_table_head {
+    background-color: #495057;
+    color: white;
+    text-align: left;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #adb5bd;
+}
+
+#subject_manage_table_head>th {
     padding: 7px 0px;
     text-align: center; /* 헤더의 텍스트 가운데 정렬 */
 }
 
-#subject_table>tbody>#info_subject1{
+#subject_manage_table>tbody>#manage_table_info_subject {
     width:100%;
-    height: 50px;
-    font-size:20px;
-    background-color:#F1F3F5;
+    font-size:17px;
     padding: 10px 20px;
     box-sizing: border-box; /* width:100%를 패딩과 border가 포함된 너비로 계산*/
     border-bottom: 1px solid #ddd;
+
+    text-align: center;
 }
 
-#subject_table tbody td:nth-child(odd) {
-    background-color: #E9ECEF; /* 짝수 번째 항목 (어울리는 색상) */
+#manage_table_info_subject>td {
+    vertical-align: middle; /* 세로 정렬: 가운데 */
+    padding: 10px; /* 셀 내부 여백 */
 }
 
-#info_subject1>#info_subject1_name{
-    text-align: center; /* 수평 가운데 정렬 */
-    vertical-align: middle; /* 수직 가운데 정렬 */
-    width: 60%;
+#manage_table_info_subject>td:nth-child(2),
+#manage_table_info_subject>td:nth-child(3) {
+    width: 100px;
 }
 
-#info_subject1_name>span{
-    font-size:26px;
+#manage_table_info_subject:nth-child(odd) {
+    background-color: #f8f9fa;
 }
 
-#info_subject1>.info_subject1_button {
-    width: 20%;
+#manage_table_info_subject:nth-child(even) {
+    background-color: #e9ecef;
 }
 
-#info_subject1>td>#EditSubject,
-#info_subject1>td>#DeleteSubject {
+/* 버튼 스타일 */
+#manage_table_info_subject>td>#EditSubject,
+#manage_table_info_subject>td>#DeleteSubject {
+    background-color: #6c757d;
+    color: white;
     border: none;
-    text-decoration: underline;
+    border-radius: 4px;
+    padding: 5px 10px;
     cursor: pointer;
-    display: block; /* 버튼을 block으로 설정하여 가운데 정렬 */
-    margin: 0 auto; /* 버튼을 수평 중앙에 배치 */
+    font-size: 12px;
+}
+
+#manage_table_info_subject>td>#EditSubject:hover,
+#manage_table_info_subject>td>#DeleteSubject:hover {
+    background-color: #495057;
+}
+
+/* '등록된 선생님이 없습니다' 메시지 스타일 */
+#subject_manage_table>tbody>.no_item {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #495057;
+    background-color: #e9ecef;
+    padding: 10px;
+    border: 1px solid #adb5bd;
+    border-radius: 4px;
 }
 
 #director_subject_manage_footer{

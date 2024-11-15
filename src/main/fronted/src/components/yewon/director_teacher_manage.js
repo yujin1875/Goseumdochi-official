@@ -103,25 +103,49 @@ function DirectorTeacherManage() {
                         <span>+ 선생 등록</span>
                     </button>
                     <div id="director_showing_teacher_manage">
-                        {teacherList.map((teacher) => (
-                            <div id="info_teacher" key={teacher.id}>
-                                <div id="info_teacher_name">
-                                    <span>{teacher.name}</span>
-                                </div>
-                                <div id="info_teacher_subject">
-                                    {teacher.lectureNameDTOList.length > 0 ?
-                                        <span>{teacher.lectureNameDTOList.map((lecture) => lecture.name).join(", ")}</span>
-                                        : <span>강의가 없습니다</span>
-                                    }
-                                </div>
-                                <button id="EditTeacher" onClick={() => openEditPopup(teacher)}>
-                                    <span>수정</span>
-                                </button>
-                                <button id="DeleteTeacher" onClick={() => deleteTeacher(teacher.id)}>
-                                    <span>삭제</span>
-                                </button>
-                            </div>
-                        ))}
+                        <table id="teacher_manage_table">
+                            <thead>
+                            <tr id="teacher_manage_table_head">
+                                <th>이름</th>
+                                <th>강의</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {teacherList.length > 0 ? (
+                                teacherList.map((teacher) => (
+                                    <tr key={teacher.id} id="manage_table_info_teacher">
+                                        <td id="info_teacher_name">
+                                            <span>{teacher.name}</span>
+                                        </td>
+                                        <td id="info_teacher_subject">
+                                            {teacher.lectureNameDTOList.length > 0 ? (
+                                                <span>
+                                                    {teacher.lectureNameDTOList.map((lecture) => lecture.name).join(", ")}
+                                                </span>
+                                            ) : (
+                                                <span>강의가 없습니다</span>
+                                            )}
+                                        </td>
+                                        <td>
+                                            <button id="EditTeacher" onClick={() => openEditPopup(teacher)}>
+                                                <span>수정</span>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button id="DeleteTeacher" onClick={() => deleteTeacher(teacher.id)}>
+                                                <span>삭제</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            ): (
+                                <div className="no_item">등록된 선생님이 없습니다</div>
+                            )
+                            }
+                            </tbody>
+                        </table>
 
                         {/* 수정 팝업 */}
                         {isEditPopupOpen && (

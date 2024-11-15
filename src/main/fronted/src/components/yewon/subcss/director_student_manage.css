@@ -41,40 +41,85 @@ hr{
     background-color:#ced4da;
 }
 
-#director_showing_student_manage>#info_student1{
+/* 관리 manage 박스 디자인 (과목, 선생, 학생 관리 동일) */
+#contents_director_student_manage>#director_showing_student_manage{
     width:850px;
-    height:40px;
-    font-size:20px;
-    background-color:#F1F3F5;
+    height:420px;
+    margin-top:25px;
+    background-color:#edf0f5;
+    border-radius: 5px;
 }
 
-#info_student1>#info_student1_name{
-    float:left;
-    width:90px;
-    height:40px;
-    margin-left:10px;
+/* 테이블 스타일 */
+#student_manage_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: white;
 }
 
-
-#info_student1_name>span{
-    font-size:26px;
-    margin:auto;
+#student_manage_table_head {
+    background-color: #495057;
+    color: white;
+    text-align: left;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #adb5bd;
 }
 
-#info_student1>a{
-    float:left;
-    width:75px;
-    height:20px;
-    margin-top:8px;
-    margin-left:5px;
+#student_manage_table_head>th {
+    padding: 7px 0px;
+    text-align: center; /* 헤더의 텍스트 가운데 정렬 */
+}
+
+#student_manage_table>tbody>#manage_table_info_student {
+    width:100%;
     font-size:17px;
+    padding: 10px 20px;
+    box-sizing: border-box; /* width:100%를 패딩과 border가 포함된 너비로 계산*/
+    border-bottom: 1px solid #ddd;
+
+    text-align: center;
 }
 
-#info_student1>#DeleteStudent{
-    margin-top:10px;
-    margin-left:35px;
-    border:none;
-    text-decoration:underline;
+#manage_table_info_student>td {
+    vertical-align: middle; /* 세로 정렬: 가운데 */
+    padding: 10px; /* 셀 내부 여백 */
+}
+
+#manage_table_info_student:nth-child(odd) {
+    background-color: #f8f9fa;
+}
+
+#manage_table_info_student:nth-child(even) {
+    background-color: #e9ecef;
+}
+
+/* 버튼 스타일 */
+#manage_table_info_student>td>#DeleteStudent {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+#manage_table_info_student>td>#DeleteStudent:hover {
+    background-color: #495057;
+}
+
+/* '등록된 선생님이 없습니다' 메시지 스타일 */
+#student_manage_table>tbody>.no_item {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #495057;
+    background-color: #e9ecef;
+    padding: 10px;
+    border: 1px solid #adb5bd;
+    border-radius: 4px;
 }
 
 #director_student_manage_footer{
