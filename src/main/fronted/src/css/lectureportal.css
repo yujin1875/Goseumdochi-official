@@ -151,93 +151,94 @@ li>a{
     margin-left:10px;
     background-color: #FFFFFF;
     overflow-y:auto;
+    font-size:17px;
 }
 
-#category_contents_lectureportal>#num{
+#category_contents_lectureportal>#num_notice{
     float:left;
     display: block;
     width: 67px;
-    height: 50px;
+    height: 30px;
     margin-top:20px;
     margin-left:10px;
+    font-weight:bold;
 
-    font-size: 24px;
     color:#000000;
     box-shadow: none;
-    border:none;
     outline: none;
     text-align: center;
-    font-weight: bold;
 }
 
-#category_contents_lectureportal>#title{
+#category_contents_lectureportal>#title_notice{
     float:left;
     display: block;
     width: 507px;
-    height: 50px;
+    height: 30px;
     margin-top:20px;
+    font-weight:bold;
 
-    font-size: 24px;
     color:#000000;
     box-shadow: none;
     border:none;
     outline: none;
     text-align: center;
-    font-weight: bold;
 }
 
-#category_contents_lectureportal>#postperson{
+#category_contents_lectureportal>#postperson_notice{
     float:left;
     display: block;
     width: 167px;
-    height: 50px;
+    height: 30px;
     margin-top:20px;
+    font-weight:bold;
 
-    font-size: 24px;
     color:#000000;
     box-shadow: none;
     border:none;
     outline: none;
     text-align: center;
-    font-weight: bold;
 }
 
-#category_contents_lectureportal>#postdate{
+#category_contents_lectureportal>#postdate_notice{
     float:left;
     display: block;
-    width: 290px;
-    height: 50px;
+    width: 310px;
+    height: 30px;
     margin-top:20px;
+    font-weight:bold;
 
-    font-size: 24px;
     color:#000000;
     box-shadow: none;
     border:none;
     outline: none;
     text-align: center;
-    font-weight: bold;
 }
 
-#category_contents_lectureportal>#visit{
+#category_contents_lectureportal>#visit_notice{
     float:left;
     display: block;
     width: 84px;
-    height: 50px;
+    height: 30px;
     margin-top:20px;
+    font-weight:bold;
 
-    font-size: 24px;
     color:#000000;
     box-shadow: none;
     border:none;
     outline: none;
     text-align: center;
-    font-weight: bold;
 }
 
-#category_contents_lectureportal>p{
-    width:300px;
-    margin-left:505px;
+#category_contents_lectureportal>#No_notice{
+    display:block;
+    float:left;
+    width:200px;
+    height:30px;
+    margin-top:30px;
+    margin-left:500px;
+    font-weight:none;
 }
+
 
 #contents_aboutNotice_lectureportal>#content_material{
     float:left;
@@ -259,6 +260,20 @@ li>a{
     overflow-y:auto;
 }
 
+#body_contents_lectureportal>h2{
+    margin-top:5px;
+    margin-left:15px;
+    margin-bottom:15px;
+}
+
+#body_contents_lectureportal>ul>li{
+    text-align:center;
+}
+
+#body_contents_lectureportal>ul>li>p{
+    margin-top:10px;
+}
+
 #contents_aboutNotice_lectureportal>#content_assignment{
     float:left;
     width: 1150px;
@@ -277,6 +292,189 @@ li>a{
     margin-left:10px;
     background-color: #FFFFFF;
     overflow-y:auto;
+}
+
+#content_exam>h2{
+    margin-top:5px;
+    margin-left:15px;
+    margin-bottom:15px;
+}
+
+#content_exam>#exam_list{
+    float:left;
+    width:1150px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+#exam_list>.exam_header{
+    float:left;
+    width:1150px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+    font-weight:bold;
+}
+
+.exam_header>#no_exam_header{
+    float:left;
+    width:50px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.exam_header>#title_exam_header{
+    float:left;
+    width:280px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.exam_header>#exammethod_exam_header{
+    float:left;
+    width:80px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.exam_header>#opendate_exam_header{
+    float:left;
+    width:140px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.exam_header>#testingtime_exam_header{
+    float:left;
+    width:250px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.exam_header>#testtime_exam_header{
+    float:left;
+    width:150px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.exam_header>#howscore_exam_header{
+    float:left;
+    width:60px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.exam_header>#score_exam_header{
+    float:left;
+    width:60px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.exam_header>#start_exam_header{
+    float:left;
+    width:80px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+#exam_list>.NonTest{
+    float:left;
+    width:150px;
+    height:30px;
+    margin-top:20px;
+    margin-left:500px;
+}
+
+#exam_list>.exam_row{
+    float:left;
+    width:1150px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.exam_header>#no_exam_row{
+    float:left;
+    width:50px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.exam_header>#title_exam_row{
+    float:left;
+    width:280px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.exam_header>#exammethod_exam_row{
+    float:left;
+    width:80px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.exam_header>#opendate_exam_row{
+    float:left;
+    width:140px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.exam_header>#testingtime_exam_row{
+    float:left;
+    width:250px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.exam_header>#testtime_exam_row{
+    float:left;
+    width:150px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.exam_header>#howscore_exam_row{
+    float:left;
+    width:60px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.exam_header>#score_exam_row{
+    float:left;
+    width:60px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
+}
+
+.exam_header>#start_exam_row{
+    float:left;
+    width:80px;
+    height:30px;
+    text-align:center;
+    vertical-align:middle;
 }
 
 #lectureportal-menu>#footer_lectureportal{
