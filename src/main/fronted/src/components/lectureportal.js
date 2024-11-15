@@ -211,8 +211,8 @@ function App10() {
                                                     </p>
                                                 </div>
                                                 <div className="author_notice_row">{notice.author}</div>
-                                                <div className="postDate_notice_row">{notice.postDate}</div>
-                                                <div className="views_notice_row">{notice.views}</div>
+                                                <div className="postDate_notice_row">{formatDateTime(notice.createdAt)}</div>
+                                                <div className="views_notice_row">0</div>
                                             </div>
                                         ))
                                     )}

@@ -285,8 +285,9 @@ li>a{
 
 .notice_row>.views_notice_row{
     float:left;
-    width:250px;
-    height:84px;
+    width:10px;
+    height:20px;
+    margin-left:45px;
     text-align:center;
     vertical-align:middle;
     overflow:hidden;
