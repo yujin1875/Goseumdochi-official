@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import logo from './images/goseumdochi.png';
 import '../css/adminmain.css';
+import { FaComments } from "react-icons/fa";
+import { PiStudent } from "react-icons/pi";
+import { RiNotification3Fill } from "react-icons/ri";
+import { LuSchool2 } from "react-icons/lu";
+import { GiArchiveRegister } from "react-icons/gi";
 
 function App18() {
     const [adminInfo, setAdminInfo] = useState(null);
@@ -65,19 +70,34 @@ function App18() {
             <div id="button_adminmain">
                 <div id="btn_adminmain">
                     <div id="noti_btn">
-                        <button onClick={GoAdminNotice}>공지사항</button>
+                        <button onClick={GoAdminNotice}>
+                            <RiNotification3Fill className="img_adminMain" size={100} /> <br/>
+                            공지사항
+                        </button>
                     </div>
                     <div id="acaform_btn">
-                        <button onClick={GoAdminAcademyFormManage}>학원 신청서</button>
+                        <button onClick={GoAdminAcademyFormManage}>
+                            <GiArchiveRegister className="img_adminMain" size={100} /> <br/>
+                            학원 신청서
+                        </button>
                     </div>
                     <div id="aca_btn">
-                        <button onClick={GoAdminAcademy}>학원 관리</button>
+                        <button onClick={GoAdminAcademy}>
+                            <LuSchool2 className="img_adminMain" size={100} /> <br/>
+                            학원 관리
+                        </button>
                     </div>
                     <div id="stu_btn">
-                        <button onClick={GoAdminStudent}>학생 관리</button>
+                        <button onClick={GoAdminStudent}>
+                            <PiStudent className="img_adminMain" size={100} /> <br/>
+                            학생 관리
+                        </button>
                     </div>
                     <div id="commu_btn">
-                        <button onClick={GoAdminCommunity}>커뮤니티</button>
+                        <button onClick={GoAdminCommunity}>
+                            <FaComments className="img_adminMain" size={100} />  <br/>
+                            커뮤니티
+                        </button>
                     </div>
                 </div>
             </div>

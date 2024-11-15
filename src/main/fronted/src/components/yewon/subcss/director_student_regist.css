@@ -2,8 +2,8 @@ hr{
     border:0 ;
 }
 #director_student_regist_frame{
-    width:1500px;
-    height:1080px;
+    width:1400px;
+    height:980px;
     background-color:#FFFFFF;
     margin:auto;
     border-radius: 100px;
@@ -20,7 +20,7 @@ hr{
     height:50px;
     margin:auto;
     margin-top:40px;
-    margin-left:520px;
+    margin-left:440px;
     text-align:center;
 }
 
@@ -33,8 +33,8 @@ hr{
 }
 
 #director_student_regist_frame>form{
-    width:1700px;
-    height:400px;
+    width:1400px;
+    height:280px;
     margin:auto;
 }
 
@@ -91,19 +91,43 @@ form>#num{
 
 form>button{
     float:left;
-    margin-left:560px;
+    width:500px !important;
+    margin-left:450px !important;
 }
 
 #director_student_regist_frame>#result{
-    width:1700px;
+    width:1400px;
     height:500px;
     margin:auto;
-    margin-top:20px;
 }
 
 #result>#info{
-    width:1600px;
+    width:900px;
     height:500px;
     margin:auto;
     margin-top:20px;
+    border: 1px solid #BCBCBC;
+    border-radius:15px;
+}
+
+#info>h2{
+    float:left;
+    width:100%;
+    margin-top:20px;
+    margin-left:40px;
+}
+
+#info>.student_info{
+    float:left;
+    width:800px;
+    height:380px;
+    background-color:#EAEAEA;
+    margin-top:10px;
+    margin-left:40px;
+}
+
+#info>.student_info>p{
+    margin-top:15px;
+    margin-left:30px;
+
 }

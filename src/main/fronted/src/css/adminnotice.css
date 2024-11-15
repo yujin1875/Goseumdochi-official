@@ -22,6 +22,7 @@ hr{
     margin:auto;
     margin-top:80px;
     margin-left:120px;
+    cursor:pointer;
 }
 
 #adminnotice_header>h2{
@@ -39,7 +40,6 @@ hr{
     width:145px;
     height:55px;
     font-size: 24px;
-    background-color:#D9D9D9;
 
     color:#000000;
     text-align: center;
@@ -68,55 +68,8 @@ hr{
     margin:auto;
 }
 
-#adminnotice_body>#adminnotice_category{
+#adminnotice_body>#adminnotice_table{
     width:1075px;
-    height:50px;
     margin:auto;
     margin-top:20px;
-}
-
-#adminnotice_category>#num{
-    float:left;
-    width:77px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
-#adminnotice_category>#title{
-    float:left;
-    width:557px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
-#adminnotice_category>#postperson{
-    float:left;
-    width:167px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
-#adminnotice_category>#postdate{
-    float:left;
-    width:190px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
-#adminnotice_category>#delete{
-    float:left;
-    width:84px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
-#adminnotice_body>#adminnotice_contents{
-    width:1075px;
-    height:750px;
-    margin:auto;
 }

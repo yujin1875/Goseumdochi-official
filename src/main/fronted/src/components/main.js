@@ -1,5 +1,5 @@
 import '../css/main.css';
-import logo from './images/goseumdochi_moving.gif';
+import logo from './images/goseumdochi.png';
 import message_icon from './images/message.png';
 import logout_icon from './images/logout.jpg';
 import React, { useState, useEffect } from 'react';

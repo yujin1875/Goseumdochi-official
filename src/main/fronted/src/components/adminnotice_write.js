@@ -57,7 +57,7 @@ function App20() {
                 </div>
                 <div id="rect"/>
                 <div id="adminnoticewrite_body">
-                    <div>
+                    <div className="adminnoticewrite_title">
                         <label htmlFor="title">제목:</label>
                         <input
                             type="text"
@@ -66,7 +66,7 @@ function App20() {
                             onChange={handleTitleChange}
                         />
                     </div>
-                    <div>
+                    <div className="adminnoticewrite_content">
                         <label htmlFor="content">내용:</label>
                         <textarea
                             id="content"

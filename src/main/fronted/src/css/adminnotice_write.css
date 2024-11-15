@@ -39,7 +39,6 @@ hr{
     width:145px;
     height:55px;
     font-size: 24px;
-    background-color:#D9D9D9;
 
     color:#000000;
     text-align: center;
@@ -60,4 +59,58 @@ hr{
     background-color:#363636;
     margin:auto;
     border-radius:5px;
+}
+
+#adminnoticewrite_body>.adminnoticewrite_title{
+    width:600px;
+    height:100px;
+    margin-top:40px;
+    margin-left:410px;
+    font-size:28px;
+}
+
+.adminnoticewrite_title>label{
+    float:left;
+}
+
+.adminnoticewrite_title>input{
+    display:block;
+    float:left;
+    width: 350px;
+    height: 48px;
+    background-color: #FFFFFF;
+    border-color: #6A6A6A;
+    border-radius: 15px;
+    margin-left:10px;
+    font-size: 15px;
+    color:#6A6A6A;
+    box-shadow: none;
+}
+
+
+#adminnoticewrite_body>.adminnoticewrite_content{
+    width:950px;
+    height:450px;
+    margin-top:40px;
+    margin-left:210px;
+    font-size:28px;
+}
+
+.adminnoticewrite_content>label{
+    float:left;
+}
+
+.adminnoticewrite_content>textarea{
+    display:block;
+    float:left;
+    width: 950px;
+    height: 400px;
+    margin-top:10px;
+    background-color: #FFFFFF;
+    border-color: #6A6A6A;
+    border-radius: 15px;
+    margin-left:10px;
+    font-size: 15px;
+    color:#6A6A6A;
+    box-shadow: none;
 }
