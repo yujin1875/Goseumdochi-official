@@ -63,79 +63,13 @@ hr{
     margin:auto;
 }
 
-#adminacademymanage_body>#adminacademymanage_category{
-    width:1745px;
-    height:50px;
-    margin:auto;
-    margin-top:20px;
-}
-
-#adminacademymanage_category>#academyName{
-    float:left;
-    width:167px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
-#adminacademymanage_category>#directorName{
-    float:left;
-    width:167px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
-#adminacademymanage_category>#directorNum{
-    float:left;
-    width:213px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
-#adminacademymanage_category>#directorEmail{
-    float:left;
-    width:333px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
-#adminacademymanage_category>#academyNum{
-    float:left;
-    width:213px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
-#adminacademymanage_category>#academyPostnum{
-    float:left;
-    width:167px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
-#adminacademymanage_category>#academyAddress{
-    float:left;
-    width:350px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
-#adminacademymanage_category>#SendLetter{
-    float:left;
-    width:122px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
 #adminacademymanage_body>#adminacademymanage_contents{
     width:1745px;
     height:750px;
     margin:auto;
+}
+
+#adminacademymanage_contents>table{
+    width:1745px;
+    text-align:center;
 }

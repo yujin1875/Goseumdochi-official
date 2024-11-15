@@ -20,7 +20,7 @@ hr{
 }
 
 #admin_info>#info{
-    width:300px;
+    width:500px;
     height:90px;
     margin:auto;
 }
@@ -135,4 +135,9 @@ hr{
     margin-left:45.5%;
     border:none;
     text-decoration: underline;
+    cursor:pointer;
+}
+
+.img_adminMain{
+    margin-bottom:10px;
 }

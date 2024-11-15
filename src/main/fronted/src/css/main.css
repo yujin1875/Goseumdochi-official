@@ -35,22 +35,21 @@
 #header_main>#user_info{
     display:block;
     float:left;
-    width: 238px;
+    width: 268px;
     height: 40px;
     margin-top: 80px;
-    margin-left: 200px;
+    margin-left: 170px;
     border:1px solid #BCBCBC;
     border-radius:5px;
 }
 
 #user_info>.infoBox{
     float:left;
-    width:110px;
+    width:150px;
     height:30px;
     margin-top:5px;
     margin-left:20px;
     font-size:24px;
-    font-family:;
 }
 
 #user_info>button{

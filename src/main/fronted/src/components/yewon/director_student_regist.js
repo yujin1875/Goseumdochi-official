@@ -106,15 +106,17 @@ function DirectorStudentRegist() {
                 {isFind && student && (
                     <div id="info">
                         <h2>학생 정보</h2>
-                        <p>ID: {student.id}</p>
-                        <p>이름: {student.studentName}</p>
-                        <p>생년월일: {student.studentBirthDate}</p>
-                        <p>전화번호: {student.studentPhoneNumber}</p>
-                        <p>이메일: {student.studentEmail}</p>
-                        <p>프로필 사진 URL: {student.profilePictureUrl}</p>
-                        <p>학원 등록 여부: {studentAcademyId ? (
-                            <div>이미 등록된 학생입니다</div>
-                            ) : (<button onClick={handleRegist}>등록하기</button>)}</p>
+                        <div className="student_info">
+                            <p>ID: {student.id}</p>
+                            <p>이름: {student.studentName}</p>
+                            <p>생년월일: {student.studentBirthDate}</p>
+                            <p>전화번호: {student.studentPhoneNumber}</p>
+                            <p>이메일: {student.studentEmail}</p>
+                            <p>프로필 사진 URL: {student.profilePictureUrl}</p>
+                            <p>학원 등록 여부: {studentAcademyId ? (
+                                <div className="alreadyRegist">이미 등록된 학생입니다</div>
+                                ) : (<button onClick={handleRegist}>등록하기</button>)}</p>
+                        </div>
                     </div>
                 )}
             </div>

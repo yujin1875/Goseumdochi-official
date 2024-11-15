@@ -21,7 +21,8 @@ hr{
     text-align: center;
     margin:auto;
     margin-top:80px;
-    margin-left:220px;
+    margin-left:200px;
+    cursor:pointer;
 }
 
 #adminstudentmanage_header>h2{
@@ -62,63 +63,14 @@ hr{
     margin:auto;
 }
 
-#adminstudentmanage_body>#adminstudentmanage_category{
-    width:1150px;
-    height:50px;
-    margin:auto;
-    margin-top:20px;
-}
-
-#adminstudentmanage_category>#studentId{
-    float:left;
-    width:167px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
-#adminstudentmanage_category>#studentName{
-    float:left;
-    width:122px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
-#adminstudentmanage_category>#studentNum{
-    float:left;
-    width:226px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
-#adminstudentmanage_category>#studentEmail{
-    float:left;
-    width:316px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
-#adminstudentmanage_category>#studentBirthdate{
-    float:left;
-    width:190px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
-#adminstudentmanage_category>#SendLetter{
-    float:left;
-    width:126px;
-    height:50px;
-    font-size: 24px;
-    text-align: center;
-}
-
 #adminstudentmanage_body>#adminstudentmanage_contents{
     width:1145px;
     height:750px;
     margin:auto;
+}
+
+#adminstudentmanage_contents>#student_table{
+    width:1145px;
+    text-align:center;
+    vertical-align:middle;
 }
