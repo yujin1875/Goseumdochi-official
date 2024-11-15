@@ -978,7 +978,7 @@ function App26() {
         <div id="App">
             <div id="menu_teacherportal">
                 <div id="teacher_info">
-                    <img src={logo} onClick={showDivAssignmentEstimation}/>
+                    <img src={logo}/>
                     <h2>고슴도치</h2>
                 </div>
                 <ul>
@@ -1024,9 +1024,6 @@ function App26() {
             <div id="teacherportal_header">
                 <div id="menu_btn" />
                 <div id="home_btn" />
-                <div id="title">
-
-                </div>
             </div>
             <div id="contents_teacherportal">
                 {visibleDiv === 'Home' && (

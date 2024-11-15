@@ -201,8 +201,8 @@ function App10() {
                                     ) : (
                                         noticeList.map((notice, index) => (
                                             <div key={index} className="notice_row">
-                                                <div>{index + 1}</div>
-                                                <div>
+                                                <div className="num_notice_row">{index + 1}</div>
+                                                <div className="title_notice_row">
                                                     <p
                                                         style={{ cursor: 'pointer', color: 'blue' }}
                                                         onClick={() => handleNoticeClick(notice)} // 제목 클릭 시 상세보기
@@ -210,9 +210,9 @@ function App10() {
                                                         {notice.title}
                                                     </p>
                                                 </div>
-                                                <div>{notice.author}</div>
-                                                <div>{notice.postDate}</div>
-                                                <div>{notice.views}</div>
+                                                <div className="author_notice_row">{notice.author}</div>
+                                                <div className="postDate_notice_row">{notice.postDate}</div>
+                                                <div className="views_notice_row">{notice.views}</div>
                                             </div>
                                         ))
                                     )}
