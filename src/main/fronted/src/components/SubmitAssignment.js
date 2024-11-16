@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import '../css/SubmitAssignment.css';
 
 function SubmitAssignment({studentId, studentName, assignmentId}) {
     const location = useLocation();
@@ -108,37 +109,45 @@ function SubmitAssignment({studentId, studentName, assignmentId}) {
     };
 
     return (
-        <div>
+        <div className="SubmitAssignment">
             <h1>과제 제출 페이지</h1>
-            {submittedAssignment && !isEditing ? (
-                <div>
-                    <h2>제출한 과제</h2>
-                    <p>제목: {title}</p>
-                    <p>내용: {content}</p>
-                    <a href={submittedAssignment.attachmentPath} download>첨부파일 다운로드</a>
-                    <div>
-                        <button onClick={handleEdit}>수정</button>
-                        <button onClick={handleDelete}>삭제</button>
+            <div className="SubmitAssignment_frame">
+                {submittedAssignment && !isEditing ? (
+                    <div className="alreadysubmit_SubmitAssignment">
+                        <h2>제출한 과제</h2>
+                        <div className="Contentalreadysubmit_SubmitAssignment">
+                            <p>제목: {title}</p>
+                            <p>내용: {content}</p>
+                            <a href={submittedAssignment.attachmentPath} download>첨부파일 다운로드</a>
+                        </div>
+                        <div className="Btnalreadysubmit_SubmitAssignment">
+                            <button onClick={handleEdit}>수정</button>
+                            <button onClick={handleDelete}>삭제</button>
+                        </div>
                     </div>
-                </div>
-            ) : (
-                <div>
-                    <h2>{isEditing ? "과제 수정" : "새 과제 제출"}</h2>
-                    <label>
-                        제목: <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-                    </label>
-                    <br />
-                    <label>
-                        내용: <textarea value={content} onChange={(e) => setContent(e.target.value)} />
-                    </label>
-                    <br />
-                    <label>
-                        첨부파일: <input type="file" onChange={handleFileChange} />
-                    </label>
-                    <br />
-                    <button onClick={isEditing ? handleUpdate : handleSubmit}>{isEditing ? "수정 완료" : "저장"}</button>
-                </div>
-            )}
+                ) : (
+                    <div className="nowsubmit_SubmitAssignment">
+                        <h2>{isEditing ? "과제 수정" : "새 과제 제출"}</h2>
+                        <div className="Contentnowsubmit_SubmitAssignment">
+                            <label>
+                                제목: <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                            </label>
+                            <br />
+                            <label>
+                                내용: <br/><textarea value={content} onChange={(e) => setContent(e.target.value)} />
+                            </label>
+                            <br />
+                            <label>
+                                첨부파일: <input type="file" onChange={handleFileChange} />
+                            </label>
+                        </div>
+                        <br />
+                        <div className="Btnnowsubmit_SubmitAssignment">
+                            <button onClick={isEditing ? handleUpdate : handleSubmit}>{isEditing ? "수정 완료" : "저장"}</button>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
