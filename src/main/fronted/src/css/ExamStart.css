@@ -1,0 +1,99 @@
+.ExamStart_header{
+    width:100%;
+    height:80px;
+}
+
+.ExamStart_frame{
+    width: 1100px;
+    height: 800px;
+    background-color: #FFFFFF;
+    margin: auto;
+    border-top: solid 3px #000000;
+}
+
+.ExamStart_frame>h2{
+    height:50px;
+    margin-top:10px;
+    margin-left:15px;
+}
+
+.ExamStart_frame>.question_ExamStart{
+    float:left;
+    width:1000px;
+    height:650px;
+    margin-left:50px;
+    overflow-y:scroll;
+    border:2px solid #BCBCBC;
+}
+
+.question_ExamStart>.questionBox_ExamStart{
+    float:left;
+    width:950px;
+    height:200px;
+    margin-top:10px;
+    margin-left:17px;
+    border-bottom: 1px solid #BCBCBC;
+}
+
+.questionBox_ExamStart>h3{
+    float:left;
+    width:920px;
+    height:90px;
+    margin-top:5px;
+    margin-left: 15px;
+    overflow-y:auto;
+}
+
+.questionBox_ExamStart>.answerBox_ExamStart{
+    float:left;
+    width:920px;
+    height:95px;
+    margin-top:5px;
+    margin-left: 15px;
+}
+
+.questionBox_ExamStart>.answerBox_ExamStart>label{
+    float:left;
+    width:100px;
+    height:30px;
+    margin-left:10px;
+    font-size:20px;
+}
+
+.questionBox_ExamStart>.answerBox_ExamStart>label>input{
+    width:20px;
+    height:20px;
+    margin-right:10px;
+}
+
+.questionBox_ExamStart>textarea{
+    float:left;
+    width:917px;
+    height:90px;
+    margin-top:5px;
+    margin-left: 15px;
+    resize:none;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.ExamStart_frame>.submit_ExamStart{
+    display:block;
+    float:left;
+    width: 90px;
+    height: 50px;
+    background-color: #363636;
+    border-color: #363636;
+    border-radius: 15px;
+    margin-top:15px;
+    margin-left:960px;
+
+    font-size: 15px;
+    color:#FFFFFF;
+    box-shadow: none;
+}
+
+.ExamStart_footer{
+    width:100%;
+    height:70px;
+}
