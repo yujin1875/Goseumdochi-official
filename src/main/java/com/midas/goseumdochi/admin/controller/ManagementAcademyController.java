@@ -1,8 +1,10 @@
 package com.midas.goseumdochi.admin.controller;
 
+import com.midas.goseumdochi.academy.dto.AcademyDTO;
 import com.midas.goseumdochi.academy.entity.AcademyEntity;
 import com.midas.goseumdochi.academy.service.AcademyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,5 +21,10 @@ public class ManagementAcademyController {
     @GetMapping("/{academyId}")
     public List<AcademyEntity> getAllAcademies() {
         return academyService.findAllAcademies();
+    }
+
+    @GetMapping("/all")
+    public List<AcademyDTO> getAllDirectorAndAcademy() {
+        return academyService.getAllAcademyAndDirector();
     }
 }
