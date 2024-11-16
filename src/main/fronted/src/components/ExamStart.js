@@ -1,3 +1,4 @@
+import '../css/ExamStart.css';
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -51,37 +52,43 @@ function ExamStart() {
         }
     };
     return (
-        <div>
-            <h2>{lecture.name} - 시험 문제</h2>
-            {questions.map((question, index) => (
-                <div key={question.id}>
-                    <h3>문제 {index + 1}: {question.text}</h3>
-                    {question.type === 'multipleChoice' ? (
-                        <div>
-                            {question.answers.map((option, i) => (
-                                <label key={i}>
-                                    <input
-                                        type="radio"
-                                        name={`question_${question.id}`}
-                                        value={option}
-                                        checked={answers[question.id] === option}
-                                        onChange={() => handleAnswerChange(question.id, option)}
-                                    />
-                                    {option}
-                                </label>
-                            ))}
+        <div id="App">
+            <div className="ExamStart_header"/>
+            <div className="ExamStart_frame">
+                <h2>{lecture.name} - 시험 문제</h2>
+                <div className="question_ExamStart">
+                    {questions.map((question, index) => (
+                        <div key={question.id} className="questionBox_ExamStart">
+                            <h3>문제 {index + 1}: {question.text}</h3>
+                            {question.type === 'multipleChoice' ? (
+                                <div className="answerBox_ExamStart">
+                                    {question.answers.map((option, i) => (
+                                        <label key={i}>
+                                            <input
+                                                type="radio"
+                                                name={`question_${question.id}`}
+                                                value={option}
+                                                checked={answers[question.id] === option}
+                                                onChange={() => handleAnswerChange(question.id, option)}
+                                            />
+                                            {option}
+                                        </label>
+                                    ))}
+                                </div>
+                            ) : (
+                                        <textarea
+                                            rows="4"
+                                            value={answers[question.id] || ""}
+                                            onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                                            placeholder="서술형 답안을 입력하세요"
+                                        />
+                            )}
                         </div>
-                    ) : (
-                        <textarea
-                            rows="4"
-                            value={answers[question.id] || ""}
-                            onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                            placeholder="서술형 답안을 입력하세요"
-                        />
-                    )}
+                    ))}
                 </div>
-            ))}
-            <button onClick={submitAnswers}>제출</button>
+                <button className="submit_ExamStart" onClick={submitAnswers}>제출</button>
+            </div>
+            <div className="ExamStart_footer"/>
         </div>
     );
 }

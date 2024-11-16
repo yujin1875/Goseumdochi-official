@@ -2452,12 +2452,14 @@ float:left;
     background-color:#FFFFFF;
 }
 
-#content_ExamAdd>input{
+#content_ExamAdd>textarea{
     width:1400px;
     height:450px;
     margin:auto;
     margin-top:30px;
     margin-left:110px;
+    resize:none;
+    font-size:24px;
 }
 
 #buttons_ExamAdd>#save{
@@ -3324,4 +3326,770 @@ float:left;
 #VideoManagement_teacherportal>ul>li>h3{
     margin-top:2px;
     margin-left:5px;
+}
+
+/* ExamRead */
+
+#ExamRead_teacherportal{
+    float:left;
+    width:1625px;
+    height:80px;
+}
+
+#ExamRead_teacherportal>#but{
+    float:left;
+    width:1625px;
+    height:80px;
+}
+
+#but>#add_question_btn{
+    float:left;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin-top:15px;
+    margin-left:870px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#title_ExamRead{
+    float:left;
+    width:1625px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#title_ExamRead>h2{
+    float:left;
+    width:100px;
+    height:30px;
+    margin-top:5px;
+    margin-left:110px;
+}
+
+#title_ExamRead>#ExamRead_title{
+    float:left;
+    width:1200px;
+    height:30px;
+    margin-top:10px;
+    margin-left:40px;
+}
+
+#method_ExamRead{
+    float:left;
+    width:1625px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#method_ExamRead>h2{
+    float:left;
+    width:140px;
+    height:30px;
+    margin-top:5px;
+    margin-left:110px;
+}
+
+#method_ExamRead>#ExamRead_method{
+    float:left;
+    width:150px;
+    height:30px;
+    margin-top:10px;
+}
+
+#opendate_ExamRead{
+    float:left;
+    width:700px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#opendate_ExamRead>h2{
+    float:left;
+    width:140px;
+    height:30px;
+    margin-top:5px;
+    margin-left:110px;
+}
+
+#opendate_ExamRead>#ExamRead_opendate{
+    float:left;
+    width:200px;
+    height:30px;
+    margin-top:11px;
+}
+
+#examperiod_ExamRead{
+    float:left;
+    width:925px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#examperiod_ExamRead>h2{
+    float:left;
+    width:140px;
+    height:30px;
+    margin-top:5px;
+}
+
+#examperiod_ExamRead>#ExamRead_examperiod{
+    float:left;
+    width:400px;
+    height:30px;
+    margin-top:11px;
+}
+
+#duration_ExamRead{
+    float:left;
+    width:700px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#duration_ExamRead>h2{
+    float:left;
+    width:140px;
+    height:30px;
+    margin-top:5px;
+    margin-left:110px;
+}
+
+#duration_ExamRead>#ExamRead_duration{
+    float:left;
+    width:100px;
+    height:30px;
+    margin-top:12px;
+}
+
+#score_ExamRead{
+    float:left;
+    width:925px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#score_ExamRead>h2{
+    float:left;
+    width:140px;
+    height:30px;
+    margin-top:5px;
+}
+
+#score_ExamRead>#ExamRead_score{
+    float:left;
+    width:100px;
+    height:30px;
+    margin-top:12px;
+}
+
+#scorePublished_ExamRead{
+    float:left;
+    width:1625px;
+    height:50px;
+    background-color:#FFFFFF;
+}
+
+#scorePublished_ExamRead>#ExamRead_scorePublished>h2{
+    float:left;
+    width:160px;
+    height:30px;
+    margin-top:5px;
+    margin-left:110px;
+}
+
+#scorePublished_ExamRead>#ExamRead_scorePublished>.ExamRead_scorePublished_about{
+    float:left;
+    width:20px;
+    height:20px;
+    margin-top:12px;
+    margin-left:30px;
+}
+
+#buttons_ExamRead{
+    float:left;
+    width:1625px;
+    height:80px;
+}
+
+#buttons_ExamRead>button{
+    float:left;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin-top:15px;
+    margin-left:10px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#question_list{
+    float:left;
+    width:1625px;
+    height:580px;
+    background-color:#FFFFFF;
+}
+
+#question_list>h3{
+    float:left;
+    width:500px;
+    margin-top:10px;
+    margin-left:110px;
+}
+
+#question_list>.bodyBox_ExamQuestion{
+    float:left;
+    width:1350px;
+    height:520px;
+    overflow-y:scroll;
+    margin-top:10px;
+    margin-left:120px;
+    border:2px solid #BCBCBC;
+    border-radius:5px;
+}
+
+.bodyBox_ExamQuestion>#body_ExamQuestion{
+    float:left;
+    width:1250px;
+    margin-top:10px;
+    margin-left:40px;
+    font-size: 18px;
+    border:1px solid #BCBCBC;
+    overflow:auto;
+}
+
+#body_ExamQuestion>#Qno{
+    float:left;
+    width:1200px;
+    height:25px;
+    margin-top:5px;
+    margin-left:10px;
+}
+
+#body_ExamQuestion>#Qtext{
+    float:left;
+    width:1200px;
+    margin-top:5px;
+    margin-left:10px;
+}
+
+#body_ExamQuestion>#Qpoints{
+    float:left;
+    width:1200px;
+    height:25px;
+    margin-top:5px;
+    margin-left:10px;
+}
+
+#body_ExamQuestion>#Qchoices{
+    float:left;
+    width:1200px;
+    margin-top:5px;
+    margin-left:10px;
+}
+
+#Qchoices>#Qchoice{
+    float:left;
+    margin-left:10px;
+}
+
+#body_ExamQuestion>#QessayAnswers{
+    float:left;
+    width:1200px;
+    margin-top:5px;
+    margin-left:10px;
+}
+
+#QessayAnswers>#QessayAnswer{
+    float:left;
+    margin-left:10px;
+}
+
+#body_ExamQuestion>#QcorrectAnswers{
+    float:left;
+    width:1200px;
+    margin-top:5px;
+    margin-left:10px;
+}
+
+#QcorrectAnswers>#QcorrectAnswer{
+    float:left;
+    margin-left:10px;
+}
+
+#body_ExamQuestion>#Qactions{
+    float:left;
+    width:1200px;
+    margin-left:10px;
+}
+
+#Qactions>button{
+    float:left;
+    width:50px;
+    height:30px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin-left:10px;
+    margin-bottom:5px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#Qactions>button:first-child{
+    margin-left:1090px;
+}
+
+#buttons_ExamRead>#revise{
+    margin-left:1100px;
+}
+
+
+/* ExamQuestionAdd */
+
+#ExamQuestionAdd_teacherportal{
+    float:left;
+    width:1625px;
+    height:80px;
+}
+
+#ExamQuestionAdd_teacherportal>#but{
+    width:1625px;
+    height:80px;
+}
+
+.ExamQuestionAdd_content{
+    float:left;
+    width:1625px;
+    height:780px;
+    background-color:#FFFFFF;
+}
+
+.ExamQuestionAdd_content>#type_ExamQuestionAdd{
+    float:left;
+    width:100%;
+    height:120px;
+}
+
+#type_ExamQuestionAdd>h2{
+    float:left;
+    width:1400px;
+    margin-top:10px;
+    margin-left:110px;
+}
+
+#type_ExamQuestionAdd>select{
+    float: left;
+    width:150px;
+    height:40px;
+    background-color:#FFFFFF;
+    border: 1px solid #000000;
+    margin-top:10px;
+    margin-left:150px;
+    font-size:18px;
+    border-radius:5px;
+}
+
+.ExamQuestionAdd_content>#text_ExamQuestionAdd{
+    float:left;
+    width:100%;
+    height:200px;
+}
+
+#text_ExamQuestionAdd>h2{
+    float:left;
+    width:1400px;
+    margin-top:10px;
+    margin-left:110px;
+}
+
+#text_ExamQuestionAdd>textarea{
+    float:left;
+    width:1400px;
+    height:120px;
+    margin-top:10px;
+    margin-left:110px;
+    resize:none;
+    overflow-y:auto;
+}
+
+.ExamQuestionAdd_content>#choices_ExamQuestionAdd{
+    float:left;
+    width:1400px;
+    height:240px;
+    margin-left:110px;
+}
+
+#choices_ExamQuestionAdd>.choice_ExamQuestionAdd{
+    float:left;
+    width:700px;
+    height:100px;
+    margin-top:5px;
+}
+
+.choice_ExamQuestionAdd>input{
+    float:left;
+    display:block;
+    width: 350px;
+    height: 40px;
+    background-color: #FFFFFF;
+    margin-top:10px;
+    border-color: #6A6A6A;
+    border-radius: 15px;
+    margin:10px auto;
+
+    font-size: 15px;
+    color:#6A6A6A;
+    box-shadow: none;
+}
+
+.ExamQuestionAdd_content>#correctAnswer_ExamQuestionAdd{
+    float:left;
+    width:1400px;
+    height:80px;
+    margin-left:110px;
+}
+
+#correctAnswer_ExamQuestionAdd>label{
+    float:left;
+    width:70px;
+    margin-top:10px;
+    margin-left:15px;
+}
+
+#correctAnswer_ExamQuestionAdd>label>h2{
+    border-bottom:10px;
+}
+
+#correctAnswer_ExamQuestionAdd>label>input{
+    width:20px;
+    height:20px;
+    margin-right:10px;
+}
+
+.ExamQuestionAdd_content>#essayAnswers_ExamQuestionAdd{
+    float:left;
+    width:1400px;
+    height:340px;
+    margin-left:110px;
+    border:1px solid #BCBCBC;
+    overflow-y:scroll;
+}
+
+#essayAnswers_ExamQuestionAdd>.essayAnswer_ExamQuestionAdd{
+    float:left;
+    width:600px;
+    height:100px;
+    margin-top:5px;
+    margin-left:5px;
+}
+
+.essayAnswer_ExamQuestionAdd>input{
+    float:left;
+    display:block;
+    width: 350px;
+    height: 40px;
+    background-color: #FFFFFF;
+    margin-top:10px;
+    border-color: #6A6A6A;
+    border-radius: 15px;
+    margin:10px auto;
+
+    font-size: 15px;
+    color:#6A6A6A;
+    box-shadow: none;
+}
+
+#essayAnswers_ExamQuestionAdd>button{
+    float:right;
+    display: block;
+    width: 80px;
+    height: 30px;
+    background-color: #363636;
+    border-color: #363636;
+    margin-top:5px;
+    margin-right:10px;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #FFFFFF;
+    box-shadow: none;
+}
+
+.ExamQuestionAdd_content>#points_ExamQuestionAdd{
+    float:left;
+    width:1400px;
+    height:90px;
+    margin-top:20px;
+    margin-left:110px;
+}
+
+#points_ExamQuestionAdd>h2{
+    float:left;
+    margin-top:16px;
+    margin-right:20px;
+}
+
+#points_ExamQuestionAdd>input{
+    float:left;
+    display:block;
+    width: 150px;
+    height: 40px;
+    background-color: #FFFFFF;
+    margin-top:10px;
+    border-color: #6A6A6A;
+    border-radius: 15px;
+    margin:10px auto;
+    text-align:center;
+
+    font-size: 15px;
+    color:#6A6A6A;
+    box-shadow: none;
+}
+
+#buttons_ExamQuestionAdd{
+    float:left;
+    width:1625px;
+    height:100px;
+}
+
+#buttons_ExamQuestionAdd>button{
+    float:left;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin-top:15px;
+    margin-left:10px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#buttons_ExamQuestionAdd>button:first-child{
+    margin-left:1310px;
+}
+
+
+/* ExamQuestionAdd */
+
+#ExamQuestionEdit_teacherportal{
+    float:left;
+    width:1625px;
+    height:80px;
+}
+
+#ExamQuestionEdit_teacherportal>#but{
+    width:1625px;
+    height:80px;
+}
+
+.ExamQuestionEdit_content{
+    float:left;
+    width:1625px;
+    height:780px;
+    background-color:#FFFFFF;
+}
+
+.ExamQuestionEdit_content>#type_ExamQuestionEdit{
+    float:left;
+    width:100%;
+    height:120px;
+}
+
+#type_ExamQuestionEdit>h2{
+    float:left;
+    width:1400px;
+    margin-top:10px;
+    margin-left:110px;
+}
+
+#type_ExamQuestionEdit>select{
+    float: left;
+    width:150px;
+    height:40px;
+    background-color:#FFFFFF;
+    border: 1px solid #000000;
+    margin-top:10px;
+    margin-left:150px;
+    font-size:18px;
+    border-radius:5px;
+}
+
+.ExamQuestionEdit_content>#text_ExamQuestionEdit{
+    float:left;
+    width:100%;
+    height:200px;
+}
+
+#text_ExamQuestionEdit>h2{
+    float:left;
+    width:1400px;
+    margin-top:10px;
+    margin-left:110px;
+}
+
+#text_ExamQuestionEdit>textarea{
+    float:left;
+    width:1400px;
+    height:120px;
+    margin-top:10px;
+    margin-left:110px;
+    resize:none;
+    overflow-y:auto;
+}
+
+.ExamQuestionEdit_content>#choices_ExamQuestionEdit{
+    float:left;
+    width:1400px;
+    height:240px;
+    margin-left:110px;
+}
+
+#choices_ExamQuestionEdit>.choice_ExamQuestionEdit{
+    float:left;
+    width:700px;
+    height:100px;
+    margin-top:5px;
+}
+
+.choice_ExamQuestionEdit>input{
+    float:left;
+    display:block;
+    width: 350px;
+    height: 40px;
+    background-color: #FFFFFF;
+    margin-top:10px;
+    border-color: #6A6A6A;
+    border-radius: 15px;
+    margin:10px auto;
+
+    font-size: 15px;
+    color:#6A6A6A;
+    box-shadow: none;
+}
+
+.ExamQuestionEdit_content>#correctAnswer_ExamQuestionEdit{
+    float:left;
+    width:1400px;
+    height:80px;
+    margin-left:110px;
+}
+
+#correctAnswer_ExamQuestionEdit>label{
+    float:left;
+    width:70px;
+    margin-top:10px;
+    margin-left:15px;
+}
+
+#correctAnswer_ExamQuestionEdit>label>h2{
+    border-bottom:10px;
+}
+
+#correctAnswer_ExamQuestionEdit>label>input{
+    width:20px;
+    height:20px;
+    margin-right:10px;
+}
+
+.ExamQuestionEdit_content>#essayAnswers_ExamQuestionEdit{
+    float:left;
+    width:1400px;
+    height:340px;
+    margin-left:110px;
+    border:1px solid #BCBCBC;
+    overflow-y:scroll;
+}
+
+#essayAnswers_ExamQuestionEdit>.essayAnswer_ExamQuestionEdit{
+    float:left;
+    width:600px;
+    height:100px;
+    margin-top:5px;
+    margin-left:5px;
+}
+
+.essayAnswer_ExamQuestionEdit>input{
+    float:left;
+    display:block;
+    width: 350px;
+    height: 40px;
+    background-color: #FFFFFF;
+    margin-top:10px;
+    border-color: #6A6A6A;
+    border-radius: 15px;
+    margin:10px auto;
+
+    font-size: 15px;
+    color:#6A6A6A;
+    box-shadow: none;
+}
+
+#essayAnswers_ExamQuestionEdit>button{
+    float:right;
+    display: block;
+    width: 80px;
+    height: 30px;
+    background-color: #363636;
+    border-color: #363636;
+    margin-top:5px;
+    margin-right:10px;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #FFFFFF;
+    box-shadow: none;
+}
+
+.ExamQuestionEdit_content>#points_ExamQuestionEdit{
+    float:left;
+    width:1400px;
+    height:90px;
+    margin-top:20px;
+    margin-left:110px;
+}
+
+#points_ExamQuestionEdit>h2{
+    float:left;
+    margin-top:16px;
+    margin-right:20px;
+}
+
+#points_ExamQuestionEdit>input{
+    float:left;
+    display:block;
+    width: 150px;
+    height: 40px;
+    background-color: #FFFFFF;
+    margin-top:10px;
+    border-color: #6A6A6A;
+    border-radius: 15px;
+    margin:10px auto;
+    text-align:center;
+
+    font-size: 15px;
+    color:#6A6A6A;
+    box-shadow: none;
+}
+
+#buttons_ExamQuestionEdit{
+    float:left;
+    width:1625px;
+    height:100px;
+}
+
+#buttons_ExamQuestionEdit>button{
+    float:left;
+    width:103px;
+    height:51px;
+    background-color:#6F7C86;
+    border-color:#6F7C86;
+    margin-top:15px;
+    margin-left:10px;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+#buttons_ExamQuestionEdit>button:first-child{
+    margin-left:1310px;
 }

@@ -1792,7 +1792,7 @@ function App26() {
                                    onChange={(e) => setScorePublished(e.target.checked)}/>
                         </div>
                         <div id="content_ExamAdd">
-                            <input type="text" id="ExamAdd_content"/>
+                            <textarea id="ExamAdd_content"/>
                         </div>
                         <div id="buttons_ExamAdd">
                             <button id="save" onClick={handleSaveExam}>
@@ -1828,7 +1828,8 @@ function App26() {
                         <div id="examperiod_ExamRead">
                             <h2>응시 기간</h2>
                             <div
-                                id="ExamRead_examperiod">{currentExam?.examPeriodStart} ~ {currentExam?.examPeriodEnd}</div>
+                                id="ExamRead_examperiod">{currentExam?.examPeriodStart} ~ {currentExam?.examPeriodEnd}
+                            </div>
                         </div>
                         <div id="duration_ExamRead">
                             <h2>시험 시간</h2>
@@ -1841,25 +1842,12 @@ function App26() {
                         <div id="scorePublished_ExamRead">
                             <div id="ExamRead_scorePublished">
                                 <h2>점수 공개 여부</h2>
-                                <div>{currentExam?.scorePublished ? '네' : '아니요'}</div>
+                                <div className="ExamRead_scorePublished_about">{currentExam?.scorePublished ? '네' : '아니요'}</div>
                             </div>
-                        </div>
-                        <div id="buttons_ExamRead">
-                            <button id="revise" onClick={showDivExamEdit}>
-                                수정
-                            </button>
-                            <button id="delete" onClick={() => handleDeleteExam(currentExam.id)}>
-                                삭제
-                            </button>
-                            <button id="evaluate" onClick={showDivExamEstimation}>
-                                평가
-                            </button>
-                            <button id="back" onClick={showDivExam}>
-                                목록
-                            </button>
                         </div>
                         <div id="question_list">
                             <h3>문제 목록</h3>
+                            <div className="bodyBox_ExamQuestion">
                             {currentExam?.questions.map((question, index) => (
                                 <div key={question.id} id="body_ExamQuestion">
                                     <div id="Qno">문제 {index + 1}</div>
@@ -1892,9 +1880,9 @@ function App26() {
 
                                     {/* 4지선다형 정답 표시 */}
                                     {question.type === 'multipleChoice' && (
-                                        <div id="QcorrectAnswer">
+                                        <div id="QcorrectAnswers">
                                             <h4>정답:</h4>
-                                            <div>보기 {question.correctAnswer}</div>
+                                            <div id="QcorrectAnswer">보기 {question.correctAnswer}</div>
                                         </div>
                                     )}
 
@@ -1904,6 +1892,21 @@ function App26() {
                                     </div>
                                 </div>
                             ))}
+                            </div>
+                        </div>
+                        <div id="buttons_ExamRead">
+                            <button id="revise" onClick={showDivExamEdit}>
+                                수정
+                            </button>
+                            <button id="delete" onClick={() => handleDeleteExam(currentExam.id)}>
+                                삭제
+                            </button>
+                            <button id="evaluate" onClick={showDivExamEstimation}>
+                                평가
+                            </button>
+                            <button id="back" onClick={showDivExam}>
+                                목록
+                            </button>
                         </div>
                     </>
                 )}
@@ -1971,62 +1974,64 @@ function App26() {
                                 <h2>시험 문제 추가</h2>
                             </div>
                         </div>
-                        <div id="type_ExamQuestionAdd">
-                            <h2>문제 유형</h2>
-                            <select id="ExamQuestionAdd_type" value={questionType} onChange={handleQuestionTypeChange}>
-                                <option value="multipleChoice">4지선다</option>
-                                <option value="essay">서술형</option>
-                            </select>
-                        </div>
-                        <div id="text_ExamQuestionAdd">
-                            <h2>문제</h2>
-                            <input type="text" id="ExamQuestionAdd_text" value={questionText} onChange={(e) => setQuestionText(e.target.value)} />
-                        </div>
-                        {questionType === 'multipleChoice' && (
-                            <>
-                                <div id="choices_ExamQuestionAdd">
-                                    {choices.map((choice, index) => (
-                                        <div key={index}>
-                                            <h2>보기 {index + 1}</h2>
-                                            <input type="text" value={choice} onChange={(e) => handleChoiceChange(index, e.target.value)} />
+                        <div className="ExamQuestionAdd_content">
+                            <div id="type_ExamQuestionAdd">
+                                <h2>문제 유형</h2> <br/>
+                                <select id="ExamQuestionAdd_type" value={questionType} onChange={handleQuestionTypeChange}>
+                                    <option value="multipleChoice">4지선다</option>
+                                    <option value="essay">서술형</option>
+                                </select>
+                            </div>
+                            <div id="text_ExamQuestionAdd">
+                                <h2>문제</h2>
+                                <textarea id="ExamQuestionAdd_text" value={questionText} onChange={(e) => setQuestionText(e.target.value)} />
+                            </div>
+                            {questionType === 'multipleChoice' && (
+                                <>
+                                    <div id="choices_ExamQuestionAdd">
+                                        {choices.map((choice, index) => (
+                                            <div className="choice_ExamQuestionAdd" key={index}>
+                                                <h2>보기 {index + 1}</h2>
+                                                <input type="text" value={choice} onChange={(e) => handleChoiceChange(index, e.target.value)} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div id="correctAnswer_ExamQuestionAdd">
+                                        <h2>정답 선택</h2>
+                                        {choices.map((_, index) => (
+                                            <label key={index}>
+                                                <input type="radio" value={index + 1} checked={correctAnswer === String(index + 1)} onChange={(e) => setCorrectAnswer(e.target.value)} />
+                                                {index + 1}
+                                            </label>
+                                        ))}
+                                    </div>
+                                </>
+                            )}
+                            {questionType === 'essay' && (
+                                <div id="essayAnswers_ExamQuestionAdd">
+                                    {essayAnswers.map((answer, index) => (
+                                        <div className="essayAnswer_ExamQuestionAdd" key={index}>
+                                            <h2>정답 {index + 1}</h2>
+                                            <input type="text" value={answer} onChange={(e) => handleEssayAnswerChange(index, e.target.value)} />
                                         </div>
                                     ))}
+                                    <button onClick={addEssayAnswer}>정답 추가</button>
                                 </div>
-                                <div id="correctAnswer_ExamQuestionAdd">
-                                    <h2>정답 선택</h2>
-                                    {choices.map((_, index) => (
-                                        <label key={index}>
-                                            <input type="radio" value={index + 1} checked={correctAnswer === String(index + 1)} onChange={(e) => setCorrectAnswer(e.target.value)} />
-                                            {index + 1}
-                                        </label>
-                                    ))}
-                                </div>
-                            </>
-                        )}
-                        {questionType === 'essay' && (
-                            <div id="essayAnswers_ExamQuestionAdd">
-                                {essayAnswers.map((answer, index) => (
-                                    <div key={index}>
-                                        <h2>정답 {index + 1}</h2>
-                                        <input type="text" value={answer} onChange={(e) => handleEssayAnswerChange(index, e.target.value)} />
-                                    </div>
-                                ))}
-                                <button onClick={addEssayAnswer}>정답 추가</button>
+                            )}
+                            <div id="points_ExamQuestionAdd">
+                                <h2>배점</h2>
+                                <input type="number" value={totalPoints} onChange={(e) => setTotalPoints(parseInt(e.target.value, 10))} />
                             </div>
-                        )}
-                        <div id="points_ExamQuestionAdd">
-                            <h2>배점</h2>
-                            <input type="number" value={totalPoints} onChange={(e) => setTotalPoints(parseInt(e.target.value, 10))} />
                         </div>
-                        <div id="buttons_ExamQuestionAdd">
-                            <button id="save" onClick={handleSaveQuestion}>
-                                저장
-                            </button>
-                            <button id="back" onClick={showDivExam}>
-                                취소
-                            </button>
-                        </div>
-                    </>
+                            <div id="buttons_ExamQuestionAdd">
+                                <button id="save" onClick={handleSaveQuestion}>
+                                    저장
+                                </button>
+                                <button id="back" onClick={showDivExam}>
+                                    취소
+                                </button>
+                            </div>
+                        </>
                 )}
 
                 {visibleDiv === 'ExamQuestionEdit' && (
@@ -2036,24 +2041,49 @@ function App26() {
                                 <h2>시험 문제 수정</h2>
                             </div>
                         </div>
-                        <div id="type_ExamQuestionEdit">
-                            <h2>문제 유형</h2>
-                            <select id="ExamQuestionEdit_type" value={editingQuestion?.type} onChange={(e) => setEditingQuestion({...editingQuestion, type: e.target.value})}>
-                                <option value="multipleChoice">4지선다</option>
-                                <option value="essay">서술형</option>
-                            </select>
-                        </div>
-                        <div id="text_ExamQuestionEdit">
-                            <h2>문제</h2>
-                            <input type="text" id="ExamQuestionEdit_text" value={editingQuestion?.text} onChange={(e) => setEditingQuestion({...editingQuestion, text: e.target.value})} />
-                        </div>
-                        {editingQuestion?.type === 'multipleChoice' && (
-                            <>
-                                <div id="choices_ExamQuestionEdit">
-                                    {editingQuestion?.answers.map((choice, index) => (
-                                        <div key={index}>
-                                            <h2>보기 {index + 1}</h2>
-                                            <input type="text" value={choice} onChange={(e) => {
+                        <div className="ExamQuestionEdit_content">
+                            <div id="type_ExamQuestionEdit">
+                                <h2>문제 유형</h2>
+                                <select id="ExamQuestionEdit_type" value={editingQuestion?.type} onChange={(e) => setEditingQuestion({...editingQuestion, type: e.target.value})}>
+                                    <option value="multipleChoice">4지선다</option>
+                                    <option value="essay">서술형</option>
+                                </select>
+                            </div>
+                            <div id="text_ExamQuestionEdit">
+                                <h2>문제</h2>
+                                <textarea id="ExamQuestionEdit_text" value={editingQuestion?.text} onChange={(e) => setEditingQuestion({...editingQuestion, text: e.target.value})} />
+                            </div>
+                            {editingQuestion?.type === 'multipleChoice' && (
+                                <>
+                                    <div id="choices_ExamQuestionEdit">
+                                        {editingQuestion?.answers.map((choice, index) => (
+                                            <div className="choice_ExamQuestionEdit" key={index}>
+                                                <h2>보기 {index + 1}</h2>
+                                                <input type="text" value={choice} onChange={(e) => {
+                                                    const newAnswers = [...editingQuestion.answers];
+                                                    newAnswers[index] = e.target.value;
+                                                    setEditingQuestion({...editingQuestion, answers: newAnswers});
+                                                }} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div id="correctAnswer_ExamQuestionEdit">
+                                        <h2>정답 선택</h2>
+                                        {editingQuestion?.answers.map((_, index) => (
+                                            <label key={index}>
+                                                <input type="radio" value={index + 1} checked={editingQuestion.correctAnswer === String(index + 1)} onChange={(e) => setEditingQuestion({...editingQuestion, correctAnswer: e.target.value})} />
+                                                {index + 1}
+                                            </label>
+                                        ))}
+                                    </div>
+                                </>
+                            )}
+                            {editingQuestion?.type === 'essay' && (
+                                <div id="essayAnswers_ExamQuestionEdit">
+                                    {editingQuestion?.answers.map((answer, index) => (
+                                        <div className="essayAnswer_ExamQuestionEdit" key={index}>
+                                            <h2>정답 {index + 1}</h2>
+                                            <input type="text" value={answer} onChange={(e) => {
                                                 const newAnswers = [...editingQuestion.answers];
                                                 newAnswers[index] = e.target.value;
                                                 setEditingQuestion({...editingQuestion, answers: newAnswers});
@@ -2061,34 +2091,11 @@ function App26() {
                                         </div>
                                     ))}
                                 </div>
-                                <div id="correctAnswer_ExamQuestionEdit">
-                                    <h2>정답 선택</h2>
-                                    {editingQuestion?.answers.map((_, index) => (
-                                        <label key={index}>
-                                            <input type="radio" value={index + 1} checked={editingQuestion.correctAnswer === String(index + 1)} onChange={(e) => setEditingQuestion({...editingQuestion, correctAnswer: e.target.value})} />
-                                            {index + 1}
-                                        </label>
-                                    ))}
-                                </div>
-                            </>
-                        )}
-                        {editingQuestion?.type === 'essay' && (
-                            <div id="essayAnswers_ExamQuestionEdit">
-                                {editingQuestion?.answers.map((answer, index) => (
-                                    <div key={index}>
-                                        <h2>정답 {index + 1}</h2>
-                                        <input type="text" value={answer} onChange={(e) => {
-                                            const newAnswers = [...editingQuestion.answers];
-                                            newAnswers[index] = e.target.value;
-                                            setEditingQuestion({...editingQuestion, answers: newAnswers});
-                                        }} />
-                                    </div>
-                                ))}
+                            )}
+                            <div id="points_ExamQuestionEdit">
+                                <h2>배점</h2>
+                                <input type="number" value={editingQuestion?.points} onChange={(e) => setEditingQuestion({...editingQuestion, points: parseInt(e.target.value, 10)})} />
                             </div>
-                        )}
-                        <div id="points_ExamQuestionEdit">
-                            <h2>배점</h2>
-                            <input type="number" value={editingQuestion?.points} onChange={(e) => setEditingQuestion({...editingQuestion, points: parseInt(e.target.value, 10)})} />
                         </div>
                         <div id="buttons_ExamQuestionEdit">
                             <button id="save" onClick={handleUpdateQuestion}>
