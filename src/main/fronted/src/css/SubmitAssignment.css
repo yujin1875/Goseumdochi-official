@@ -1,0 +1,164 @@
+.SubmitAssignment{
+    float:left;
+    width:1150px;
+    height:592px;
+}
+
+.SubmitAssignment>h1{
+    float:left;
+    margin-top:5px;
+    margin-left:10px;
+}
+
+.SubmitAssignment>.SubmitAssignment_frame{
+    float:left;
+    width:1150px;
+    height:530px;
+}
+
+.SubmitAssignment_frame>.alreadysubmit_SubmitAssignment{
+    float:left;
+    position: relative;
+    width:1150px;
+    height:520px;
+    overflow-y:auto;
+    font-size:20px;
+}
+
+.alreadysubmit_SubmitAssignment>h2{
+    float:left;
+    width:1100px;
+    margin-top:10px;
+    margin-left:25px;
+}
+
+.alreadysubmit_SubmitAssignment>.Contentalreadysubmit_SubmitAssignment{
+    float:left;
+    width:1000px;
+    height:400px;
+    background-color:#EAEAEA;
+    margin-top:10px;
+    margin-left:70px;
+    overflow-y:scroll;
+}
+
+.Contentalreadysubmit_SubmitAssignment>p{
+    float:left;
+    width:900px;
+    margin-top:10px;
+    margin-left:25px;
+}
+
+.Contentalreadysubmit_SubmitAssignment>a{
+    float:left;
+    width:900px;
+    margin-top:10px;
+    margin-left:25px;
+}
+
+.alreadysubmit_SubmitAssignment>.Btnalreadysubmit_SubmitAssignment{
+    position: absolute;
+    bottom: 0;
+}
+
+.Btnalreadysubmit_SubmitAssignment>button{
+    float:left;
+    display: block;
+    width: 50px;
+    height: 40px;
+    background-color: #363636;
+    border-color: #363636;
+    margin-top:5px;
+    margin-left:10px;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #FFFFFF;
+    box-shadow: none;
+}
+
+.Btnalreadysubmit_SubmitAssignment>button:first-child{
+    margin-left:1000px;
+}
+
+
+.SubmitAssignment_frame>.nowsubmit_SubmitAssignment{
+    float:left;
+    position: relative;
+    width:1150px;
+    height:520px;
+    overflow-y:auto;
+    font-size:20px;
+}
+
+.nowsubmit_SubmitAssignment>h2{
+    float:left;
+    width:1100px;
+    margin-top:10px;
+    margin-left:25px;
+}
+
+.nowsubmit_SubmitAssignment>.Contentnowsubmit_SubmitAssignment{
+    float:left;
+    position: relative;
+    width:1000px;
+    height:380px;
+    background-color:#EAEAEA;
+    margin-top:10px;
+    margin-left:70px;
+    overflow-y:scroll;
+}
+
+.Contentnowsubmit_SubmitAssignment>label{
+    float:left;
+    width:900px;
+    margin-top:10px;
+    margin-left:25px;
+}
+
+.Contentnowsubmit_SubmitAssignment>label:first-child>input{
+    width: 650px;
+    height: 40px;
+    background-color: #FFFFFF;
+    border-color: #6A6A6A;
+    border-radius: 15px;
+    text-align:left;
+
+    font-size: 15px;
+    color:#6A6A6A;
+    box-shadow: none;
+}
+
+.Contentnowsubmit_SubmitAssignment>label>textarea{
+    float:left;
+    width:900px;
+    height:200px;
+    margin-top:10px;
+    margin-left:25px;
+    margin-bottom:10px;
+    overflow-y:scroll;
+    resize:none;
+}
+
+.nowsubmit_SubmitAssignment>.Btnnowsubmit_SubmitAssignment{
+    position: absolute;
+    bottom: 0;
+}
+
+.Btnnowsubmit_SubmitAssignment>button{
+    float:left;
+    display: block;
+    width: 70px;
+    height: 40px;
+    background-color: #363636;
+    border-color: #363636;
+    margin-top:5px;
+    margin-left:10px;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #FFFFFF;
+    box-shadow: none;
+}
+
+.Btnnowsubmit_SubmitAssignment>button:first-child{
+    margin-left:1000px;
+}

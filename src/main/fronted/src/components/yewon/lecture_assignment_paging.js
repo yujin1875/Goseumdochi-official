@@ -121,7 +121,25 @@ function LectureAssignmentPaging({ user, lecture }) { // props로 user와 lectur
                                     ) : "비공개"}
                                 </td>
                                 <td>
-                                    <button onClick={() => submitAssignment(assignment.id)}>과제 제출</button>
+                                    <button
+                                      onClick={() => submitAssignment(assignment.id)}
+                                      style={{
+                                        float: "left",
+                                        display: "block",
+                                        width: "50px",
+                                        height: "25px",
+                                        backgroundColor: "#363636",
+                                        borderColor: "#363636",
+                                        marginTop: "5px",
+                                        marginLeft: "10px",
+                                        borderRadius: "5px",
+                                        fontSize: "15px",
+                                        color: "#FFFFFF",
+                                        boxShadow: "none",
+                                      }}
+                                    >
+                                      제출
+                                    </button>
                                 </td>
                             </tr>
                         ))}
