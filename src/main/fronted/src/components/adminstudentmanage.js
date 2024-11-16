@@ -42,7 +42,6 @@ function App23() {
                                     <th>번호</th>
                                     <th>이메일</th>
                                     <th>생년월일</th>
-                                    <th>쪽지보내기</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,9 +52,6 @@ function App23() {
                                         <td>{student.studentPhoneNumber}</td>
                                         <td>{student.studentEmail}</td>
                                         <td>{student.studentBirthDate}</td>
-                                        <td>
-                                            <button>쪽지 보내기</button>
-                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

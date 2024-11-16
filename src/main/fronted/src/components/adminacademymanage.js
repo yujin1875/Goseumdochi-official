@@ -1,57 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import '../css/adminacademymanage.css';
 import logo from './images/goseumdochi.png';
+import axios from "axios";
 
 const App22 = () => {
-    const [directors, setDirectors] = useState([]);
+    const [academyList, setAcademyList] = useState([]); // [학원 + 원장] 정보 담을 리스트
 
     useEffect(() => {
-        const fetchDirectors = async () => {
+        // 학원 정보를 가져오는 함수를 정의합니다.
+        const fetchAcademyList = async () => {
             try {
-                const token = localStorage.getItem('authToken'); // 인증 토큰 가져오기
-                const response = await fetch('/api/admin/manage/director', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`, // Bearer 토큰 추가
-                        'Content-Type': 'application/json'
-                    }
-                });
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                const data = await response.json();
-                console.log('Directors fetched:', data); // Fetch된 데이터 확인
-
-                const directorsWithAcademy = await Promise.all(data.map(async (director) => {
-                    if (!director.academyEntity || !director.academyEntity.id) {
-                        console.error('AcademyEntity is missing or invalid for director:', director);
-                        return director;
-                    }
-
-                    // 각 원장 정보에 해당하는 학원 정보 가져오기
-                    const academyResponse = await fetch(`/api/admin/manage/academy/${director.academyEntity.id}`, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`, // Bearer 토큰 추가
-                            'Content-Type': 'application/json'
-                        }
-                    });
-
-                    if (!academyResponse.ok) {
-                        console.error('Failed to fetch academy:', academyResponse.statusText);
-                        return director;
-                    }
-
-                    const academyData = await academyResponse.json();
-                    console.log('Academy fetched for director', director.id, academyData); // Fetch된 학원 데이터 확인
-                    return { ...director, academy: academyData };
-                }));
-                setDirectors(directorsWithAcademy);
+                const response = await axios.get('/api/admin/management/academy/all'); // API를 호출하여 학생 정보를 가져옵니다.
+                setAcademyList(response.data); // 가져온 학생 정보를 상태 변수에 저장합니다.
             } catch (error) {
-                console.error('Error fetching directors:', error);
+                console.error('Error fetching students:', error);
             }
         };
 
-
-        fetchDirectors();
+        fetchAcademyList(); // useEffect가 호출될 때 학생 정보를 가져오는 함수를 실행합니다.
     }, []);
 
     const goBackToAdminNotice = () => {
@@ -77,24 +43,20 @@ const App22 = () => {
                                     <th>원장님 이름</th>
                                     <th>원장님 번호</th>
                                     <th>원장님 이메일</th>
-                                    <th>학원 우편번호</th>
+                                    <th>학원 주소</th>
                                     <th>학원 상세 주소</th>
-                                    <th>쪽지보내기</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {directors.map(director => (
-                                    <tr key={director.id}>
-                                        <td>{director.academy?.id}</td>
-                                        <td>{director.academy?.name}</td>
-                                        <td>{director.name}</td>
-                                        <td>{director.phoneNumber}</td>
-                                        <td>{director.email}</td>
-                                        <td>{director.academy?.postcode}</td>
-                                        <td>{director.academy?.address}</td>
-                                        <td>
-                                            <button>쪽지 보내기</button>
-                                        </td>
+                                {academyList.map(academy => (
+                                    <tr key={academy.id}>
+                                        <td>{academy.id}</td>
+                                        <td>{academy.name}</td>
+                                        <td>{academy.directorDTO.name}</td>
+                                        <td>{academy.directorDTO.phoneNumber}</td>
+                                        <td>{academy.directorDTO.email}</td>
+                                        <td>{academy.address}</td>
+                                        <td>{academy.addressDetail}</td>
                                     </tr>
                                 ))}
                             </tbody>
