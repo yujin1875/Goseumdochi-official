@@ -101,7 +101,7 @@ form>.director_student_regist_btn{
     margin:auto;
 }
 
-#result>#info{
+#result>#info_result{
     width:900px;
     height:500px;
     margin:auto;
@@ -110,14 +110,14 @@ form>.director_student_regist_btn{
     border-radius:15px;
 }
 
-#info>h2{
+#info_result>h2{
     float:left;
     width:100%;
     margin-top:20px;
     margin-left:40px;
 }
 
-#info>.student_info{
+#info_result>.student_info{
     float:left;
     width:800px;
     height:380px;
@@ -126,7 +126,7 @@ form>.director_student_regist_btn{
     margin-left:40px;
 }
 
-#info>.student_info>p{
+#info_result>.student_info>p{
     margin-top:15px;
     margin-left:30px;
 

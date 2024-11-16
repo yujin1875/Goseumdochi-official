@@ -104,7 +104,7 @@ function DirectorStudentRegist() {
             <div id="result">
                 {error && <p>{error}</p>}
                 {isFind && student && (
-                    <div id="info">
+                    <div id="info_result">
                         <h2>학생 정보</h2>
                         <div className="student_info">
                             <p>ID: {student.id}</p>
