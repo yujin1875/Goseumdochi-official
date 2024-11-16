@@ -99,7 +99,7 @@ function DirectorStudentRegist() {
                         onChange={(e) => setInputStudentPhoneNumber(e.target.value)}
                     />
                 </div>
-                <button type="submit">찾기</button>
+                <button className="director_student_regist_btn" type="submit">찾기</button>
             </form>
             <div id="result">
                 {error && <p>{error}</p>}
