@@ -2,6 +2,7 @@ package com.midas.goseumdochi.admin.controller;
 
 import com.midas.goseumdochi.admin.dto.AdminDTO;
 import com.midas.goseumdochi.admin.repository.AdminRepository;
+import com.midas.goseumdochi.admin.service.AdminService;
 import com.midas.goseumdochi.util.ai.EncDecService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,14 +15,14 @@ import jakarta.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class LoginController {
 
-    private final AdminRepository adminRepository;
-    private final EncDecService encDecService;
+    private final AdminService adminService;
 
     // 로그인 처리
     @PostMapping("/login")
     public ResponseEntity<?> login(HttpSession session, @RequestParam String loginid, @RequestParam String password) {
-        if ("admin".equals(loginid) && "admin".equals(password)) {
-            session.setAttribute("loginId", loginid); // 로그인 성공 시 아이디 저장
+        System.out.println("loginid: " + loginid + ", password: " + password);
+        if (adminService.authenticate(loginid, password)) {
+            session.setAttribute("loginId", loginid); // 로그인 성공 시 세션 저장
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity
@@ -34,19 +35,8 @@ public class LoginController {
     @GetMapping("/adminInfo")
     public ResponseEntity<?> getAdminInfo(HttpSession session) {
         Object loginIdObj = session.getAttribute("loginId");
-        String loginId = null;
-
-        if (loginIdObj != null) {
-            if (loginIdObj instanceof Long) {
-                loginId = String.valueOf(loginIdObj); // Long을 String으로 변환
-            } else {
-                loginId = (String) loginIdObj; // 이미 String 타입인 경우
-            }
-        }
-
-        if (loginId != null) {
-            AdminDTO adminDTO = new AdminDTO(loginId); // 생성자를 통해 관리자 이름 설정
-            return ResponseEntity.ok(adminDTO);
+        if (loginIdObj instanceof String loginId) {
+            return ResponseEntity.ok("현재 로그인된 관리자: " + loginId);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
     }

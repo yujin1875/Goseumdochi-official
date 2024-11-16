@@ -16,7 +16,7 @@ public class ManagementAcademyController {
 
     private final AcademyService academyService;
 
-    @GetMapping
+    @GetMapping("/{academyId}")
     public List<AcademyEntity> getAllAcademies() {
         return academyService.findAllAcademies();
     }
