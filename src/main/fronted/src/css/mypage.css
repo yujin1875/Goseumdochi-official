@@ -247,8 +247,17 @@ input>#notice_btn{
 
 #b_mypage>button{
     float:left;
-    font-size:20px;
+    display: block;
+    width: 60px;
+    height: 30px;
+    background-color: #363636;
+    border-color: #363636;
+    margin-top:5px;
     margin-left:10px;
+    border-radius: 5px;
+    font-size: 20px;
+    color: #FFFFFF;
+    box-shadow: none;
 }
 
 #b_mypage>#change_btn{

@@ -404,7 +404,7 @@ li>a{
 
 .exam_header>#testingtime_exam_header{
     float:left;
-    width:250px;
+    width:280px;
     height:30px;
     text-align:center;
     vertical-align:middle;
@@ -412,7 +412,7 @@ li>a{
 
 .exam_header>#testtime_exam_header{
     float:left;
-    width:150px;
+    width:120px;
     height:30px;
     text-align:center;
     vertical-align:middle;
@@ -496,7 +496,7 @@ li>a{
 
 .exam_row>#testingtime_exam_row{
     float:left;
-    width:250px;
+    width:280px;
     height:40px;
     text-align:center;
     vertical-align:middle;
@@ -505,7 +505,7 @@ li>a{
 
 .exam_row>#testtime_exam_row{
     float:left;
-    width:150px;
+    width:120px;
     height:40px;
     text-align:center;
     vertical-align:middle;

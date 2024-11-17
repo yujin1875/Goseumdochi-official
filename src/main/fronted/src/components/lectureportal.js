@@ -333,8 +333,10 @@ function App10() {
                                                                 })}
                                                                 disabled={exam.totalScore !== -1} // 시험 점수가 -1이 아니면 비활성화
                                                                 style={{
+                                                                    borderRadius: "5px",
                                                                     cursor: exam.totalScore !== -1 ? "not-allowed" : "pointer", // 비활성화된 경우 커서를 "not-allowed"로 표시
-                                                                    backgroundColor: exam.totalScore !== -1 ? "#d3d3d3" : "#007bff" // 비활성화된 경우 버튼 색을 회색으로 변경
+                                                                    backgroundColor: exam.totalScore !== -1 ? "#d3d3d3" : "#363636", // 비활성화된 경우 버튼 색을 회색으로 변경
+                                                                    color: exam.totalScore !== -1 ? "light-dark" : "#FFFFFF"
                                                                 }}
                                                             >
                                                                 {exam.totalScore !== -1 ? "응시 완료" : "시작"} {/* 버튼 텍스트 동적 변경 */}

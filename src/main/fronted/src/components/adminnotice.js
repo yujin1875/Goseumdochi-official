@@ -73,7 +73,7 @@ function App19() {
                 </div>
                 <div id="rect"/>
                 <div id="adminnotice_body">
-                    <table id="adminnotice_table">
+                    <table id="adminnotice_table" style={{ fontSize: "20px" }}>
                         <thead>
                             <tr>
                                 <th>번호</th>
@@ -85,7 +85,7 @@ function App19() {
                         </thead>
                         <tbody>
                             {notices.map(notice => (
-                                <tr key={notice.id}>
+                                <tr key={notice.id} style={{ textAlign: "center" , verticalAlign: "middle", minHeight: "30px"}}>
                                     <td>{notice.num}</td>
                                     <td>{notice.title}</td>
                                     <td>{notice.writer}</td>

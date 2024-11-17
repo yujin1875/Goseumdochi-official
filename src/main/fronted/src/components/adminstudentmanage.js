@@ -34,7 +34,7 @@ function App23() {
                 <div id="rect"/>
                 <div id="adminstudentmanage_body">
                     <div id="adminstudentmanage_contents">
-                        <table id="student_table">
+                        <table id="student_table" style={{ fontSize: "20px" }}>
                             <thead>
                                 <tr>
                                     <th>ID</th>

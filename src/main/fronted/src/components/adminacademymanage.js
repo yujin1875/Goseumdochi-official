@@ -35,7 +35,7 @@ const App22 = () => {
                 <div id="adminacademymanage_body">
 
                     <div id="adminacademymanage_contents">
-                        <table>
+                        <table style={{ fontSize: "20px" }}>
                             <thead>
                                 <tr>
                                     <th>학원 번호</th>
