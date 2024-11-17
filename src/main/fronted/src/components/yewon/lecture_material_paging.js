@@ -25,6 +25,12 @@ function LectureMaterialPaging({ user, lecture }) { // props로 user와 lecture 
         }
     };
 
+    const [selectedMaterial, setSelectedMaterial] = useState(null);
+
+    const handleMaterialClick = (material) => {
+        setSelectedMaterial(material); // 클릭한 공지사항의 데이터 설정
+    };
+
     const goToPage = (page) => {
         setCurrentPage(page);
     };
@@ -43,7 +49,6 @@ function LectureMaterialPaging({ user, lecture }) { // props로 user와 lecture 
                 <thead>
                 <tr>
                     <th>No</th>
-                    <th>내용</th>
                     <th>제목</th>
                     <th>작성자</th>
                     <th>작성일시</th>
@@ -54,8 +59,14 @@ function LectureMaterialPaging({ user, lecture }) { // props로 user와 lecture 
                 {materialList.map((material) => (
                     <tr key={material.id} style={{ height: '40px', overflow: 'hidden'}}>
                         <td>{material.id}</td>
-                        <td>{material.content}</td>
-                        <td>{material.title}</td>
+                        <td>
+                            <p
+                                style={{ cursor: 'pointer', color: 'blue' }}
+                                onClick={() => handleMaterialClick(material)}// 제목 클릭 시 상세보기
+                            >
+                                {material.title}
+                            </p>
+                        </td>
                         <td>{material.author}</td>
                         <td>{formatDateTime(material.createdAt)}</td>
                         <td><a href={material.attachmentPath} download>첨부파일</a></td>
@@ -63,6 +74,16 @@ function LectureMaterialPaging({ user, lecture }) { // props로 user와 lecture 
                 ))}
                 </tbody>
             </table>
+                {selectedMaterial && (
+                    <div id="material_detail">
+                        <h3>{selectedMaterial.title}</h3>
+                        <p><strong>작성자:</strong> {selectedMaterial.author}</p>
+                        <p><strong>게시일:</strong> {selectedMaterial.createdAt && formatDateTime(selectedMaterial.createdAt)}</p>
+                        <p><strong>내용:</strong> {selectedMaterial.content}</p> {/* 공지사항 내용 */}
+                        <button onClick={() => setSelectedMaterial(null)}>닫기</button>
+                    </div>
+                )}
+
 
             <div className="button_material_paging">
                 <button onClick={() => goToPage(1)}>&lt;&lt;</button>

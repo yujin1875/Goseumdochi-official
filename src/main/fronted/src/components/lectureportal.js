@@ -267,7 +267,7 @@ function App10() {
                                         )}
                                         {selectedVideo && ( // 선택된 강의가 있을 때 해당 영상만 표시
                                             <>
-                                                <h2>{selectedVideo.title}</h2>
+                                                <h2 className="titlevideo_lectureportal">{selectedVideo.title}</h2>
                                                 <video width="640" height="360" controls>
                                                     <source src={selectedVideo.videoUrl} type="video/mp4" />
                                                     Your browser does not support the video tag.

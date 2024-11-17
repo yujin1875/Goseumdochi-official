@@ -82,6 +82,12 @@ function LectureAssignmentPaging({ user, lecture }) { // props로 user와 lectur
         setSelectedAssignmentId(assignmentId);
     };
 
+    const [selectedAssignment, setSelectedAssignment] = useState(null);
+
+    const handleAssignmentClick = (assignment) => {
+        setSelectedAssignment(assignment); // 클릭한 공지사항의 데이터 설정
+    };
+
     return (
         <div className="assignment_paging">
             {selectedAssignmentId == null ? (
@@ -93,7 +99,6 @@ function LectureAssignmentPaging({ user, lecture }) { // props로 user와 lectur
                         <tr>
                             <th>No</th>
                             <th>제목</th>
-                            <th>내용</th>
                             <th>작성자</th>
                             <th>공개일</th>
                             <th>마감일</th>
@@ -107,8 +112,14 @@ function LectureAssignmentPaging({ user, lecture }) { // props로 user와 lectur
                         {assignmentList.map((assignment) => (
                             <tr key={assignment.id} style={{ height: '40px', overflow: 'hidden'}}>
                                 <td>{assignment.id}</td>
-                                <td>{assignment.title}</td>
-                                <td>{assignment.content}</td>
+                                <td>
+                                    <p
+                                        style={{ cursor: 'pointer', color: 'blue' }}
+                                        onClick={() => handleAssignmentClick(assignment)}// 제목 클릭 시 상세보기
+                                    >
+                                        {assignment.title}
+                                    </p>
+                                </td>
                                 <td>{assignment.author}</td>
                                 <td>{formatDateTime(assignment.createdAt)}</td>
                                 <td>{formatDateTime(assignment.deadline)}</td>
@@ -145,6 +156,15 @@ function LectureAssignmentPaging({ user, lecture }) { // props로 user와 lectur
                         ))}
                         </tbody>
                     </table>
+                        {selectedAssignment && (
+                            <div id="assignment_detail">
+                                <h3>{selectedAssignment.title}</h3>
+                                <p><strong>작성자:</strong> {selectedAssignment.author}</p>
+                                <p><strong>게시일:</strong> {selectedAssignment.createdAt && formatDateTime(selectedAssignment.createdAt)}</p>
+                                <p><strong>내용:</strong> {selectedAssignment.content}</p> {/* 공지사항 내용 */}
+                                <button onClick={() => setSelectedAssignment(null)}>닫기</button>
+                            </div>
+                        )}
 
                     {/* 페이징 버튼 */}
                     <div className="button_assignment_paging">

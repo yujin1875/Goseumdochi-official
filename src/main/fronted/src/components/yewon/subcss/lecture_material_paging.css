@@ -41,3 +41,33 @@
 .material_paging>.button_material_paging>button:first-child{
     margin-left:470px;
 }
+
+#material_detail {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#material_detail h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#material_detail p {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+#material_detail button {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
