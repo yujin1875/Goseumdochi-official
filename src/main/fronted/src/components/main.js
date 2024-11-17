@@ -39,7 +39,7 @@ function App6() {
         navigate('/community', { state: { user: user } });  // user 정보를 state로 전달
     };
     const Gomypage = () => {
-        navigate('/mypage', { state: { studentId: user.id } });
+        navigate('/mypage', { state: { studentId: user.id, user } });
     };
 
     const GoLecturePotal = (lecture) => {

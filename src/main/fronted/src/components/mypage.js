@@ -7,8 +7,8 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function App12() {
-    const Gomain = () => {
-        navigate('/main', { state: { studentId } });
+    const GoMain = () => {
+        navigate('/main', { state: { user } });
     };
     const Gonotice = () => {
         navigate('/notice', { state: { studentId } });
@@ -229,7 +229,7 @@ function App12() {
         <div id="App">
             <div id="mypage-menu">
                 <div id="header_mypage">
-                    <img src={logo} onClick={() => navigate('/main')} alt="Logo" />
+                    <img src={logo} onClick={GoMain} alt="Logo" />
                         <div id="user_info">
                             <div className="infoBox">
                                 {userName && `${userName}님`}
