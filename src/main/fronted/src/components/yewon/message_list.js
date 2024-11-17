@@ -1,5 +1,6 @@
 import React, { useState ,useEffect } from 'react';
 import axios from 'axios';
+import logo from '../images/goseumdochi.png';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -74,11 +75,19 @@ function MessageList() {
         return `${year}년 ${month}월 ${day}일 ${ampm} ${formattedHours}:${minutes}`;
     };
 
+    const Gomain = () => {
+        navigate('/main', {state: {user: user}});
+    }
+
     return (
         <div id="App">
             <div id="header_message" />
             <div id="message">
-                <h1>쪽지</h1>
+
+                <h1>
+                    <img src={logo} onClick={Gomain} alt="logo"/><br/>
+                    쪽지
+                </h1>
                 <select value={messageType} onChange={handleChange}>
                     <option value="receive">받은쪽지</option>
                     <option value="send">보낸쪽지</option>
