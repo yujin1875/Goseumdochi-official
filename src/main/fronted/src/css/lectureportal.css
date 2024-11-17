@@ -319,12 +319,49 @@ li>a{
     margin-bottom:15px;
 }
 
+#body_contents_lectureportal>ul{
+    overflow-y:scroll;
+    float:left;
+    width: 180px;
+    height:500px;
+    margin-left:10px;
+    border:1px solid #BCBCBC;
+    text-align:center;
+}
+
 #body_contents_lectureportal>ul>li{
     text-align:center;
 }
 
 #body_contents_lectureportal>ul>li>p{
     margin-top:10px;
+}
+
+#body_contents_lectureportal>.titlevideo_lectureportal{
+    float:left;
+    width:600px;
+    margin-left:20px;
+}
+
+#body_contents_lectureportal>video{
+    float:left;
+    margin-left:140px;
+    text-align:center;
+}
+
+#body_contents_lectureportal>button{
+    float:left;
+    display: block;
+    width: 70px;
+    height: 40px;
+    background-color: #363636;
+    border-color: #363636;
+    margin-top:405px;
+    margin-left:10px;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #FFFFFF;
+    box-shadow: none;
 }
 
 #contents_aboutNotice_lectureportal>#content_assignment{
